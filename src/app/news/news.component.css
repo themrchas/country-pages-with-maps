@@ -1,0 +1,43 @@
+.tile-large {
+    height:515px;
+    width: 400px;
+}
+
+@media  (min-width: 1090px) and (max-width: 1370px){
+    .tile-large {
+        width:310px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tile-large {
+        width: 100%;
+    }
+}
+
+.news-source {
+    color: #60a917;
+    margin-right: 10px;
+}
+
+.news-meta {
+    font-size: .9em;
+}
+
+.news-time {
+    color: #777;
+}
+
+.news-title {
+    line-height: 1.6em;
+}
+
+.news-item {
+    padding: 5px 0;
+}
+
+.news-body {
+    font-size: .95em;
+    color: #bbb;
+    word-wrap: break-word;
+}

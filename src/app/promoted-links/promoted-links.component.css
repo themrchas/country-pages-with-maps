@@ -1,0 +1,93 @@
+.promoted-links {
+    display: inline-block;
+}
+
+.promoted-links ul {
+    list-style-type: none;
+    padding: 0;
+    float: left;
+}
+
+.ms-webpart-titleText, .ms-webpart-titleText a {
+    color: maroon !important;
+    font-size: 18px;
+    padding: 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: "Segoe UI","Segoe",Tahoma,Arial, Helvetica, sans-serif !important;
+}
+
+.promoted-links-container  {
+    float: left;
+    margin-left: -8px;
+    margin-top: 5px;
+}
+
+.promoted-links-container ul {
+    margin-bottom: 0;
+    padding: 8px;
+}
+
+.ms-tileview-tile-content {
+    background-color: transparent;
+    width: 150px;
+    height: 150px;
+    float: left;
+    overflow: hidden;
+}
+
+.ms-tileview-tile-content img {
+    height: 150px;
+}
+
+.ms-tileview-tile-content a {
+    background-color: #777;
+    height: 150px;
+    width: 150px;
+    display: inline-block;
+}
+
+.desc-slider-title {
+    vertical-align: bottom;
+    height: 35px;
+    display: table-cell;
+    margin-top: 15px;
+}
+
+.desc-slider, .desc-background {
+    position: relative;
+    transition: all .4s ease-out;
+    padding: 2px 10px;
+    color: #fff;
+    height: 150px;
+    width: 150px;
+}
+
+.desc-slider {
+    top: -200px;
+    font-size: 13px;
+}
+
+.desc-background {
+    background-color: #000;
+    opacity: 0.7;
+    top: -50px;
+}
+
+.desc-slider-desc {
+    line-height: 1.6em;
+    margin-top: 15px;
+}
+
+.ms-tileview-tile-content:hover .desc-background {
+    top: -150px;
+}
+
+.ms-tileview-tile-content:hover .desc-slider {
+    top: -300px;
+}
+
+.ms-tileview-tile-content:hover .desc-slider-title {
+    margin-top: 0;
+    vertical-align: top;
+}

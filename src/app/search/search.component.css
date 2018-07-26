@@ -1,0 +1,165 @@
+
+#searchForm {
+    position: relative;
+}
+/*#searchForm {
+    position: relative;
+    top: 70px;
+    padding-left: 5%;
+}*/
+
+/*.ms-srch-sb-searchLink:hover {
+    background-color: #E6F2FA;
+}
+
+.ms-srch-sbLarge-searchImg {
+    position: relative;
+    top: -35px;
+    left: 35px;
+}
+
+.search-button {
+    height: 32px;
+    width: 32px;
+    overflow: hidden;
+    display: block;
+    position: relative;
+    margin-top: 10px;
+}
+
+.typeahead-input {
+    width: 500px;
+    height: 40px;
+    border: none;
+    outline: none;
+    margin: 5px 0 5px 15px;
+    font: 18px/normal 'Segoe UI',Arial,Helvetica,Sans-Serif;
+}
+
+.ms-srch-sb-navLink, .ms-srch-sb-searchLink {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: top;
+    background-color: transparent;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+    height: 48px;
+    width: 40px;
+}
+
+.typeahead-container {
+    display: inline-block;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,.6);
+}
+
+.typeahead-container:hover {
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.18), 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+.tt-menu {
+    background-color: #fff;
+    width: 559px;
+    font: 16px/normal "Segoe UI","Segoe",Tahoma,Helvetica,Arial,sans-serif;
+    text-align: left;
+    border-top: 1px solid #ccc;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.6);
+}
+
+.tt-suggestion {
+    padding: 4px 10px;
+}
+
+.tt-suggestion:hover {
+    cursor: pointer;
+    background-color: rgba(205, 230, 247, 0.50);
+}
+
+.tt-suggestion a {
+    text-decoration: none !important;
+}
+
+h5.section-title {
+    margin: 0;
+    padding: 2px 10px;
+    font-size: 13px;
+    color: #707070;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-align: right;
+    background-color: rgba(239, 239, 239, 0.78);
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+}
+
+.empty-message {
+    margin: 4px 10px;
+}
+
+.tt-suggestion {
+    display: none;
+}
+
+.tt-suggestion .highlighted-summary {
+    font-size: 13px;
+    color: #000;
+}
+
+.global-footer {
+    padding: 8px;
+    background-color: rgb(233, 233, 233);
+    text-align: center;
+    margin-top: 10px;
+    border-top: 1px solid #AAA;
+    border-bottom: 1px solid #AAA;
+}
+
+.global-footer a {
+    color: #333 !important;
+    text-decoration: underline;
+}
+
+.global-footer a:hover {
+    text-decoration: none;
+}
+
+.tt-dataset-acronymDataset .tt-suggestion:hover {
+    background-color: transparent;
+    color: #000;
+    cursor: text;
+}
+
+.show {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+.tt-dataset.hide-title .section-title {
+    display: none;
+}
+
+h4 {
+    margin-top: 5px;
+}
+
+.tt-suggestion img {
+    border: none;
+    vertical-align: middle;
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+.tt-suggestion a {
+    display: inline-block;
+    width: 100%;
+}
+
+.tt-dataset-searchDataset .tt-suggestion {
+    padding-bottom: 10px;
+}*/
+
+

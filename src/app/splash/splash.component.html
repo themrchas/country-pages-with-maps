@@ -1,0 +1,91 @@
+<!--<div class="splash container-fluid" [ngStyle]="{'background':splashImage, 'background-size':'cover'}">
+  <div class="row">
+    <div class="col-md-5 search-col" style="padding-left: 5%;top: 70px; max-width: 680px;z-index:999">
+      <div class="row">
+        <app-search></app-search>
+      </div>
+    </div>
+    <div class="col-md-7" style="top: 50px">
+      <div class="row">
+        <div class="pull-right widget-container">
+          <div class="tile-group">
+                    <app-today-events></app-today-events>
+                    <app-upcoming-events></app-upcoming-events>
+          </div>
+          <div class="tile-group no-margin-left col-md-6">
+                    <app-news></app-news>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="splashDescription" style="position: relative; left: 5%; color: #eee; width: 35%;" class="splash-description">
+      <div style="font-size: 1.4em; margin-bottom: 10px;line-height: 1.3em;">{{splashDescription}}</div>
+      <a style="background-color: maroon; color: #AAA; padding: 0 5px; text-transform: uppercase" href="{{splashUrl}}" target="_blank">Full Image <i class="fa fa-external-link"></i></a>
+    </div>
+  </div>
+</div>-->
+<!--<div class="splash container-fluid" [ngStyle]="{'background':splashImage, 'background-size':'cover'}">
+  <div class="row">
+    <div class="col-md-5" style="padding-left: 5%;top: 70px; max-width: 680px;z-index:999">
+      <div class="row">
+        <app-search></app-search>
+      </div>
+    </div>
+    <div class="col-md-7" style="top: 50px">
+      <div class="row">
+        <div class="pull-right widget-container">
+          <div class="tile-group">
+            <app-today-events></app-today-events>
+            <app-upcoming-events></app-upcoming-events>
+          </div>
+          <div class="tile-group no-margin-left col-md-6">
+            <app-news></app-news>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="splashDescription" style="position: relative; left: 5%; color: #eee; width: 35%;" class="splash-description">
+      <div style="font-size: 1.4em; margin-bottom: 10px;line-height: 1.3em;">{{splashDescription}}</div>
+      <a style="background-color: maroon; color: #AAA; padding: 0 5px; text-transform: uppercase" href="{{splashUrl}}" target="_blank">Full Image <i class="fa fa-external-link"></i></a>
+    </div>
+  </div>
+</div>-->
+
+<!--<div class="splash flex-container" [ngStyle]="{'background':splashImage, 'background-size':'cover'}">
+    <div class="left-col">
+        <app-search></app-search>
+        <div class="desc" *ngIf="splashDescription">
+            <div>{{splashDescription}}</div>
+            <a href="{{splashImage}}" target="_blank">Full Image</a>
+        </div>
+    </div>
+    <div class="right-col widget-container">
+        <div class="tile-group">
+            <app-today-events></app-today-events>
+            <app-upcoming-events></app-upcoming-events>
+        </div>
+        <div class="tile-group no-margin-left">
+            <app-news></app-news>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="splash flex-container" [ngStyle]="{'background':splashImage, 'background-size':'cover'}">
+  <div class="left-col">
+        <app-search></app-search>
+        <div *ngIf="splashDescription" class="desc">
+          <div class="splash-description">{{splashDescription}}</div>
+          <a class="full-image-link" href="{{splashUrl}}" target="_blank">Full Image <i class="fa fa-external-link"></i></a>
+        </div>
+  </div>
+  <div class="right-col widget-container">
+      <div class="tile-group">
+          <app-today-events></app-today-events>
+          <app-upcoming-events></app-upcoming-events>
+      </div>
+      <div class="tile-group no-margin-left">
+          <app-news></app-news>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+
+<div class="promoted-links">
+  <div class="ms-webpart-titleText">{{promotedLinksTitle}}</div>
+  <div class="promoted-links-container">
+    <ul *ngFor="let promotedLink of promotedLinks">
+      <li class="ms-tileview-tile-content">
+        <a href={{promotedLink.url}}><img width="150" onload="SP.ScriptHelpers.resizeImageToSquareLength(this, 150)" 
+          alt={{promotedLink.title}} src="{{promotedLink.backgroundImage}}">
+          <div class="desc-background"></div>
+          <div class="desc-slider">
+            <div class="desc-slider-title">{{promotedLink.title}}</div>
+            <div class="desc-slider-desc">{{promotedLink.desc}}</div>
+          </div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="bg-dark fg-white tile-large">
+  <div class="tile-content">
+    <div class="padding10 no-padding-top">
+      <h5>
+        <div class="place-right">
+          <span (click)="prevDayClicked()" class="mif-chevron-left"></span>
+          <span (click)="nextDayClicked()" class="mif-chevron-right"></span>
+        </div>
+        <div class="place-right uppercase">{{selectedDate.format('ddd, DD MMM')}}</div>
+        <strong class="uppercase" (click)="goToEventsView()">Calendar </strong><a *ngIf="infoUrl" href="{{infoUrl}}"><span class="mif-info"></span></a>
+      </h5>
+      <div class="notify shadow" *ngIf="!!eventsList && !eventsList.length">
+        <span class="notify-title">No Events for selected day</span>
+      </div>
+      <perfect-scrollbar style="height:260px">
+        <div *ngFor="let evt of eventsList" style="width:260px;">
+          <hr class="bg-gray" style="height:1px" *ngIf="!evt.isSimilarToPreviousTime">
+          <div (click)="onItemClicked(evt)" [ngClass]="{'eventAllDay': evt.isAllDayEvent, 'eventAlreadyStarted':(!evt.isAllDayEvent && evt.eventDate.isBefore(now)), 'eventUpcoming':(!evt.isAllDayEvent && now.isBefore(evt.eventDate))}">
+            <div>
+              <div>{{evt.title}}</div>
+              <div *ngIf="!evt.isAllDayEvent">{{evt.eventDate.format('HH:mm')}} - {{evt.endDate.format('HH:mm')}}
+                <small class="place-right">{{evt.eventDate.fromNow()}}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div>
+</div>
+              

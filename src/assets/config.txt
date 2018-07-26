@@ -1,0 +1,147 @@
+{
+        "splashImages": [
+            {
+                "url": "./assets/images/background.jpg",
+                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
+            }
+        ],
+        "feedbackUrl": "/",
+        "userWebURL": "/sites/dev_lisa",
+        "searchSite": "/sites/dev_lisa",
+        "spSearchSourceId": "8413cd39-2156-4e00-b54d-11efd9abdb89",
+        "peopleSearchSourceId": "b09a7990-05ea-4af9-81ef-edfab16c4e31",
+        "searchResultsURL": "/sites/dev_lisa/_layouts/15/osssearchresults.aspx?k=",
+        "searchConfigSite": "/sites/dev_lisa",
+        "acronymSite": "/sites/dev_lisa",
+        "tsrSite": "/sites/dev_lisa",
+        "airfieldSite": "/sites/dev_lisa",
+        "eventsInfoUrl": "#",
+        "eventsWebURL": "/sites/dev_lisa",
+        "eventsCalendarURL": "/sites/dev_lisa/Lists/EventsCalendar",
+        "eventsListName": "EventsCalendar",
+        "eventsDefaultView": "",
+        "eventsViewGuids": ["80E3A819-D345-4987-827A-4DD40F312E5F","EC47BAD7-73E2-4197-8ED4-2107DCCB1588"],
+        "metricsWebURL": "/sites/dev_lisa",
+        "metricsListName": "SearchMetrics",
+        "newsInfoUrl": "#",
+        "newsWidgetTitle": "My News",
+        "newsSources": [
+            {
+                "sourceName": "MyBlog",
+                "listName": "Posts",
+                "webURL": "/sites/dev_lisa/myBlog",
+                "sourceURL": "/sites/dev_lisa/myBlog",
+                "type": "blog",
+		        "displayForm": "Post.aspx",
+                "dateField": "PublishedDate"
+            },
+            {
+                "sourceName": "Announcements",
+                "listName": "Announcements",
+                "webURL": "/sites/dev_lisa",
+                "sourceURL": "/sites/dev_lisa/Lists/Announcements",
+                "type": "announcements",
+		        "displayForm": "DispForm.aspx",
+                "dateField": "Modified"
+            },
+            {
+                "sourceName": "AnotherBlog",
+                "listName": "Posts",
+                "webURL": "/sites/dev_lisa/anotherBlog",
+                "sourceURL": "/sites/dev_lisa/anotherBlog",
+                "type": "blog",
+		        "displayForm": "Post.aspx",
+                "dateField": "PublishedDate"
+            }
+        ],
+        "navMenuConfig": {
+            "commandTitle": "My Command",
+            "logoPath": "./assets/images/SOCAF Patch 46 64 .png",
+            "leftMenus": [
+                {
+                    "title": "Command Group",
+                    "url": "/hq/cmdgrp",
+                    "templateSelector": "#menu-cg",
+                    "menuType": "dropdown"
+                },
+                {
+                    "title": "Directorates",
+                    "templateSelector": "#menu-dirs",
+                    "menuType": "megaMenu"
+                },
+                {
+                    "title": "Components",
+                    "templateSelector": "#menu-components",
+                    "menuType": "dropdown"
+                }, 
+                {
+                    "title": "Ops",
+                    "templateSelector": "#menu-components",
+                    "menuType": "dropdown"
+                }, 
+                {
+                    "title": "Information",
+                    "templateSelector": "#menu-info",
+                    "menuType": "megaMenu"
+                },
+                {
+                    "title": "Tools",
+                    "templateSelector": "#menu-tools",
+                    "menuType": "megaMenu"
+                },
+                {
+                    "title": "External",
+                    "templateSelector": "#menu-external",
+                    "menuType": "megaMenu"
+                }
+            ],
+            "helpDeskMenu": {
+                "title": "IT Help Desk",
+                "templateSelector": "#menu-help-desk"
+            },
+            "oneDrive": {
+                "logoPath": "./assets/images/icons8-onedrive-filled-50-white.png",
+                "url": "/sites/mysites/_layouts/15/MySite.aspx?MySiteRedirect=AllDocuments"
+            },
+            "myProfileUrl": "http://sp-dev-sharepoi/sites/mysites/Person.aspx"
+        },
+        "promotedLinksTitle": "Command Title",
+        "promotedLinks": [
+            {
+                "title": "My Link",
+                "desc": "More details",
+                "url": "http://www.google.com",
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
+            },
+            {
+                "title": "My Link",
+                "desc": "More details",
+                "url": "http://www.google.com",
+                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+            },
+            {
+                "title": "My Link",
+                "desc": "More details",
+                "url": "http://www.google.com",
+                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+            },
+            {
+                "title": "My Link",
+                "desc": "More details",
+                "url": "http://www.google.com",
+                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+            },
+            {
+                "title": "My Link",
+                "desc": "More details",
+                "url": "http://www.google.com",
+                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+            },
+            {
+                "title": "My Link",
+                "desc": "More details",
+                "url": "http://www.google.com",
+                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+            }
+        ]
+}

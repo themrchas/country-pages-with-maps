@@ -1,0 +1,11 @@
+.feedback {
+    position: absolute;
+    right: 2%;
+    margin-right: 5px;
+    margin-top: -15px;
+    font-size: 1em;
+}
+
+.feedback > a {
+    color: rgb(104,104,130);
+}
