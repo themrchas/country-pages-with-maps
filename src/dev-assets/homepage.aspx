@@ -15,7 +15,7 @@
 	  	<SharePoint:ScriptLink ID="registerSP" runat="server" OnDemand="False" LoadAfterUI="True" Name="sp.js" Localizable="False"/>
 	  	<SharePoint:FormDigest runat="server"/>
 	  	
-	  	<link rel="stylesheet" href="http://sp-dev-sharepoi/_layouts/15/1033/STYLES/COREV15.css" text="text/css" />
+	  	<link rel="stylesheet" href="/_layouts/15/1033/STYLES/COREV15.css" text="text/css" />
 </head>
 
 <body>

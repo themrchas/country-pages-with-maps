@@ -103,45 +103,45 @@
                 "logoPath": "./assets/images/icons8-onedrive-filled-50-white.png",
                 "url": "/sites/mysites/_layouts/15/MySite.aspx?MySiteRedirect=AllDocuments"
             },
-            "myProfileUrl": "http://sp-dev-sharepoi/sites/mysites/Person.aspx"
+            "myProfileUrl": "/sites/mysites/Person.aspx"
         },
         "promotedLinksTitle": "Command Title",
         "promotedLinks": [
             {
                 "title": "My Link",
                 "desc": "More details",
-                "url": "http://www.google.com",
+                "url": "/",
                 "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             },
             {
                 "title": "My Link",
                 "desc": "More details",
-                "url": "http://www.google.com",
-                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+                "url": "/",
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             },
             {
                 "title": "My Link",
                 "desc": "More details",
-                "url": "http://www.google.com",
-                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+                "url": "/",
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             },
             {
                 "title": "My Link",
                 "desc": "More details",
-                "url": "http://www.google.com",
-                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+                "url": "/",
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             },
             {
                 "title": "My Link",
                 "desc": "More details",
-                "url": "http://www.google.com",
-                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+                "url": "/",
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             },
             {
                 "title": "My Link",
                 "desc": "More details",
-                "url": "http://www.google.com",
-                "backgroundImage": "http://sp-dev-sharepoi/_layouts/15/images/gettingstarted.png?rev=23"
+                "url": "/",
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             }
         ]
 }
