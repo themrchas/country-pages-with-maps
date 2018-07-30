@@ -31,13 +31,24 @@ import * as _ from 'lodash';
 @Injectable()
 export class ConfigProvider {
     static settings: any;
-    static spJsonHttpOptions = {
-      headers: new HttpHeaders({
-        'Accept': 'application/json;odata=verbose',
-        'Content-Type': 'application/json;odata=verbose'
-      })
-    };
+    static spGetHttpOptions() {
+      return {
+        headers: new HttpHeaders({
+          'Accept': 'application/json;odata=verbose',
+          'Content-Type': 'application/json;odata=verbose'
+        })
+      };
+    }
 
+    static spPostHttpOptions() {
+      return {
+        headers: new HttpHeaders({
+          'Accept': 'application/json;odata=verbose',
+          'Content-Type': 'application/json;odata=verbose',
+          'X-RequestDigest': String($('#__REQUESTDIGEST').val()),
+        })
+      };
+    }
 
     constructor(private httpClient: HttpClient) {}
 

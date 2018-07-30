@@ -19,7 +19,7 @@ export class SearchComponent implements AfterViewInit {
   currQuery: {} = {};
   constructor(private metricsService: MetricsService) {}
   private redirectToSharePointSearch() {
-    this.metricsService.sendMetrics(this.typeaheadInit.val(), 'Performed SharePoint Search').subscribe();
+    this.metricsService.sendSearchMetrics(this.typeaheadInit.val(), 'Performed SharePoint Search').subscribe();
     window.location.href = ConfigProvider.settings.searchResultsURL + this.typeaheadInit.val();
   }
   // Parse a result from the search service and create a title/value hash table with all the properties available
@@ -441,7 +441,7 @@ export class SearchComponent implements AfterViewInit {
       self.currQuery[dataset + 'Completed'] = true;
       if (self.currQuery['searchDatasetCompleted'] && self.currQuery['peopleDatasetCompleted']) {
         if (self.currQuery['searchLength'] === 0 && self.currQuery['peopleSearchLength'] === 0) {
-          self.metricsService.sendMetrics(self.typeaheadInit.val(), 'No Suggestions').subscribe();
+          self.metricsService.sendSearchMetrics(self.typeaheadInit.val(), 'No Suggestions').subscribe();
         } else {
           // TODO: Need to troubleshoot the abandoned query metric more
           // Some suggestions returned.  Start a timer and if it fires after 3s (to give user time to review suggestions)
@@ -465,7 +465,7 @@ export class SearchComponent implements AfterViewInit {
       // User selected a suggestion - send metrics
       // NOTE: had to update corejs.typeahead.js to not clear the input box when an item is selected
       const suggestedUrl = suggestion.SearchConfigURL ? suggestion.SearchConfigURL.Url : suggestion.Path;
-      self.metricsService.sendMetrics(self.typeaheadInit.val(), 'Selected Suggestion', dataset, suggestedUrl).subscribe();
+      self.metricsService.sendSearchMetrics(self.typeaheadInit.val(), 'Selected Suggestion', dataset, suggestedUrl).subscribe();
 
       // hide the search tips that displays
       $('.search-tips').hide();

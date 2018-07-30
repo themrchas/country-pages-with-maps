@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { ConfigProvider } from '../providers/configProvider';
+import { MetricsService } from '../services/metrics.service';
 
 @Component({
   selector: 'app-feedback',
@@ -8,10 +9,14 @@ import { ConfigProvider } from '../providers/configProvider';
 })
 export class FeedbackComponent implements OnInit {
   feedbackUrl: string;
-  constructor() { }
+  constructor(private metricsService: MetricsService) { }
 
   ngOnInit() {
     this.feedbackUrl = ConfigProvider.settings.feedbackUrl;
+  }
+
+  @HostListener('click', ['$event']) onclick(event: any) {
+    this.metricsService.sendClickMetrics('Feedback', event, '.feedback').subscribe();
   }
 
 }

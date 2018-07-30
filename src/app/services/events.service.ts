@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { Observable, from } from 'rxjs';
+import { Observable, from, empty } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 import { SpServicesWrapperService } from './sp-services-wrapper.service';
 import { ConfigProvider } from '../providers/configProvider';
 import { UtilitiesService } from './utilities.service';
@@ -68,7 +68,11 @@ export class EventsService {
 
     return from(viewGuids).pipe(mergeMap(viewGuid =>
       this.utilitiesService.getView(ConfigProvider.settings.eventsWebURL,
-        ConfigProvider.settings.eventsListName, viewGuid as string))).pipe(mergeMap(viewData => {
+        ConfigProvider.settings.eventsListName, viewGuid as string).pipe(
+          catchError(error => {
+            console.warn('Could not find view by GUID: ' + viewGuid);
+            return empty();
+        })))).pipe(mergeMap(viewData => {
           let viewQuery = '<Query>' + viewData['d'].ViewQuery + '</Query>';
           if (viewQuery.indexOf('DateRangesOverlap') < 0) {
             viewQuery = viewQuery.replace('<Where>', '\

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { mergeMap} from 'rxjs/operators';
+import { mergeMap, catchError } from 'rxjs/operators';
 import { NewsItem, NewsSource, createNewsItemFromSharePointResult } from '../model/news';
-import { Observable, from } from 'rxjs';
+import { Observable, from, empty } from 'rxjs';
 import * as moment from 'moment';
 
 @Injectable({
@@ -31,7 +31,10 @@ export class NewsService {
       const getNewsFromSourceObservable = source => {
         const expiresFilter = source.type === 'announcements' ? ` and Expires ge datetime'${moment().toISOString()}'` : '';
         return this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
-        `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'${expiresFilter}`, httpOptions);
+        `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'${expiresFilter}`, httpOptions).pipe(
+          catchError(error => {
+          return empty();
+        }));
       };
       from(sources).pipe(mergeMap(source => getNewsFromSourceObservable(source), (sourceItem, observableItem) => {
         return {

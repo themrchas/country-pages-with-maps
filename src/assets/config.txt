@@ -21,8 +21,10 @@
         "eventsListName": "EventsCalendar",
         "eventsDefaultView": "",
         "eventsViewGuids": ["80E3A819-D345-4987-827A-4DD40F312E5F","EC47BAD7-73E2-4197-8ED4-2107DCCB1588"],
-        "metricsWebURL": "/sites/dev_lisa",
-        "metricsListName": "SearchMetrics",
+        "searchMetricsWebURL": "/sites/dev_lisa",
+        "searchMetricsListName": "SearchMetrics",
+        "clickMetricsWebURL": "/sites/dev_lisa",
+        "clickMetricsListName": "ClickMetrics",
         "newsInfoUrl": "#",
         "newsWidgetTitle": "My News",
         "newsSources": [
