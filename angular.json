@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "Z:/SiteAssets/homepage/dist",
+            "outputPath": "Z:/homepage-integration/SiteAssets/homepage/dist",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
