@@ -4,6 +4,9 @@
     .nav>li:hover {
         background-color: maroon !important;
     }
+    .low .nav > li:hover {
+        background-color: #027e02 !important;
+    }
     
 }
 

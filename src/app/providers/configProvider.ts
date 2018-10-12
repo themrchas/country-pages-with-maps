@@ -31,6 +31,7 @@ import * as _ from 'lodash';
 @Injectable()
 export class ConfigProvider {
     static settings: any;
+    static env: string;
     static spGetHttpOptions() {
       return {
         headers: new HttpHeaders({
@@ -58,6 +59,7 @@ export class ConfigProvider {
         return new Promise<void>((resolve, reject) => {
             this.httpClient.get(jsonFile).toPromise().then((response: Response) => {
               ConfigProvider.settings = response;
+              ConfigProvider.env = ConfigProvider.settings.env;
               resolve();
             }).catch((response: any) => {
               reject(`Could not load file '${jsonFile}':${JSON.stringify(response)}`);

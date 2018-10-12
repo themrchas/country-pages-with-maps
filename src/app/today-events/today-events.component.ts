@@ -3,6 +3,7 @@ import { EventsService } from '../services/events.service';
 import { ConfigProvider } from '../providers/configProvider';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { subscribeOn } from '../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-today-events',
@@ -21,16 +22,21 @@ export class TodayEventsComponent implements OnInit {
     this.selectedDate = moment();
     this.now = moment();
     this.fetchCalendarEvents();
-    this.infoUrl = ConfigProvider.settings.eventsInfoUrl;
+    this.infoUrl = ConfigProvider.settings.events.infoUrl;
   }
 
   fetchCalendarEvents() {
     const isoDateString = moment.utc(this.selectedDate).format('YYYY-MM-DDTHH:mm:ss') + 'Z';
     const self = this;
     let tempEvents = new Array<any>();
-    const viewGuids = ConfigProvider.settings.eventsViewGuids;
+    const viewGuids = ConfigProvider.settings.events.viewGuids;
+    const camlQuery = ConfigProvider.settings.events.camlQuery;
 
-    this.eventsService.getEventsForSelectedDayMultipleViews(isoDateString, viewGuids).subscribe({
+    this.eventsService.getEventsForSelectedDay(isoDateString, camlQuery).then(function(data) {
+      tempEvents = data;
+      self.eventsList = self.compareEachItemAgainstPreviousItem(tempEvents);
+    });
+    /*this.eventsService.getEventsForSelectedDayMultipleViews(isoDateString, viewGuids).subscribe({
       next: x => {
         if (x) {
           tempEvents = tempEvents.concat(x);
@@ -39,7 +45,7 @@ export class TodayEventsComponent implements OnInit {
       complete: () => {
         self.eventsList = self.compareEachItemAgainstPreviousItem(tempEvents);
       }
-    });
+    });*/
 
   }
 
@@ -70,7 +76,7 @@ export class TodayEventsComponent implements OnInit {
   }
 
   goToEventsView() {
-    window.open(ConfigProvider.settings.eventsCalendarURL + '/' + ConfigProvider.settings.eventsDefaultView, '_blank');
+    window.open(ConfigProvider.settings.events.calendarURL + '/' + ConfigProvider.settings.events.defaultView, '_blank');
   }
 
 }

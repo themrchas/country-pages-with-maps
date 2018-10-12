@@ -1,10 +1,10 @@
 
 <div class="promoted-links">
-  <div class="ms-webpart-titleText">{{promotedLinksTitle}}</div>
+  <div class="ms-webpart-titleText" [ngClass]="env === 'low' ? 'text-dark' : 'text-maroon'">{{promotedLinksTitle}}</div>
   <div class="promoted-links-container">
     <ul *ngFor="let promotedLink of promotedLinks">
       <li class="ms-tileview-tile-content">
-        <a href={{promotedLink.url}}><img width="150" onload="SP.ScriptHelpers.resizeImageToSquareLength(this, 150)" 
+        <a href={{promotedLink.url}} [target]="promotedLink.newTab ? '_blank': '_self'"><img width="150" onload="SP.ScriptHelpers.resizeImageToSquareLength(this, 150)" 
           alt={{promotedLink.title}} src="{{promotedLink.backgroundImage}}">
           <div class="desc-background"></div>
           <div class="desc-slider">

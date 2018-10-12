@@ -1,61 +1,94 @@
 {
+        "env": "low",
+        "hideSearch": false,
         "splashImages": [
             {
                 "url": "./assets/images/background.jpg",
                 "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
+            },
+            {
+                "url": "./assets/images/background2.jpg",
+                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
+            },
+            {
+                "url": "./assets/images/background3.jpg",
+                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
+            },
+            {
+                "url": "./assets/images/background4.jpg",
+                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
             }
         ],
         "feedbackUrl": "/",
-        "userWebURL": "/sites/dev_lisa",
-        "searchSite": "/sites/dev_lisa",
+        "userWebURL": "/sites/socaf/homepage-integration",
+        "searchSite": "/sites/socaf/homepage-integration",
         "spSearchSourceId": "8413cd39-2156-4e00-b54d-11efd9abdb89",
         "peopleSearchSourceId": "b09a7990-05ea-4af9-81ef-edfab16c4e31",
-        "searchResultsURL": "/sites/dev_lisa/_layouts/15/osssearchresults.aspx?k=",
-        "searchConfigSite": "/sites/dev_lisa",
-        "acronymSite": "/sites/dev_lisa",
-        "tsrSite": "/sites/dev_lisa",
-        "airfieldSite": "/sites/dev_lisa",
-        "eventsInfoUrl": "#",
-        "eventsWebURL": "/sites/dev_lisa",
-        "eventsCalendarURL": "/sites/dev_lisa/Lists/EventsCalendar",
-        "eventsListName": "EventsCalendar",
-        "eventsDefaultView": "",
-        "eventsViewGuids": ["80E3A819-D345-4987-827A-4DD40F312E5F","EC47BAD7-73E2-4197-8ED4-2107DCCB1588"],
-        "searchMetricsWebURL": "/sites/dev_lisa",
+        "searchResultsURL": "/sites/socaf/homepage-integration/_layouts/15/osssearchresults.aspx?k=",
+        "searchConfigSite": "/sites/socaf/homepage-integration",
+        "acronymSite": "/sites/socaf/homepage-integration",
+        "tsrSite": "/sites/socaf/homepage-integration",
+        "airfieldSite": "/sites/socaf/homepage-integration",
+        "events": {
+            "infoUrl": "#",
+            "webURL": "/sites/socaf/homepage-integration",
+            "calendarURL": "/sites/socaf/homepage-integration/Lists/EventsCalendar",
+            "listName": "EventsCalendar",
+            "defaultView": "",
+            "viewGuids": ["C4C62B78%2D677E%2D4552%2D9F42%2D16189901B4E0"],
+            "camlQuery": "<Query><Where><And><Eq><FieldRef Name='Category' /><Value Type='Text'>Meeting</Value></Eq><DateRangesOverlap><FieldRef Name='EventDate'/><FieldRef Name='EndDate'/><FieldRef Name='RecurrenceID'/><Value Type='DateTime'><Today /></Value></DateRangesOverlap></And></Where><OrderBy><FieldRef Name='EventDate' Ascending='TRUE' /></OrderBy></Query>"
+        },
+        "pao": {
+            "widgetTitle": "SOCAFRICA in the News",
+            "infoUrl": "#",
+            "sources": [
+                 {
+                    "sourceName": "PAO News Review",
+                    "listName": "Shared Documents",
+                    "webURL": "/sites/socaf/homepage-integration",
+                    "sourceURL": "/sites/socaf/homepage-integration/Shared%20Documents",
+                    "type": "docLibrary",
+                    "dateField": "TimeLastModified"
+                }
+            ]
+        },
+        "searchMetricsWebURL": "/sites/socaf/homepage-integration",
         "searchMetricsListName": "SearchMetrics",
-        "clickMetricsWebURL": "/sites/dev_lisa",
+        "clickMetricsWebURL": "/sites/socaf/homepage-integration",
         "clickMetricsListName": "ClickMetrics",
-        "newsInfoUrl": "#",
-        "newsWidgetTitle": "My News",
-        "newsSources": [
-            {
-                "sourceName": "MyBlog",
-                "listName": "Posts",
-                "webURL": "/sites/dev_lisa/myBlog",
-                "sourceURL": "/sites/dev_lisa/myBlog",
-                "type": "blog",
-		        "displayForm": "Post.aspx",
-                "dateField": "PublishedDate"
-            },
-            {
-                "sourceName": "Announcements",
-                "listName": "Announcements",
-                "webURL": "/sites/dev_lisa",
-                "sourceURL": "/sites/dev_lisa/Lists/Announcements",
-                "type": "announcements",
-		        "displayForm": "DispForm.aspx",
-                "dateField": "Modified"
-            },
-            {
-                "sourceName": "AnotherBlog",
-                "listName": "Posts",
-                "webURL": "/sites/dev_lisa/anotherBlog",
-                "sourceURL": "/sites/dev_lisa/anotherBlog",
-                "type": "blog",
-		        "displayForm": "Post.aspx",
-                "dateField": "PublishedDate"
-            }
-        ],
+        "news": {
+            "infoUrl": "#",
+            "widgetTitle": "SOCAFRICA News",
+            "sources": [
+                {
+                    "sourceName": "MyBlog",
+                    "listName": "Posts",
+                    "webURL": "/sites/socaf/homepage-integration/myBlog",
+                    "sourceURL": "/sites/socaf/homepage-integration/myBlog",
+                    "type": "blog",
+                    "displayForm": "Post.aspx",
+                    "dateField": "PublishedDate"
+                },
+                {
+                    "sourceName": "Announcements",
+                    "listName": "Announcements",
+                    "webURL": "/sites/socaf/homepage-integrationa",
+                    "sourceURL": "/sites/socaf/homepage-integration/Lists/Announcements",
+                    "type": "announcements",
+                    "displayForm": "DispForm.aspx",
+                    "dateField": "Modified"
+                },
+                {
+                    "sourceName": "AnotherBlog",
+                    "listName": "Posts",
+                    "webURL": "/sites/socaf/homepage-integration/anotherBlog",
+                    "sourceURL": "/sites/socaf/homepage-integration/anotherBlog",
+                    "type": "blog",
+                    "displayForm": "Post.aspx",
+                    "dateField": "PublishedDate"
+                }
+            ]
+        },
         "navMenuConfig": {
             "commandTitle": "My Command",
             "logoPath": "./assets/images/SOCAF Patch 46 64 .png",
@@ -110,10 +143,11 @@
         "promotedLinksTitle": "Command Title",
         "promotedLinks": [
             {
-                "title": "My Link",
+                "title": "My Link with a lot of text so it goes on 3 lines",
                 "desc": "More details",
                 "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
+                "backgroundImage": "./assets/images/SOCAF Patch Icon.png",
+                "newTab": "true"
             },
             {
                 "title": "My Link",

@@ -10,12 +10,14 @@ import { PromotedLink } from '../model/promotedLink';
 export class PromotedLinksComponent implements OnInit {
   promotedLinks: any;
   promotedLinksTitle: String;
+  env: string;
 
   constructor() { }
 
   ngOnInit() {
     this.promotedLinks = ConfigProvider.settings.promotedLinks as Array<PromotedLink>;
     this.promotedLinksTitle = ConfigProvider.settings.promotedLinksTitle;
+    this.env = ConfigProvider.env;
   }
 
 }

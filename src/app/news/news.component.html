@@ -2,13 +2,13 @@
   <div class="tile-content">
       <div class="padding10 no-padding-top">
           <h5 style="margin-bottom:20px">
-            <strong class="uppercase">{{newsWidgetTitle}}</strong>&nbsp;<a *ngIf="infoUrl" href="{{infoUrl}}"><span class="mif-info"></span></a>
+            <strong class="uppercase">{{settings.widgetTitle}}</strong>&nbsp;<a *ngIf="settings.infoUrl" href="{{settings.infoUrl}}"><span class="mif-info"></span></a>
           </h5>
           <perfect-scrollbar style="height:445px">
             <div *ngFor="let newsItem of newsItems" style="width: 90%">
               <div class="news-item">
-                <a href="{{newsItem.url}}" class="fg-white news-title">{{newsItem.title}}</a>
-                <div class="news-body">{{ (newsItem.body.length>110) ? (newsItem.body | slice:0:110)+'...':(newsItem.body) }}</div>
+                <a href="{{newsItem.url}}" class="fg-white news-title"><i *ngIf="newsItem.source.type === 'docLibrary'" class="fa fa-file-o"></i><span>{{newsItem.title}}</span></a>
+                <div *ngIf="newsItem.body" class="news-body">{{ (newsItem.body.length>110) ? (newsItem.body | slice:0:110)+'...':(newsItem.body) }}</div>
                 <div class="news-meta"><a href="{{newsItem.source.sourceURL}}" class='news-source'>{{newsItem.source.sourceName}}</a><span class='news-time'>{{newsItem.date.fromNow()}}</span></div>
               </div>
               <hr>

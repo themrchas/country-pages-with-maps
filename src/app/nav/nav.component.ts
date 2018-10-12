@@ -16,6 +16,7 @@ export class NavComponent implements OnInit {
   myProfileUrl: string;
   helpDeskMenu: any;
   navbarCollapsed: boolean;
+  env: string;
 
   constructor(private userService: UserService) { }
 
@@ -39,6 +40,8 @@ export class NavComponent implements OnInit {
     this.myProfileUrl = this.navConfig.myProfileUrl;
 
     this.adjustNavbarMenus();
+
+    this.env = ConfigProvider.env;
   }
 
   // change the navbar menus to be clickable when navbar collapsed, otherwise hoverable

@@ -424,7 +424,7 @@ body {
 }
 
 .desc-slider {
-	top: -200px;
+	top: -197px;
 	font-size: 13px;
 }
 
@@ -716,17 +716,6 @@ perfect-scrollbar > .ps.ps--active-y > .ps__rail-y {
 	color: #aaa;
 }
 
-@media (max-width: 767px) {
-    .right-col {
-        flex-direction: column;
-        padding-right: 5%;
-    }
-
-	.tile-large {
-		width: 100%;
-	}
-
-    .splash {
-        max-height: inherit;
-    }
+.paoWidget .tile-large{
+	background-color: #2b2d26 !important;
 }

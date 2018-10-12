@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { NewsItem, NewsSource, createNewsItemFromSharePointResult } from '../model/news';
+import { SpListService } from './sp-list.service';
 import { Observable, from, empty } from 'rxjs';
 import * as moment from 'moment';
 
@@ -10,7 +11,7 @@ import * as moment from 'moment';
 })
 export class NewsService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private spListService: SpListService) { }
 
   getNewsFromSources(sources: Array<NewsSource>): Promise<Array<NewsItem>> {
 
@@ -30,11 +31,20 @@ export class NewsService {
       const startISO = moment().startOf('day').add(-4, 'month').toISOString();
       const getNewsFromSourceObservable = source => {
         const expiresFilter = source.type === 'announcements' ? ` and Expires ge datetime'${moment().toISOString()}'` : '';
-        return this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
-        `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'${expiresFilter}`, httpOptions).pipe(
-          catchError(error => {
-          return empty();
-        }));
+        let asyncRequest;
+        if (source.type === 'docLibrary') {
+          asyncRequest = this.spListService.getDocuments(source.webURL, source.listName).pipe(
+            catchError(error => {
+            return empty();
+          }));
+        } else {
+          asyncRequest = this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
+          `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'${expiresFilter}`, httpOptions).pipe(
+            catchError(error => {
+            return empty();
+          }));
+        }
+        return asyncRequest;
       };
       from(sources).pipe(mergeMap(source => getNewsFromSourceObservable(source), (sourceItem, observableItem) => {
         return {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { UserService } from '../services/user.service';
-import { UtilitiesService } from '../services/utilities.service';
+import { UserService } from './user.service';
+import { UtilitiesService } from './utilities.service';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { mergeMap} from 'rxjs/operators';

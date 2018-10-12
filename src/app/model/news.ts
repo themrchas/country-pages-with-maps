@@ -20,9 +20,18 @@ export class NewsItem {
 const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
 export function createNewsItemFromSharePointResult(result: any, source: NewsSource) {
-    const itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
-    const resultText = $(result.Body, ownerDocument).text();
-    return new NewsItem(result.Title, resultText, itemURL, source, moment(result[source.dateField]));
+    let newsItem, itemURL, resultText, resultTitle;
+    if (source.type === 'docLibrary') {
+        itemURL = result.ServerRelativeUrl;
+        resultTitle = result.Title || result.Name;
+        resultText = null;
+    } else {
+        itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
+        resultText = $(result.Body, ownerDocument).text();
+        resultTitle = result.Title;
+    }
+    newsItem = new NewsItem(resultTitle, resultText, itemURL, source, moment(result[source.dateField]));
+    return newsItem;
 }
 
 export class NewsSource {
@@ -32,12 +41,16 @@ export class NewsSource {
     sourceURL: string;
     displayForm: string;
     dateField: string;
+    type: string;  // todo: enum?
 
-    constructor(listName: string, sourceName: string, webURL: string, sourceURL: string, displayForm: string, dateField: string) {
+    // For document library sources, the folder path should be used as the listName
+    constructor(listName: string, sourceName: string, webURL: string, sourceURL: string,
+        displayForm: string, dateField: string, type: string) {
         this.listName = listName;
         this.sourceName = sourceName;
         this.webURL = webURL;
         this.sourceURL = sourceURL;
         this.displayForm = displayForm;
+        this.type = type;
     }
 }

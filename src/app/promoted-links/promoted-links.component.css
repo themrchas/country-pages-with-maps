@@ -9,12 +9,19 @@
 }
 
 .ms-webpart-titleText, .ms-webpart-titleText a {
-    color: maroon !important;
     font-size: 18px;
     padding: 0;
     font-weight: bold;
     text-transform: uppercase;
     font-family: "Segoe UI","Segoe",Tahoma,Arial, Helvetica, sans-serif !important;
+}
+
+.ms-webpart-titleText.text-maroon {
+    color: maroon !important;
+}
+
+.ms-webpart-titleText.text-dark {
+    color: #222 !important;
 }
 
 .promoted-links-container  {
@@ -64,7 +71,7 @@
 }
 
 .desc-slider {
-    top: -200px;
+    top: -197px;
     font-size: 13px;
 }
 

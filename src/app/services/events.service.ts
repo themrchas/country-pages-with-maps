@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { SpServicesWrapperService } from './sp-services-wrapper.service';
 import { ConfigProvider } from '../providers/configProvider';
-import { UtilitiesService } from './utilities.service';
+import { SpListService } from './sp-list.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,13 +31,13 @@ export class EventsService {
     ows_fAllDayEvent: {mappedName: 'isAllDayEvent', objectType: 'Boolean'}
   };
   _defaultOpts = {
-    webURL: ConfigProvider.settings.eventsWebURL,
-    listName: ConfigProvider.settings.eventsListName,
+    webURL: ConfigProvider.settings.events.webURL,
+    listName: ConfigProvider.settings.events.listName,
     spServicesJsonMapping: this._spServicesJsonMapping,
     CAMLViewFields: this._viewFields
   };
 
-  constructor( private httpClient: HttpClient, private utilitiesService: UtilitiesService,
+  constructor( private httpClient: HttpClient, private spListService: SpListService,
     private spServicesWrapper: SpServicesWrapperService ) { }
 
   private _reshapeAfterSpServicesJsonMapping(items, startOfSelectedDay) {
@@ -46,14 +46,14 @@ export class EventsService {
       item.endDate = moment(item.endDate);
       item.startedAfterSelectedDate = (item.eventDate > startOfSelectedDay);
       item.endedPriorToSelectedDate = (item.endDate < startOfSelectedDay);
-      item.URL = ConfigProvider.settings.eventsWebURL + 'Lists' + ConfigProvider.settings.eventsListName +
+      item.URL = ConfigProvider.settings.events.webURL + 'Lists' + ConfigProvider.settings.events.listName +
         '/DispForm.aspx?ID=' + item.id;
       return item;
     });
   }
 
   openEvent(event) {
-    window.open(ConfigProvider.settings.eventsCalendarURL + '/DispForm.aspx?ID=' + event.id, '_blank');
+    window.open(ConfigProvider.settings.events.calendarURL + '/DispForm.aspx?ID=' + event.id, '_blank');
   }
 
   getEventsForSelectedDayMultipleViews(start, viewGuids: Array<string>) {
@@ -67,8 +67,8 @@ export class EventsService {
     // have the DateRangesOverlaps conditions at all.
 
     return from(viewGuids).pipe(mergeMap(viewGuid =>
-      this.utilitiesService.getView(ConfigProvider.settings.eventsWebURL,
-        ConfigProvider.settings.eventsListName, viewGuid as string).pipe(
+      this.spListService.getView(ConfigProvider.settings.events.webURL,
+        ConfigProvider.settings.events.listName, viewGuid as string).pipe(
           catchError(error => {
             console.warn('Could not find view by GUID: ' + viewGuid);
             return empty();
@@ -99,7 +99,7 @@ export class EventsService {
                               <FieldRef Name="EventDate"/>\
                               <FieldRef Name="EndDate"/>\
                               <FieldRef Name="RecurrenceID"/>\
-                              <Value Type="DateTime"><Today/></Value>\
+                              <Value Type="DateTime"><Today /></Value>\
                             </DateRangesOverlap>\
                         </Where>\
                         <OrderBy><FieldRef Name="EventDate" Ascending="TRUE" /></OrderBy>\
@@ -115,7 +115,7 @@ export class EventsService {
     return this.spServicesWrapper.executeQuery(queryOpts).then(function(json) {
       const startOfSelectedDay = moment(start).startOf('day');
       json = self._reshapeAfterSpServicesJsonMapping(json, startOfSelectedDay);
-      json = _temp.filter(json, {endedPriorToSelectedDate: false});
+      json = _temp.filter(json, {endedPriorToSelectedDate: false });
       return json;
     });
   }
@@ -130,8 +130,8 @@ export class EventsService {
       })
     };
 
-    return this.httpClient.get(ConfigProvider.settings.eventsWebURL +
-      '/_vti_bin/ListData.svc/' + ConfigProvider.settings.eventsListName.replace(/ /g, '') + '?\
+    return this.httpClient.get(ConfigProvider.settings.events.webURL +
+      '/_vti_bin/ListData.svc/' + ConfigProvider.settings.events.listName.replace(/ /g, '') + '?\
         $select=Id,Title,StartTime,EndTime&\
         $orderby=StartTime&$filter=ShowOnHomepage eq true and StartTime ge datetime\'' +
         startISO + '\' and StartTime le datetime\'' + endISO + '\'', httpOptions).pipe(map (resp => {

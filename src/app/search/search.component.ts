@@ -378,19 +378,21 @@ export class SearchComponent implements AfterViewInit {
       minLength: 2
     }, sources);
 
+    let searchTips = `<div class='search-tips' style='display: none'>`;
+    searchTips += ConfigProvider.env === 'low' ? `<h4>Explore SOCAFRICA NIPR Portal</h4>` : `<h4>Explore SOCAFRICA</h4>`;
+    searchTips += `<div>Enter keyword(s) or people.  For example, "J6" or "John Smith".</div><br/>`;
+    if (ConfigProvider.env !== 'low') {
+      searchTips += `<div>Or, try these specialized search terms:
+                    <ul>
+                      <li>Type <i>TSR XXXX</i> to search for a TSR by ID.</li>
+                      <li>Type <i>ICAO XXXX</i> to search for an airport code by ID.</li>
+                    </ul>
+                    </div>`;
+    }
+    searchTips += `</div>`;
+
     // Add searchtips after the menu
-    $(
-      `<div class='search-tips' style='display: none'>\
-        <h4>Explore SOCAFRICA</h4>
-        <div>Enter keyword(s) or people.  For example, "J6" or "John Smith".</div><br/>
-        <div>Or, try these specialized search terms:
-        <ul>
-          <li>Type <i>TSR XXXX</i> to search for a TSR by ID.</li>
-          <li>Type <i>ICAO XXXX</i> to search for an airport code by ID.</li>
-        </ul>
-        </div>
-        </div>`
-    ).insertAfter('.tt-menu');
+    $(searchTips).insertAfter('.tt-menu');
 
     // This event doesn't fire every time the menu opens, it fires the first time you click in the box, even if there is no text
     this.typeaheadInit.on('typeahead:open', function() {

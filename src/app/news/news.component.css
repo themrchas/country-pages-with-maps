@@ -41,3 +41,8 @@
     color: #bbb;
     word-wrap: break-word;
 }
+
+.news-title i {
+    color: #aaa;
+    margin-right: 5px;
+}
