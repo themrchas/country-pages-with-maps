@@ -30,7 +30,6 @@
 .splash {          
     min-height: 400px; 
     border-bottom: 8px solid #730000;
-    overflow: hidden;
     position: relative;
 }
 
