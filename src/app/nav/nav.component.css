@@ -3,9 +3,16 @@
 
     .nav>li:hover {
         background-color: maroon !important;
+        transition: background-color 0 250ms;
     }
     .low .nav > li:hover {
         background-color: #027e02 !important;
+        transition: background-color 0 250ms;
+    }
+
+    .nav > li {
+        background-color: transparent;
+        transition: background-color 0 .1s;
     }
     
 }
@@ -116,9 +123,9 @@
 
     .dropdown-menu {
         padding: 0;
-        height: 0;
-        display: block;
         visibility: hidden;
+        display: block;
+        transition: visibility .1s;
     }
 
     .navbar-right {
@@ -126,15 +133,9 @@
     }
 
     .dropdown:hover .dropdown-menu {
-        -webkit-transition: all 0.3s ease;
-        -moz-transition: all 0.3s ease;
-        -ms-transition: all 0.3s ease;
-        -o-transition: all 0.3s ease;
-        transition: all 0.3s ease; 
-        transition-delay: 0.1s;
-
+        transition: visibility 0 250ms;
         visibility: visible;
-        height: auto;
+
     }
 }
 
@@ -223,6 +224,10 @@ button.navbar-toggle {
     width: 100%;
     display: inline-block;
     padding: 0 5px;
+}
+
+:host ::ng-deep .dropdown-menu > li > a:focus, :host ::ng-deep .dropdown-menu > li > a:hover {
+    background-color: #eee !important;
 }
 
 :host ::ng-deep .menu-header > a {

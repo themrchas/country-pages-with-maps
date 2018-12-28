@@ -123,6 +123,12 @@ app-search {
     }
 }
 
+@media (min-width: 1089px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .right-col {
+         flex: 5 !important;
+     }
+ }
+
 @media (max-width: 767px) {
     .right-col {
         flex-direction: column;
@@ -154,7 +160,7 @@ app-search {
 .full-image-link {
     background-color: maroon;
     color: #bcbcbc;
-    padding: 0 5px;
+    padding: 2px 5px;
     text-transform: uppercase;
 }
 

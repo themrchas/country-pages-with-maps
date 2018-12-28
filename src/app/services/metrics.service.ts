@@ -16,7 +16,7 @@ export class MetricsService {
 
   getCurrentUser() {
       return this.currentUser ? of(this.currentUser) :
-        this.userService.getCurrentUser(ConfigProvider.settings.metricsWebURL).pipe(map(result => {
+        this.userService.getCurrentUser(ConfigProvider.settings.searchMetricsWebURL).pipe(map(result => {
           this.currentUser = result;
         }));
   }
