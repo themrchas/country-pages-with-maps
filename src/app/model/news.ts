@@ -6,6 +6,7 @@ export class NewsItem {
     url: string;
     source: NewsSource;
     date: any;
+    friendlyDate: any;
 
     constructor(title: string, body: string, url: string, source: NewsSource, date: any) {
         this.title = title;
@@ -13,6 +14,7 @@ export class NewsItem {
         this.source = source;
         this.date = date;
         this.url = url;
+        this.friendlyDate = moment(date).format('DD MMM').toUpperCase();
     }
 
 }
@@ -25,6 +27,11 @@ export function createNewsItemFromSharePointResult(result: any, source: NewsSour
         itemURL = result.ServerRelativeUrl;
         resultTitle = result.Title || result.Name;
         resultText = null;
+    } else if (source.type === 'list') {
+        itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}` + '&Source=' + window.location.href;
+        resultTitle = result.Title;
+        resultText = source.contentField ? $(result[source.contentField], ownerDocument).text() : null;
+        // TODO: if contentField is not an HTML field, just grab it directly
     } else {
         itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
         resultText = $(result.Body, ownerDocument).text();
@@ -41,16 +48,18 @@ export class NewsSource {
     sourceURL: string;
     displayForm: string;
     dateField: string;
+    contentField: string;
     type: string;  // todo: enum?
 
     // For document library sources, the folder path should be used as the listName
     constructor(listName: string, sourceName: string, webURL: string, sourceURL: string,
-        displayForm: string, dateField: string, type: string) {
+        displayForm: string, dateField: string, type: string, contentField: string) {
         this.listName = listName;
         this.sourceName = sourceName;
         this.webURL = webURL;
         this.sourceURL = sourceURL;
         this.displayForm = displayForm;
         this.type = type;
+        this.contentField = type;
     }
 }

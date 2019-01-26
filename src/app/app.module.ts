@@ -16,6 +16,8 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { NewsComponent } from './news/news.component';
 import { NavComponent } from './nav/nav.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { BannerComponent } from './banner/banner.component';
+import { TableComponent } from './table/table.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -31,7 +33,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TodayEventsComponent,
     NewsComponent,
     NavComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    BannerComponent,
+    TableComponent
   ],
   imports: [
     BrowserModule,

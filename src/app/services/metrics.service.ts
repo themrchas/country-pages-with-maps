@@ -6,13 +6,15 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { mergeMap} from 'rxjs/operators';
 import { ConfigProvider } from '../providers/configProvider';
+import { SpListService } from './sp-list.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MetricsService {
   private currentUser: any;
-  constructor(private userService: UserService, private utilitiesService: UtilitiesService, private httpClient: HttpClient) { }
+  constructor(private userService: UserService, private utilitiesService: UtilitiesService, private httpClient: HttpClient,
+    private spListService: SpListService) { }
 
   getCurrentUser() {
       return this.currentUser ? of(this.currentUser) :
@@ -33,7 +35,8 @@ export class MetricsService {
         'Title': queryText,
         'SearchAction': action,
         'SelectedDataset': dataset,
-        'UserId': this.currentUser['Id']
+        'UserId': this.currentUser['Id'],
+        'Source': ConfigProvider.settings.searchMetricsSourceName
       };
 
       if (url) {
@@ -43,8 +46,13 @@ export class MetricsService {
           'Url': url
         };
       }
-      return this.httpClient.post(ConfigProvider.settings.searchMetricsWebURL + `/_api/web/lists/GetByTitle('` +
-          ConfigProvider.settings.searchMetricsListName + `')/Items`, JSON.stringify(metadata), ConfigProvider.spPostHttpOptions());
+
+      return this.spListService.getContextInfo(ConfigProvider.settings.searchMetricsWebURL).pipe(mergeMap((contextInfo) => {
+        const requestDigest = contextInfo['d'].GetContextWebInformation.FormDigestValue;
+        return this.httpClient.post(ConfigProvider.settings.searchMetricsWebURL + `/_api/web/lists/GetByTitle('` +
+            ConfigProvider.settings.searchMetricsListName + `')/Items`, JSON.stringify(metadata),
+              ConfigProvider.spPostHttpOptions(requestDigest));
+        }));
       }));
   }
 

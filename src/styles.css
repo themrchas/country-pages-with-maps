@@ -719,3 +719,7 @@ perfect-scrollbar > .ps.ps--active-y > .ps__rail-y {
 .paoWidget .tile-large{
 	background-color: #2b2d26 !important;
 }
+
+.dtsWidget .tile-large{
+	height: 255px !important;
+}

@@ -65,6 +65,14 @@ app-search {
     list-style-type: none;
 }
 
+.iconContainer {
+    text-align: center;
+}
+
+.iconContainer img {
+    height: 400px;
+}
+
 .flex-container {
     display: flex;
     flex-direction: row;

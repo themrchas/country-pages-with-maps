@@ -4,18 +4,21 @@
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="WebPartPageExpansion" content="full" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<SharePoint:CssRegistration Name="default" runat="server"/>
 		<title>Homepage</title>
-	  	<base href="http://sp-dev-sharepoi/sites/dev_lisa/SiteAssets/homepage/dist/">
+	  	<base href="http://ekm-sp13/sites/socaf/homepage-integration/SiteAssets/homepage/dist/">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
-	  	<link rel="icon" type="image/x-icon" href="homepage/dist/favicon.ico">
+	  	<link href="favicon.ico" rel="shortcut icon" type="image/ico">
 	  	
 	  	<script src="/_layouts/MicrosoftAjax.js"></script>
 	  	<SharePoint:ScriptLink ID="registerSP" runat="server" OnDemand="False" LoadAfterUI="True" Name="sp.js" Localizable="False"/>
 	  	<SharePoint:FormDigest runat="server"/>
 	  	
-	  	<link rel="stylesheet" href="/_layouts/15/1033/STYLES/COREV15.css" text="text/css" />
+	  	<link rel="stylesheet" href="http://ekm-sp13/_layouts/15/1033/STYLES/COREV15.css" text="text/css" />
+	  	<!--<link rel="stylesheet" href="styles.28aa0f3c23f5edc9a587.css"></head>-->
+
 </head>
 
 <body>
@@ -31,10 +34,10 @@
 	<script type="text/javascript" src="vendor.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 	
-<!--<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script>
-<script type="text/javascript" src="polyfills.8c93fbe0d2830ee6991d.js"></script>
-<script type="text/javascript" src="scripts.7b938c1dc4579adbbd5c.js"></script>
-<script type="text/javascript" src="main.c1af428ecd51251b0dc6.js"></script>	-->
+	<!--<script type="text/javascript" src="runtime.a66f828dca56eeb90e02.js"></script>
+	<script type="text/javascript" src="polyfills.19a039d8d9f93fbd2388.js"></script>
+	<script type="text/javascript" src="scripts.7b938c1dc4579adbbd5c.js"></script>
+	<script type="text/javascript" src="main.2d582be61e8a0a2b47f6.js"></script>-->
 	
 	<!-- Templates for Top Navigation Menus -->
 	<script type="text/template" id="menu-cg">
@@ -97,6 +100,17 @@
 	      <li><a href="#">Another action</a></li>
 	      <li><a href="#">Something else here</a></li>
 	</script>
+	<script type="text/template" id="search-tips">
+   		<h4>Explore SOCAFRICA</h4>
+    	<div>Enter keyword(s) or people.  For example, "J6" or "John Smith".</div><br/>
+    	<div>Or, try these specialized search terms:
+                    <ul>
+                      <li>Type <i>TSR XXXX</i> to search for a TSR by ID.</li>
+                      <li>Type <i>ICAO XXXX</i> to search for an airport code by ID.</li>
+                    </ul>
+         </div>
+    </script>
+
 </body>
 
 </html>

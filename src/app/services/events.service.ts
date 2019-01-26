@@ -30,33 +30,28 @@ export class EventsService {
     ows_EventType0: {mappedName: 'eventType', objectType: 'Text'},
     ows_fAllDayEvent: {mappedName: 'isAllDayEvent', objectType: 'Boolean'}
   };
-  _defaultOpts = {
-    webURL: ConfigProvider.settings.events.webURL,
-    listName: ConfigProvider.settings.events.listName,
-    spServicesJsonMapping: this._spServicesJsonMapping,
-    CAMLViewFields: this._viewFields
-  };
 
   constructor( private httpClient: HttpClient, private spListService: SpListService,
     private spServicesWrapper: SpServicesWrapperService ) { }
 
-  private _reshapeAfterSpServicesJsonMapping(items, startOfSelectedDay) {
+  private _reshapeAfterSpServicesJsonMapping(items, startOfSelectedDay, eventSource) {
     return _.map(items, function(item) {
       item.eventDate = moment(item.eventDate);
       item.endDate = moment(item.endDate);
       item.startedAfterSelectedDate = (item.eventDate > startOfSelectedDay);
       item.endedPriorToSelectedDate = (item.endDate < startOfSelectedDay);
-      item.URL = ConfigProvider.settings.events.webURL + 'Lists' + ConfigProvider.settings.events.listName +
+      item.URL = eventSource.webURL + 'Lists' + eventSource.listName +
         '/DispForm.aspx?ID=' + item.id;
       return item;
     });
   }
 
   openEvent(event) {
-    window.open(ConfigProvider.settings.events.calendarURL + '/DispForm.aspx?ID=' + event.id, '_blank');
+    const id = event.Id ? event.Id : event.id;
+    window.open(event.source.calendarURL + '/DispForm.aspx?ID=' + id, '_blank');
   }
 
-  getEventsForSelectedDayMultipleViews(start, viewGuids: Array<string>) {
+  getEventsForSelectedDayMultipleViews(start, viewGuids: Array<string>, eventSource) {
     // Cannot simply pass in a viewName for the list query because we need to add the
     // camlQuery with DateRangesOverlap <Today>, and spServices/SharePoint does not support
     // supplying a viewName and a camlQuery at the same time.
@@ -67,8 +62,8 @@ export class EventsService {
     // have the DateRangesOverlaps conditions at all.
 
     return from(viewGuids).pipe(mergeMap(viewGuid =>
-      this.spListService.getView(ConfigProvider.settings.events.webURL,
-        ConfigProvider.settings.events.listName, viewGuid as string).pipe(
+      this.spListService.getView(eventSource.webURL,
+        eventSource.listName, viewGuid as string).pipe(
           catchError(error => {
             console.warn('Could not find view by GUID: ' + viewGuid);
             return empty();
@@ -92,7 +87,7 @@ export class EventsService {
         }));
   }
 
-  getEventsForSelectedDay(start, query?: string): Promise<any> {
+  getEventsForSelectedDay(start, eventSource, query?: string): Observable<any> {
     const camlQuery = query ? query : '<Query>\
                         <Where>\
                             <DateRangesOverlap>\
@@ -109,18 +104,28 @@ export class EventsService {
                                 <RecurrencePatternXMLVersion>v3</RecurrencePatternXMLVersion>\
                                 <ExpandRecurrence>TRUE</ExpandRecurrence>\
                               </QueryOptions>';
-    const queryOpts = $.extend({}, this._defaultOpts, {CAMLQuery: camlQuery, CAMLQueryOptions: camlQueryOptions});
+    const defaultOpts = {
+      webURL: eventSource.webURL,
+      listName: eventSource.listName,
+      spServicesJsonMapping: this._spServicesJsonMapping,
+      CAMLViewFields: this._viewFields
+    };
+    const queryOpts = $.extend({}, defaultOpts, {CAMLQuery: camlQuery, CAMLQueryOptions: camlQueryOptions});
     const self = this;
     const _temp = _;
-    return this.spServicesWrapper.executeQuery(queryOpts).then(function(json) {
+    return from(this.spServicesWrapper.executeQuery(queryOpts).then(function(json) {
       const startOfSelectedDay = moment(start).startOf('day');
-      json = self._reshapeAfterSpServicesJsonMapping(json, startOfSelectedDay);
+      json = self._reshapeAfterSpServicesJsonMapping(json, startOfSelectedDay, eventSource);
       json = _temp.filter(json, {endedPriorToSelectedDate: false });
+      json = _temp.chain(json).map(function(item) {
+        item.source = eventSource;
+        return item;
+      }).value();
       return json;
-    });
+    }));
   }
 
-  getNonExpandedEvents(startISO, endISO): Observable<any[]> {
+  getNonExpandedEvents(startISO, endISO, eventSource): Observable<any[]> {
     // Filtering on Calendar lists' EventDate does not seem to work with _api/web/lists.
     // Filtering by date only seems to work with Created, Modified
     // Using legacy REST endpoint instead
@@ -130,8 +135,8 @@ export class EventsService {
       })
     };
 
-    return this.httpClient.get(ConfigProvider.settings.events.webURL +
-      '/_vti_bin/ListData.svc/' + ConfigProvider.settings.events.listName.replace(/ /g, '') + '?\
+    return this.httpClient.get(eventSource.webURL +
+      '/_vti_bin/ListData.svc/' + eventSource.listName.replace(/ /g, '') + '?\
         $select=Id,Title,StartTime,EndTime&\
         $orderby=StartTime&$filter=ShowOnHomepage eq true and StartTime ge datetime\'' +
         startISO + '\' and StartTime le datetime\'' + endISO + '\'', httpOptions).pipe(map (resp => {
@@ -155,6 +160,7 @@ export class EventsService {
                 } else {
                   item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase() + '-' + item.EndTime.format('DD MMM').toUpperCase();
                 }
+                item.source = eventSource;
                 return item;
               }).value();
           }));

@@ -37,6 +37,11 @@ export class NewsService {
             catchError(error => {
             return empty();
           }));
+        } else if (source.type === 'list') {
+          asyncRequest = this.spListService.getListItems(source.webURL, source.listName).pipe(
+            catchError(error => {
+            return empty();
+          }));
         } else {
           asyncRequest = this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
           `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'${expiresFilter}`, httpOptions).pipe(

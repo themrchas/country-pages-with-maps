@@ -35,18 +35,17 @@ export class ConfigProvider {
     static spGetHttpOptions() {
       return {
         headers: new HttpHeaders({
-          'Accept': 'application/json;odata=verbose',
-          'Content-Type': 'application/json;odata=verbose'
+          'Accept': 'application/json;odata=verbose'
         })
       };
     }
 
-    static spPostHttpOptions() {
+    static spPostHttpOptions(requestDigest?) {
       return {
         headers: new HttpHeaders({
           'Accept': 'application/json;odata=verbose',
           'Content-Type': 'application/json;odata=verbose',
-          'X-RequestDigest': String($('#__REQUESTDIGEST').val()),
+          'X-RequestDigest': requestDigest ? requestDigest : String($('#__REQUESTDIGEST').val()),
         })
       };
     }

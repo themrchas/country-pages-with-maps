@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EventsService } from '../services/events.service';
 import { ConfigProvider } from '../providers/configProvider';
+import { Observable, from, empty } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { subscribeOn } from '../../../node_modules/rxjs/operators';
+import { map, mergeMap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-today-events',
@@ -29,13 +30,20 @@ export class TodayEventsComponent implements OnInit {
     const isoDateString = moment.utc(this.selectedDate).format('YYYY-MM-DDTHH:mm:ss') + 'Z';
     const self = this;
     let tempEvents = new Array<any>();
-    const viewGuids = ConfigProvider.settings.events.viewGuids;
-    const camlQuery = ConfigProvider.settings.events.camlQuery;
 
-    this.eventsService.getEventsForSelectedDay(isoDateString, camlQuery).then(function(data) {
-      tempEvents = data;
-      self.eventsList = self.compareEachItemAgainstPreviousItem(tempEvents);
+
+    from(ConfigProvider.settings.events.sources).pipe(mergeMap(eventSource => {
+      const camlQuery = eventSource['camlQuery'];
+      return this.eventsService.getEventsForSelectedDay(isoDateString, eventSource, camlQuery);
+    })).subscribe({
+      next: x => {
+        tempEvents = tempEvents.concat(x);
+      },
+      complete: () => {
+        self.eventsList = self.compareEachItemAgainstPreviousItem(tempEvents);
+      }
     });
+
     /*this.eventsService.getEventsForSelectedDayMultipleViews(isoDateString, viewGuids).subscribe({
       next: x => {
         if (x) {

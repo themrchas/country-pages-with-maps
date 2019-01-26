@@ -2,7 +2,7 @@
   <div class="tile-content">
     <div class="padding10 no-padding-top">
       <h5>
-          <strong class="uppercase" ng-click="goToMasterEventsView('homepage.aspx')">Upcoming Events</strong>
+          <strong class="uppercase" (click)="goToEventsView()">Upcoming Events</strong>
       </h5>
       <perfect-scrollbar [scrollIndicators]="false" style="height:150px">
           <div *ngFor="let item of upcomingEvents" style="width:260px">

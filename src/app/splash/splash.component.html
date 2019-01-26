@@ -12,8 +12,11 @@
                 <div class="splash-description">{{splashDescription}}</div>
                 <a class="full-image-link" href="{{splashUrl}}" target="_blank">Full Image <i class="fa fa-expand"></i></a>
                 </div>
+                <div *ngIf="splashIconUrl" class="iconContainer">
+                    <img src="{{splashIconUrl}}" />
+                </div>
         </div>
-        <div class="right-col widget-container">
+        <!--<div class="right-col widget-container">
             <div *ngIf="showEventsWidgets" class="tile-group">
                 <app-today-events></app-today-events>
                 <app-upcoming-events></app-upcoming-events>
@@ -23,6 +26,35 @@
             </div>
             <div class="tile-group no-margin-left">
                 <app-news [settings]="newsSettings"></app-news>
+            </div>
+        </div>-->
+        <div class="right-col widget-container">
+            <div *ngFor="let tileGroup of tileGroups; let i = index">
+                <div class="tileGroup" [ngClass]="i > 0 ? 'no-margin-left' : ''">
+                    <ng-container *ngFor="let tile of tileGroup.tiles">
+                        <ng-container *ngIf="tile === 'today-events'">
+                            <app-today-events></app-today-events>
+                        </ng-container>
+                        <ng-container *ngIf="tile === 'upcoming-events'">
+                            <app-upcoming-events></app-upcoming-events>
+                        </ng-container>
+                        <ng-container *ngIf="tile === 'pao'">
+                            <app-news [settings]="paoSettings" class="paoWidget"></app-news>    
+                        </ng-container>
+                        <ng-container *ngIf="tile === 'news'">
+                            <app-news [settings]="newsSettings"></app-news>    
+                        </ng-container>
+                        <ng-container *ngIf="tile === 'dtsRequests'">
+                            <app-table [settings]="dtsRequestsSettings"class="dtsWidget"></app-table>    
+                        </ng-container>
+                        <ng-container *ngIf="tile === 'dtsVouchers'">
+                            <app-table [settings]="dtsVouchersSettings"class="dtsWidget"></app-table>    
+                        </ng-container>
+                        <ng-container *ngIf="tile === 'announcements'">
+                            <app-announcements></app-announcements>
+                        </ng-container>
+                    </ng-container>
+                </div>
             </div>
         </div>
     </div>

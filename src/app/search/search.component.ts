@@ -17,10 +17,16 @@ export class SearchComponent implements AfterViewInit {
   sources: any[];
   typeaheadInit: any;
   currQuery: {} = {};
+  searchSettings: any;
+  defaultHeaders: {} =  {
+    'Accept': 'application/json;odata=verbose;charset=utf-8',
+    'Content-Type': 'application/json;odata=verbose'
+  };
+
   constructor(private metricsService: MetricsService) {}
   private redirectToSharePointSearch() {
     this.metricsService.sendSearchMetrics(this.typeaheadInit.val(), 'Performed SharePoint Search').subscribe();
-    window.location.href = ConfigProvider.settings.searchResultsURL + this.typeaheadInit.val();
+    window.location.href = this.searchSettings.searchResultsURL + this.typeaheadInit.val();
   }
   // Parse a result from the search service and create a title/value hash table with all the properties available
   private getFields(results) {
@@ -33,25 +39,19 @@ export class SearchComponent implements AfterViewInit {
     return r;
   }
 
-  ngAfterViewInit() {
-
+  private getSharePointSearchSource(webURL, sourceId) {
     const self = this;
-    const defaultHeaders =  {
-            'Accept': 'application/json;odata=verbose;charset=utf-8'
-          };
-
-    // SharePoint Search
-    const bldSearchSource = new Bloodhound({
+    return new Bloodhound({
       datumTokenizer: function(datum) {
         return Bloodhound.tokenizers.whitespace(datum.value);
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: ConfigProvider.settings.searchSite + `/_api/search/query?level=site&sourceid='` +
-          ConfigProvider.settings.spSearchSourceId + `'&queryText=`,
+        url: webURL + `/_api/search/query?level=site&sourceid='` +
+          sourceId + `'&queryText=`,
         prepare: function(query, settings) {
           settings.url = settings.url + `'` + query + `'`;
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
@@ -77,17 +77,19 @@ export class SearchComponent implements AfterViewInit {
         }
       }
     });
+  }
 
-    // People Search
-    const bldPeopleSource = new Bloodhound({
+  private getSharePointPeopleSearch(webURL, sourceId) {
+    const self = this;
+    return new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.nonword,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: ConfigProvider.settings.searchSite + `/_api/search/query?level=site&sourceid='` +
-         ConfigProvider.settings.peopleSearchSourceId + `'&selectproperties='PreferredName,Path'&querytext=`,
+        url: webURL + `/_api/search/query?level=site&sourceid='` +
+         sourceId + `'&selectproperties='PreferredName,Path'&querytext=`,
         prepare: function(query, settings) {
           settings.url = settings.url + `'` + query + `*'`;
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
@@ -101,19 +103,21 @@ export class SearchComponent implements AfterViewInit {
         cache: false
       }
     });
+  }
 
-    // Organizations
-    const bldOrganizationsSrc = new Bloodhound({
+  private getOrganizationsSource(webURL, listName) {
+    const self = this;
+    return new Bloodhound({
       datumTokenizer: function(datum) {
          return Bloodhound.tokenizers.nonword(datum.Title); // use nonword so that strings within parenthesis, like (KM) will be matched
         // return Bloodhound.tokenizers.whitespace(datum.tokens);
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       prefetch: {
-        url: ConfigProvider.settings.searchConfigSite +
-          `/_api/web/lists/GetByTitle('SearchConfig')/items?$top=1000&$filter=SearchConfigCategory%20eq%20'Organization'`,
+        url: webURL +
+          `/_api/web/lists/GetByTitle('` + listName + `')/items?$top=1000&$filter=SearchConfigCategory%20eq%20'Organization'`,
         prepare: function(settings) {
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
@@ -131,18 +135,20 @@ export class SearchComponent implements AfterViewInit {
         cache: false // TODO: why do we not get any results when cache turned on?
       }
     });
+  }
 
-    // Suggested Links
-    const bldUsefulLinksSrc = new Bloodhound({
+  private getUsefulLinksSource(webURL, listName) {
+    const self = this;
+    return new Bloodhound({
       datumTokenizer: function(datum) {
         return Bloodhound.tokenizers.whitespace(datum.tokens);
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       prefetch: {
-        url: ConfigProvider.settings.searchConfigSite +
-          `/_api/web/lists/GetByTitle('SearchConfig')/items?$top=1000&$filter=SearchConfigCategory%20eq%20'Suggested Link'`,
+        url: webURL +
+          `/_api/web/lists/GetByTitle('` + listName + `')/items?$top=1000&$filter=SearchConfigCategory%20eq%20'Suggested Link'`,
         prepare: function(settings) {
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
@@ -160,17 +166,19 @@ export class SearchComponent implements AfterViewInit {
         cache: false // TODO: why do we not get any results when cache turned on?
       }
     });
+  }
 
-    // Glossary and Acronyms
-    const bldAcronymsSrc = new Bloodhound({
+  private getAcronymSource(webURL, listName) {
+    const self = this;
+    return new Bloodhound({
       datumTokenizer: function (datum) {
         return Bloodhound.tokenizers.whitespace(datum.tokens);
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       prefetch: {
-        url: ConfigProvider.settings.acronymSite + `/_api/web/lists/GetByTitle('Terms%20of%20Reference%20and%20Acronyms')/items?$top=2000`,
+        url: webURL + `/_api/web/lists/GetByTitle('` + listName + `')/items?$top=2000`,
         prepare: function(settings) {
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
@@ -184,13 +192,15 @@ export class SearchComponent implements AfterViewInit {
         }
       }
     });
+  }
 
-    // Transport Support Requests
-    const bldTsrSrc = new Bloodhound({
+  private getTsrSource(webURL, listName) {
+    const self = this;
+    return new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: ConfigProvider.settings.tsrSite + `/_api/web/lists/GetByTitle('Transportation Support Request (TSR) Tracker')/items?`,
+        url: webURL + `/_api/web/lists/GetByTitle('` + listName + `')/items?`,
         prepare: function(query, settings) {
           let queryId = null;
           const queryTokens = Bloodhound.tokenizers.whitespace(query);
@@ -204,13 +214,13 @@ export class SearchComponent implements AfterViewInit {
             // Ignore this query for this source
             settings.url = settings.url + 'isValid=false';
           }
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
           const query = ($('.tt-input').val() as string).replace('TSR ', '');
           const results = $.map(response.d.results, function(result) {
-            result.Path = ConfigProvider.settings.tsrSite + '/Lists/asr/DispForm.aspx?ID=' + result.ID;
+            result.Path = webURL + '/Lists/asr/DispForm.aspx?ID=' + result.ID;
             result.HighlightedID = result.ID.toString().replace(query, '<strong>' + query + '</strong>');
             result.val = 'TSR ' + result.ID.toString();
             return result;
@@ -226,13 +236,15 @@ export class SearchComponent implements AfterViewInit {
         }
       }
     });
+  }
 
-    // Airfields
-    const bldIcaoSrc = new Bloodhound({
+  private getIcaoSource(webURL, listName) {
+    const self = this;
+    return new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.whitespace,
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: ConfigProvider.settings.airfieldSite + `/_api/web/lists/GetByTitle('Airfield Locations (ICAO Codes)')/items?`,
+        url: webURL + `/_api/web/lists/GetByTitle('` + listName + `')/items?`,
         prepare: function(query, settings) {
           let queryId = null;
           const queryTokens = Bloodhound.tokenizers.whitespace(query);
@@ -246,7 +258,7 @@ export class SearchComponent implements AfterViewInit {
             // Ignore this query for this source
             settings.url = settings.url + 'isValid=false';
           }
-          settings.headers = defaultHeaders;
+          settings.headers = self.defaultHeaders;
           return settings;
         },
         transform: function(response) {
@@ -266,111 +278,107 @@ export class SearchComponent implements AfterViewInit {
         }
       }
     });
+  }
 
-    const sources = [
-    {
-      name: 'tsrDataset',
-      display: 'value',
-      source: bldTsrSrc,
-      templates: {
-        empty: `<div class='empty-message'>Unable to find any TSRs that match the ID</div>`,
-        suggestion: Handlebars.compile(`<div><a href='{{Path}}'>{{{HighlightedID}}}</a></div>`),
-        header: `<h5 class='section-title'>Transport Support Requests</h5>`,
-        footer: `<div class='footer'></div>`
-      }
-    },
-    {
-      name: 'icaoDataset',
-      display: 'value',
-      source: bldIcaoSrc,
-      templates: {
-        empty: `<div class='empty-message'>Unable to find any Airfield Locations that match the ICAO</div>`,
-        suggestion: Handlebars.compile(`<div>{{{Descriptive}}}</div>`),
-        header: `<h5 class='section-title'>Transport Support Requests</h5>`,
-        footer: `<div class='footer'></div>`
-      }
-    },
-    {
-      name: 'acronymDataset',
-      display: 'value',
-      source: bldAcronymsSrc,
-      templates: {
-        empty: `<div style='display:none;'></div>`,
-        suggestion: Handlebars.compile(`<div class="result-item">{{abbrv}} - {{Title}}</div>`),
-        header: `<h5 class='section-title'>Glossary / Acronyms</h5>`,
-        footer: `<div class='footer'></div>`
-      }
-    },
-    {
-      name: 'orgDataset',
-      display: 'value',
-      source: bldOrganizationsSrc,
-      templates: {
-        empty: `<div style='display:none;'></div>`,
-        suggestion: Handlebars.compile(`<div><a href='{{SearchConfigURL.Url}}'>{{Title}}</a></div>`),
-        header: `<h5 class='section-title'>Organizations</h5>`,
-        footer: `<div class='footer'></div>`
-      }
-    },
-    {
-      name: 'usefulLinksDataset',
-      display: 'value',
-      source: bldUsefulLinksSrc,
-      templates: {
-        empty: `<div style='display:none;'></div>`,
-        suggestion: Handlebars.compile(`<div><a href='{{SearchConfigURL.Url}}'>{{Title}}</a></div>`),
-        header: `<h5 class='section-title'>Suggested Links</h5>`,
-        footer: `<div class='footer'></div>`
-      }
-    },
-    {
-      name: 'searchDataset',
-      display: 'value',
-      source: bldSearchSource,
-      templates: {
-        empty: `<div style='display:none;'></div>`,
-        suggestion: Handlebars.compile(`<div><a href='{{Path}}'>{{#if ImagePath}}<img src='{{ImagePath}}'></img>&nbsp;{{/if}}{{Title}}<br/>
-          <div class='highlighted-summary'>{{{HitHighlightedSummary}}}</div></a></div></div>`),
-        header: `<h5 class='section-title'>Matched Search Results</h5>`,
-        footer: `<div class='footer'></div>`
-      }
-    },
-    {
-      name: 'peopleDataset',
-      display: 'value',
-      source: bldPeopleSource,
-      templates: {
-        empty: Handlebars.compile(`<div class='global-footer'><a href='` + ConfigProvider.settings.searchResultsURL +
-          `{{query}}' onclick='redirectToSpSearch(); return false;'>View all search results for "{{query}}"</a></div>`),
-        suggestion: Handlebars.compile(`<div><a href='{{Path}}'>{{PreferredName}}</a></div>`),
-        header: `<h5 class='section-title'>People</h5>`,
-        footer: Handlebars.compile(`<div class='global-footer'><a href='` + ConfigProvider.settings.searchResultsURL +
-          `{{query}}' onclick='redirectToSpSearch(); return false;'>View all search results for "{{query}}"</a></div>`)
-      }
-    }];
+  ngAfterViewInit() {
 
-    if (ConfigProvider.settings.removePeopleSearch) {
-      sources.pop();
-    }
-    if (ConfigProvider.settings.removeSpSearch) {
-      sources.splice(5, 1);
-    }
-    if (ConfigProvider.settings.removeUsefulLinks) {
-      sources.splice(4, 1);
-    }
-    if (ConfigProvider.settings.removeOrgs) {
-      sources.splice(3, 1);
-    }
-    if (ConfigProvider.settings.removeAcronyms) {
-      sources.splice(2, 1);
-    }
-    if (ConfigProvider.settings.removeICAO) {
-      sources.splice(1, 1);
-    }
-    if (ConfigProvider.settings.removeTSR) {
-      sources.splice(0, 1);
-    }
+    const self = this;
+    this.searchSettings = ConfigProvider.settings.search;
+    const sources = [];
 
+    for (const source of this.searchSettings.sources) {
+      if (source.type === 'Acronyms') {
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getAcronymSource(source.webURL, source.listName),
+          templates: {
+            empty: `<div style='display:none;'></div>`,
+            suggestion: Handlebars.compile(`<div class="result-item">{{abbrv}} - {{Title}}</div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: `<div class='footer'></div>`
+          }
+        });
+      } else if (source.type === 'Organizations') {
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getOrganizationsSource(source.webURL, source.listName),
+          templates: {
+            empty: `<div style='display:none;'></div>`,
+            suggestion: Handlebars.compile(`<div><a href='{{SearchConfigURL.Url}}'>{{Title}}</a></div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: `<div class='footer'></div>`
+          }
+        });
+      } else if (source.type === 'UsefulLinks') {
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getUsefulLinksSource(source.webURL, source.listName),
+          templates: {
+            empty: `<div style='display:none;'></div>`,
+            suggestion: Handlebars.compile(`<div><a href='{{SearchConfigURL.Url}}'>{{Title}}</a></div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: `<div class='footer'></div>`
+          }
+        });
+      } else if (source.type === 'TSR') {
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getTsrSource(source.webURL, source.listName),
+          templates: {
+            empty: `<div class='empty-message'>Unable to find any TSRs that match the ID</div>`,
+            suggestion: Handlebars.compile(`<div><a href='{{Path}}'>{{{HighlightedID}}}</a></div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: `<div class='footer'></div>`
+          }
+        });
+      } else if (source.type === 'Airfield') {
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getIcaoSource(source.webURL, source.listName),
+          templates: {
+            empty: `<div class='empty-message'>Unable to find any Airfield Locations that match the ICAO</div>`,
+            suggestion: Handlebars.compile(`<div>{{{Descriptive}}}</div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: `<div class='footer'></div>`
+          }
+        });
+      } else if (source.type === 'SharepointSearch') {
+
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getSharePointSearchSource(source.searchSite, source.sourceId),
+          templates: {
+            empty: `<div style='display:none;'></div>`,
+            suggestion: Handlebars.compile(`<div><a href='{{Path}}'>{{#if ImagePath}}
+            <img src='{{ImagePath}}'></img>&nbsp;{{/if}}{{Title}}<br/>
+              <div class='highlighted-summary'>{{{HitHighlightedSummary}}}</div></a></div></div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: `<div class='footer'></div>`
+          }
+        });
+
+      } else if (source.type === 'PeopleSearch') {
+        sources.push({
+          name: source.datasetName,
+          display: 'value',
+          source: this.getSharePointPeopleSearch(source.searchSite, source.sourceId),
+          templates: {
+            empty: Handlebars.compile(`<div class='global-footer'><a href='` + this.searchSettings.searchResultsURL +
+              `{{query}}' onclick='redirectToSpSearch(); return false;'>View all search results for "{{query}}"</a></div>`),
+            suggestion: Handlebars.compile(`<div><a href='{{Path}}'>{{PreferredName}}</a></div>`),
+            header: `<h5 class='section-title'>` + source.heading + `</h5>`,
+            footer: Handlebars.compile(`<div class='global-footer'><a href='` + this.searchSettings.searchResultsURL +
+              `{{query}}' onclick='redirectToSpSearch(); return false;'>View all search results for "{{query}}"</a></div>`)
+          }
+        });
+      }
+    }
     // Initialize the typeahead
     this.typeaheadInit = $('.typeahead-input').typeahead({
       hint: true,
@@ -379,16 +387,7 @@ export class SearchComponent implements AfterViewInit {
     }, sources);
 
     let searchTips = `<div class='search-tips' style='display: none'>`;
-    searchTips += ConfigProvider.env === 'low' ? `<h4>Explore SOCAFRICA NIPR Portal</h4>` : `<h4>Explore SOCAFRICA</h4>`;
-    searchTips += `<div>Enter keyword(s) or people.  For example, "J6" or "John Smith".</div><br/>`;
-    if (ConfigProvider.env !== 'low') {
-      searchTips += `<div>Or, try these specialized search terms:
-                    <ul>
-                      <li>Type <i>TSR XXXX</i> to search for a TSR by ID.</li>
-                      <li>Type <i>ICAO XXXX</i> to search for an airport code by ID.</li>
-                    </ul>
-                    </div>`;
-    }
+    searchTips += $(this.searchSettings.searchTipsSelector).html();  // template is on aspx page
     searchTips += `</div>`;
 
     // Add searchtips after the menu
