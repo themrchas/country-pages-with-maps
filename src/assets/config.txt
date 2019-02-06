@@ -20,40 +20,40 @@
             }
         ],
         "feedbackUrl": "/",
-        "userWebURL": "/sites/socaf/homepage-integration",
+        "userWebURL": "http://localhost:8080/sites/socaf/homepage-integration",
         "search": {
             "sources": [
                 {
                     "type": "Acronyms",
-                    "webURL": "/sites/socaf/homepage-integration",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
                     "listName": "Terms of Reference and Acronyms",
                     "heading": "Glossary / Acronyms",
                     "datasetName": "acronymDataset"
                 },
                 {
                     "type": "Organizations",
-                    "webURL": "/sites/socafdev",
+                    "webURL": "http://localhost:8080/sites/socafdev",
                     "listName": "SearchConfig",
                     "heading": "Organizations",
                     "datasetName": "orgDataset"
                 },
                 {
                     "type": "UsefulLinks",
-                    "webURL": "/sites/socafdev",
+                    "webURL": "http://localhost:8080/sites/socafdev",
                     "listName": "SearchConfig",
                     "heading": "Suggested Links",
                     "datasetName": "usefulLinksDataset"
                 },
                 {
                     "type": "TSR",
-                    "webURL": "/sites/socaf/homepage-integration",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
                     "listName": "Transportation Support Request (TSR) Tracker",
                     "heading": "Transport Support Requests",
                     "datasetName": "tsrDataset"
                 },
                 {
                     "type": "Airfield",
-                    "webURL": "/sites/socaf/homepage-integration",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
                     "listName": "Airfield Locations (ICAO Codes)",
                     "heading": "Airfield Locations",
                     "datasetName": "icaoDataset"
@@ -63,32 +63,24 @@
                     "sourceId": "8413cd39-2156-4e00-b54d-11efd9abdb89",
                     "heading": "Matched Search Results",
                     "datasetName": "searchDataset",
-                    "searchSite": "/sites/socaf"
+                    "searchSite": "http://localhost:8080/sites/socaf"
                 },
                 {
                     "type": "PeopleSearch",
                     "sourceId": "b09a7990-05ea-4af9-81ef-edfab16c4e31",
                     "heading": "People",
                     "datasetName": "peopleDataset",
-                    "searchSite": "/sites/socaf"
+                    "searchSite": "http://localhost:8080/sites/socaf"
                 }
             ],
-            "searchResultsURL": "/sites/socaf/homepage-integration/_layouts/15/osssearchresults.aspx?k=",
+            "searchResultsURL": "http://localhost:8080/sites/socaf/homepage-integration/_layouts/15/osssearchresults.aspx?k=",
             "searchTipsSelector": "#search-tips"
         },
-        "searchSite": "/sites/socaf/homepage-integration",
-        "spSearchSourceId": "8413cd39-2156-4e00-b54d-11efd9abdb89",
-        "peopleSearchSourceId": "b09a7990-05ea-4af9-81ef-edfab16c4e31",
-        "searchResultsURL": "/sites/socaf/homepage-integration/_layouts/15/osssearchresults.aspx?k=",
-        "searchConfigSite": "/sites/socafdev",
-        "acronymSite": "/sites/socaf/homepage-integration",
-        "tsrSite": "/sites/socaf/homepage-integration",
-        "airfieldSite": "/sites/socaf/homepage-integration",
         "events": {
             "infoUrl": "#",
             "sources": [
                 {
-                    "webURL": "/sites/socaf/homepage-integration",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
                     "calendarURL": "/sites/socaf/homepage-integration/Lists/EventsCalendar",
                     "listName": "EventsCalendar",
                     "defaultView": "",
@@ -96,13 +88,13 @@
                     "camlQuery": "<Query><Where><And><Eq><FieldRef Name='Category' /><Value Type='Text'>Meeting</Value></Eq><DateRangesOverlap><FieldRef Name='EventDate'/><FieldRef Name='EndDate'/><FieldRef Name='RecurrenceID'/><Value Type='DateTime'><Today /></Value></DateRangesOverlap></And></Where><OrderBy><FieldRef Name='EventDate' Ascending='TRUE' /></OrderBy></Query>"
                 },
                 {
-                    "webURL": "/sites/socafdev",
+                    "webURL": "http://localhost:8080/sites/socafdev",
                     "calendarURL": "/sites/socafdev/lists/DevCalendar",
                     "listName": "DevCalendar",
                     "defaultView": ""
                 },
                 {
-                    "webURL": "/sites/socafdev",
+                    "webURL": "http://localhost:8080/sites/socafdev",
                     "calendarURL": "/sites/socafdev/lists/DevCalendar2",
                     "listName": "DevCalendar2",
                     "defaultView": ""
@@ -124,7 +116,7 @@
                  {
                     "sourceName": "DTS Requests",
                     "listName": "DTS Requests",
-                    "webURL": "/sites/socafdev",
+                    "webURL": "http://localhost:8080/sites/socafdev",
                     "sourceURL": "/sites/socafdev/Lists/DTS%20Requests",
                     "rowLimit": 5,
                     "order": "Modified desc",
@@ -145,13 +137,13 @@
         },
         "dtsVouchers": {
             "widgetTitle": "DTS Vouchers",
-            "infoUrl": "/sites/socafdev/Lists/DTS%20Vouchers",
+            "infoUrl": "http://localhost:8080/sites/socafdev/Lists/DTS%20Vouchers",
             "source": 
                  {
                     "sourceName": "DTS Vouchers",
                     "listName": "DTS Vouchers",
-                    "webURL": "/sites/socafdev",
-                    "sourceURL": "/sites/socafdev/Lists/DTS%20Vouchers",
+                    "webURL": "http://localhost:8080/sites/socafdev",
+                    "sourceURL": "http://localhost:8080/sites/socafdev/Lists/DTS%20Vouchers",
                     "titleField":  {
                         "displayName": "Section",
                         "columnName": "Title"
@@ -168,7 +160,7 @@
         },
         "banner": {
             "listName": "BannerAnnouncements",
-            "webURL": "http://ekm-sp13/sites/socafdev"
+            "webURL": "http://localhost:8080/sites/socafdev"
         },
         "news": {
             "widgetTitle": "Announcements",
@@ -176,15 +168,15 @@
                 {
                     "sourceName": "AnnouncementsBlog",
                     "listName": "Posts",
-                    "webURL": "/sites/socafdev/announcementsBlog",
-                    "sourceURL": "/sites/socafdev/announcementsBlog",
+                    "webURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
+                    "sourceURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
                     "type": "blog",
                     "displayForm": "Post.aspx",
                     "dateField": "PublishedDate"
                 }
             ],
             "cic": {
-                "webURL": "/sites/socafdev",
+                "webURL": "http://localhost:8080/sites/socafdev",
                 "listName": "cicTest",
                 "url": "/sites/socafdev/lists/cicTest"
             }
@@ -196,18 +188,18 @@
                  {
                     "sourceName": "PAO News Review",
                     "listName": "Shared Documents",
-                    "webURL": "/sites/socaf/homepage-integration",
-                    "sourceURL": "/sites/socaf/homepage-integration/Shared%20Documents",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
+                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/Shared%20Documents",
                     "type": "docLibrary",
                     "dateField": "TimeLastModified"
                 }
             ]
         },
-        "metricsWebURL": "/sites/socafdev",
-        "searchMetricsWebURL": "/sites/socafdev",
+        "metricsWebURL": "http://localhost:8080/sites/socafdev",
+        "searchMetricsWebURL": "http://localhost:8080/sites/socafdev",
         "searchMetricsListName": "SearchMetrics",
         "searchMetricsSourceName": "JOG-A",
-        "clickMetricsWebURL": "/sites/socaf/homepage-integration",
+        "clickMetricsWebURL": "http://localhost:8080/sites/socaf/homepage-integration",
         "clickMetricsListName": "ClickMetrics",
         "commented-news": {
             "infoUrl": "#",
@@ -216,8 +208,8 @@
                 {
                     "sourceName": "MyBlog",
                     "listName": "Posts",
-                    "webURL": "/sites/socaf/homepage-integration/myBlog",
-                    "sourceURL": "/sites/socaf/homepage-integration/myBlog",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration/myBlog",
+                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/myBlog",
                     "type": "blog",
                     "displayForm": "Post.aspx",
                     "dateField": "PublishedDate"
@@ -225,8 +217,8 @@
                 {
                     "sourceName": "Announcements",
                     "listName": "Announcements",
-                    "webURL": "/sites/socaf/homepage-integrationa",
-                    "sourceURL": "/sites/socaf/homepage-integration/Lists/Announcements",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integrationa",
+                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/Lists/Announcements",
                     "type": "announcements",
                     "displayForm": "DispForm.aspx",
                     "dateField": "Modified"
@@ -234,8 +226,8 @@
                 {
                     "sourceName": "AnotherBlog",
                     "listName": "Posts",
-                    "webURL": "/sites/socaf/homepage-integration/anotherBlog",
-                    "sourceURL": "/sites/socaf/homepage-integration/anotherBlog",
+                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration/anotherBlog",
+                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/anotherBlog",
                     "type": "blog",
                     "displayForm": "Post.aspx",
                     "dateField": "PublishedDate"
