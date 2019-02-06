@@ -33,7 +33,7 @@ export class NewsService {
         const expiresFilter = source.type === 'announcements' ? ` and Expires ge datetime'${moment().toISOString()}'` : '';
         let asyncRequest;
         if (source.type === 'docLibrary') {
-          asyncRequest = this.spListService.getDocuments(source.webURL, source.listName, ).pipe(
+          asyncRequest = this.spListService.getDocuments(source.webURL, source.listName).pipe(
             catchError(error => {
             return empty();
           }));
