@@ -1,6 +1,6 @@
 # Homepage
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.  Upgraded to Angular 7.3.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.  Upgraded to Angular CLI 7.3.0.
 
 ## Development server
 
