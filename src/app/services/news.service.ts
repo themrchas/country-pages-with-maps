@@ -33,7 +33,7 @@ export class NewsService {
         const expiresFilter = source.type === 'announcements' ? ` and Expires ge datetime'${moment().toISOString()}'` : '';
         let asyncRequest;
         if (source.type === 'docLibrary') {
-          asyncRequest = this.spListService.getDocuments(source.webURL, source.listName).pipe(
+          asyncRequest = this.spListService.getDocuments(source.webURL, source.listName, ).pipe(
             catchError(error => {
             return empty();
           }));
@@ -66,5 +66,10 @@ export class NewsService {
           complete: () => resolve(newsItems)
       });
     });
+  }
+
+  getCicItems(webURL, listName, startTime) {
+    const recentItemsFilter = `Modified ge datetime'${startTime.toISOString()}'`;
+    return this.spListService.getListItems(webURL, listName, null, recentItemsFilter);
   }
 }

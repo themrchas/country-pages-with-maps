@@ -46,3 +46,9 @@
     color: #aaa;
     margin-right: 5px;
 }
+
+.recent-indicator {
+    font-size: .9em;
+    color: #aaa;
+    font-style: italic;
+}

@@ -17,7 +17,7 @@
 	  	<SharePoint:FormDigest runat="server"/>
 	  	
 	  	<link rel="stylesheet" href="http://ekm-sp13/_layouts/15/1033/STYLES/COREV15.css" text="text/css" />
-	  	<!--<link rel="stylesheet" href="styles.28aa0f3c23f5edc9a587.css"></head>-->
+	  	<!--<link rel="stylesheet" href="styles.28aa0f3c23f5edc9a587.css"/>-->
 
 </head>
 

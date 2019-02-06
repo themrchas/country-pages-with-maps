@@ -114,7 +114,7 @@
                 "tiles": ["today-events", "upcoming-events"]
             },
             {
-                "tiles": ["dtsRequests", "dtsVouchers"]
+                "tiles": ["news"]
             }
         ],
         "dtsRequests": {
@@ -182,7 +182,12 @@
                     "displayForm": "Post.aspx",
                     "dateField": "PublishedDate"
                 }
-            ]
+            ],
+            "cic": {
+                "webURL": "/sites/socafdev",
+                "listName": "cicTest",
+                "url": "/sites/socafdev/lists/cicTest"
+            }
         },
         "pao": {
             "widgetTitle": "SOCAFRICA in the News",
