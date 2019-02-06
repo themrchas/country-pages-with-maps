@@ -1,10 +1,10 @@
 # Homepage
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.  Upgraded to Angular 7.3.0.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.  To support retrieving data from SharePoint, use sp-rest-proxy.  The config.txt file points to localhost:8080 for SharePoint requests, which assumes sp-rest-proxy is running.
 
 ## Code scaffolding
 
