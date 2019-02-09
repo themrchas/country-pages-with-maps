@@ -219,7 +219,7 @@
             ]
         },
         "navMenuConfig": {
-            "commandTitle": "Country Pages",
+            "appTitle": "Country Pages",
             "commented-logoPath": "",
             "leftMenus": [
                 {

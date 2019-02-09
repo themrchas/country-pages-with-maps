@@ -13,6 +13,7 @@ export class NavComponent implements OnInit {
   leftMenus: Array<any>;
   navbarCollapsed: boolean;
   env: string;
+  countries: Array<any>;
 
   constructor(private countryService: CountryService) { }
 
@@ -25,7 +26,13 @@ export class NavComponent implements OnInit {
 
     // TODO: retrieve countries from the list, gpossibly grouped by Region?
     // Not sure is the REST API supports grouping, especially if the Region column is a Managed Metadata column
-    this.countryService.getCountries();
+    this.countryService.getCountries().subscribe({
+      next: response => {
+        if (response && response['d']) {
+          this.countries = response['d'].results;
+        }
+      }
+    });
 
     this.adjustNavbarMenus();
 
