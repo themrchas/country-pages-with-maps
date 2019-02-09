@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "homepage-app-angular": {
+    "country-page-dashboard": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "Z:/homepage-integration/SiteAssets/homepage/dist",
+            "outputPath": "dist/country-page-dashboard",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -59,18 +59,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "homepage-app-angular:build"
+            "browserTarget": "country-page-dashboard:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "homepage-app-angular:build:production"
+              "browserTarget": "country-page-dashboardr:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "homepage-app-angular:build"
+            "browserTarget": "country-page-dashboard:build"
           }
         },
         "test": {
@@ -104,7 +104,7 @@
         }
       }
     },
-    "homepage-app-angular-e2e": {
+    "country-page-dashboard-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -112,11 +112,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "homepage-app-angular:serve"
+            "devServerTarget": "country-page-dashboard:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "homepage-app-angular:serve:production"
+              "devServerTarget": "country-page-dashboard:serve:production"
             }
           }
         },
@@ -132,5 +132,5 @@
       }
     }
   },
-  "defaultProject": "homepage-app-angular"
+  "defaultProject": "country-page-dashboard"
 }

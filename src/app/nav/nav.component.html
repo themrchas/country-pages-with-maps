@@ -18,138 +18,21 @@
     <ul class="nav navbar-nav" *ngFor="let leftMenu of leftMenus">
         <li class="dropdown" [ngClass]="{'mega-menu': leftMenu.menuType === 'megaMenu'}">
           <a [attr.data-toggle]="navbarCollapsed ? 'dropdown' : null" [attr.href]="leftMenu.url && !navbarCollapsed ? leftMenu.url : null" role="button" aria-haspopup="true" aria-expanded="false">{{leftMenu.title}}</a>
-          <ul class="dropdown-menu" [innerHTML]="leftMenu.templateHtml"></ul>
+          <ul class="dropdown-menu">
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="menu-section"><a class="menu-header" routerLink="/country/country1" routerLinkActive="active">Country 1</a></div>
+                    <div class="menu-section"><a class="menu-header" routerLink="/country/country2" routerLinkActive="active">Country 2</a></div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="menu-section"><a class="menu-header" routerLink="/country/country3" routerLinkActive="active">Country 3</a></div>
+                    <div class="menu-section"><a class="menu-header" routerLink="/country/country4" routerLinkActive="active">Country 4</a></div>
+                  </div>
+                </div>
+          </ul>
         </li>
     </ul>
-    <!--<li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Command Group</a>
-      <ul class="dropdown-menu">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      </ul>
-    </li>
-    <li class="dropdown columns-3">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Directorates</a>
-      <ul class="dropdown-menu multi-column">
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="menu-section"><a class="menu-header" href="#">J1</a></div>
-            <div class="menu-section"><a class="menu-header" href="#">J2</a></div>
-            <div class="menu-section"><a class="menu-header" href="#">J3</a>
-              <ul class="">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here that's extra long so we can see how it looks</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="menu-section"><a class="menu-header" href="#">J1</a></div>
-            <div class="menu-section"><a class="menu-header" href="#">J2</a></div>
-            <div class="menu-section"><a class="menu-header" href="#">J3</a>
-              <ul class="">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here that's extra long so we can see how it looks</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="menu-section"><a class="menu-header" href="#">J1</a></div>
-            <div class="menu-section"><a class="menu-header" href="#">J2</a></div>
-            <div class="menu-section"><a class="menu-header" href="#">J3</a>
-              <ul class="">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here that's extra long so we can see how it looks</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </ul>
-    </li>
-    <li class="dropdown columns-2">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Components</a>
-            <ul class="dropdown-menu multi-column">
-              <div class="row">
-                <div class="col-sm-6">
-                  <ul class="multi-column-dropdown">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here that's extra long so we can see how it looks</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </div>
-                <div class="col-sm-6">
-                  <ul class="multi-column-dropdown">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </div>
-              </div>
-            </ul>
-        </li>
-    <li><a href="#">Tools</a></li>
-    <li><a href="#">Information</a></li>
-    <li class="dropdown columns-3">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">External Links</a>
-            <ul class="dropdown-menu multi-column">
-              <div class="row">
-                <div class="col-sm-4">
-                  <ul class="multi-column-dropdown">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here that's extra long so we can see how it looks</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </div>
-                <div class="col-sm-4">
-                  <ul class="multi-column-dropdown">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </div>
-          <div class="col-sm-4">
-                  <ul class="multi-column-dropdown">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </div>
-              </div>
-            </ul>
-        </li>
-    </ul>-->
-    <ul class="nav navbar-nav navbar-right">
-    <li class="dropdown">
-      <a [attr.data-toggle]="navbarCollapsed ? 'dropdown' : null" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-question-circle"></i><span class="rtlabel"> {{helpDeskMenu.title}} </span><span class="caret"></span></a>
-      <ul class="dropdown-menu" [innerHTML]="helpDeskMenu.templateHtml"></ul>
-    </li>
-    <li class="divider-vertical"></li>
-    <li><a href="{{navConfig.oneDrive.url}}"><img src="{{navConfig.oneDrive.logoPath}}" style="height:20px;width:auto"/><span class="rtlabel"> OneDrive</span></a></li>
-    <li *ngIf="currentUser"><a href="{{navConfig.myProfileUrl}}"><i class="fa fa-user"></i><span class="rtlabel"> {{ (currentUser.length>25) ? (currentUser | slice:0:25)+'...':(currentUser) }}</span></a></li>
-    </ul>
+    
   </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

@@ -1,25 +1,9 @@
 {
         "env": "low",
-        "hideSearch": false,
-        "splashImages": [
-            {
-                "url": "./assets/images/background.jpg",
-                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
-            },
-            {
-                "url": "./assets/images/background2.jpg",
-                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
-            },
-            {
-                "url": "./assets/images/background3.jpg",
-                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
-            },
-            {
-                "url": "./assets/images/background4.jpg",
-                "desc": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquya." 
-            }
-        ],
-        "feedbackUrl": "/",
+        "country": {
+            "webURL": "/sites/socafdev",
+            "listName": "CountryData"
+        },
         "userWebURL": "http://localhost:8080/sites/socaf/homepage-integration",
         "search": {
             "sources": [
@@ -235,57 +219,22 @@
             ]
         },
         "navMenuConfig": {
-            "commandTitle": "SOCAFRICA",
-            "logoPath": "./assets/images/SOCAF Patch 46 64 .png",
+            "commandTitle": "Country Pages",
+            "commented-logoPath": "",
             "leftMenus": [
                 {
-                    "title": "Command Group",
-                    "url": "/hq/cmdgrp",
-                    "templateSelector": "#menu-cg",
-                    "menuType": "dropdown"
-                },
-                {
-                    "title": "Directorates",
-                    "templateSelector": "#menu-dirs",
+                    "title": "East Africa",
+                    "templateSelector": "#menu-ea",
                     "menuType": "megaMenu"
                 },
                 {
-                    "title": "Components",
-                    "templateSelector": "#menu-components",
-                    "menuType": "dropdown"
-                }, 
-                {
-                    "title": "Ops",
-                    "templateSelector": "#menu-components",
-                    "menuType": "dropdown"
-                }, 
-                {
-                    "title": "Information",
-                    "templateSelector": "#menu-info",
-                    "menuType": "megaMenu"
-                },
-                {
-                    "title": "Tools",
-                    "templateSelector": "#menu-tools",
-                    "menuType": "megaMenu"
-                },
-                {
-                    "title": "External",
-                    "templateSelector": "#menu-external",
+                    "title": "North & West Africa",
+                    "templateSelector": "#menu-nwa",
                     "menuType": "megaMenu"
                 }
-            ],
-            "helpDeskMenu": {
-                "title": "IT Help Desk",
-                "templateSelector": "#menu-help-desk"
-            },
-            "oneDrive": {
-                "logoPath": "./assets/images/icons8-onedrive-filled-50-white.png",
-                "url": "/sites/mysites/_layouts/15/MySite.aspx?MySiteRedirect=AllDocuments"
-            },
-            "myProfileUrl": "/sites/mysites/Person.aspx"
+            ]
         },
-        "promotedLinksTitle": "Command Title",
+        "promotedLinksTitle": "",
         "promotedLinks": [
             {
                 "title": "My Link with a lot of text so it goes on 3 lines",

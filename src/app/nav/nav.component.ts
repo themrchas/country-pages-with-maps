@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ConfigProvider } from '../providers/configProvider';
-import { UserService } from '../services/user.service';
+import { CountryService } from '../services/country.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,34 +10,22 @@ import { UserService } from '../services/user.service';
 export class NavComponent implements OnInit {
 
   navConfig: any;
-  navTemplate: string;
   leftMenus: Array<any>;
-  currentUser: string;
-  myProfileUrl: string;
-  helpDeskMenu: any;
   navbarCollapsed: boolean;
   env: string;
 
-  constructor(private userService: UserService) { }
+  constructor(private countryService: CountryService) { }
 
   ngOnInit() {
     this.navConfig = ConfigProvider.settings.navMenuConfig;
 
     // Using the selector, find the html for the dropdown
-    this.leftMenus = this.navConfig.leftMenus.map(function(leftMenu) {
-      leftMenu.templateHtml = $(leftMenu.templateSelector).html();
-      return leftMenu;
-    });
+    // TODO: Remove this and dynamically generate these (see next TODO)
+    this.leftMenus = this.navConfig.leftMenus;
 
-    // Update the IT Help menu
-    this.helpDeskMenu = this.navConfig.helpDeskMenu;
-    this.helpDeskMenu.templateHtml = $(this.helpDeskMenu.templateSelector).html();
-
-    // Update the user account link
-    this.userService.getCurrentUser(ConfigProvider.settings.userWebURL).subscribe({
-        next: x => { this.currentUser = x.Title; }
-    });
-    this.myProfileUrl = this.navConfig.myProfileUrl;
+    // TODO: retrieve countries from the list, gpossibly grouped by Region?
+    // Not sure is the REST API supports grouping, especially if the Region column is a Managed Metadata column
+    this.countryService.getCountries();
 
     this.adjustNavbarMenus();
 

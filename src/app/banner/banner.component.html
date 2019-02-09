@@ -1,5 +1,0 @@
-<div class="banner-container" *ngIf="announcementHtml"  [ngClass]="env === 'low' ? 'low' : ''">
-  <div *ngIf="announcementType === 'Warning',else infoIcon" class="type-icon">&#9888;</div>
-  <ng-template #infoIcon><div class="type-icon" style="padding:2px 10px 2px 0;margin-top:-5px">&#9432;</div></ng-template>
-  <div [innerHTML]="announcementHtml"></div>
-</div>
