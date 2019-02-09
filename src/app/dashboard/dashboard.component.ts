@@ -3,6 +3,7 @@ import { CountryService } from '../services/country.service';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Country } from '../model/country';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  selectedCountry: Observable<any>;
+  selectedCountry: Observable<Country>;
   constructor(private route: ActivatedRoute, private router: Router, private countryService: CountryService) { }
 
   ngOnInit() {

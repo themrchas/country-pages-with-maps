@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { ConfigProvider } from '../providers/configProvider';
 import { CountryService } from '../services/country.service';
+import { Country } from '../model/country';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,7 @@ export class NavComponent implements OnInit {
   leftMenus: Array<any>;
   navbarCollapsed: boolean;
   env: string;
-  countries: Array<any>;
+  countries: Array<Country>;
 
   constructor(private countryService: CountryService) { }
 
@@ -24,14 +25,10 @@ export class NavComponent implements OnInit {
     // TODO: Remove this and dynamically generate these (see next TODO)
     this.leftMenus = this.navConfig.leftMenus;
 
-    // TODO: retrieve countries from the list, gpossibly grouped by Region?
+    // TODO: retrieve countries from the list, possibly grouped by Region?
     // Not sure is the REST API supports grouping, especially if the Region column is a Managed Metadata column
     this.countryService.getCountries().subscribe({
-      next: response => {
-        if (response && response['d']) {
-          this.countries = response['d'].results;
-        }
-      }
+      next: countries => this.countries = countries
     });
 
     this.adjustNavbarMenus();
