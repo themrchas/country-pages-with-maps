@@ -28,7 +28,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
 
 const appRoutes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/selectCountry' },
+  { path: '', pathMatch: 'full', redirectTo: '/country' },
   { path: '**', component: PageNotFoundComponent }
 ];
 
