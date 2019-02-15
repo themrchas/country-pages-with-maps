@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Country } from '../model/country';
 
@@ -15,11 +14,9 @@ export class DashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private countryService: CountryService) { }
 
   ngOnInit() {
-    this.selectedCountry = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.countryService.getCountry(params.get('countryCode')))
-    );
-
+    this.countryService.selectedCountry.subscribe(selectedCountry => {
+      this.selectedCountry = selectedCountry ;
+    });
   }
 
 }

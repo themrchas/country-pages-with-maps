@@ -1,3 +1,17 @@
-<p>
-  Welcome to the SOCAFRICA Country Pages!  Please use the top menu to select a country.
-</p>
+<div class="select-container">
+  <ng-container *ngIf="selectedCountry | async as selectedCountry">
+    <h3>{{selectedCountry.title}}</h3>
+    <div class="region-text">{{selectedCountry.region}}</div>
+  </ng-container>
+
+  <button mat-button [matMenuTriggerFor]="menu">Select a Country</button>
+  <mat-menu #menu="matMenu">
+    <div matSubheader>East Africa</div>
+    <a mat-menu-item routerLink="/country/deu">Germany</a>
+    <a mat-menu-item routerLink="/country/grc">Greece</a>
+    <mat-divider></mat-divider>
+    <div matSubheader>North &amp; West Africa</div>
+    <a mat-menu-item routerLink="/country/gib">Gibraltar</a>
+    <a mat-menu-item routerLink="/country/gha">Ghana</a>
+  </mat-menu>
+</div>

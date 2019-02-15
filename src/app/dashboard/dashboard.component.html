@@ -2,7 +2,25 @@
     <ng-container *ngIf="selectedCountry | async as selectedCountry">
         <h3>{{selectedCountry.title}}</h3>
         <div>
-            <app-country-fact-box></app-country-fact-box>
+                <mat-card class="example-card md-elevation-z5">
+                        <mat-card-header>
+                          <div mat-card-avatar class="example-header-image"></div>
+                          <mat-card-title>{{selectedCountry.title}}</mat-card-title>
+                          <mat-card-subtitle>{{selectedCountry.population}}</mat-card-subtitle>
+                        </mat-card-header>
+                        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                        <mat-card-content>
+                          <p>
+                            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                            bred for hunting.
+                          </p>
+                        </mat-card-content>
+                        <mat-card-actions>
+                          <button mat-button>LIKE</button>
+                          <button mat-button>SHARE</button>
+                        </mat-card-actions>
+                      </mat-card>
         </div>
     </ng-container>
 </div>

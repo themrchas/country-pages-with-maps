@@ -1,277 +1,70 @@
-@media (min-width:768px){
-    .dropdown-menu li:hover .sub-menu { visibility: visible; } 
+/* Side nav */
 
-    .nav>li:hover {
-        background-color: maroon !important;
-        transition: background-color 0 250ms;
-    }
-    .low .nav > li:hover {
-        background-color: #027e02 !important;
-        transition: background-color 0 250ms;
-    }
-
-    .nav > li {
-        background-color: transparent;
-        transition: background-color 0 .1s;
-    }
-    
+.sidenav-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
 }
 
-.navbar .divider-vertical {
-    height: 50px;
-    margin: 0 9px;
-    border-right: 1px solid #ffffff;
-    border-left: 1px solid #f2f2f2;
+.mat-sidenav {
+    background-color: #404145;
+    box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
 }
 
-.navbar-inverse .divider-vertical {
-    border-right-color: #222222;
-    border-left-color: #111111;
+.mat-drawer-side {
+    border-right: none;
 }
 
-.navbar-brand img {
-	float: left;
-	margin-right: 10px;
-	height: 40px;
-	margin-top: -10px;
+.mat-toolbar {
+    background-color: transparent;
 }
 
-@media (max-width: 1125px) {
-    .navbar-header {
-        float: none;
-    }
-
-    .mega-menu .dropdown-menu {
-        left: 2% !important;
-        right: 2% !important;
-    }
+.mat-toolbar img {
+    height: 40px;
+    margin-right: 10px;
 }
 
-@media (max-width: 767px) {
-    .navbar-collapse .nav > .divider-vertical {
-        display: none;
-    }
-
-    :host ::ng-deep .menu-header, :host ::ng-deep .menu-header > a {
-        color: #eee !important;
-    }
-
-    :host ::ng-deep .menu-header:hover > a {
-        color: #222 !important;
-        background-color: #eee !important;
-    }
+.toolbar-title {
+    color: #fff;
 }
 
-@media (min-width: 768px) and (max-width: 1140px) {
-    .navbar-right {
-        position: absolute;
-        top: 0;
-        right: 2%;
-    }
+.mat-list-item {
+    color: #c3c3c3;
 }
 
-@media (min-width: 768px) and (max-width: 1500px) {
-    .navbar-right li .rtlabel {
-        display: none;
-    }
-    
-    .mega-menu .dropdown-menu {
-        right: 118px;
-    }
+/*
+.mat-sidenav-container {
+  height: 100%;
 }
 
-@media (min-width: 1201px) {
-    .mega-menu .dropdown-menu {
-        right: 310px;
-    }	
+.mat-sidenav {
+  background-color: #404145;
+  box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
 }
 
-.navbar .divider-vertical {
-    height: 30px;
-    margin: 9px;
-    border-left: 1px solid #aaa;
-    border-right: 1px solid rgba(255, 255, 255, 0.3);
+.mat-sidenav-content {
+    padding: 0 10px;
+    background-color: #eee;
 }
 
-.navbar-default .navbar-toggle .icon-bar {
-    background-color: #666;
+.mat-sidenav img {
+    height: 40px;
 }
 
-.navbar-default .navbar-toggle:hover .icon-bar {
-    background-color: #666;
+.toolbar-title {
+  margin: 0 16px 0 16px;
+  color: #fff;
 }
 
-.mega-menu .dropdown-menu {
-    margin-top: -1px;
+.mat-subheader {
+  font-size: 18px;
+  font-weight: 900;
 }
 
-/* From VM */
-
-/* Bootstrap Overrides */
-.navbar {
-    border-radius: 0;
-    margin-bottom: 0;
-    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
+.app-nav-list-icon {
+  margin: 0 12px 0 12px;
 }
-
-.dropdown-menu {
-    border-radius: 0;
-    overflow: hidden;
-}
-
-@media (min-width: 768px) {
-
-    .dropdown-menu {
-        padding: 0;
-        visibility: hidden;
-        display: block;
-        transition: visibility .1s;
-    }
-
-    .navbar-right {
-        margin-right: 1px;
-    }
-
-    .dropdown:hover .dropdown-menu {
-        transition: visibility 0 250ms;
-        visibility: visible;
-
-    }
-}
-
-.navbar {
-    background-color: #21262d;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-
-.navbar-brand, .navbar-brand:visited {
-    font-size: 30px !important;
-    font-weight: 700;
-    color: #eee;
-}
-
-
-.navbar-nav>li>a {
-    color: #eee !important;
-    font-size: 1.1em;
-}
-
-.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover {
-    color: #555 !important;
-}
-    
-
-.navbar-toggle {
-    background-color: #888;
-    border-color: #bbb;
-}
-
-button.navbar-toggle {
-    min-width: auto;
-}
-
-.navbar-toggle .icon-bar {
-    background-color: #bbb;
-}
-
-.mega-menu .dropdown-menu {
-    min-width: 500px;
-    left: 200px;
-    max-width: 1350px;
-    padding: 20px 50px;
-}
-
-.mega-menu.dropdown {
-    position: static;
-}
-
-.navbar {
-    border: none;
-}
-
-.dropdown-toggle:before {
-    content: none;
-}
-
-/*.mega-menu .dropdown-menu {
-    padding: 20px 50px;
-}*/
-
-/* To be applied to nav html templates */
-
-:host ::ng-deep .menu-header {
-    font-size: 16px;
-    font-weight: 600;
-    color: #353535;
-    padding: 2px;
-    width: 100%;
-    display: inline-block;
-}
-
-:host ::ng-deep .menu-section {
-    padding: 10px;
-}
-
-:host ::ng-deep .menu-section > ul {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 5px;
-}
-
-:host ::ng-deep .menu-section > ul > li > a {
-    color: #666;
-    text-decoration: none;
-    width: 100%;
-    display: inline-block;
-    padding: 0 5px;
-}
-
-:host ::ng-deep .dropdown-menu > li > a:focus, :host ::ng-deep .dropdown-menu > li > a:hover {
-    background-color: #eee !important;
-}
-
-:host ::ng-deep .menu-header > a {
-    display: inline-block;
-    width: 100%;
-    padding: 0 2px;
-    color: #222;
-}
-
-:host ::ng-deep .menu-section > ul > li > a:hover, :host ::ng-deep .menu-header > a:hover {
-    text-decoration: none;
-}
-
-:host ::ng-deep .menu-section > ul > li > a:hover, :host ::ng-deep .menu-header > a:hover {
-    color: #000;
-    text-decoration: none;
-    background-color:#eee;
-}
-
-:host ::ng-deep :not(.mega-menu).dropdown > ul a {
-    font-weight: 600;
-    padding: 10px 20px;
-}
-
-/* animation */
-/* actual dropdown animation */
-/*.dropdown .dropdown-menu {
-    -webkit-transition: all 3.8s;
-    -moz-transition: all 3.8s;
-    -ms-transition: all 3.8s;
-    -o-transition: all 3.8s;
-    transition: all 3.8s;
-
-    max-height: 0;
-    display: block;
-    overflow: hidden;
-    opacity: 0;
-}
-
-.dropdown:hover .dropdown-menu {
-    max-height: 200px;
-    opacity: 1;
-}*/
-
-/*:host ::ng-deep .nav-test {
-color: red;
-}*/
+*/

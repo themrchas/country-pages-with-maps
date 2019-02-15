@@ -1,38 +1,28 @@
-<nav class="navbar navbar-default navbar-dark bg-dark" [ngClass]="env === 'low' ? 'low' : ''">
-  <div>
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-    <span class="sr-only">Toggle navigation</span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="/">
-      <img *ngIf="navConfig.logoPath" src="{{navConfig.logoPath}}">
-      {{navConfig.appTitle}}
-    </a>
-  </div>
-
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav" *ngFor="let leftMenu of leftMenus">
-        <li class="dropdown" [ngClass]="{'mega-menu': leftMenu.menuType === 'megaMenu'}">
-          <a [attr.data-toggle]="navbarCollapsed ? 'dropdown' : null" [attr.href]="leftMenu.url && !navbarCollapsed ? leftMenu.url : null" role="button" aria-haspopup="true" aria-expanded="false">{{leftMenu.title}}</a>
-          <ul class="dropdown-menu">
-              <div class="row">
-                  <div class="col-sm-6">
-                    <div class="menu-section"><a class="menu-header" routerLink="/country/deu" routerLinkActive="active">Germany</a></div>
-                    <div class="menu-section"><a class="menu-header" routerLink="/country/gha" routerLinkActive="active">Country 2</a></div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="menu-section"><a class="menu-header" routerLink="/country/gib" routerLinkActive="active">Country 3</a></div>
-                    <div class="menu-section"><a class="menu-header" routerLink="/country/grc" routerLinkActive="active">Country 4</a></div>
-                  </div>
-                </div>
-          </ul>
-        </li>
-    </ul>
-    
-  </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+<mat-sidenav-container class="sidenav-container" autosize>
+    <mat-sidenav mode="side" opened>
+        <mat-toolbar>
+            <mat-toolbar-row>
+                <img src="./assets/images/SOCAF Patch 46 64 .png">
+                <h2 class="toolbar-title">Country Pages</h2>
+            </mat-toolbar-row>
+        </mat-toolbar>
+        <app-select-country></app-select-country>
+        <mat-nav-list>
+          
+            <!--<a mat-list-item routerLink="/" style="height: 0;"></a>-->
+            <a mat-list-item>
+                <mat-icon matListIcon class="app-nav-list-icon"></mat-icon>
+                Overview
+            </a>
+          
+            <!--<mat-divider></mat-divider>-->
+        
+            <a mat-list-item>
+                <mat-icon matListIcon class="app-nav-list-icon"></mat-icon>
+                Section 1
+            </a>
+          
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
+</mat-sidenav-container>

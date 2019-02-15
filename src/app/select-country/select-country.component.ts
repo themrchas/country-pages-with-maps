@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CountryService } from '../services/country.service';
+import { Observable } from 'rxjs';
+import { Country } from '../model/country';
 
 @Component({
   selector: 'app-select-country',
@@ -6,10 +9,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select-country.component.css']
 })
 export class SelectCountryComponent implements OnInit {
-
-  constructor() { }
+  selectedCountry: Observable<Country>;
+  countries: Observable<Array<Country>>;
+  constructor(private countryService: CountryService) { }
 
   ngOnInit() {
+    this.countryService.selectedCountry.subscribe(selectedCountry => {
+      this.selectedCountry = selectedCountry ;
+    });
+
+    this.countries = this.countryService.getCountries();
   }
 
 }
