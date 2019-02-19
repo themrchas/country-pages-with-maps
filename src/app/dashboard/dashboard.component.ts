@@ -11,12 +11,29 @@ import { Country } from '../model/country';
 })
 export class DashboardComponent implements OnInit {
   selectedCountry: Observable<Country>;
-  constructor(private route: ActivatedRoute, private router: Router, private countryService: CountryService) { }
+  tableSettings: any;
+
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private countryService: CountryService) { }
 
   ngOnInit() {
     this.countryService.selectedCountry.subscribe(selectedCountry => {
       this.selectedCountry = selectedCountry ;
     });
+
+    this.route.paramMap.subscribe((params: ParamMap) => console.log('Topic: ' + params.get('topic')));
+
+    this.tableSettings = {
+      source: {
+        webURL: 'http://localhost:8080/sites/SOCAFDEV',
+        listName: 'SampleList'
+      },
+      columns: [
+        { columnName: 'Title', displayName: 'Title' },
+        { columnName: 'Created', displayName: 'Created Date'}
+      ]
+    };
   }
 
 }

@@ -14,8 +14,9 @@ export class CountryService {
 
   constructor(private spListService: SpListService) {}
 
+  // Use ISO 3 for country code
   getCountry(countryCode): Observable<Country> {
-    const filter = `Country_x0020_Code eq '${countryCode.toUpperCase()}'`;
+    const filter = `ISO_3_CountryCode eq '${countryCode.toUpperCase()}'`;
     return this.spListService.getListItems(ConfigProvider.settings.country.webURL,
       ConfigProvider.settings.country.listName, null, filter, 1).pipe(map(resp => {
         const respArray = createCountryArrayFromSharePointResponse(resp);

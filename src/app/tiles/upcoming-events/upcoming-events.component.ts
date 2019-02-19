@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventsService } from '../services/events.service';
-import { ConfigProvider } from '../providers/configProvider';
+import { EventsService } from '../../services/events.service';
+import { ConfigProvider } from '../../providers/configProvider';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { Observable, from, empty } from 'rxjs';

@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import * as $ from 'jquery';
 
 export class NewsItem {
     title: string;

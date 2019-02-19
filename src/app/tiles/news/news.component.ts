@@ -1,6 +1,6 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { NewsService } from '../services/news.service';
-import { NewsItem, NewsSource } from '../model/news';
+import { NewsService } from '../../services/news.service';
+import { NewsItem, NewsSource } from '../../model/news';
 import * as moment from 'moment';
 
 @Component({

@@ -1,5 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { SpListService } from '../services/sp-list.service';
+import { SpListService } from '../../services/sp-list.service';
 import * as moment from 'moment';
 
 @Component({
@@ -19,10 +19,10 @@ export class TableComponent implements OnInit {
       this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
       next: response => {
         for (const result of response['d'].results) {
-          result.title = result[this.settings.source.titleField.columnName];
-          result.status = result[this.settings.source.statusField.columnName] ?
-            result[this.settings.source.statusField.columnName].Description : '';
-          result.time = moment(result[this.settings.source.timeField.columnName]);
+          result.columns = [];
+          for (const column of this.settings.columns) {
+            result.columns.push(result[column.columnName]);
+          }
           this.listItems.push(result);
         }
       }

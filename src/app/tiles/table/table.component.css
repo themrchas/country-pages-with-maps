@@ -26,6 +26,11 @@ th {
     border-bottom: 1px solid #555;
 }
 
-.status {
-    color: #4390df
+mat-card {
+    height: 300px;
+}
+
+mat-card-actions {
+    padding: 0;
+    text-align: center;
 }

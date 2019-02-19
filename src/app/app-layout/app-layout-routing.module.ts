@@ -7,6 +7,13 @@ import { SelectCountryComponent } from '../select-country/select-country.compone
 
 const routes: Routes = [
   {
+    path: 'country/:countryCode/:topic',
+    component: AppLayoutComponent,
+    children: [
+      { path: '', component: DashboardComponent }
+    ]
+  },
+  {
     path: 'country/:countryCode',
     component: AppLayoutComponent,
     children: [
