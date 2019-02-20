@@ -8,11 +8,42 @@
     </mat-toolbar>
     <div class="dashboard-container">
     <ng-container *ngIf="selectedCountry | async as selectedCountry">
-        <div>
-          <app-table [settings]="tableSettings"></app-table>
-        </div>
-        <div>
-          <app-map [country]="selectedCountry"></app-map>
-        </div>
+
+      <mat-grid-list cols="3" rowHeight="350px" gutterSize="1rem">
+          <mat-grid-tile rowspan="1" colspan="1">
+              <app-news [settings]="newsSettings"></app-news>
+          </mat-grid-tile>
+        <mat-grid-tile>
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <app-map [country]="selectedCountry"></app-map>
+        </mat-grid-tile>
+        <mat-grid-tile rowspan="1" colspan="2">
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>
+        <!--<mat-grid-tile rowspan="1" colspan="1">
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>-->
+        <!--<mat-grid-tile rowspan="1" colspan="1">
+            <app-map [country]="selectedCountry"></app-map>
+        </mat-grid-tile>-->
+        <!--<mat-grid-tile rowspan="1" colspan="1">
+            <app-news [settings]="newsSettings"></app-news>
+        </mat-grid-tile>
+        <mat-grid-tile rowspan="1" colspan="1">
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>
+        <mat-grid-tile rowspan="1" colspan="2">
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>
+        <mat-grid-tile rowspan="1" colspan="1">
+            <app-table [settings]="tableSettings"></app-table>
+        </mat-grid-tile>-->
+      </mat-grid-list>
+
     </ng-container>
 </div>

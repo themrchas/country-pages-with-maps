@@ -1,0 +1,8 @@
+mat-card {
+    height: calc(100% - 40px);
+    margin-top: 5px;
+}
+
+mat-card-content {
+    height: 280px;
+}

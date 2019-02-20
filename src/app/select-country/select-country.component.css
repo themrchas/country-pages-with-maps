@@ -5,3 +5,9 @@
 .mat-subheader {
     font-weight: bold;
 }
+
+button {
+    color: #fff;
+    background-color: #16b6c6;
+    font-weight: bold;
+}

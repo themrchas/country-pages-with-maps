@@ -43,7 +43,7 @@ export class SpListService {
       ConfigProvider.spGetHttpOptions());
   }
 
-  getContextInfo(listWeb: string): Observable<Object> {
-    return this.httpClient.post(`${listWeb}/_api/contextinfo`, '{}', ConfigProvider.spGetHttpOptions());
+  getContextInfo(webURL: string): Observable<Object> {
+    return this.httpClient.post(`${webURL}/_api/contextinfo`, '{}', ConfigProvider.spGetHttpOptions());
   }
 }

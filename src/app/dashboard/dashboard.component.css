@@ -1,9 +1,6 @@
-.example-card {
-    max-width: 400px;
-}
-
 .dashboard-container {
     padding: 0 20px;
+    margin-bottom: 20px;
 }
 
 .dashboard-container h3 {
@@ -17,4 +14,9 @@
 .mat-toolbar {
     background: transparent;
     padding: 20px;
+}
+
+app-table, app-news, app-map {
+    height: 100%;
+    width: calc(100% - 10px);
 }

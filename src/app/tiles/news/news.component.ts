@@ -12,13 +12,9 @@ export class NewsComponent implements OnInit {
   @Input()
   settings: any;
   newsItems: Array<NewsItem>;
-  past24Hours: any;
-  cicItems: Array<any>;
-  cicURL: string;
   constructor(private newsService: NewsService) { }
 
   ngOnInit() {
-    this.past24Hours = moment().subtract(24, 'hours');
     this.loadNews();
   }
 
@@ -34,17 +30,5 @@ export class NewsComponent implements OnInit {
 
       self.newsItems = newsItems;
     });
-
-    if (this.settings.cic) {
-      this.cicURL = this.settings.cic.url;
-      // Special case for Command Info Catalog
-      this.newsService.getCicItems(this.settings.cic.webURL, this.settings.cic.listName, this.past24Hours).subscribe({
-        next: response => {
-          if (response && response['d']) {
-            this.cicItems = response['d'].results;
-          }
-        }
-      });
-    }
   }
 }

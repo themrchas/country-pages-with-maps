@@ -16,6 +16,7 @@ th {
     padding-right: 5px;
     font-size: 12px;
     font-weight: normal;
+    text-align: left;
 }
 
 .list-item td {
@@ -26,11 +27,12 @@ th {
     border-bottom: 1px solid #555;
 }
 
-mat-card {
-    height: 300px;
-}
-
 mat-card-actions {
     padding: 0;
     text-align: center;
+}
+
+mat-card {
+    height: calc(100% - 40px);
+    margin-top: 5px;
 }
