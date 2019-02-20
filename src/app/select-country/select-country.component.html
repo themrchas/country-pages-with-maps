@@ -7,11 +7,14 @@
   <button mat-button [matMenuTriggerFor]="menu">Select a Country</button>
   <mat-menu #menu="matMenu">
     <div matSubheader>East Africa</div>
-    <a mat-menu-item routerLink="/country/deu">Germany</a>
-    <a mat-menu-item routerLink="/country/grc">Greece</a>
+      <div *ngFor="let country of countriesEA | async">
+            <a mat-menu-item [routerLink]="['/country', country.countryCode3, 'Overview']">{{country.title}}</a>
+      </div>
+            <!-- <a mat-menu-item routerLink="/country/grc">Greece</a> -->
     <mat-divider></mat-divider>
     <div matSubheader>North &amp; West Africa</div>
-    <a mat-menu-item routerLink="/country/gib">Gibraltar</a>
-    <a mat-menu-item routerLink="/country/gha">Ghana</a>
+    <div *ngFor="let country of countriesNWA | async">
+      <a mat-menu-item [routerLink]="['/country', country.countryCode3, 'Overview']">{{country.title}}</a>
+</div>
   </mat-menu>
 </div>
