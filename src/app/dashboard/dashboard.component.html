@@ -1,7 +1,6 @@
 <div class="dashboard-container">
     <ng-container *ngIf="selectedCountry | async as selectedCountry">
         <h3>{{selectedCountry.title}}</h3>
-        <!--<app-map [country]="selectedCountry"></app-map>-->
         <div>
           <app-table [settings]="tableSettings"></app-table>
         </div>

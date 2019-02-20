@@ -28,8 +28,7 @@
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
               "./node_modules/corejs-typeahead/dist/bloodhound.js",
-              "./node_modules/spservices/dist/jquery.SPServices.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "./node_modules/spservices/dist/jquery.SPServices.min.js"
             ]
           },
           "configurations": {

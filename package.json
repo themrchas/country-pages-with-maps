@@ -25,7 +25,6 @@
     "@angular/platform-browser-dynamic": "^7.2.3",
     "@angular/router": "^7.2.3",
     "angular-font-awesome": "^3.1.2",
-    "bootstrap": "^3.3.7",
     "core-js": "^2.5.4",
     "corejs-typeahead": "^1.2.1",
     "font-awesome": "^4.7.0",
