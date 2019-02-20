@@ -3,9 +3,18 @@
 }
 
 .dashboard-container {
-    padding: 20px;
+    padding: 0 20px;
 }
 
 .dashboard-container h3 {
     margin-top: 0;
+}
+
+.fill-space {
+    flex: 1 1 auto;
+}
+
+.mat-toolbar {
+    background: transparent;
+    padding: 20px;
 }

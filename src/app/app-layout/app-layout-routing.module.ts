@@ -15,10 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'country/:countryCode',
-    component: AppLayoutComponent,
-    children: [
-      { path: '', component: DashboardComponent }
-    ]
+    redirectTo: 'country/:countryCode/Overview'
   },
   {
     path: 'country',

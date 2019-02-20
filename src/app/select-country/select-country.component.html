@@ -1,20 +1,16 @@
 <div class="select-container">
-  <ng-container *ngIf="selectedCountry | async as selectedCountry">
-    <h3>{{selectedCountry.title}}</h3>
-    <div class="region-text">{{selectedCountry.region}}</div>
-  </ng-container>
 
-  <button mat-button [matMenuTriggerFor]="menu">Select a Country</button>
+  <button mat-button [matMenuTriggerFor]="menu" mat-raised-button>Select a Country</button>
   <mat-menu #menu="matMenu">
     <div matSubheader>East Africa</div>
       <div *ngFor="let country of countriesEA | async">
-            <a mat-menu-item [routerLink]="['/country', country.countryCode3, 'Overview']">{{country.title}}</a>
+            <a mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
       </div>
             <!-- <a mat-menu-item routerLink="/country/grc">Greece</a> -->
     <mat-divider></mat-divider>
     <div matSubheader>North &amp; West Africa</div>
     <div *ngFor="let country of countriesNWA | async">
-      <a mat-menu-item [routerLink]="['/country', country.countryCode3, 'Overview']">{{country.title}}</a>
-</div>
+      <a mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+    </div>
   </mat-menu>
 </div>

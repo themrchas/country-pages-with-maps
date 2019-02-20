@@ -1,18 +1,5 @@
-.select-container {
-    background-color: #f3f5f7;
-    text-align: center;
-}
-
 .region-text {
     font-size: 12px;
-}
-
-h3 {
-    margin: 0;
-}
-
-.country-picker {
-    margin-top: 1em;
 }
 
 .mat-subheader {
