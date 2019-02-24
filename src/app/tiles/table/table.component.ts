@@ -1,21 +1,22 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { SpListService } from '../../services/sp-list.service';
-import * as moment from 'moment';
+import { SpRestService } from '../../services/sp-rest.service';
+import { Country } from '../../model/country';
+import { TileComponent } from '../tile/tile.component';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit {
-  @Input()
-  settings: any;
+export class TableComponent implements OnInit, TileComponent {
+  @Input() settings: any;
+  @Input() country: Country;
   listItems: Array<any>;
-  constructor(private spListService: SpListService) { }
+  constructor(private spRestService: SpRestService) { }
 
   ngOnInit() {
     this.listItems = Array<any>();
-    this.spListService.getListItems(this.settings.source.webURL, this.settings.source.listName,
+    this.spRestService.getListItems(this.settings.source.webURL, this.settings.source.listName,
       this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
       next: response => {
         for (const result of response['d'].results) {

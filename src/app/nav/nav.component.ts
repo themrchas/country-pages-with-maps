@@ -1,8 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ConfigProvider } from '../providers/configProvider';
 import { CountryService } from '../services/country.service';
 import { Country } from '../model/country';
-import { Observable } from 'rxjs';
+import { TopicService } from '../services/topic.service';
 
 @Component({
   selector: 'app-nav',
@@ -10,19 +9,14 @@ import { Observable } from 'rxjs';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  selectedCountry: Observable<Country>;
-  countries: Observable<Array<Country>>;
+  selectedCountry: Country;
+  topics: Array<any>;
 
-  constructor(private countryService: CountryService) { }
+  constructor(private countryService: CountryService, private topicService: TopicService) { }
 
   ngOnInit() {
 
-    this.countryService.selectedCountry.subscribe(selectedCountry => {
-      this.selectedCountry = selectedCountry ;
-    });
-
-    // TODO: retrieve countries from the list, possibly grouped by Region?
-    // Not sure is the REST API supports grouping, especially if the Region column is a Managed Metadata column
-    this.countries = this.countryService.getCountries();
+    this.countryService.selectedCountry.subscribe(selectedCountry => this.selectedCountry = selectedCountry);
+    this.topics = this.topicService.getTopics();
   }
 }

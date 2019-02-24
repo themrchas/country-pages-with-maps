@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpListService } from './sp-list.service';
+import { TopicService } from './topic.service';
 
-describe('SpListService', () => {
+describe('TopicService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: SpListService = TestBed.get(SpListService);
+    const service: TopicService = TestBed.get(TopicService);
     expect(service).toBeTruthy();
   });
 });

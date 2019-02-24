@@ -4,62 +4,94 @@
             "webURL": "http://localhost:8080/sites/socafdev",
             "listName": "CountryData"
         },
+        "topics": [
+            {
+                "name": "Overview",
+                "topicId": "overview",
+                "tiles": [
+                    { 
+                        "type": "table",
+                        "rowspan": 1,
+                        "colspan": 1,
+                        "heading": "Sample List",
+                        "settings": {
+                            "source": {
+                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "listName": "SampleList"
+                            },
+                            "columns": [
+                                { "columnName": "Title", "displayName": "Title" },
+                                { "columnName": "Created", "displayName": "Created Date"}
+                            ]
+                        }
+                    },
+                    { 
+                        "type": "map",
+                        "rowspan": 1,
+                        "colspan": 1,
+                        "heading": "Map"
+                    },
+                    { 
+                        "type": "table",
+                        "rowspan": 1,
+                        "colspan": 1,
+                        "heading": "Sample List",
+                        "settings": {
+                            "source": {
+                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "listName": "SampleList"
+                            },
+                            "columns": [
+                                { "columnName": "Title", "displayName": "Title" },
+                                { "columnName": "Created", "displayName": "Created Date"}
+                            ]
+                        }
+                    },
+                    { 
+                        "type": "table",
+                        "rowspan": 1,
+                        "colspan": 2,
+                        "heading": "Sample List",
+                        "settings": {
+                            "source": {
+                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "listName": "SampleList"
+                            },
+                            "columns": [
+                                { "columnName": "Title", "displayName": "Title" },
+                                { "columnName": "Created", "displayName": "Created Date"}
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Facts & Contacts",
+                "topicId": "facts",
+                "tiles": [
+                    { 
+                        "type": "news",
+                        "rowspan": 1,
+                        "colspan": 1,
+                        "heading": "News",
+                        "settings": {
+                            "sources": [
+                                {
+                                    "sourceName": "AnnouncementsBlog",
+                                    "listName": "Posts",
+                                    "webURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
+                                    "sourceURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
+                                    "type": "blog",
+                                    "displayForm": "Post.aspx",
+                                    "dateField": "PublishedDate"
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        ],
         "userWebURL": "http://localhost:8080/sites/socaf/homepage-integration",
-        "search": {
-            "sources": [
-                {
-                    "type": "Acronyms",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
-                    "listName": "Terms of Reference and Acronyms",
-                    "heading": "Glossary / Acronyms",
-                    "datasetName": "acronymDataset"
-                },
-                {
-                    "type": "Organizations",
-                    "webURL": "http://localhost:8080/sites/socafdev",
-                    "listName": "SearchConfig",
-                    "heading": "Organizations",
-                    "datasetName": "orgDataset"
-                },
-                {
-                    "type": "UsefulLinks",
-                    "webURL": "http://localhost:8080/sites/socafdev",
-                    "listName": "SearchConfig",
-                    "heading": "Suggested Links",
-                    "datasetName": "usefulLinksDataset"
-                },
-                {
-                    "type": "TSR",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
-                    "listName": "Transportation Support Request (TSR) Tracker",
-                    "heading": "Transport Support Requests",
-                    "datasetName": "tsrDataset"
-                },
-                {
-                    "type": "Airfield",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
-                    "listName": "Airfield Locations (ICAO Codes)",
-                    "heading": "Airfield Locations",
-                    "datasetName": "icaoDataset"
-                },
-                {
-                    "type": "SharepointSearch",
-                    "sourceId": "8413cd39-2156-4e00-b54d-11efd9abdb89",
-                    "heading": "Matched Search Results",
-                    "datasetName": "searchDataset",
-                    "searchSite": "http://localhost:8080/sites/socaf"
-                },
-                {
-                    "type": "PeopleSearch",
-                    "sourceId": "b09a7990-05ea-4af9-81ef-edfab16c4e31",
-                    "heading": "People",
-                    "datasetName": "peopleDataset",
-                    "searchSite": "http://localhost:8080/sites/socaf"
-                }
-            ],
-            "searchResultsURL": "http://localhost:8080/sites/socaf/homepage-integration/_layouts/15/osssearchresults.aspx?k=",
-            "searchTipsSelector": "#search-tips"
-        },
         "events": {
             "infoUrl": "#",
             "sources": [
@@ -91,187 +123,6 @@
             },
             {
                 "tiles": ["news"]
-            }
-        ],
-        "dtsRequests": {
-            "widgetTitle": "DTS Requests",
-            "infoUrl": "/sites/socafdev/Lists/DTS%20Requests",
-            "source": 
-                 {
-                    "sourceName": "DTS Requests",
-                    "listName": "DTS Requests",
-                    "webURL": "http://localhost:8080/sites/socafdev",
-                    "sourceURL": "/sites/socafdev/Lists/DTS%20Requests",
-                    "rowLimit": 5,
-                    "order": "Modified desc",
-                    "filter": "Title ne 'Another Title'",
-                    "titleField":  {
-                        "displayName": "Section",
-                        "columnName": "Title"
-                    },
-                    "statusField": {
-                        "displayName": "Request Status",
-                        "columnName": "Status"
-                    },
-                    "timeField": {
-                        "displayName": "Time",
-                        "columnName": "Modified"
-                    }
-                }
-        },
-        "dtsVouchers": {
-            "widgetTitle": "DTS Vouchers",
-            "infoUrl": "http://localhost:8080/sites/socafdev/Lists/DTS%20Vouchers",
-            "source": 
-                 {
-                    "sourceName": "DTS Vouchers",
-                    "listName": "DTS Vouchers",
-                    "webURL": "http://localhost:8080/sites/socafdev",
-                    "sourceURL": "http://localhost:8080/sites/socafdev/Lists/DTS%20Vouchers",
-                    "titleField":  {
-                        "displayName": "Section",
-                        "columnName": "Title"
-                    },
-                    "statusField": {
-                        "displayName": "Voucher Status",
-                        "columnName": "Status"
-                    },
-                    "timeField": {
-                        "displayName": "Time",
-                        "columnName": "Modified"
-                    }
-                }
-        },
-        "banner": {
-            "listName": "BannerAnnouncements",
-            "webURL": "http://localhost:8080/sites/socafdev"
-        },
-        "news": {
-            "widgetTitle": "Announcements",
-            "sources": [
-                {
-                    "sourceName": "AnnouncementsBlog",
-                    "listName": "Posts",
-                    "webURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
-                    "sourceURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
-                    "type": "blog",
-                    "displayForm": "Post.aspx",
-                    "dateField": "PublishedDate"
-                }
-            ],
-            "cic": {
-                "webURL": "http://localhost:8080/sites/socafdev",
-                "listName": "cicTest",
-                "url": "/sites/socafdev/lists/cicTest"
-            }
-        },
-        "pao": {
-            "widgetTitle": "SOCAFRICA in the News",
-            "infoUrl": "#",
-            "sources": [
-                 {
-                    "sourceName": "PAO News Review",
-                    "listName": "Shared Documents",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
-                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/Shared%20Documents",
-                    "type": "docLibrary",
-                    "dateField": "TimeLastModified"
-                }
-            ]
-        },
-        "metricsWebURL": "http://localhost:8080/sites/socafdev",
-        "searchMetricsWebURL": "http://localhost:8080/sites/socafdev",
-        "searchMetricsListName": "SearchMetrics",
-        "searchMetricsSourceName": "JOG-A",
-        "clickMetricsWebURL": "http://localhost:8080/sites/socaf/homepage-integration",
-        "clickMetricsListName": "ClickMetrics",
-        "commented-news": {
-            "infoUrl": "#",
-            "widgetTitle": "SOCAFRICA News",
-            "sources": [
-                {
-                    "sourceName": "MyBlog",
-                    "listName": "Posts",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration/myBlog",
-                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/myBlog",
-                    "type": "blog",
-                    "displayForm": "Post.aspx",
-                    "dateField": "PublishedDate"
-                },
-                {
-                    "sourceName": "Announcements",
-                    "listName": "Announcements",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integrationa",
-                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/Lists/Announcements",
-                    "type": "announcements",
-                    "displayForm": "DispForm.aspx",
-                    "dateField": "Modified"
-                },
-                {
-                    "sourceName": "AnotherBlog",
-                    "listName": "Posts",
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration/anotherBlog",
-                    "sourceURL": "http://localhost:8080/sites/socaf/homepage-integration/anotherBlog",
-                    "type": "blog",
-                    "displayForm": "Post.aspx",
-                    "dateField": "PublishedDate"
-                }
-            ]
-        },
-        "navMenuConfig": {
-            "appTitle": "Country Pages",
-            "commented-logoPath": "",
-            "leftMenus": [
-                {
-                    "title": "East Africa",
-                    "templateSelector": "#menu-ea",
-                    "menuType": "megaMenu"
-                },
-                {
-                    "title": "North & West Africa",
-                    "templateSelector": "#menu-nwa",
-                    "menuType": "megaMenu"
-                }
-            ]
-        },
-        "promotedLinksTitle": "",
-        "promotedLinks": [
-            {
-                "title": "My Link with a lot of text so it goes on 3 lines",
-                "desc": "More details",
-                "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png",
-                "newTab": "true"
-            },
-            {
-                "title": "My Link",
-                "desc": "More details",
-                "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
-            },
-            {
-                "title": "My Link",
-                "desc": "More details",
-                "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
-            },
-            {
-                "title": "My Link",
-                "desc": "More details",
-                "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
-            },
-            {
-                "title": "My Link",
-                "desc": "More details",
-                "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
-            },
-            {
-                "title": "My Link",
-                "desc": "More details",
-                "url": "/",
-                "backgroundImage": "./assets/images/SOCAF Patch Icon.png"
             }
         ]
 }

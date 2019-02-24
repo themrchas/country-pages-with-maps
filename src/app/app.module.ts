@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ConfigProvider, configProviderFactory } from './providers/configProvider';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-import { AppLayoutModule } from './app-layout/app-layout.module';
+import { MainLayoutModule } from './main-layout/main-layout.module';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/country' },
@@ -18,7 +18,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
-    AppLayoutModule,
+    MainLayoutModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only

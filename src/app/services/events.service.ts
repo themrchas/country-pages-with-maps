@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { SpServicesWrapperService } from './sp-services-wrapper.service';
 import { ConfigProvider } from '../providers/configProvider';
-import { SpListService } from './sp-list.service';
+import { SpRestService } from './sp-rest.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +31,7 @@ export class EventsService {
     ows_fAllDayEvent: {mappedName: 'isAllDayEvent', objectType: 'Boolean'}
   };
 
-  constructor( private httpClient: HttpClient, private spListService: SpListService,
+  constructor( private httpClient: HttpClient, private spRestService: SpRestService,
     private spServicesWrapper: SpServicesWrapperService ) { }
 
   private _reshapeAfterSpServicesJsonMapping(items, startOfSelectedDay, eventSource) {
@@ -62,7 +62,7 @@ export class EventsService {
     // have the DateRangesOverlaps conditions at all.
 
     return from(viewGuids).pipe(mergeMap(viewGuid =>
-      this.spListService.getView(eventSource.webURL,
+      this.spRestService.getView(eventSource.webURL,
         eventSource.listName, viewGuid as string).pipe(
           catchError(error => {
             console.warn('Could not find view by GUID: ' + viewGuid);

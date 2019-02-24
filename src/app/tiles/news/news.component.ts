@@ -2,15 +2,17 @@ import { Input, Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
 import { NewsItem, NewsSource } from '../../model/news';
 import * as moment from 'moment';
+import { TileComponent } from '../tile/tile.component';
+import { Country } from '../../model/country';
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
-export class NewsComponent implements OnInit {
-  @Input()
-  settings: any;
+export class NewsComponent implements OnInit, TileComponent {
+  @Input() settings: any;
+  @Input() country: Country;
   newsItems: Array<NewsItem>;
   constructor(private newsService: NewsService) { }
 

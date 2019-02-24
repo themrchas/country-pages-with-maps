@@ -1,28 +1,20 @@
-<mat-card class="mat-elevation-z3">
-    <mat-card-header>
-        <!--<div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{selectedCountry.title}}</mat-card-title>
-        <mat-card-subtitle>{{selectedCountry.population}}</mat-card-subtitle>-->
-        <mat-card-title>{{settings.title}}</mat-card-title>
-    </mat-card-header>
-    <!--<img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">-->
-    <mat-card-content>
-        <perfect-scrollbar style="height:230px">
-                <table>
-                    <tr class='table-headings'>
-                    <th *ngFor="let column of settings.columns">{{column.displayName}}</th>
-                    </tr>
-                    <ng-container *ngFor="let listItem of listItems">
-                    <tr class="list-item">
-                        <td *ngFor="let column of listItem.columns">{{column}}</td>
-                    </tr>
-                    </ng-container>
-                </table>
-        </perfect-scrollbar>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button>Show More</button>
-    </mat-card-actions>
-</mat-card>
+<mat-card-content>
+    <perfect-scrollbar style="height:230px">
+            <table>
+                <tr class='table-headings'>
+                <th *ngFor="let column of settings.columns">{{column.displayName}}</th>
+                </tr>
+                <ng-container *ngFor="let listItem of listItems">
+                <tr class="list-item">
+                    <td *ngFor="let column of listItem.columns">{{column}}</td>
+                </tr>
+                </ng-container>
+            </table>
+    </perfect-scrollbar>
+</mat-card-content>
+<mat-card-actions>
+    <button mat-button>Show More</button>
+</mat-card-actions>
+
     
     

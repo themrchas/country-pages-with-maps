@@ -1,21 +1,20 @@
 import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldHigh from '@amcharts/amcharts4-geodata/worldHigh';
-import { CountryService } from '../../services/country.service';
 import { Country } from '../../model/country';
+import { TileComponent } from '../tile/tile.component';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapComponent implements OnInit, AfterViewInit, OnDestroy, TileComponent {
   private map: am4maps.MapChart;
-  @Input()
-  country: Country;
-  constructor(private zone: NgZone, private countryService: CountryService) { }
+  @Input() country: Country;
+  @Input() settings: any;
+  constructor(private zone: NgZone) { }
 
   ngOnInit() {
   }

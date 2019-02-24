@@ -7,16 +7,12 @@
     margin-top: 0;
 }
 
-.fill-space {
-    flex: 1 1 auto;
-}
-
 .mat-toolbar {
     background: transparent;
     padding: 20px;
 }
 
-app-table, app-news, app-map {
+app-tile {
     height: 100%;
     width: calc(100% - 10px);
 }

@@ -35,36 +35,11 @@
     color: #c3c3c3;
 }
 
-/*
-.mat-sidenav-container {
-  height: 100%;
+.fill-space {
+    flex: 1 1 auto;
 }
 
-.mat-sidenav {
-  background-color: #404145;
-  box-shadow: 0 16px 38px -12px rgba(0,0,0,.56), 0 4px 25px 0 rgba(0,0,0,.12), 0 8px 10px -5px rgba(0,0,0,.2);
+.active-route {
+    background-color: #3a3a3e;
+    border-left: 4px solid #7dc0f3;
 }
-
-.mat-sidenav-content {
-    padding: 0 10px;
-    background-color: #eee;
-}
-
-.mat-sidenav img {
-    height: 40px;
-}
-
-.toolbar-title {
-  margin: 0 16px 0 16px;
-  color: #fff;
-}
-
-.mat-subheader {
-  font-size: 18px;
-  font-weight: 900;
-}
-
-.app-nav-list-icon {
-  margin: 0 12px 0 12px;
-}
-*/

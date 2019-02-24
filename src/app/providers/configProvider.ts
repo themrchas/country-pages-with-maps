@@ -1,28 +1,3 @@
-/*import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
-
-export class ConfigProvider {
-  static settings: any;
-  constructor(private http: HttpClient) {}
-
-  load() {
-    const jsonFile = 'assets/config.json';
-      return new Promise<void>((resolve, reject) => {
-          this.http.get(jsonFile).toPromise().then((response: Response) => {
-            ConfigProvider.settings = response.json();
-            resolve();
-          }).catch((response: any) => {
-            reject(`Could not load file '${jsonFile}':${JSON.stringify(response)}`);
-          });
-      });
-  }
-}
-
-export function configProviderFactory(provider: ConfigProvider) {
-    return () => provider.load();
-}*/
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -32,23 +7,6 @@ import * as _ from 'lodash';
 export class ConfigProvider {
     static settings: any;
     static env: string;
-    static spGetHttpOptions() {
-      return {
-        headers: new HttpHeaders({
-          'Accept': 'application/json;odata=verbose'
-        })
-      };
-    }
-
-    static spPostHttpOptions(requestDigest?) {
-      return {
-        headers: new HttpHeaders({
-          'Accept': 'application/json;odata=verbose',
-          'Content-Type': 'application/json;odata=verbose',
-          'X-RequestDigest': requestDigest ? requestDigest : String($('#__REQUESTDIGEST').val()),
-        })
-      };
-    }
 
     constructor(private httpClient: HttpClient) {}
 

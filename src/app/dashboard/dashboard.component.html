@@ -1,48 +1,11 @@
-
-    <mat-toolbar>
-      <ng-container *ngIf="selectedCountry | async as selectedCountry">
-          <h3>{{selectedCountry.title}}</h3>
-          <span class="fill-space"></span>
-          <app-select-country></app-select-country>
-      </ng-container>
-    </mat-toolbar>
     <div class="dashboard-container">
-    <ng-container *ngIf="selectedCountry | async as selectedCountry">
-
-      <mat-grid-list cols="3" rowHeight="350px" gutterSize="1rem">
-          <mat-grid-tile rowspan="1" colspan="1">
-              <app-news [settings]="newsSettings"></app-news>
+    <ng-container *ngIf="selectedCountry">
+      <mat-grid-list *ngIf="selectedTopic" cols="3" rowHeight="350px" gutterSize="1rem">
+        <ng-container *ngFor="let tile of selectedTopic.tiles">
+          <mat-grid-tile [rowspan]="tile.rowspan" [colspan]="tile.colspan">
+              <app-tile [tile]="tile" [country]="selectedCountry"></app-tile>
           </mat-grid-tile>
-        <mat-grid-tile>
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <app-map [country]="selectedCountry"></app-map>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="1" colspan="2">
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>
-        <mat-grid-tile>
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>
-        <!--<mat-grid-tile rowspan="1" colspan="1">
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>-->
-        <!--<mat-grid-tile rowspan="1" colspan="1">
-            <app-map [country]="selectedCountry"></app-map>
-        </mat-grid-tile>-->
-        <!--<mat-grid-tile rowspan="1" colspan="1">
-            <app-news [settings]="newsSettings"></app-news>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="1" colspan="1">
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="1" colspan="2">
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>
-        <mat-grid-tile rowspan="1" colspan="1">
-            <app-table [settings]="tableSettings"></app-table>
-        </mat-grid-tile>-->
+        </ng-container>
       </mat-grid-list>
 
     </ng-container>

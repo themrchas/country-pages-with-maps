@@ -10,23 +10,18 @@ import { Country } from '../model/country';
 })
 export class SelectCountryComponent implements OnInit {
 
-  selectedCountry: Observable<Country>;
-
-  countriesEA: Observable<Array<Country>>;
-  countriesNWA: Observable<Array<Country>>;
+  countriesEA: Array<Country>;
+  countriesNWA: Array<Country>;
 
 
   // Return array of countries based on region
-  private groupCountries(countries: Country[], region: string): Observable<Array<Country>> {
-    return of(countries.filter(el => el.region === region));
+  private groupCountries(countries: Country[], region: string): Array<Country> {
+    return countries.filter(el => el.region === region);
   }
 
   constructor(private countryService: CountryService) { }
 
   ngOnInit() {
-    this.countryService.selectedCountry.subscribe(selectedCountry => {
-      this.selectedCountry = selectedCountry ;
-    });
 
     this.countryService.getCountries().subscribe({
       next: obsCountries =>  {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { mergeMap, catchError } from 'rxjs/operators';
 import { NewsItem, NewsSource, createNewsItemFromSharePointResult } from '../model/news';
-import { SpListService } from './sp-list.service';
+import { SpRestService } from './sp-rest.service';
 import { Observable, from, empty } from 'rxjs';
 import * as moment from 'moment';
 
@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class NewsService {
 
-  constructor(private httpClient: HttpClient, private spListService: SpListService) { }
+  constructor(private httpClient: HttpClient, private spRestService: SpRestService) { }
 
   getNewsFromSources(sources: Array<NewsSource>): Promise<Array<NewsItem>> {
 
@@ -33,12 +33,12 @@ export class NewsService {
         const expiresFilter = source.type === 'announcements' ? ` and Expires ge datetime'${moment().toISOString()}'` : '';
         let asyncRequest;
         if (source.type === 'docLibrary') {
-          asyncRequest = this.spListService.getDocuments(source.webURL, source.listName).pipe(
+          asyncRequest = this.spRestService.getDocuments(source.webURL, source.listName).pipe(
             catchError(error => {
             return empty();
           }));
         } else if (source.type === 'list') {
-          asyncRequest = this.spListService.getListItems(source.webURL, source.listName).pipe(
+          asyncRequest = this.spRestService.getListItems(source.webURL, source.listName).pipe(
             catchError(error => {
             return empty();
           }));
@@ -70,6 +70,6 @@ export class NewsService {
 
   getCicItems(webURL, listName, startTime) {
     const recentItemsFilter = `Modified ge datetime'${startTime.toISOString()}'`;
-    return this.spListService.getListItems(webURL, listName, null, recentItemsFilter);
+    return this.spRestService.getListItems(webURL, listName, null, recentItemsFilter);
   }
 }

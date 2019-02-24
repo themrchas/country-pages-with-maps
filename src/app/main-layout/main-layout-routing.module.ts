@@ -1,28 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppLayoutComponent } from './app-layout.component';
+import { MainLayoutComponent } from './main-layout.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { SelectCountryComponent } from '../select-country/select-country.component';
 
 
 const routes: Routes = [
   {
-    path: 'country/:countryCode/:topic',
-    component: AppLayoutComponent,
+    path: 'country/:countryCode/:topicId',
+    component: MainLayoutComponent,
     children: [
       { path: '', component: DashboardComponent }
     ]
   },
   {
     path: 'country/:countryCode',
-    redirectTo: 'country/:countryCode/Overview'
+    redirectTo: 'country/:countryCode/overview'
   },
   {
     path: 'country',
-    component: AppLayoutComponent,
-    children: [
+    component: MainLayoutComponent,
+    /*children: [
       { path: '', component: SelectCountryComponent }
-    ]
+    ]*/
   }
 ];
 
@@ -30,4 +30,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AppLayoutRoutingModule { }
+export class MainLayoutRoutingModule { }
