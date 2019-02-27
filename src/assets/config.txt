@@ -116,13 +116,5 @@
                     "defaultView": ""
                 }
             ]
-        },
-        "tileGroups": [
-            {
-                "tiles": ["today-events", "upcoming-events"]
-            },
-            {
-                "tiles": ["news"]
-            }
-        ]
+        }
 }
