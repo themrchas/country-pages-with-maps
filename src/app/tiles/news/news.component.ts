@@ -1,9 +1,9 @@
 import { Input, Component, OnInit } from '@angular/core';
 import { NewsService } from '../../services/news.service';
 import { NewsItem, NewsSource } from '../../model/news';
-import * as moment from 'moment';
 import { TileComponent } from '../tile/tile.component';
 import { Country } from '../../model/country';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-news',
@@ -12,7 +12,7 @@ import { Country } from '../../model/country';
 })
 export class NewsComponent implements OnInit, TileComponent {
   @Input() settings: any;
-  @Input() country: Country;
+  @Input() country: BehaviorSubject<Country>;
   newsItems: Array<NewsItem>;
   constructor(private newsService: NewsService) { }
 

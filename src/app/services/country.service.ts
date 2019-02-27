@@ -9,8 +9,7 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CountryService {
-  private countrySubject = new BehaviorSubject<Country>(null);
-  selectedCountry = this.countrySubject.asObservable();
+  selectedCountry = new BehaviorSubject<Country>(null);
 
   constructor(private spRestService: SpRestService) {}
 
@@ -32,6 +31,6 @@ export class CountryService {
   }
 
   changeCountry(countryCode: string) {
-    this.getCountry(countryCode).subscribe(country => this.countrySubject.next(country));
+    this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
   }
 }

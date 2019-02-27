@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../services/country.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Country } from '../model/country';
 import { TopicService } from '../services/topic.service';
@@ -12,8 +12,8 @@ import { ConfigProvider } from '../providers/configProvider';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  selectedCountry: Country;
-  selectedTopic: Observable<any>;
+  selectedCountry: BehaviorSubject<Country>;
+  selectedTopic: BehaviorSubject<any>;
   tableSettings: any;
   newsSettings: any;
 
@@ -23,13 +23,8 @@ export class DashboardComponent implements OnInit {
     private topicService: TopicService) { }
 
   ngOnInit() {
-    this.countryService.selectedCountry.subscribe(selectedCountry => {
-      this.selectedCountry = selectedCountry ;
-    });
-
-    this.topicService.selectedTopic.subscribe(selectedTopic => {
-      this.selectedTopic = selectedTopic;
-    });
+    this.selectedCountry = this.countryService.selectedCountry;
+    this.selectedTopic = this.topicService.selectedTopic;
 
   }
 

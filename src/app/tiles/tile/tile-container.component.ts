@@ -5,6 +5,7 @@ import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
 import { TileComponent } from './tile.component';
 import { Country } from '../../model/country';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-tile',
@@ -12,10 +13,8 @@ import { Country } from '../../model/country';
   styleUrls: ['./tile-container.component.css']
 })
 export class TileContainerComponent implements OnInit {
-  @Input()
-  tile: any;
-  @Input()
-  country: Country;
+  @Input() tile: any;
+  @Input() country: BehaviorSubject<Country>;
   @ViewChild(TileDirective) tileDirective: TileDirective;
   tileTypes = {
     TABLE: 'table',
