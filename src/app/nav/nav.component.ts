@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { Country } from '../model/country';
 import { TopicService } from '../services/topic.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-nav',
@@ -9,14 +10,14 @@ import { TopicService } from '../services/topic.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  selectedCountry: Country;
+  selectedCountry: BehaviorSubject<Country>;
   topics: Array<any>;
 
   constructor(private countryService: CountryService, private topicService: TopicService) { }
 
   ngOnInit() {
 
-    this.countryService.selectedCountry.subscribe(selectedCountry => this.selectedCountry = selectedCountry);
+    this.selectedCountry = this.countryService.selectedCountry;
     this.topics = this.topicService.getTopics();
   }
 }

@@ -6,7 +6,7 @@
                 <h2 class="toolbar-title">Country Pages</h2>
             </mat-toolbar-row>
         </mat-toolbar>
-        <ng-container *ngIf="selectedCountry">
+        <ng-container *ngIf="selectedCountry | async as selectedCountry">
             <mat-nav-list>
                 <ng-container *ngFor="let topic of topics | keyvalue" >
                 <a mat-list-item [routerLink]="['/country', selectedCountry.countryCode3, topic.value.topicId]" routerLinkActive="active-route">
@@ -22,7 +22,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar>
-            <ng-container *ngIf="selectedCountry">
+            <ng-container *ngIf="selectedCountry | async as selectedCountry">
                 <h3>{{selectedCountry.title}}</h3>
             </ng-container>
             <span class="fill-space"></span>
