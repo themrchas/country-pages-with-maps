@@ -17,6 +17,7 @@ export class ConfigProvider {
             this.httpClient.get(jsonFile).toPromise().then((response: Response) => {
               ConfigProvider.settings = response;
               ConfigProvider.env = ConfigProvider.settings.env;
+              console.log('ConfigProvider.settings is', ConfigProvider.settings);
               resolve();
             }).catch((response: any) => {
               reject(`Could not load file '${jsonFile}':${JSON.stringify(response)}`);

@@ -4,6 +4,12 @@ import { TableComponent } from '../table/table.component';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
 import { TileComponent } from './tile.component';
+
+
+//Chas
+import { GenericTableComponent } from '../generic-table/generic-table.component';
+
+
 import { Country } from '../../model/country';
 import { BehaviorSubject } from 'rxjs';
 
@@ -16,10 +22,13 @@ export class TileContainerComponent implements OnInit {
   @Input() tile: any;
   @Input() country: BehaviorSubject<Country>;
   @ViewChild(TileDirective) tileDirective: TileDirective;
+
   tileTypes = {
     TABLE: 'table',
     NEWS: 'news',
-    MAP: 'map'
+    MAP: 'map',
+
+   GENTABLE: 'gen-table' //Chas
   };
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
@@ -32,6 +41,13 @@ export class TileContainerComponent implements OnInit {
     } else if (this.tile.type === this.tileTypes.MAP) {
       tileComponent = MapComponent;
     }
+
+//Chas
+    else if (this.tile.type === this.tileTypes.GENTABLE) { 
+      tileComponent = GenericTableComponent;
+    }
+
+
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       tileComponent);

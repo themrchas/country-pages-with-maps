@@ -2,6 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatCardModule, MatListModule, MatButtonModule, MatMenuModule, MatToolbarModule, MatGridListModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+
+//List searching
+import { MatFormFieldModule, MatInputModule } from '@angular/material';
+
 import { DashboardComponent } from './dashboard.component';
 import { TileContainerComponent } from '../tiles/tile/tile-container.component';
 import { UpcomingEventsComponent } from '../tiles/upcoming-events/upcoming-events.component';
@@ -16,6 +21,7 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
+import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -31,7 +37,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NewsComponent,
     TableComponent,
     CountryFactBoxComponent,
-    MapComponent
+    MapComponent,
+    GenericTableComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -41,11 +48,17 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatListModule,
     MatGridListModule,
     MatToolbarModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule 
+
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ],
-  entryComponents: [TableComponent, MapComponent, NewsComponent],
+  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent],
 })
 export class DashboardModule { }

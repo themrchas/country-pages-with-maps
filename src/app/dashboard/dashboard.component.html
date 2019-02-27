@@ -1,6 +1,6 @@
     <div class="dashboard-container">
     <ng-container *ngIf="selectedCountry.value">
-      <mat-grid-list *ngIf="selectedTopic.value" cols="3" rowHeight="350px" gutterSize="1rem">
+      <mat-grid-list *ngIf="selectedTopic.value" cols="3" rowHeight="400px" gutterSize="1rem">
         <ng-container *ngFor="let tile of selectedTopic.value.tiles">
           <mat-grid-tile [rowspan]="tile.rowspan" [colspan]="tile.colspan">
               <app-tile [tile]="tile" [country]="selectedCountry"></app-tile>
