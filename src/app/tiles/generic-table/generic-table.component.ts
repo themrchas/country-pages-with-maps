@@ -10,7 +10,11 @@ import { formatDate } from '@angular/common';
 import { MatTableDataSource } from '@angular/material';
 import { MatPaginator} from '@angular/material';
 import { MatSort } from '@angular/material';
-import { MatFormField } from '@angular/material';
+
+
+//Modal
+import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
+import { TableItemDialogComponent } from '../../modals/table-item-dialog/table-item-dialog.component';
 
 import { TileComponent } from '../tile/tile.component';
 import { BehaviorSubject } from 'rxjs';
@@ -32,6 +36,9 @@ export class GenericTableComponent implements OnInit, AfterViewInit, TileCompone
   @ViewChild(MatSort) sort: MatSort;
 
  // @ViewChild(MatPagintor) pagintor: MatPaginator;
+
+ //modal
+  tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
   
   listItems: Array<any>;
 
@@ -40,7 +47,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, TileCompone
 
  dataSource  = new MatTableDataSource<any>();
 
- 
+modal: any;
 
  // dataSource = new MatTableDataSource<Observable<Array<any>>>(this.parsedListItems);
 
@@ -60,6 +67,7 @@ testListItems: Array<any> = [
 onRowClicked(event:any) : void {
 
   console.log('Row clicked with event:', event);
+  this.openTableItemDialog();
 }
 
 doFilter(value:string) : void  {
@@ -69,18 +77,23 @@ doFilter(value:string) : void  {
 /****************************/
 
 
-
-
   formatDate(strDate:string): void {
 
     console.log('passed date', strDate,'converted date',moment(strDate).format('MM/DD/YYYY'));
   }
   
-  constructor(private spRestService: SpRestService) { }
+  constructor(private spRestService: SpRestService, private dialog: MatDialog) { }
+
+  openTableItemDialog() {
+
+    let dialogConfig:MatDialogConfig  = new MatDialogConfig();
+    dialogConfig.width = "400px";
+    this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent,dialogConfig);
+  }
 
   ngOnInit() {
 
-    
+       
 
     this.dataSource.paginator = this.paginator;
     

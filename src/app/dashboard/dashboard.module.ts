@@ -7,6 +7,10 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
 //List searching
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
+//Modal support
+import { MatDialogModule }  from '@angular/material';
+import { TableItemDialogComponent} from '../modals/table-item-dialog/table-item-dialog.component';
+
 import { DashboardComponent } from './dashboard.component';
 import { TileContainerComponent } from '../tiles/tile/tile-container.component';
 import { UpcomingEventsComponent } from '../tiles/upcoming-events/upcoming-events.component';
@@ -22,6 +26,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
+import { isNgTemplate } from '@angular/compiler';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -38,7 +43,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TableComponent,
     CountryFactBoxComponent,
     MapComponent,
-    GenericTableComponent
+    GenericTableComponent, 
+    TableItemDialogComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -53,12 +59,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule 
+    MatInputModule,
+    MatDialogModule
 
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ],
-  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent],
+  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent, TableItemDialogComponent],
 })
 export class DashboardModule { }
