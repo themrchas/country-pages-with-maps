@@ -11,6 +11,7 @@ import { TableComponent } from '../tiles/table/table.component';
 import { CountryFactBoxComponent } from '../tiles/country-fact-box/country-fact-box.component';
 import { MapComponent } from '../tiles/map/map.component';
 
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
@@ -36,6 +37,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   imports: [
     DashboardRoutingModule,
     CommonModule,
+    MDBBootstrapModule.forRoot(),
     MatCardModule,
     MatButtonModule,
     MatListModule,

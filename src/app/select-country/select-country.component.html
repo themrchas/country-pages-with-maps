@@ -1,4 +1,4 @@
-<div class="select-container">
+<!--<div class="select-container">
 
   <button mat-button [matMenuTriggerFor]="menu" mat-buton-raised>Select a Country</button>
   <mat-menu #menu="matMenu">
@@ -12,4 +12,28 @@
       <a mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
     </div>
   </mat-menu>
-</div>
+</div>-->
+
+
+
+<div class="dropdown" mdbDropdown>
+
+
+    <button mdbDropdownToggle mdbBtn color="info" class="dropdown-toggle waves-light" type="button"
+      mdbWavesEffect>
+      Change Country
+    </button>
+  
+  
+    <div class="dropdown-menu dropdown-primary">
+      <div>East Africa</div>
+      <ng-container *ngFor="let country of countriesEA">
+          <a class="dropdown-item" mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+      </ng-container>
+      <div class="divider dropdown-divider"></div>
+      <div>North &amp; West Africa</div>
+      <ng-container *ngFor="let country of countriesNWA">
+          <a class="dropdown-item" mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+      </ng-container>
+    </div>
+  </div>
