@@ -87,8 +87,32 @@ doFilter(value:string) : void  {
   openTableItemDialog() {
 
     let dialogConfig:MatDialogConfig  = new MatDialogConfig();
+
     dialogConfig.width = "400px";
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = { name:"Beavis", friend:"Butthead"};
+
+
     this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent,dialogConfig);
+
+    this.tableItemDialogRef.afterClosed().subscribe(result => {
+      console.log('Dialog result:', result);
+      this.tableItemDialogRef.close('It closed');
+    });
+
+    this.tableItemDialogRef.beforeClosed().subscribe(result => {
+      console.log('Dialog result in beforeClosed:', result);
+     // this.tableItemDialogRef.close('It closed');
+     console.log('Dialog is closing - beforeClosed');
+    });
+
+
+    this.tableItemDialogRef.afterOpened().subscribe(result => {
+      console.log('Dialog result in afterOpened:', result);
+     // this.tableItemDialogRef.close('It closed');
+     //console.log('Dialog is closing - beforeClosed');
+    });
   }
 
   ngOnInit() {

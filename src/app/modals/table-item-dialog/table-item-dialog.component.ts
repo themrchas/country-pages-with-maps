@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-table-item-dialog',
@@ -7,9 +8,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TableItemDialogComponent implements OnInit {
 
-  constructor() { }
+  modalData: any;
 
+  closeTheModal() {
+    console.log('you clikced the close button');
+    this.dialogRef.close('Dialog has been closed in dialog component');
+  }
+
+  constructor(private dialogRef: MatDialogRef<TableItemDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) data) { 
+
+                this.modalData = data;
+
+                console.log('data passed to modal is', this.modalData);
+              }
+
+ // onNoClick() : void {
+   close() {
+     console.log('dialog is closing');
+this.dialogRef.close('Dialog has been closed');
+}
   ngOnInit() {
+
+
   }
 
 }
