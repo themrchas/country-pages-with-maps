@@ -4,14 +4,16 @@ import { TableComponent } from '../table/table.component';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
 import { TileComponent } from './tile.component';
+import { TabsComponent } from '../tabs/tabs.component';
 
 
-//Chas
+// Chas
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 
 
 import { Country } from '../../model/country';
 import { BehaviorSubject } from 'rxjs';
+import { CountryFactBoxComponent } from '../country-fact-box/country-fact-box.component';
 
 @Component({
   selector: 'app-tile',
@@ -27,8 +29,9 @@ export class TileContainerComponent implements OnInit {
     TABLE: 'table',
     NEWS: 'news',
     MAP: 'map',
-
-   GENTABLE: 'gen-table' //Chas
+    FACTBOX: 'fact-box',
+    GENTABLE: 'gen-table', // Chas
+    TABS: 'tabs'
   };
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
@@ -40,14 +43,15 @@ export class TileContainerComponent implements OnInit {
       tileComponent = NewsComponent;
     } else if (this.tile.type === this.tileTypes.MAP) {
       tileComponent = MapComponent;
-    }
-
-//Chas
-    else if (this.tile.type === this.tileTypes.GENTABLE) { 
+    } else if (this.tile.type === this.tileTypes.FACTBOX) {
+      tileComponent = CountryFactBoxComponent;
+    } else if (this.tile.type === this.tileTypes.GENTABLE) {
       tileComponent = GenericTableComponent;
+    } else if (this.tile.type === this.tileTypes.TABS) {
+      tileComponent = TabsComponent;
+    } else {
+      console.error(`Unknown tile type: ${this.tile.type}`);
     }
-
-
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
       tileComponent);

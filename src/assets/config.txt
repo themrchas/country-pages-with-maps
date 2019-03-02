@@ -10,30 +10,17 @@
                 "topicId": "overview",
                 "tiles": [
                     { 
-                        "type": "table",
-                        "rowspan": 1,
+                        "type": "fact-box",
                         "colspan": 1,
-                        "heading": "Sample List",
-                        "settings": {
-                            "source": {
-                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
-                                "listName": "SampleList"
-                            },
-                            "columns": [
-                                { "columnName": "Title", "displayName": "Title" },
-                                { "columnName": "Created", "displayName": "Created Date"}
-                            ]
-                        }
+                        "heading": "SOCAFRICA Country Overview"
                     },
-                    { 
+                    {
                         "type": "map",
-                        "rowspan": 1,
                         "colspan": 1,
                         "heading": "Map"
                     },
                     { 
                         "type": "table",
-                        "rowspan": 1,
                         "colspan": 1,
                         "heading": "Sample List",
                         "settings": {
@@ -48,8 +35,7 @@
                         }
                     },
                     { 
-                        "type": "table",
-                        "rowspan": 1,
+                        "type": "gen-table",
                         "colspan": 2,
                         "heading": "Sample List",
                         "settings": {
@@ -71,7 +57,6 @@
                 "tiles": [
                     { 
                         "type": "news",
-                        "rowspan": 1,
                         "colspan": 1,
                         "heading": "News",
                         "settings": {
@@ -84,6 +69,41 @@
                                     "type": "blog",
                                     "displayForm": "Post.aspx",
                                     "dateField": "PublishedDate"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "type": "tabs",
+                        "colspan": 2,
+                        "heading": "US Contacts",
+                        "settings": {
+                            "tabs": [
+                                {
+                                    "heading": "SOCAFRICA",
+                                    "settings": {
+                                        "source": {
+                                            "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                            "listName": "SampleList"
+                                        },
+                                        "columns": [
+                                            { "columnName": "Title", "displayName": "Title" },
+                                            { "columnName": "Created", "displayName": "Created Date"}
+                                        ]
+                                    }
+                                },
+                                {
+                                    "heading": "AFRICOM",
+                                    "settings": {
+                                        "source": {
+                                            "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                            "listName": "SampleList"
+                                        },
+                                        "columns": [
+                                            { "columnName": "Title", "displayName": "Title" },
+                                            { "columnName": "Created", "displayName": "Created Date"}
+                                        ]
+                                    }
                                 }
                             ]
                         }

@@ -1,2 +1,7 @@
-<div class="bg-dark fg-white tile-large">
-</div>
+<table class="table" *ngIf="country | async as country">
+    <tr><td class="label">Region</td><td>{{country.region}}</td></tr>
+    <tr><td class="label">Sub-Unit</td><td></td></tr>
+    <tr><td class="label">Campaign</td><td></td></tr>
+    <tr><td class="label">LOEs</td><td></td></tr>
+    <tr><td class="label">African Partners</td><td></td></tr>
+</table>

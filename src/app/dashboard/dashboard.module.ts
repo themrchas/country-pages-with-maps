@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatCardModule, MatListModule, MatButtonModule, MatMenuModule, MatToolbarModule, MatGridListModule } from '@angular/material';
+import { MatCardModule,
+  MatListModule,
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatGridListModule,
+  MatTabsModule } from '@angular/material';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
-//List searching
+// List searching
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
 import { DashboardComponent } from './dashboard.component';
@@ -15,6 +21,7 @@ import { NewsComponent } from '../tiles/news/news.component';
 import { TableComponent } from '../tiles/table/table.component';
 import { CountryFactBoxComponent } from '../tiles/country-fact-box/country-fact-box.component';
 import { MapComponent } from '../tiles/map/map.component';
+import { TabsComponent } from '../tiles/tabs/tabs.component';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -39,7 +46,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TableComponent,
     CountryFactBoxComponent,
     MapComponent,
-    GenericTableComponent
+    GenericTableComponent,
+    TabsComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -55,12 +63,12 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatPaginatorModule,
     MatSortModule,
     MatFormFieldModule,
-    MatInputModule 
-
+    MatInputModule,
+    MatTabsModule
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ],
-  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent],
+  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent, CountryFactBoxComponent, TabsComponent],
 })
 export class DashboardModule { }

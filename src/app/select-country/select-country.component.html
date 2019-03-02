@@ -1,39 +1,18 @@
-<!--<div class="select-container">
-
-  <button mat-button [matMenuTriggerFor]="menu" mat-buton-raised>Select a Country</button>
-  <mat-menu #menu="matMenu">
-    <div matSubheader>East Africa</div>
-    <div *ngFor="let country of countriesEA">
-          <a mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
-    </div>
-    <mat-divider></mat-divider>
-    <div matSubheader>North &amp; West Africa</div>
-    <div *ngFor="let country of countriesNWA">
-      <a mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
-    </div>
-  </mat-menu>
-</div>-->
-
-
-
-<div class="dropdown" mdbDropdown>
-
-
-    <button mdbDropdownToggle mdbBtn color="info" class="dropdown-toggle waves-light" type="button"
+<div class="btn-group" mdbDropdown>
+    <button mdbDropdownToggle type="button" mdbBtn color="info" class="dropdown-toggle waves-light"
       mdbWavesEffect>
       Change Country
     </button>
   
-  
     <div class="dropdown-menu dropdown-primary">
-      <div>East Africa</div>
-      <ng-container *ngFor="let country of countriesEA">
-          <a class="dropdown-item" mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
-      </ng-container>
-      <div class="divider dropdown-divider"></div>
-      <div>North &amp; West Africa</div>
-      <ng-container *ngFor="let country of countriesNWA">
-          <a class="dropdown-item" mat-menu-item [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
-      </ng-container>
-    </div>
+        <div>East Africa</div>
+        <ng-container *ngFor="let country of countriesEA">
+            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+        </ng-container>
+        <div class="divider dropdown-divider"></div>
+        <div>North &amp; West Africa</div>
+        <ng-container *ngFor="let country of countriesNWA">
+            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+        </ng-container>
+      </div>
   </div>

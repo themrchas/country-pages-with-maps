@@ -29,8 +29,7 @@ const appRoutes: Routes = [
   ],
   declarations: [
     AppComponent,
-    PageNotFoundComponent,
-    
+    PageNotFoundComponent
   ],
   providers: [
     ConfigProvider,
