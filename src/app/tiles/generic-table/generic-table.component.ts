@@ -56,13 +56,15 @@ modal: any;
   /*** mat-table */
   columnsToDisplay = ['Title','Created'];
 
-
+  //{columnName: "Title", displayName: "Title"}
+  matTableCols: Array<any>;
+/*
 testListItems: Array<any> = [
 
   {title:"Entry One", Created:"12/1/2018"},
   {title:"Entry Two", Created:"1/1/2019"}
 
-];
+]; */
 
 onRowClicked(event:any) : void {
 
@@ -120,6 +122,11 @@ doFilter(value:string) : void  {
        
 
     this.dataSource.paginator = this.paginator;
+
+    console.log('settings are',this.settings.columns);
+
+    //Get columns to display
+    this.matTableCols = this.settings.columns;
     
 
 

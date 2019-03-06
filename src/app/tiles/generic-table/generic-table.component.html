@@ -19,15 +19,25 @@
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
+  <ng-container *ngFor="let tblCol in matTableCols" matColumnDef="tblCol.columnName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{tblCol.displayName}}</th>
+    <td mat-cell *matCellDef="let tableItem">{{tableItem[tblCol.columnName]}}</td>
+
+  </ng-container>
+
+  <!--
     <ng-container matColumnDef="Title">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Title</th>
       <td mat-cell *matCellDef="let tableItem">{{tableItem.Title}}</td>
     </ng-container>
   
+
     <ng-container matColumnDef="Created">
         <th mat-header-cell *matHeaderCellDef>Time Created</th>
         <td mat-cell *matCellDef="let tableItem">{{tableItem.Created}}</td>
       </ng-container>
+
+    -->
   
       <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
       <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"
