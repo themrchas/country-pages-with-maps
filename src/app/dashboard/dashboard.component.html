@@ -1,14 +1,12 @@
 <div class="dashboard-container">
-    <ng-container *ngIf="selectedCountry.value">
-      <ng-container *ngIf="selectedTopic.value">
+    <ng-container *ngIf="selectedCountry.value && selectedTopic.value">
           <div class="row wow fadeIn" *ngFor="let row of rows">
             <ng-container *ngFor="let tile of row">
-              <div class="mb-4" [ngClass]="{'col-md-4': tile.colspan === 1, 'col-md-8': tile.colspan === 2, 'col-md-12': tile.colspan === 3}">
+              <div class="mb-4" [ngClass]="{'col-lg-4': tile.colspan === 1, 'col-lg-8': tile.colspan === 2, 'col-lg-12': tile.colspan === 3}">
                 <app-tile [tile]="tile" [country]="selectedCountry"></app-tile>
               </div>
             </ng-container>
           </div>  
-      </ng-container>
 
     </ng-container>
 </div>

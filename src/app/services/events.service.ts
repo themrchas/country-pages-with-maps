@@ -137,8 +137,8 @@ export class EventsService {
 
     return this.httpClient.get(eventSource.webURL +
       '/_vti_bin/ListData.svc/' + eventSource.listName.replace(/ /g, '') + '?\
-        $select=Id,Title,StartTime,EndTime&\
-        $orderby=StartTime&$filter=ShowOnHomepage eq true and StartTime ge datetime\'' +
+        $select=Id,Title,StartTime,EndTime,Location&\
+        $orderby=StartTime&$filter=StartTime ge datetime\'' +
         startISO + '\' and StartTime le datetime\'' + endISO + '\'', httpOptions).pipe(map (resp => {
             const d = resp['d'];
             const results = d['results'];
@@ -155,7 +155,7 @@ export class EventsService {
                 if (isSameDay) {
                   item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase();
                 } else if (isSameMonth) {
-                  item.friendlyDate = item.StartTime.format('DD') + '-' + item.EndTime.format('DD') + '' +
+                  item.friendlyDate = item.StartTime.format('DD') + '-' + item.EndTime.format('DD') + ' ' +
                     item.StartTime.format('MMM').toUpperCase();
                 } else {
                   item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase() + '-' + item.EndTime.format('DD MMM').toUpperCase();

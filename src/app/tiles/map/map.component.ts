@@ -15,10 +15,11 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
   private map: am4maps.MapChart;
   @Input() country: BehaviorSubject<Country>;
   @Input() settings: any;
+  subscription: any;
   constructor(private zone: NgZone) { }
 
   ngOnInit() {
-    this.country.subscribe(country => {
+    this.subscription = this.country.subscribe(country => {
         const self = this;
         this.zone.runOutsideAngular(() => {
           const map = am4core.create('mapdiv', am4maps.MapChart);
@@ -53,6 +54,7 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
 
 
   ngOnDestroy() {
+    this.subscription.unsubscribe();
     this.zone.runOutsideAngular(() => {
       if (this.map) {
         this.map.dispose();

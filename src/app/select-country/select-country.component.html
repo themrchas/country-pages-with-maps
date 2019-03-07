@@ -7,12 +7,12 @@
     <div class="dropdown-menu dropdown-primary">
         <div>East Africa</div>
         <ng-container *ngFor="let country of countriesEA">
-            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
         </ng-container>
         <div class="divider dropdown-divider"></div>
         <div>North &amp; West Africa</div>
         <ng-container *ngFor="let country of countriesNWA">
-            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]">{{country.title}}</a>
+            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
         </ng-container>
       </div>
   </div>

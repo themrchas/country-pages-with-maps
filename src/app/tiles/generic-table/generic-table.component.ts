@@ -86,7 +86,8 @@ doFilter(value: string): void  {
 
     this.listItems = Array<any>();
     this.spRestService.getListItems(this.settings.source.webURL, this.settings.source.listName,
-      this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
+      this.settings.source.order, this.settings.source.filter, this.settings.source.select,
+      this.settings.source.expand, this.settings.source.rowLimit).subscribe({
       next: response => {
         console.log('SampleList in table.components.ts is', response);
 

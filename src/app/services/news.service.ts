@@ -5,6 +5,8 @@ import { NewsItem, NewsSource, createNewsItemFromSharePointResult } from '../mod
 import { SpRestService } from './sp-rest.service';
 import { Observable, from, empty } from 'rxjs';
 import * as moment from 'moment';
+import { ConfigProvider } from '../providers/configProvider';
+import { Country } from '../model/country';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class NewsService {
 
   constructor(private httpClient: HttpClient, private spRestService: SpRestService) { }
 
-  getNewsFromSources(sources: Array<NewsSource>): Promise<Array<NewsItem>> {
+  getNewsFromSources(sources: Array<NewsSource>, country: Country): Promise<Array<NewsItem>> {
 
     const newsItems = Array<NewsItem>();
     const httpOptions = {
@@ -28,9 +30,14 @@ export class NewsService {
     // Request news from each of the sources, compile results into the newsItems array
     // When complete, resolve the promise
     return new Promise<Array<NewsItem>>((resolve) => {
-      const startISO = moment().startOf('day').add(-4, 'month').toISOString();
+
       const getNewsFromSourceObservable = source => {
-        const expiresFilter = source.type === 'announcements' ? ` and Expires ge datetime'${moment().toISOString()}'` : '';
+        let filter = source.filter ? ConfigProvider.replacePlaceholdersWithFieldValues(source.filter, country) : '';
+        if (source.beginDaysAgo) {
+          filter += filter ? ' and ' : '';
+          filter += `${source.dateField} ge dateTime'${moment().startOf('day').add(source.beginDaysAgo, 'days').toISOString()}`;
+        }
+
         let asyncRequest;
         if (source.type === 'docLibrary') {
           asyncRequest = this.spRestService.getDocuments(source.webURL, source.listName).pipe(
@@ -38,16 +45,22 @@ export class NewsService {
             return empty();
           }));
         } else if (source.type === 'list') {
-          asyncRequest = this.spRestService.getListItems(source.webURL, source.listName).pipe(
+          asyncRequest = this.spRestService.getListItems(source.webURL, source.listName, source.order,
+            source.filter, source.select, source.expand, source.rowLimit).pipe(
             catchError(error => {
             return empty();
           }));
         } else {
-          asyncRequest = this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
-          `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'${expiresFilter}`, httpOptions).pipe(
+          /*asyncRequest = this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
+          `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'`, httpOptions).pipe(
             catchError(error => {
             return empty();
-          }));
+          }));*/
+          asyncRequest = this.spRestService.getListItems(source.webURL, source.listName, source.order,
+            filter, source.select, source.expand, source.rowLimit).pipe(
+              catchError(error => {
+              return empty();
+            }));
         }
         return asyncRequest;
       };
@@ -66,10 +79,5 @@ export class NewsService {
           complete: () => resolve(newsItems)
       });
     });
-  }
-
-  getCicItems(webURL, listName, startTime) {
-    const recentItemsFilter = `Modified ge datetime'${startTime.toISOString()}'`;
-    return this.spRestService.getListItems(webURL, listName, null, recentItemsFilter);
   }
 }

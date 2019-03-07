@@ -15,22 +15,28 @@ export class CountryService {
 
   // Use ISO 3 for country code
   getCountry(countryCode): Observable<Country> {
-    const filter = `ISO_3_CountryCode eq '${countryCode.toUpperCase()}'`;
-    return this.spRestService.getListItems(ConfigProvider.settings.country.webURL,
-      ConfigProvider.settings.country.listName, null, filter, 1).pipe(map(resp => {
-        const respArray = createCountryArrayFromSharePointResponse(resp);
-        return respArray.length > 0 ? respArray[0] : null;
-      }));
+      let viewXml = ConfigProvider.settings.country.camlQueryFilterCountry as string;
+      viewXml = ConfigProvider.replacePlaceholdersWithFieldValues(viewXml, { countryCode: countryCode.toUpperCase()});
+
+      return this.spRestService.getListItemsCamlQuery(ConfigProvider.settings.country.webURL,
+        ConfigProvider.settings.country.listName,
+        JSON.stringify({ViewXml: `${viewXml}`}),
+        ConfigProvider.requestDigest).pipe(map(resp => {
+          const respArray = createCountryArrayFromSharePointResponse(resp);
+          return respArray.length > 0 ? respArray[0] : null;
+        }));
   }
 
   getCountries(): Observable<Array<Country>> {
-    return this.spRestService.getListItems(ConfigProvider.settings.country.webURL,
-      ConfigProvider.settings.country.listName).pipe(map(resp => {
+    return this.spRestService.getListItemsCamlQuery(ConfigProvider.settings.country.webURL,
+      ConfigProvider.settings.country.listName,
+      JSON.stringify({ViewXml: `${ConfigProvider.settings.country.camlQueryAllCountries}`}),
+      ConfigProvider.requestDigest).pipe(map(resp => {
         return createCountryArrayFromSharePointResponse(resp);
     }));
   }
 
   changeCountry(countryCode: string) {
-    this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
+      this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
   }
 }

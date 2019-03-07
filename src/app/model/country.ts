@@ -4,6 +4,7 @@ export class Country {
 
     constructor(
         public title: string,
+        public countryMM: string,
         public countryCode2: string,
         public countryCode3: string,
         public region: string,
@@ -14,6 +15,7 @@ export class Country {
 export function createCountryFromSharePointResult(result: any) {
     return new Country(
         result.Title,
+        result.CountryMM.Label,
         result.ISO_2_CountryCode,
         result.ISO_3_CountryCode,
         result.Region,

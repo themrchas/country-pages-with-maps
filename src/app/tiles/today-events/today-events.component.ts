@@ -1,18 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import { ConfigProvider } from '../../providers/configProvider';
-import { Observable, from, empty } from 'rxjs';
+import { from, BehaviorSubject } from 'rxjs';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
+import { TileComponent } from '../tile/tile.component';
+import { Country } from '../../model/country';
 
 @Component({
   selector: 'app-today-events',
   templateUrl: './today-events.component.html',
   styleUrls: ['./today-events.component.css']
 })
-export class TodayEventsComponent implements OnInit {
-
+export class TodayEventsComponent implements OnInit, TileComponent {
+  @Input() settings: any;
+  @Input() country: BehaviorSubject<Country>;
   selectedDate: any;
   now: any;
   eventsList: Array<any>;
