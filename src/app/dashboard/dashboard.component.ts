@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
     this.selectedCountry = this.countryService.selectedCountry;
     this.selectedTopic = this.topicService.selectedTopic;
 
+    console.log('selectedtopic is ', this.selectedTopic);
+
   }
 
 }

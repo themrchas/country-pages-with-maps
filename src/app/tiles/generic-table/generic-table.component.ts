@@ -126,7 +126,7 @@ modal: any;
     //Get columns to display
     this.matTableCols = this.settings.columns;
 
-    //console.log('matTableCols are', this.matTableCols);
+    console.log('this.settings.columns', this.settings.columns);
 
     //Create table display column order.  This is determined by the 'columnOrder' property of each table column entry found in settings.columns
     this.columnsToDisplay = this.matTableCols.sort((a,b) => (a.columnOrder > b.columnOrder) ? 1 : -1).map( (columnEntry) => { return columnEntry.columnName} );

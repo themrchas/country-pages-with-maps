@@ -1,7 +1,7 @@
 {
         "env": "low",
         "country": {
-            "webURL": "http://localhost:8080/sites/socafdev",
+            "webURL": "http://localhost:8080/sites/dev/socafdev",
             "listName": "CountryData"
         },
         "topics": [
@@ -16,7 +16,7 @@
                         "heading": "Sample List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "webURL": "http://localhost:8080/sites/dev/SOCAFDEV",
                                 "listName": "SampleList"
                             },
                             "columns": [
@@ -38,7 +38,7 @@
                         "heading": "Sample List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "webURL": "http://localhost:8080/sites/dev/SOCAFDEV",
                                 "listName": "SampleList"
                             },
                             "columns": [
@@ -48,18 +48,35 @@
                         }
                     },
                     { 
-                        "type": "table",
+                        "type": "gen-table",
                         "rowspan": 1,
                         "colspan": 2,
-                        "heading": "Sample List",
+                        "heading": "Sample Gen List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "webURL": "http://localhost:8080/sites/dev/SOCAFDEV",
                                 "listName": "SampleList"
                             },
                             "columns": [
-                                { "columnName": "Title", "displayName": "Title" },
-                                { "columnName": "Created", "displayName": "Created Date"}
+                                { "columnName": "Title", "displayName": "Title", "columnOrder":2 },
+                                { "columnName": "Created", "displayName": "Created Date", "columnOrder":1 }
+                            ]
+                        }
+    
+                    },
+                    { 
+                        "type": "gen-table",
+                        "rowspan": 1,
+                        "colspan": 1,
+                        "heading": "Sample Links List",
+                        "settings": {
+                            "source": {
+                                "webURL": "http://localhost:8080/sites/dev/SOCAFDEV",
+                                "listName": "CountryLinks"
+                            },
+                            "columns": [
+                                { "columnName": "Description", "displayName": "Description", "columnOrder":2 },
+                                { "columnName": "URL", "displayName": "URL", "columnOrder":1 }
                             ]
                         }
                     }
