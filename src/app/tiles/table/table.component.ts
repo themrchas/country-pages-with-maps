@@ -32,12 +32,12 @@ export class TableComponent implements OnInit, OnDestroy, TileComponent {
     if (this.settings.source.camlQuery) {
       const viewXml = ConfigProvider.replacePlaceholdersWithFieldValues(this.settings.source.camlQuery, country);
       obs = this.spRestService.getListItemsCamlQuery(
-        this.settings.source.webURL,
+        this.settings.source.listWeb,
         this.settings.source.listName,
         JSON.stringify({ViewXml: `${viewXml}`}),
         ConfigProvider.requestDigest);
     } else {
-      obs = this.spRestService.getListItems(this.settings.source.webURL, this.settings.source.listName,
+      obs = this.spRestService.getListItems(this.settings.source.listWeb, this.settings.source.listName,
         this.settings.source.order, this.settings.source.filter, this.settings.source.select,
         this.settings.source.expand, this.settings.source.rowLimit);
     }

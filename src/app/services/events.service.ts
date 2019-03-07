@@ -40,7 +40,7 @@ export class EventsService {
       item.endDate = moment(item.endDate);
       item.startedAfterSelectedDate = (item.eventDate > startOfSelectedDay);
       item.endedPriorToSelectedDate = (item.endDate < startOfSelectedDay);
-      item.URL = eventSource.webURL + 'Lists' + eventSource.listName +
+      item.URL = eventSource.listWeb + 'Lists' + eventSource.listName +
         '/DispForm.aspx?ID=' + item.id;
       return item;
     });
@@ -62,7 +62,7 @@ export class EventsService {
     // have the DateRangesOverlaps conditions at all.
 
     return from(viewGuids).pipe(mergeMap(viewGuid =>
-      this.spRestService.getView(eventSource.webURL,
+      this.spRestService.getView(eventSource.listWeb,
         eventSource.listName, viewGuid as string).pipe(
           catchError(error => {
             console.warn('Could not find view by GUID: ' + viewGuid);
@@ -105,7 +105,7 @@ export class EventsService {
                                 <ExpandRecurrence>TRUE</ExpandRecurrence>\
                               </QueryOptions>';
     const defaultOpts = {
-      webURL: eventSource.webURL,
+      listWeb: eventSource.listWeb,
       listName: eventSource.listName,
       spServicesJsonMapping: this._spServicesJsonMapping,
       CAMLViewFields: this._viewFields
@@ -135,7 +135,7 @@ export class EventsService {
       })
     };
 
-    return this.httpClient.get(eventSource.webURL +
+    return this.httpClient.get(eventSource.listWeb +
       '/_vti_bin/ListData.svc/' + eventSource.listName.replace(/ /g, '') + '?\
         $select=Id,Title,StartTime,EndTime,Location&\
         $orderby=StartTime&$filter=StartTime ge datetime\'' +

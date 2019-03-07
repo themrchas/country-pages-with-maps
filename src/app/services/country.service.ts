@@ -18,7 +18,7 @@ export class CountryService {
       let viewXml = ConfigProvider.settings.country.camlQueryFilterCountry as string;
       viewXml = ConfigProvider.replacePlaceholdersWithFieldValues(viewXml, { countryCode: countryCode.toUpperCase()});
 
-      return this.spRestService.getListItemsCamlQuery(ConfigProvider.settings.country.webURL,
+      return this.spRestService.getListItemsCamlQuery(ConfigProvider.settings.country.listWeb,
         ConfigProvider.settings.country.listName,
         JSON.stringify({ViewXml: `${viewXml}`}),
         ConfigProvider.requestDigest).pipe(map(resp => {
@@ -28,7 +28,7 @@ export class CountryService {
   }
 
   getCountries(): Observable<Array<Country>> {
-    return this.spRestService.getListItemsCamlQuery(ConfigProvider.settings.country.webURL,
+    return this.spRestService.getListItemsCamlQuery(ConfigProvider.settings.country.listWeb,
       ConfigProvider.settings.country.listName,
       JSON.stringify({ViewXml: `${ConfigProvider.settings.country.camlQueryAllCountries}`}),
       ConfigProvider.requestDigest).pipe(map(resp => {

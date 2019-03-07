@@ -25,6 +25,7 @@ export class TileContainerComponent implements OnInit {
   @Input() tile: any;
   @Input() country: BehaviorSubject<Country>;
   @ViewChild(TileDirective) tileDirective: TileDirective;
+  sources: Array<any>;
 
   tileTypes = {
     TABLE: 'table',
@@ -49,6 +50,14 @@ export class TileContainerComponent implements OnInit {
     const componentRef = viewContainerRef.createComponent(componentFactory);
     (componentRef.instance as TileComponent).settings = this.tile.settings;
     (componentRef.instance as TileComponent).country = this.country;
+
+    if (this.tile.settings) {
+      if (this.tile.settings.source) {
+        this.sources = [this.tile.settings.source];
+      } else {
+        this.sources = this.tile.settings.sources;
+      }
+    }
   }
 
   getTileComponent(tileType) {

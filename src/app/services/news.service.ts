@@ -40,23 +40,23 @@ export class NewsService {
 
         let asyncRequest;
         if (source.type === 'docLibrary') {
-          asyncRequest = this.spRestService.getDocuments(source.webURL, source.listName).pipe(
+          asyncRequest = this.spRestService.getDocuments(source.listWeb, source.listName).pipe(
             catchError(error => {
             return empty();
           }));
         } else if (source.type === 'list') {
-          asyncRequest = this.spRestService.getListItems(source.webURL, source.listName, source.order,
+          asyncRequest = this.spRestService.getListItems(source.listWeb, source.listName, source.order,
             source.filter, source.select, source.expand, source.rowLimit).pipe(
             catchError(error => {
             return empty();
           }));
         } else {
-          /*asyncRequest = this.httpClient.get(source.webURL + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
+          /*asyncRequest = this.httpClient.get(source.listWeb + `/_api/web/lists/GetByTitle('${source.listName}')/Items?` +
           `$filter=${approvedFilter} and ${source.dateField} ge dateTime'${startISO}'`, httpOptions).pipe(
             catchError(error => {
             return empty();
           }));*/
-          asyncRequest = this.spRestService.getListItems(source.webURL, source.listName, source.order,
+          asyncRequest = this.spRestService.getListItems(source.listWeb, source.listName, source.order,
             filter, source.select, source.expand, source.rowLimit).pipe(
               catchError(error => {
               return empty();

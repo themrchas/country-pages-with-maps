@@ -90,13 +90,13 @@ export class SpRestService {
      this.spGetHttpOptions());
   }
 
-  getContextInfo(webURL: string): Observable<Object> {
-    return this.httpClient.post(`${webURL}/_api/contextinfo`, '{}', this.spGetHttpOptions());
+  getContextInfo(listWeb: string): Observable<Object> {
+    return this.httpClient.post(`${listWeb}/_api/contextinfo`, '{}', this.spGetHttpOptions());
   }
 
   // Each site collection stores user information, and the user id can differ between site collections
-  getCurrentUser(userWebUrl: string) {
-    return this.httpClient.get(userWebUrl + '/_api/web/currentUser', this.spGetHttpOptions()).pipe(map (resp => {
+  getCurrentUser(userlistWeb: string) {
+    return this.httpClient.get(userlistWeb + '/_api/web/currentUser', this.spGetHttpOptions()).pipe(map (resp => {
           const d = resp['d'];
           return d;
       }));

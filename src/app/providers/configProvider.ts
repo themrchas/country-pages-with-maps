@@ -34,13 +34,16 @@ export class ConfigProvider {
                     ConfigProvider.requestDigest = String(rdOnPage.value);
                     resolve();
                 } else {
-                    this.httpClient.post(`${ConfigProvider.settings.country.webURL}/_api/contextinfo`, '{}', {
+                    this.httpClient.post(`${ConfigProvider.settings.country.listWeb}/_api/contextinfo`, '{}', {
                         headers: new HttpHeaders({
                           Accept: 'application/json;odata=verbose'
                         })
                     }).subscribe(contextInfo => {
                         ConfigProvider.requestDigest = contextInfo['d'].GetContextWebInformation.FormDigestValue;
                         resolve();
+                    }, error => {
+                        console.error(error);
+                        resolve();  // For now, still resolve for testing purposes
                     });
                 }
             });

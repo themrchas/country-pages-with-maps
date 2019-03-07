@@ -1,6 +1,49 @@
 <div class="card">
+  <!--<mdb-navbar SideClass="navbar navbar-light navbar-expand-lg justify-content-between">
+      <mdb-navbar-brand>
+          {{tile.heading}}
+      </mdb-navbar-brand>
+      <links>
+        <div class="dropdown" dropdown>
+          <a dropdownToggle type="button" class="nav-link"><span class="navbar-toggler-icon"></span></a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>
+              <div class="divider dropdown-divider"></div>
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
+          </div>
+        </div>
+      </links>
+  </mdb-navbar>-->
+  <mdb-navbar SideClass="navbar navbar-light navbar-expand-lg justify-content-between">
+      <mdb-navbar-brand>
+          <span>{{tile.heading}}</span>
+      </mdb-navbar-brand>
+      <links>
+          <div class="ml-auto">
+            <div class="dropdown" dropdown>
+              <a dropdownToggle type="button" class="nav-link"><span class="navbar-toggler-icon"></span></a>
+              <div *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                <section class="mb-3">
+                <h6>About</h6>  
+                <div *ngIf="tile.description; else no_description">{{tile.description}}</div>
+                <ng-template #no_description>No description for this tile</ng-template>
+              </section>
+              <section class="mb-3" *ngIf="sources">
+                <h6>Sources</h6> 
+                  <ul *ngFor="let source of sources">
+                      <li><a class="waves-light" mdbWavesEffect [href]="source.url" target="_blank">{{source.listName}}</a></li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+
+          </div>
+      </links>
+  </mdb-navbar>
+
   <div class="card-body">
-    <h5 class="card-title">{{tile.heading}}</h5>
     <ng-container tile-host></ng-container>   
   </div>
 </div>

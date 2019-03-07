@@ -1,7 +1,7 @@
 {
         "env": "low",
         "country": {
-            "webURL": "http://localhost:8080/sites/socafdev",
+            "listWeb": "http://localhost:8080/sites/socafdev",
             "listName": "CountryData",
             "camlQueryAllCountries": "<Query></Query>",
             "camlQueryFilterCountry": "<View><Query><Where><Eq><FieldRef Name='ISO_3_CountryCode'/><Value Type='Text'>{{countryCode}}</Value></Eq></Where></Query></View>"
@@ -14,7 +14,8 @@
                     { 
                         "type": "fact-box",
                         "colspan": 1,
-                        "heading": "SOCAFRICA Country Overview"
+                        "heading": "SOCAFRICA Country Overview",
+                        "description": "Various information about the selected country"
                     },
                     {
                         "type": "map",
@@ -27,9 +28,10 @@
                         "heading": "Sample List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
+                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",
                                 "listName": "SampleList",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
@@ -44,8 +46,9 @@
                         "heading": "Sample List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/SOCAFDEV",
-                                "listName": "SampleList"
+                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",
+                                "listName": "SampleList",
+                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
@@ -68,8 +71,8 @@
                                 {
                                     "sourceName": "AnnouncementsBlog",
                                     "listName": "Posts",
-                                    "webURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
-                                    "sourceURL": "http://localhost:8080/sites/socafdev/announcementsBlog",
+                                    "listWeb": "http://localhost:8080/sites/socafdev/announcementsBlog",
+                                    "url": "http://localhost:8080/sites/socafdev/announcementsBlog",
                                     "type": "blog",
                                     "displayForm": "Post.aspx",
                                     "dateField": "PublishedDate",
@@ -88,8 +91,8 @@
                             "numDays": 30,
                             "sources": [
                                 {
-                                    "webURL": "http://localhost:8080/sites/socafdev",
-                                    "calendarURL": "/sites/socafdev/lists/DevCalendar",
+                                    "listWeb": "http://localhost:8080/sites/socafdev",
+                                    "url": "/sites/socafdev/lists/DevCalendar",
                                     "listName": "DevCalendar",
                                     "defaultView": ""
                                 }
@@ -106,8 +109,9 @@
                                     "heading": "SOCAFRICA",
                                     "settings": {
                                         "source": {
-                                            "webURL": "http://localhost:8080/sites/SOCAFDEV",
-                                            "listName": "SampleList"
+                                            "listWeb": "http://localhost:8080/sites/SOCAFDEV",
+                                            "listName": "SampleList",
+                                            "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"
                                         },
                                         "columns": [
                                             { "columnName": "Title", "displayName": "Title" },
@@ -119,8 +123,9 @@
                                     "heading": "AFRICOM",
                                     "settings": {
                                         "source": {
-                                            "webURL": "http://localhost:8080/sites/SOCAFDEV",
-                                            "listName": "SampleList"
+                                            "listWeb": "http://localhost:8080/sites/SOCAFDEV",
+                                            "listName": "SampleList",
+                                            "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"
                                         },
                                         "columns": [
                                             { "columnName": "Title", "displayName": "Title" },
@@ -133,31 +138,5 @@
                     }
                 ]
             }
-        ],
-        "userWebURL": "http://localhost:8080/sites/socaf/homepage-integration",
-        "events": {
-            "infoUrl": "#",
-            "sources": [
-                {
-                    "webURL": "http://localhost:8080/sites/socaf/homepage-integration",
-                    "calendarURL": "/sites/socaf/homepage-integration/Lists/EventsCalendar",
-                    "listName": "EventsCalendar",
-                    "defaultView": "",
-                    "viewGuids": ["C4C62B78%2D677E%2D4552%2D9F42%2D16189901B4E0"],
-                    "camlQuery": "<Query><Where><And><Eq><FieldRef Name='Category' /><Value Type='Text'>Meeting</Value></Eq><DateRangesOverlap><FieldRef Name='EventDate'/><FieldRef Name='EndDate'/><FieldRef Name='RecurrenceID'/><Value Type='DateTime'><Today /></Value></DateRangesOverlap></And></Where><OrderBy><FieldRef Name='EventDate' Ascending='TRUE' /></OrderBy></Query>"
-                },
-                {
-                    "webURL": "http://localhost:8080/sites/socafdev",
-                    "calendarURL": "/sites/socafdev/lists/DevCalendar",
-                    "listName": "DevCalendar",
-                    "defaultView": ""
-                },
-                {
-                    "webURL": "http://localhost:8080/sites/socafdev",
-                    "calendarURL": "/sites/socafdev/lists/DevCalendar2",
-                    "listName": "DevCalendar2",
-                    "defaultView": ""
-                }
-            ]
-        }
+        ]
 }

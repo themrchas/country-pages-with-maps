@@ -29,12 +29,12 @@ export function createNewsItemFromSharePointResult(result: any, source: NewsSour
         resultTitle = result.Title || result.Name;
         resultText = null;
     } else if (source.type === 'list') {
-        itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}` + '&Source=' + window.location.href;
+        itemURL = `${source.listWeb}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}` + '&Source=' + window.location.href;
         resultTitle = result.Title;
         resultText = source.contentField ? $(result[source.contentField], ownerDocument).text() : null;
         // TODO: if contentField is not an HTML field, just grab it directly
     } else {
-        itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
+        itemURL = `${source.listWeb}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
         resultText = $(result.Body, ownerDocument).text();
         resultTitle = result.Title;
     }
@@ -45,20 +45,20 @@ export function createNewsItemFromSharePointResult(result: any, source: NewsSour
 export class NewsSource {
     listName: string;
     sourceName: string;
-    webURL: string;
-    sourceURL: string;
+    listWeb: string;
+    url: string;
     displayForm: string;
     dateField: string;
     contentField: string;
     type: string;  // todo: enum?
 
     // For document library sources, the folder path should be used as the listName
-    constructor(listName: string, sourceName: string, webURL: string, sourceURL: string,
+    constructor(listName: string, sourceName: string, listWeb: string, url: string,
         displayForm: string, dateField: string, type: string, contentField: string) {
         this.listName = listName;
         this.sourceName = sourceName;
-        this.webURL = webURL;
-        this.sourceURL = sourceURL;
+        this.listWeb = listWeb;
+        this.url = url;
         this.displayForm = displayForm;
         this.type = type;
         this.contentField = type;

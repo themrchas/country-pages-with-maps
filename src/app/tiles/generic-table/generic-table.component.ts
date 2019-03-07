@@ -79,13 +79,12 @@ doFilter(value: string): void  {
   ngOnInit() {
 
 
-
     this.dataSource.paginator = this.paginator;
 
 
 
     this.listItems = Array<any>();
-    this.spRestService.getListItems(this.settings.source.webURL, this.settings.source.listName,
+    this.spRestService.getListItems(this.settings.source.listWeb, this.settings.source.listName,
       this.settings.source.order, this.settings.source.filter, this.settings.source.select,
       this.settings.source.expand, this.settings.source.rowLimit).subscribe({
       next: response => {
