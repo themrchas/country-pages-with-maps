@@ -35,54 +35,51 @@ export class GenericTableComponent implements OnInit, AfterViewInit, TileCompone
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
- // @ViewChild(MatPagintor) pagintor: MatPaginator;
+ /*** modal start ***/
 
- //modal
-  tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
+ tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
+
+ /** modal end ***/ 
+
+ 
   
-  listItems: Array<any>;
-
- parsedListItems: Observable<Array<any>>;
-
-
- dataSource  = new MatTableDataSource<any>();
+  
+  //listItems: Array<any>;
 
 modal: any;
 
- // dataSource = new MatTableDataSource<Observable<Array<any>>>(this.parsedListItems);
+ 
+  /*** mat-table start ***/
 
-
-
-  /*** mat-table */
-  columnsToDisplay = ['Title','Created'];
-
-  //{columnName: "Title", displayName: "Title"}
+  //Data source used to control the tabel
+  dataSource  = new MatTableDataSource<any>();
+  
+  /* Holds the column names to be displayed in the table.  In addition, the order in which the column names appear in this array 
+  determines the left to right column sequence in table
+  Example - columnsToDisplay = ['Created','Title'];
+  */
+  columnsToDisplay: Array<string>;    
+  
+  /* Holds information for each column in table.
+  Example entry- {columnName: "Created", displayName: "Created Date", columnOrder: 1}
+  */
   matTableCols: Array<any>;
-/*
-testListItems: Array<any> = [
 
-  {title:"Entry One", Created:"12/1/2018"},
-  {title:"Entry Two", Created:"1/1/2019"}
+ //Fire off when row in table clicked
+  onRowClicked(event:any) : void {
 
-]; */
-
-onRowClicked(event:any) : void {
-
-  console.log('Row clicked with event:', event);
-  this.openTableItemDialog();
-}
-
-doFilter(value:string) : void  {
-  console.log('filtering on',value);
-  this.dataSource.filter = value.trim();
-}
-/****************************/
-
-
-  formatDate(strDate:string): void {
-
-    console.log('passed date', strDate,'converted date',moment(strDate).format('MM/DD/YYYY'));
+    console.log('Row clicked with event:', event);
+    this.openTableItemDialog();
   }
+  
+  //Used to filter rows based on user provided input
+  doFilter(value:string) : void  {
+    //console.log('filtering on',value);
+    this.dataSource.filter = value.trim();
+  }
+
+  /*** mat-table end ***/
+
   
   constructor(private spRestService: SpRestService, private dialog: MatDialog) { }
 
@@ -117,51 +114,57 @@ doFilter(value:string) : void  {
     });
   }
 
-  ngOnInit() {
+   ngOnInit() {
+      
 
-       
+
 
     this.dataSource.paginator = this.paginator;
 
-    console.log('settings are',this.settings.columns);
+    //console.log('settings are',this.settings.columns);
 
     //Get columns to display
     this.matTableCols = this.settings.columns;
-    
 
+    //console.log('matTableCols are', this.matTableCols);
 
-    this.listItems = Array<any>();
+    //Create table display column order.  This is determined by the 'columnOrder' property of each table column entry found in settings.columns
+    this.columnsToDisplay = this.matTableCols.sort((a,b) => (a.columnOrder > b.columnOrder) ? 1 : -1).map( (columnEntry) => { return columnEntry.columnName} );
+        
+   // this.listItems = Array<any>();
+   let listItems: Array<any> = Array<any>();
+
     this.spRestService.getListItems(this.settings.source.webURL, this.settings.source.listName,
       this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
-      next: response => {
-        console.log('SampleList in table.components.ts is', response);
+        next: response => {
+         
 
-        //Loop over raw resultsn
-        for (const result of response['d'].results) {
+          console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', response);
 
-       //   result.columns = [];
-       result.columns = {};
-          console.log('processing result with value',result);
-          for (const column of this.settings.columns) {
-          //  console.log('pushing', column.columnName,'with value',result[column.columnName]);
-          //  result.columns.push(result[column.columnName]);
-          
-          //  result.columns[column.columnName] = result[column.columnName]
-          result.columns[column.columnName] = (column.columnName != 'Created') ? result[column.columnName] : 
-                                                                    moment(result[column.columnName]).format('MM/DD/YYYY');
-            
-          }
-          this.listItems.push(result.columns);
-          this.formatDate(result['Created']);
+          //Loop over raw results
+          for (const result of response['d'].results) {
 
-          console.log('listItems is',this.listItems);
+            //Object that will contain columnName:value combination for each value returned in the response 
+            result.columns = {};
 
-        //  this.parsedListItems = of(this.listItems);
-        this.parsedListItems = of(this.listItems);
+            //Loop over each raw result and match the column name with its value (from response)
+            for (const column of this.settings.columns) {
 
-        this.dataSource.data = this.listItems;
-        }
-      }
+              result.columns[column.columnName] = (column.columnName != 'Created') ? result[column.columnName] :
+                moment(result[column.columnName]).format('MM/DD/YYYY');
+
+            } //for
+
+            //Add formated object to list of items to be returned
+           listItems.push(result.columns);
+    
+          } //for
+
+          //Update the table datasource info
+          this.dataSource.data = listItems;
+
+        } //next
+
     });
 
    // this.data
