@@ -4,9 +4,7 @@ import { TableComponent } from '../table/table.component';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
 import { TileComponent } from './tile.component';
-
-
-//Chas
+import { LinksComponent } from '../links/links.component';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 
 
@@ -27,8 +25,9 @@ export class TileContainerComponent implements OnInit {
     TABLE: 'table',
     NEWS: 'news',
     MAP: 'map',
+    GENTABLE: 'gen-table',
+    LINKS: 'links'
 
-   GENTABLE: 'gen-table' //Chas
   };
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
@@ -41,10 +40,11 @@ export class TileContainerComponent implements OnInit {
     } else if (this.tile.type === this.tileTypes.MAP) {
       tileComponent = MapComponent;
     }
-
-//Chas
     else if (this.tile.type === this.tileTypes.GENTABLE) { 
       tileComponent = GenericTableComponent;
+    }
+    else if (this.tile.type === this.tileTypes.LINKS) { 
+      tileComponent = LinksComponent;
     }
 
 

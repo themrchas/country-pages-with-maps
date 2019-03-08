@@ -26,6 +26,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
+import { LinksComponent } from '../tiles/links/links.component';
 import { isNgTemplate } from '@angular/compiler';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -44,7 +45,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CountryFactBoxComponent,
     MapComponent,
     GenericTableComponent, 
-    TableItemDialogComponent
+    TableItemDialogComponent,
+    LinksComponent,
   ],
   imports: [
     DashboardRoutingModule,
@@ -60,7 +62,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule
 
   ],
   providers: [

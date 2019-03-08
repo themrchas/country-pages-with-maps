@@ -116,9 +116,6 @@ modal: any;
 
    ngOnInit() {
       
-
-
-
     this.dataSource.paginator = this.paginator;
 
     //console.log('settings are',this.settings.columns);
@@ -126,7 +123,7 @@ modal: any;
     //Get columns to display
     this.matTableCols = this.settings.columns;
 
-    console.log('this.settings.columns', this.settings.columns);
+    console.log('this.settings', this.settings);
 
     //Create table display column order.  This is determined by the 'columnOrder' property of each table column entry found in settings.columns
     this.columnsToDisplay = this.matTableCols.sort((a,b) => (a.columnOrder > b.columnOrder) ? 1 : -1).map( (columnEntry) => { return columnEntry.columnName} );
@@ -138,6 +135,29 @@ modal: any;
       this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
         next: response => {
          
+          if (this.settings.source.listType == 'links') {
+
+            //Loop over raw results
+            for (const result of response['d'].results) {
+
+              //Object that will contain columnName:value combination for each value returned in the response 
+              result.columns = {};
+
+              for (const column of this.settings.columns) {
+
+                result.columns[column.columnName] = "<a href='"+result[column.columnName].Url+"'>"+result[column.columnName].Description+"</a>";
+
+              } //for
+
+              //Add formated object to list of items to be returned
+              listItems.push(result.columns);
+          
+            } //for
+
+          } //if
+
+          else {
+
 
           console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', response);
 
@@ -159,6 +179,7 @@ modal: any;
            listItems.push(result.columns);
     
           } //for
+        } //else
 
           //Update the table datasource info
           this.dataSource.data = listItems;
