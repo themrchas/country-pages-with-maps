@@ -16,6 +16,14 @@ export class LinksComponent implements OnInit {
 
   listItems: Array<any> = Array<any>();
 
+   openInTab(event: any): void {
+
+    event.preventDefault();
+    let urlTarget: string  = event.target.childNodes['0'].attributes[3].nodeValue;
+    window.open(urlTarget,'_blank');
+    
+  }
+
   constructor(private spRestService: SpRestService) { }
 
   ngOnInit() {
@@ -24,7 +32,7 @@ export class LinksComponent implements OnInit {
       this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
         next: response => {
                  
-          console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', response);
+          console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', response, 'with settings.columns',this.settings.columns);
 
           //Loop over raw results
           for (const result of response['d'].results) {
@@ -34,17 +42,19 @@ export class LinksComponent implements OnInit {
 
             for (const column of this.settings.columns) {
 
-              //Sharepoint link list returns URL as URL { Url:, Description: }
-              result.columns[column] = result['URL'].column;
-              
-              //"<a href='"+result[column.columnName].Url+"'>"+result[column.columnName].Description+"</a>";
+              console.log('result item:', result, 'and current column name',column.columnName);
 
+              //Sharepoint link list returns URL as URL { Url:, Description: }
+              result.columns[column.columnName] = result['URL'][column.columnName];
+            
             } //for
 
             //Add formated object to list of items to be returned
             this.listItems.push(result.columns);
         
           } //for
+
+          console.log('links to display are',this.listItems);
 
       
         } //next

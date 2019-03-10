@@ -69,6 +69,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ],
-  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent, TableItemDialogComponent],
+  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent, LinksComponent, TableItemDialogComponent],
 })
 export class DashboardModule { }
