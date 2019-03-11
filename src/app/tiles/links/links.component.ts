@@ -44,8 +44,8 @@ export class LinksComponent implements OnInit {
 
               console.log('result item:', result, 'and current column name',column.columnName);
 
-              //Sharepoint link list returns URL as URL { Url:, Description: }
-              result.columns[column.columnName] = result['URL'][column.columnName];
+              //Sharepoint link list returns URL as URL { Url:, Description: } ans Comments is a first level property
+              result.columns[column.columnName] = (column.columnName != 'Comments') ? result['URL'][column.columnName] : result[column.columnName];
             
             } //for
 

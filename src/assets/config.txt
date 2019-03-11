@@ -65,7 +65,7 @@
     
                     },
                     { 
-                        "type": "gen-table",
+                        "type": "links",
                         "rowspan": 1,
                         "colspan": 1,
                         "heading": "Sample Links List",
@@ -73,10 +73,13 @@
                             "source": {
                                 "webURL": "http://localhost:8080/sites/dev/SOCAFDEV",
                                 "listName": "CountryLinks"
+                                
                             },
                             "columns": [
-                                { "columnName": "Description", "displayName": "Description", "columnOrder":2 },
-                                { "columnName": "URL", "displayName": "URL", "columnOrder":1 }
+                                 { "columnName": "Url", "displayName": "Destination", "columnOrder":1 },
+                                 { "columnName": "Description", "displayName": "Description", "columnOrder":2 },
+                                 { "columnName": "Comments", "displayName": "Comments", "columnOrder":3 }
+
                             ]
                         }
                     }
