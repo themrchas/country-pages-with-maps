@@ -41,7 +41,7 @@
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
-                                { "columnName": "Created", "displayName": "Created Date"},
+                                { "columnName": "Created", "displayName": "Created Date", "type": "date"},
                                 { "columnName": "Country", "displayName": "Country", "type": "mm"}
                             ]
                         }
@@ -49,17 +49,38 @@
                     { 
                         "type": "gen-table",
                         "colspan": 2,
-                        "heading": "Sample List",
+                        "heading": "Sample Gen List",
                         "settings": {
                             "source": {
                                 "listWeb": "http://localhost:8080/sites/SOCAFDEV",
                                 "listName": "SampleList",
-                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"
+                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList",
+                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
-                                { "columnName": "Created", "displayName": "Created Date"}
+                                { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
+                                { "columnName": "Created", "displayName": "Created Date", "type": "date" },
+                                { "columnName": "Country", "displayName": "Country", "type": "mm" }
                             ]
+                        }
+    
+                    },
+                    { 
+                        "type": "links",
+                        "rowspan": 1,
+                        "colspan": 1,
+                        "heading": "Sample Links List",
+                        "settings": {
+                            "source": {
+                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",
+                                "listName": "CountryLinks"
+                                
+                            },
+                            "columnMappings": {
+                                "urlField": "Url",
+                                "commentsField": "Comments"
+                            }
                         }
                     }
                 ]

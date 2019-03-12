@@ -4,6 +4,7 @@ import { DataSource } from '../model/dataSource';
 import { ConfigProvider } from '../providers/configProvider';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,27 @@ export class DataLayerService {
       let retVal = null;
       if (resp && resp['d'] && resp['d'].results) {
         retVal = resp['d'].results;
+
+        if (columns) {
+          retVal = retVal.map(result => {
+            result.processedColumns = [];
+            // process columns
+            for (const column of columns) {
+              const colName = column.columnName;
+              if (column.type === 'mm') {
+                result.processedColumns[colName] = result[colName].Label;
+              } else if (column.type === 'date') {
+                result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
+              } else if (column.type === 'url') {
+                // does anything actually need to be processed?
+                result.processedColumns[colName] = result[colName];
+              } else {
+                result.processedColumns[colName] = result[colName];
+              }
+            }
+            return result;
+          });
+        }
       }
       return retVal;
     }));

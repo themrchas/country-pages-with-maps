@@ -13,6 +13,10 @@ import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/mate
 // List searching
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
+// Modal support
+import { MatDialogModule } from '@angular/material';
+import { TableItemDialogComponent} from '../modals/table-item-dialog/table-item-dialog.component';
+
 import { DashboardComponent } from './dashboard.component';
 import { TileContainerComponent } from '../tiles/tile/tile-container.component';
 import { UpcomingEventsComponent } from '../tiles/upcoming-events/upcoming-events.component';
@@ -31,6 +35,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
 import { SingleItemComponent } from '../tiles/single-item/single-item.component';
+import { LinksComponent } from '../tiles/links/links.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -49,7 +54,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MapComponent,
     GenericTableComponent,
     TabsComponent,
-    SingleItemComponent
+    SingleItemComponent,
+    TableItemDialogComponent,
+    LinksComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -66,6 +73,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatSortModule,
     MatFormFieldModule,
     MatInputModule,
+    MatDialogModule,
+    MatListModule,
     MatTabsModule
   ],
   providers: [
@@ -79,7 +88,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CountryFactBoxComponent,
     TabsComponent,
     UpcomingEventsComponent,
-    SingleItemComponent
+    SingleItemComponent,
+    LinksComponent,
+    TableItemDialogComponent
   ],
 })
 export class DashboardModule { }

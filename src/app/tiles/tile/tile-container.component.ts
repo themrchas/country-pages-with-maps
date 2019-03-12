@@ -8,6 +8,7 @@ import { TabsComponent } from '../tabs/tabs.component';
 
 
 // Chas
+import { LinksComponent } from '../links/links.component';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 
 
@@ -36,7 +37,9 @@ export class TileContainerComponent implements OnInit {
     GENTABLE: 'gen-table', // Chas
     TABS: 'tabs',
     UPCOMING_EVENTS: 'upcoming-events',
-    SINGLE_ITEM: 'single-item'
+    SINGLE_ITEM: 'single-item',
+    LINKS: 'links'
+
   };
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
@@ -95,6 +98,10 @@ export class TileContainerComponent implements OnInit {
       }
       case this.tileTypes.SINGLE_ITEM: {
         tileComponent = SingleItemComponent;
+        break;
+      }
+      case this.tileTypes.LINKS: {
+        tileComponent = LinksComponent;
         break;
       }
       default: {
