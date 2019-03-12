@@ -3,6 +3,8 @@ import { Input, Component, OnInit } from '@angular/core';
 import { MatListModule } from '@angular/material'
 import { SpRestService } from '../../services/sp-rest.service';
 
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+
 import * as moment from 'moment';
 
 @Component({
@@ -24,7 +26,19 @@ export class LinksComponent implements OnInit {
     
   }
 
-  constructor(private spRestService: SpRestService) { }
+
+
+  cleanUrl(iconUrl:string) :SafeStyle {
+console.log('sanitizing', iconUrl);
+let test: SafeStyle;
+       test = this.sanitizer.bypassSecurityTrustStyle(`url(${iconUrl})`);
+       console.log('test is',test);
+
+       return test;
+
+  }
+
+  constructor(private spRestService: SpRestService, private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
 
@@ -45,7 +59,12 @@ export class LinksComponent implements OnInit {
               console.log('result item:', result, 'and current column name',column.columnName);
 
               //Sharepoint link list returns URL as URL { Url:, Description: } ans Comments is a first level property
-              result.columns[column.columnName] = (column.columnName != 'Comments') ? result['URL'][column.columnName] : result[column.columnName];
+
+              
+
+             // result.columns[column.columnName] = (column.columnName != 'Comments') ? result['URL'][column.columnName] : result[column.columnName];
+             result.columns[column.columnName] = (!/Comments|iconUrl/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
+             !result.columns['iconUrl']  && (result.columns['iconUrl'] = "/assets/images/SOCAFPatch30x42.pngg");
             
             } //for
 

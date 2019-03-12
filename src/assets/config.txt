@@ -78,7 +78,8 @@
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination", "columnOrder":1 },
                                  { "columnName": "Description", "displayName": "Description", "columnOrder":2 },
-                                 { "columnName": "Comments", "displayName": "Comments", "columnOrder":3 }
+                                 { "columnName": "Comments", "displayName": "Comments", "columnOrder":3 },
+                                 { "columnName": "iconUrl", "displayName": "iconUrl", "columnOrder":4 }
 
                             ]
                         }
