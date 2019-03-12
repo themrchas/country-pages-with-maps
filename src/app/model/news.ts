@@ -1,28 +1,22 @@
-import * as moment from 'moment';
 import * as $ from 'jquery';
+import * as moment from 'moment';
+import { DataSource } from './dataSource';
 
 export class NewsItem {
-    title: string;
-    body: string;
-    url: string;
-    source: NewsSource;
-    date: any;
     friendlyDate: any;
 
-    constructor(title: string, body: string, url: string, source: NewsSource, date: any) {
-        this.title = title;
-        this.body = body;
-        this.source = source;
-        this.date = date;
-        this.url = url;
+    constructor(public title: string,
+        public body: string,
+        public url: string,
+        public source: DataSource,
+        public date: any) {
         this.friendlyDate = moment(date).format('DD MMM').toUpperCase();
     }
-
 }
 
 const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
-export function createNewsItemFromSharePointResult(result: any, source: NewsSource) {
+export function createNewsItemFromSharePointResult(result: any, source: DataSource, columns?: Array<any>) {
     let newsItem, itemURL, resultText, resultTitle;
     if (source.type === 'docLibrary') {
         itemURL = result.ServerRelativeUrl;
@@ -40,27 +34,4 @@ export function createNewsItemFromSharePointResult(result: any, source: NewsSour
     }
     newsItem = new NewsItem(resultTitle, resultText, itemURL, source, moment(result[source.dateField]));
     return newsItem;
-}
-
-export class NewsSource {
-    listName: string;
-    sourceName: string;
-    listWeb: string;
-    url: string;
-    displayForm: string;
-    dateField: string;
-    contentField: string;
-    type: string;  // todo: enum?
-
-    // For document library sources, the folder path should be used as the listName
-    constructor(listName: string, sourceName: string, listWeb: string, url: string,
-        displayForm: string, dateField: string, type: string, contentField: string) {
-        this.listName = listName;
-        this.sourceName = sourceName;
-        this.listWeb = listWeb;
-        this.url = url;
-        this.displayForm = displayForm;
-        this.type = type;
-        this.contentField = type;
-    }
 }

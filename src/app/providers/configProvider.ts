@@ -9,14 +9,6 @@ export class ConfigProvider {
 
     constructor(private httpClient: HttpClient) {}
 
-    static replacePlaceholdersWithFieldValues(str: string, item) {
-        const matchedItems = str.match(/(?<=\{\{)(.*?)(?=\}\})/g);
-        for (const matchedItem of matchedItems) {
-            str = str.replace(`{{${matchedItem}}}`, item[matchedItem]);
-        }
-        return str;
-    }
-
     load() {
       const jsonFile = 'assets/config.txt';
         return new Promise<void>((resolve, reject) => {

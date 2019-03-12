@@ -12,10 +12,16 @@
                 "topicId": "overview",
                 "tiles": [
                     { 
-                        "type": "fact-box",
+                        "type": "single-item",
                         "colspan": 1,
                         "heading": "SOCAFRICA Country Overview",
-                        "description": "Various information about the selected country"
+                        "description": "Various information about the selected country",
+                        "settings": {
+                            "columns": [
+                                { "columnName": "countryMM", "displayName": "Country"},
+                                { "columnName": "region", "displayName": "Region" }
+                            ]
+                        }
                     },
                     {
                         "type": "map",
@@ -69,7 +75,7 @@
                         "settings": {
                             "sources": [
                                 {
-                                    "sourceName": "AnnouncementsBlog",
+                                    "displayName": "AnnouncementsBlog",
                                     "listName": "Posts",
                                     "listWeb": "http://localhost:8080/sites/socafdev/announcementsBlog",
                                     "url": "http://localhost:8080/sites/socafdev/announcementsBlog",

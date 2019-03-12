@@ -15,6 +15,7 @@ import { Country } from '../../model/country';
 import { BehaviorSubject } from 'rxjs';
 import { CountryFactBoxComponent } from '../country-fact-box/country-fact-box.component';
 import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.component';
+import { SingleItemComponent } from '../single-item/single-item.component';
 
 @Component({
   selector: 'app-tile',
@@ -34,7 +35,8 @@ export class TileContainerComponent implements OnInit {
     FACTBOX: 'fact-box',
     GENTABLE: 'gen-table', // Chas
     TABS: 'tabs',
-    UPCOMING_EVENTS: 'upcoming-events'
+    UPCOMING_EVENTS: 'upcoming-events',
+    SINGLE_ITEM: 'single-item'
   };
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
@@ -89,6 +91,10 @@ export class TileContainerComponent implements OnInit {
       }
       case this.tileTypes.UPCOMING_EVENTS: {
         tileComponent = UpcomingEventsComponent;
+        break;
+      }
+      case this.tileTypes.SINGLE_ITEM: {
+        tileComponent = SingleItemComponent;
         break;
       }
       default: {

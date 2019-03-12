@@ -25,8 +25,8 @@ export function createCountryFromSharePointResult(result: any) {
 
 export function createCountryArrayFromSharePointResponse(resp) {
     let retVal: Array<Country>;
-    if (resp && resp['d'] && resp['d'].results) {
-        retVal = resp['d'].results.map(createCountryFromSharePointResult);
+    if (resp) {
+        retVal = resp.map(createCountryFromSharePointResult);
     } else {
         console.error('Unable to retrieve countries from SP response');
         retVal = new Array<Country>();

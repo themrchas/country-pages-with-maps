@@ -5,6 +5,8 @@ import { TileComponent } from '../tile/tile.component';
 import { BehaviorSubject } from 'rxjs';
 import { ConfigProvider } from '../../providers/configProvider';
 import { CountryService } from '../../services/country.service';
+import { DataSource } from '../../model/dataSource';
+import { DataLayerService } from '../../services/data-layer.service';
 
 @Component({
   selector: 'app-table',
@@ -16,7 +18,7 @@ export class TableComponent implements OnInit, OnDestroy, TileComponent {
   @Input() country: BehaviorSubject<Country>;
   listItems: Array<any>;
   subscription: any;
-  constructor(private spRestService: SpRestService, private countryService: CountryService) { }
+  constructor(private dataLayerService: DataLayerService, private countryService: CountryService) { }
 
   ngOnInit() {
     this.subscription = this.countryService.selectedCountry.subscribe(newCountry => {
@@ -29,22 +31,13 @@ export class TableComponent implements OnInit, OnDestroy, TileComponent {
     this.listItems = Array<any>();
 
     // Check if the source settings use a caml query otherwise use a filter
-    if (this.settings.source.camlQuery) {
-      const viewXml = ConfigProvider.replacePlaceholdersWithFieldValues(this.settings.source.camlQuery, country);
-      obs = this.spRestService.getListItemsCamlQuery(
-        this.settings.source.listWeb,
-        this.settings.source.listName,
-        JSON.stringify({ViewXml: `${viewXml}`}),
-        ConfigProvider.requestDigest);
-    } else {
-      obs = this.spRestService.getListItems(this.settings.source.listWeb, this.settings.source.listName,
-        this.settings.source.order, this.settings.source.filter, this.settings.source.select,
-        this.settings.source.expand, this.settings.source.rowLimit);
-    }
+    this.settings.source.replaceItem = country;
+    obs = this.dataLayerService.getItemsFromSource(this.settings.source as DataSource,
+      country);
 
     obs.subscribe({
-      next: response => {
-        for (const result of response['d'].results) {
+      next: results => {
+        for (const result of results) {
           result.columns = [];
           for (const column of this.settings.columns) {
             let colStr = result[column.columnName];

@@ -30,6 +30,7 @@ import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
+import { SingleItemComponent } from '../tiles/single-item/single-item.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -47,7 +48,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CountryFactBoxComponent,
     MapComponent,
     GenericTableComponent,
-    TabsComponent
+    TabsComponent,
+    SingleItemComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -76,7 +78,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GenericTableComponent,
     CountryFactBoxComponent,
     TabsComponent,
-    UpcomingEventsComponent
+    UpcomingEventsComponent,
+    SingleItemComponent
   ],
 })
 export class DashboardModule { }
