@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../services/country.service';
-import {BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Country } from '../model/country';
 import { TopicService } from '../services/topic.service';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,26 +27,41 @@ export class DashboardComponent implements OnInit {
     this.selectedCountry = this.countryService.selectedCountry;
     this.selectedTopic = this.topicService.selectedTopic;
 
-    this.topicService.selectedTopic.subscribe(topic => {
-      if (topic !== null) {
-        // Dynamically determine how many rows we need and which tiles per row
-        // TODO: this happens every time the topic changes, maybe we should only
-        // do this when the topic loads the first time, and keep them loaded?
+    combineLatest(this.selectedCountry, this.selectedTopic).subscribe(combined => {
+      const country = combined[0];
+      const topic = combined[1];
+
+      if (country && topic) {
         let currColCountForRow = 0;
-        const tempRows = [[]];  // Each row will have an array of tiles
-        for (const tile of topic.tiles) {
-          if (currColCountForRow === 3 || tile.colspan + currColCountForRow > 3) {
-            // Create new row
-            tempRows.push([]);
-            currColCountForRow = 0;
+        const tempRows = [[]];  // Each row will have an array of tiles, tiles can span 1-3 cols
+        for (const item of topic.tiles) {
+          const tile = Object.assign({}, item);
+          // countries can have customized tiles
+          if (this.displayTileForCountry(tile, country)) {
+            if (currColCountForRow === 3 || tile.colspan + currColCountForRow > 3) {
+              // Create new row
+              tempRows.push([]);
+              currColCountForRow = 0;
+            }
+            // Countries can have customized sources per tile
+            if (tile.customSettings && tile.customSettings[country.countryCode3]) {
+              tile.settings = tile.customSettings[country.countryCode3];
+            }
+            tempRows[tempRows.length - 1].push(tile);
+            currColCountForRow += tile.colspan;
           }
-          tempRows[tempRows.length - 1].push(tile);
-          currColCountForRow += tile.colspan;
         }
         this.rows = tempRows;
       }
     });
+  }
 
+  displayTileForCountry(tile, country: Country): boolean {
+    let retVal = true;
+    if (tile.displayForCountries && country) {
+      retVal = tile.displayForCountries.includes(country.countryCode3);
+    }
+    return retVal;
   }
 
 }

@@ -37,7 +37,7 @@ export class TodayEventsComponent implements OnInit, TileComponent {
 
     from(ConfigProvider.settings.events.sources).pipe(mergeMap(eventSource => {
       const camlQuery = eventSource['camlQuery'];
-      return this.eventsService.getEventsForSelectedDay(isoDateString, eventSource, camlQuery);
+      return this.eventsService.getEventsForRange(isoDateString, eventSource, camlQuery);
     })).subscribe({
       next: x => {
         tempEvents = tempEvents.concat(x);

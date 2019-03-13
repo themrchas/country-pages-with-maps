@@ -21,7 +21,8 @@
                                 { "columnName": "countryMM", "displayName": "Country"},
                                 { "columnName": "region", "displayName": "Region" }
                             ]
-                        }
+                        },
+                        "displayForCountries": ["DEU", "GHA"]
                     },
                     {
                         "type": "map",
@@ -32,6 +33,19 @@
                         "type": "table",
                         "colspan": 1,
                         "heading": "Sample List",
+                        "customSettings": {
+                            "DEU": {
+                                "source": {
+                                    "listWeb": "http://localhost:8080/sites/SOCAFDEV",
+                                    "listName": "CountryLinks",
+                                    "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/CountryLinks"
+                                },
+                                "columns": [
+                                    { "columnName": "Title", "displayName": "Title" },
+                                    { "columnName": "Modified", "displayName": "Modified Date", "type": "date"}
+                                ]
+                            }
+                        },
                         "settings": {
                             "source": {
                                 "listWeb": "http://localhost:8080/sites/SOCAFDEV",
@@ -74,8 +88,8 @@
                         "settings": {
                             "source": {
                                 "listWeb": "http://localhost:8080/sites/SOCAFDEV",
-                                "listName": "CountryLinks"
-                                
+                                "listName": "CountryLinks",
+                                "url": "http://localhost:8080/sites/SOCAFDEV/Lists/CountryLinks"
                             },
                             "columnMappings": {
                                 "urlField": "Url",

@@ -8,7 +8,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<SharePoint:CssRegistration Name="default" runat="server"/>
 		<title>SOCAFRICA Country Pages</title>
-	  	<base href="http://ekm-sp13/sites/socafdev/SiteAssets/CountryPages/">
+	  	<base href="http://ekm-sp13/sites/socafdev/SiteAssets/CountryPages/index.aspx">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
 	  	<link href="favicon.ico" rel="shortcut icon" type="image/ico">
 	  	

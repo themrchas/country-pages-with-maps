@@ -21,7 +21,7 @@ export class TableComponent implements OnInit, OnDestroy, TileComponent {
   constructor(private dataLayerService: DataLayerService, private countryService: CountryService) { }
 
   ngOnInit() {
-    this.subscription = this.countryService.selectedCountry.subscribe(newCountry => {
+    this.subscription = this.country.subscribe(newCountry => {
       this.loadListItems(newCountry);
     });
   }

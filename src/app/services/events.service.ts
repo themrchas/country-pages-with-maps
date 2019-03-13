@@ -83,11 +83,11 @@ export class EventsService {
           } else {
             viewQuery = viewQuery.replace('<Month />', '<Today/>');
           }
-          return this.getEventsForSelectedDay(start, viewQuery);
+          return this.getEventsForRange(start, viewQuery);
         }));
   }
 
-  getEventsForSelectedDay(start, eventSource, query?: string): Observable<any> {
+  getEventsForRange(start, eventSource, query?: string, recurrenceRange = 'Today'): Observable<any> {
     const camlQuery = query ? query : '<Query>\
                         <Where>\
                             <DateRangesOverlap>\

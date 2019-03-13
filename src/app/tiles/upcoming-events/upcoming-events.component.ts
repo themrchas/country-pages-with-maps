@@ -1,10 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { EventsService } from '../../services/events.service';
-import { ConfigProvider } from '../../providers/configProvider';
 import * as moment from 'moment';
-import * as _ from 'lodash';
 import { from, BehaviorSubject } from 'rxjs';
-import { mergeMap, catchError } from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 import { TileComponent } from '../tile/tile.component';
 import { Country } from '../../model/country';
 
@@ -13,13 +11,21 @@ import { Country } from '../../model/country';
   templateUrl: './upcoming-events.component.html',
   styleUrls: ['./upcoming-events.component.css']
 })
-export class UpcomingEventsComponent implements OnInit, TileComponent {
+export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent {
   @Input() settings: any;
   @Input() country: BehaviorSubject<Country>;
   upcomingEvents: Array<any>;
+  subscription: any;
   constructor( private eventsService: EventsService ) { }
 
   ngOnInit() {
+    this.subscription = this.country.subscribe(selectedCountry => {
+      this.loadEvents(selectedCountry);
+    });
+
+  }
+
+  loadEvents(country) {
     let tempEvents = new Array<any>();
 
     from(this.settings.sources).pipe(mergeMap(eventSource => {
@@ -30,14 +36,29 @@ export class UpcomingEventsComponent implements OnInit, TileComponent {
             tempEvents = tempEvents.concat(x);
           }
         },
-        complete: () => this.upcomingEvents = _.sortBy(tempEvents, 'StartTime')
+        complete: () => this.upcomingEvents = tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1)
     });
+
+    /* from(this.settings.sources).pipe(mergeMap(eventSource => {
+      return this.eventsService.getEventsForRange(moment().startOf('day').toISOString(),
+        eventSource, undefined, 'Month');
+    })).subscribe({next: x => {
+          if (x && x.length > 0) {
+            tempEvents = tempEvents.concat(x);
+          }
+        },
+        complete: () => this.upcomingEvents = tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1)
+    }); */
 
   }
 
   // To Do: Tie in with Modal?
   onItemClicked(event: any) {
     this.eventsService.openEvent(event);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
 
