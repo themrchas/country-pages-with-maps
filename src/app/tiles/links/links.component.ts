@@ -16,8 +16,12 @@ export class LinksComponent implements OnInit {
 
   @Input() settings: any;
 
+  readonly defaultBackgroundColor:string ="#BEBEBE";
+  readonly defaultIconUrl:string ="/assets/images/links-images/info42x42.png";
+
   listItems: Array<any> = Array<any>();
 
+  //Open chsoen link in a new browser tab
    openInTab(event: any): void {
 
     event.preventDefault();
@@ -26,17 +30,7 @@ export class LinksComponent implements OnInit {
     
   }
 
-
-
-  cleanUrl(iconUrl:string) :SafeStyle {
-console.log('sanitizing', iconUrl);
-let test: SafeStyle;
-       test = this.sanitizer.bypassSecurityTrustStyle(`url(${iconUrl})`);
-       console.log('test is',test);
-
-       return test;
-
-  }
+ 
 
   constructor(private spRestService: SpRestService, private sanitizer:DomSanitizer) { }
 
@@ -58,15 +52,15 @@ let test: SafeStyle;
 
               console.log('result item:', result, 'and current column name',column.columnName);
 
-              //Sharepoint link list returns URL as URL { Url:, Description: } ans Comments is a first level property
-
-              
-
-             // result.columns[column.columnName] = (column.columnName != 'Comments') ? result['URL'][column.columnName] : result[column.columnName];
-             result.columns[column.columnName] = (!/Comments|iconUrl/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
-             !result.columns['iconUrl']  && (result.columns['iconUrl'] = "/assets/images/SOCAFPatch30x42.pngg");
+              //Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl, and backgroundColor are a first level property
+             result.columns[column.columnName] = (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
+             
             
             } //for
+
+            //Set default values as required
+            !result.columns['iconUrl']  && (result.columns['iconUrl'] = this.defaultIconUrl);
+            !result.columns['backgroundColor'] && (result.columns['backgroundColor'] = this.defaultBackgroundColor);
 
             //Add formated object to list of items to be returned
             this.listItems.push(result.columns);

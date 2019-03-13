@@ -36,8 +36,8 @@
     background-repeat: no-repeat;
     background-position: center;
 
-    background-color:cornflowerblue;
-    border-radius: 2px;
+   /* background-color:cornflowerblue; */
+    border-radius: 4px;
     /* border-right:dashed; */
 }
 

@@ -1,57 +1,32 @@
 
  <mat-card-content>
-   <perfect-scrollbar style="height:230px"> 
-<!-- <mat-nav-list> -->
-  <!--  <div [ngStyle]="{'background-image': 'url(' + '/assets/images/SOCAF Patch 30 x 42.png' + ')' }" >Butthead</div> -->
-  <!-- <div [ngStyle]="{'background-image': 'url(' + '/assets/images/background2.jpg' + ')' }" >Butthead</div> 
-   <div style="width:100px; height:100px; background-color:royalblue;" [ngStyle]="{'background-image': 'url(' + '/assets/images/SOCAFPatch30x42.png' + ')' }" >Butthead</div> -->
-
-
- <mat-list> 
-   
-   
-    
-
-
-   <ng-container *ngFor="let link of listItems"> 
-     
-    
-
-
-
+  <perfect-scrollbar style="height:230px">
+  
+    <mat-list>
+  
+      <ng-container *ngFor="let link of listItems">
+  
         <div mat-list-item class="container">
-
-            <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ')' }" ></div>
-        <!-- <div class="icon" [style.background-image]="cleanUrl(link.iconUrl)" ></div> -->
-        <!-- <div class="icon"  ></div> -->
+  
+        <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ')','background-color': link.backgroundColor  }"></div> 
+       <!-- <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ') ' }"></div> -->
+  
           <div class="link">
-              <a href="{{link.Url}}" (click)="openInTab($event)">{{link.Description}}</a>
+            <a href="{{link.Url}}" (click)="openInTab($event)">{{link.Description}}</a>
           </div>
-
+  
           <div class="description">
             {{link.Comments}}
-
+  
           </div>
-        
-        
+  
+  
         </div>
-    
-  <!--  </mat-list-item> -->
-    <!--
-    <a mat-list-item href="{{link.Url}}" (click)="openInTab($event)">{{link.Description}}</a>
-    -->
-   
-
-   <!--  <div class="container"> 
-
-
-
-    </div> -->
-   
- </ng-container> 
-
-
-<!-- </mat-nav-list> -->
-</mat-list> 
-</perfect-scrollbar> 
+  
+  
+      </ng-container>
+  
+  
+    </mat-list>
+  </perfect-scrollbar>
 </mat-card-content>
