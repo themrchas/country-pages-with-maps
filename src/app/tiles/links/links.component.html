@@ -1,7 +1,32 @@
-<mat-nav-list>
-  <ng-container *ngFor="let link of listItems">
+
+ <mat-card-content>
+  <perfect-scrollbar style="height:230px">
   
-    <a mat-list-item href="{{link.Url}}" (click)="openInTab($event)">{{link.Description}}</a>
+    <mat-list>
   
-  </ng-container>
-</mat-nav-list>
+      <ng-container *ngFor="let link of listItems">
+  
+        <div mat-list-item class="container">
+  
+        <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ')','background-color': link.backgroundColor  }"></div> 
+       <!-- <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ') ' }"></div> -->
+  
+          <div class="link">
+            <a href="{{link.Url}}" (click)="openInTab($event)">{{link.Description}}</a>
+          </div>
+  
+          <div class="description">
+            {{link.Comments}}
+  
+          </div>
+  
+  
+        </div>
+  
+  
+      </ng-container>
+  
+  
+    </mat-list>
+  </perfect-scrollbar>
+</mat-card-content>

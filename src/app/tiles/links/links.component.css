@@ -1,0 +1,43 @@
+.container {
+    display:grid;
+    grid-template-columns: 50px 7px auto;
+    grid-template-rows: 20px 25px 10px;
+    
+
+    /* border:solid blueviolet; */
+}
+
+.link {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    grid-column-end: 4;
+    grid-row-end:2;
+    justify-items: start;
+    
+}
+
+.description {
+    grid-column-start: 3;
+    grid-row-start: 2;
+    grid-row-end:3;
+    grid-column-end: 4;
+    font-size:11px;
+    
+
+}
+
+.icon {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end:3;
+
+   /* background-image: url("/assets/images/SOCAF Patch 30 x 42.png"); */
+    background-repeat: no-repeat;
+    background-position: center;
+
+   /* background-color:cornflowerblue; */
+    border-radius: 4px;
+    /* border-right:dashed; */
+}
+

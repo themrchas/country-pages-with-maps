@@ -3,6 +3,8 @@ import { Input, Component, OnInit } from '@angular/core';
 import { MatListModule } from '@angular/material'
 import { SpRestService } from '../../services/sp-rest.service';
 
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+
 import * as moment from 'moment';
 
 @Component({
@@ -14,8 +16,12 @@ export class LinksComponent implements OnInit {
 
   @Input() settings: any;
 
+  readonly defaultBackgroundColor:string ="#BEBEBE";
+  readonly defaultIconUrl:string ="/assets/images/links-images/info42x42.png";
+
   listItems: Array<any> = Array<any>();
 
+  //Open chsoen link in a new browser tab
    openInTab(event: any): void {
 
     event.preventDefault();
@@ -24,7 +30,9 @@ export class LinksComponent implements OnInit {
     
   }
 
-  constructor(private spRestService: SpRestService) { }
+ 
+
+  constructor(private spRestService: SpRestService, private sanitizer:DomSanitizer) { }
 
   ngOnInit() {
 
@@ -44,10 +52,15 @@ export class LinksComponent implements OnInit {
 
               console.log('result item:', result, 'and current column name',column.columnName);
 
-              //Sharepoint link list returns URL as URL { Url:, Description: }
-              result.columns[column.columnName] = result['URL'][column.columnName];
+              //Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl, and backgroundColor are a first level property
+             result.columns[column.columnName] = (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
+             
             
             } //for
+
+            //Set default values as required
+            !result.columns['iconUrl']  && (result.columns['iconUrl'] = this.defaultIconUrl);
+            !result.columns['backgroundColor'] && (result.columns['backgroundColor'] = this.defaultBackgroundColor);
 
             //Add formated object to list of items to be returned
             this.listItems.push(result.columns);
