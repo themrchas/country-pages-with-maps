@@ -6,12 +6,12 @@
                 <h2 class="toolbar-title">Country Pages</h2>
             </mat-toolbar-row>
         </mat-toolbar>
-        <ng-container *ngIf="selectedCountry | async as selectedCountry">
+        <ng-container>
             <mat-nav-list>
-                <ng-container *ngFor="let topic of topics | keyvalue" >
-                <a mat-list-item [routerLink]="['/country', selectedCountry.countryCode3, topic.value.topicId]" routerLinkActive="active-route">
+                <ng-container *ngFor="let topic of topics" >
+                <a mat-list-item [routerLink]="[]" [queryParams]="{ topic: topic.topicId }" routerLinkActive="active-route">
                     <mat-icon matListIcon class="app-nav-list-icon"></mat-icon>
-                    {{topic.value.name}}
+                    {{topic.name}}
                 </a>
             </ng-container>
             

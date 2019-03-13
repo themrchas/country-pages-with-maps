@@ -42,19 +42,34 @@ export class SpRestService {
     };
   }
 
-  getListItems(listWeb: string, listName: string, order?: string, filter?: string, rowLimit?: number): Observable<Object>  {
+  getListItems(listWeb: string,
+        listName: string,
+        order?: string,
+        filter?: string,
+        select?: string,
+        expand?: string,
+        rowLimit?: number): Observable<any>  {
+
     let reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/items`;
-    reqUrl += order || filter || rowLimit ? '?' : '';
+    reqUrl += order || filter || rowLimit || select || expand ? '?' : '';
     if (order) {
       reqUrl += '&$orderby=' + order;
     }
     if (filter) {
       reqUrl += order ? '&' : '';
-      reqUrl += '&$filter=' + filter;
+      reqUrl += '$filter=' + filter;
+    }
+    if (select) {
+      reqUrl += order || filter ? '&' : '';
+      reqUrl += '$select=' + select;
+    }
+    if (expand) {
+      reqUrl += order || expand ? '&' : '';
+      reqUrl += '$expand=' + expand;
     }
     if (rowLimit) {
-      reqUrl += order || filter ? '&' : '';
-      reqUrl += '&$top=' + rowLimit;
+      reqUrl += order || filter || select ? '&' : '';
+      reqUrl += '$top=' + rowLimit;
     }
 
     return this.httpClient.get(reqUrl, this.spGetHttpOptions());
@@ -75,13 +90,13 @@ export class SpRestService {
      this.spGetHttpOptions());
   }
 
-  getContextInfo(webURL: string): Observable<Object> {
-    return this.httpClient.post(`${webURL}/_api/contextinfo`, '{}', this.spGetHttpOptions());
+  getContextInfo(listWeb: string): Observable<Object> {
+    return this.httpClient.post(`${listWeb}/_api/contextinfo`, '{}', this.spGetHttpOptions());
   }
 
   // Each site collection stores user information, and the user id can differ between site collections
-  getCurrentUser(userWebUrl: string) {
-    return this.httpClient.get(userWebUrl + '/_api/web/currentUser', this.spGetHttpOptions()).pipe(map (resp => {
+  getCurrentUser(userlistWeb: string) {
+    return this.httpClient.get(userlistWeb + '/_api/web/currentUser', this.spGetHttpOptions()).pipe(map (resp => {
           const d = resp['d'];
           return d;
       }));

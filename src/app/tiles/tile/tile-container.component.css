@@ -1,4 +1,45 @@
-mat-card {
-    height: calc(100% - 40px);
-    margin-top: 5px;
+.card {
+    height: 100%;
+}
+
+.card-body {
+    padding-top: .5rem;
+}
+
+.nav-link {
+    padding: 0;
+}
+
+
+.dropdown .dropdown-menu {
+    -webkit-transform: translate3d(-175px, 25px, 0px);
+    transform: translate3d(-170px, 25px, 0px);
+    width: 200px;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    font-size: .8em;
+    padding: 1rem;
+}
+
+.dropdown-menu ul {
+    margin: 0;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.dropdown-menu a {
+    padding: 0;
+    font-size: 1em;
+    color: #007bff;
+}
+
+.dropdown .dropdown-item {
+    white-space: normal;
+}
+
+:host ::ng-deep nav .container {
+    padding: 0;
+}
+
+:host ::ng-deep .navbar {
+    box-shadow: none;
 }

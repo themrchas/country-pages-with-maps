@@ -4,33 +4,41 @@ import { ConfigProvider } from '../providers/configProvider';
 import { Country, createCountryArrayFromSharePointResponse } from '../model/country';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DataSource, replacePlaceholdersWithFieldValues } from '../model/dataSource';
+import { DataLayerService } from './data-layer.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
+  countrySource: any;
   selectedCountry = new BehaviorSubject<Country>(null);
 
-  constructor(private spRestService: SpRestService) {}
+  constructor(private dataLayerService: DataLayerService) {
+    this.countrySource = ConfigProvider.settings.country;
+  }
 
   // Use ISO 3 for country code
   getCountry(countryCode): Observable<Country> {
-    const filter = `ISO_3_CountryCode eq '${countryCode.toUpperCase()}'`;
-    return this.spRestService.getListItems(ConfigProvider.settings.country.webURL,
-      ConfigProvider.settings.country.listName, null, filter, 1).pipe(map(resp => {
-        const respArray = createCountryArrayFromSharePointResponse(resp);
-        return respArray.length > 0 ? respArray[0] : null;
-      }));
+      this.countrySource.camlQuery = this.countrySource.camlQueryFilterCountry;
+      const filterObj = { countryCode: countryCode.toUpperCase()};
+
+      return this.dataLayerService.getItemsFromSource(this.countrySource,
+        filterObj).pipe(map(resp => {
+          const respArray = createCountryArrayFromSharePointResponse(resp);
+          return respArray.length > 0 ? respArray[0] : null;
+        }));
   }
 
   getCountries(): Observable<Array<Country>> {
-    return this.spRestService.getListItems(ConfigProvider.settings.country.webURL,
-      ConfigProvider.settings.country.listName).pipe(map(resp => {
+    this.countrySource.camlQuery = this.countrySource.camlQueryAllCountries;
+
+    return this.dataLayerService.getItemsFromSource(this.countrySource as DataSource).pipe(map(resp => {
         return createCountryArrayFromSharePointResponse(resp);
     }));
   }
 
   changeCountry(countryCode: string) {
-    this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
+      this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
   }
 }

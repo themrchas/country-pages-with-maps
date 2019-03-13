@@ -40,7 +40,7 @@ export class EventsService {
       item.endDate = moment(item.endDate);
       item.startedAfterSelectedDate = (item.eventDate > startOfSelectedDay);
       item.endedPriorToSelectedDate = (item.endDate < startOfSelectedDay);
-      item.URL = eventSource.webURL + 'Lists' + eventSource.listName +
+      item.URL = eventSource.listWeb + 'Lists' + eventSource.listName +
         '/DispForm.aspx?ID=' + item.id;
       return item;
     });
@@ -62,7 +62,7 @@ export class EventsService {
     // have the DateRangesOverlaps conditions at all.
 
     return from(viewGuids).pipe(mergeMap(viewGuid =>
-      this.spRestService.getView(eventSource.webURL,
+      this.spRestService.getView(eventSource.listWeb,
         eventSource.listName, viewGuid as string).pipe(
           catchError(error => {
             console.warn('Could not find view by GUID: ' + viewGuid);
@@ -83,11 +83,11 @@ export class EventsService {
           } else {
             viewQuery = viewQuery.replace('<Month />', '<Today/>');
           }
-          return this.getEventsForSelectedDay(start, viewQuery);
+          return this.getEventsForRange(start, viewQuery);
         }));
   }
 
-  getEventsForSelectedDay(start, eventSource, query?: string): Observable<any> {
+  getEventsForRange(start, eventSource, query?: string, recurrenceRange = 'Today'): Observable<any> {
     const camlQuery = query ? query : '<Query>\
                         <Where>\
                             <DateRangesOverlap>\
@@ -105,7 +105,7 @@ export class EventsService {
                                 <ExpandRecurrence>TRUE</ExpandRecurrence>\
                               </QueryOptions>';
     const defaultOpts = {
-      webURL: eventSource.webURL,
+      listWeb: eventSource.listWeb,
       listName: eventSource.listName,
       spServicesJsonMapping: this._spServicesJsonMapping,
       CAMLViewFields: this._viewFields
@@ -135,10 +135,10 @@ export class EventsService {
       })
     };
 
-    return this.httpClient.get(eventSource.webURL +
+    return this.httpClient.get(eventSource.listWeb +
       '/_vti_bin/ListData.svc/' + eventSource.listName.replace(/ /g, '') + '?\
-        $select=Id,Title,StartTime,EndTime&\
-        $orderby=StartTime&$filter=ShowOnHomepage eq true and StartTime ge datetime\'' +
+        $select=Id,Title,StartTime,EndTime,Location&\
+        $orderby=StartTime&$filter=StartTime ge datetime\'' +
         startISO + '\' and StartTime le datetime\'' + endISO + '\'', httpOptions).pipe(map (resp => {
             const d = resp['d'];
             const results = d['results'];
@@ -155,7 +155,7 @@ export class EventsService {
                 if (isSameDay) {
                   item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase();
                 } else if (isSameMonth) {
-                  item.friendlyDate = item.StartTime.format('DD') + '-' + item.EndTime.format('DD') + '' +
+                  item.friendlyDate = item.StartTime.format('DD') + '-' + item.EndTime.format('DD') + ' ' +
                     item.StartTime.format('MMM').toUpperCase();
                 } else {
                   item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase() + '-' + item.EndTime.format('DD MMM').toUpperCase();

@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatCardModule, MatListModule, MatButtonModule, MatMenuModule, MatToolbarModule, MatGridListModule } from '@angular/material';
+import { MatCardModule,
+  MatListModule,
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatGridListModule,
+  MatTabsModule } from '@angular/material';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 
-//List searching
+// List searching
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
-//Modal support
-import { MatDialogModule }  from '@angular/material';
+// Modal support
+import { MatDialogModule } from '@angular/material';
 import { TableItemDialogComponent} from '../modals/table-item-dialog/table-item-dialog.component';
 
 import { DashboardComponent } from './dashboard.component';
@@ -19,15 +25,17 @@ import { NewsComponent } from '../tiles/news/news.component';
 import { TableComponent } from '../tiles/table/table.component';
 import { CountryFactBoxComponent } from '../tiles/country-fact-box/country-fact-box.component';
 import { MapComponent } from '../tiles/map/map.component';
+import { TabsComponent } from '../tiles/tabs/tabs.component';
 
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
+import { SingleItemComponent } from '../tiles/single-item/single-item.component';
 import { LinksComponent } from '../tiles/links/links.component';
-import { isNgTemplate } from '@angular/compiler';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -44,13 +52,16 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TableComponent,
     CountryFactBoxComponent,
     MapComponent,
-    GenericTableComponent, 
+    GenericTableComponent,
+    TabsComponent,
+    SingleItemComponent,
     TableItemDialogComponent,
-    LinksComponent,
+    LinksComponent
   ],
   imports: [
     DashboardRoutingModule,
     CommonModule,
+    MDBBootstrapModule.forRoot(),
     MatCardModule,
     MatButtonModule,
     MatListModule,
@@ -63,12 +74,23 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatFormFieldModule,
     MatInputModule,
     MatDialogModule,
-    MatListModule
-
+    MatListModule,
+    MatTabsModule
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
   ],
-  entryComponents: [TableComponent, MapComponent, NewsComponent, GenericTableComponent, LinksComponent, TableItemDialogComponent],
+  entryComponents: [
+    TableComponent,
+    MapComponent,
+    NewsComponent,
+    GenericTableComponent,
+    CountryFactBoxComponent,
+    TabsComponent,
+    UpcomingEventsComponent,
+    SingleItemComponent,
+    LinksComponent,
+    TableItemDialogComponent
+  ],
 })
 export class DashboardModule { }

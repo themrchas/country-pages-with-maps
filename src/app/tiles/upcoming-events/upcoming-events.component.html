@@ -1,18 +1,10 @@
-<div class="bg-dark fg-white tile-large" ng-class="{flipme':animateFlip}">
-  <div class="tile-content">
-    <div class="padding10 no-padding-top">
-      <h5>
-          <strong class="uppercase" (click)="goToEventsView()">Upcoming Events</strong>
-      </h5>
-      <perfect-scrollbar [scrollIndicators]="false" style="height:150px">
-          <div *ngFor="let item of upcomingEvents" style="width:260px">
-            <div class="eventAllDay" (click)="onItemClicked(item)">
-              <div>
-                <div><strong>{{item.friendlyDate}}</strong>&nbsp;{{item.Title}}</div>
-              </div>
-            </div>
-          </div>
-      </perfect-scrollbar>
+<perfect-scrollbar [scrollIndicators]="false" style="height:150px">
+    <div *ngFor="let item of upcomingEvents" style="width:260px">
+      <div class="eventAllDay" (click)="onItemClicked(item)">
+        <div>
+          <div><strong>{{item.friendlyDate}}</strong>&nbsp;{{item.Title}}</div>
+          <div class="card-text">{{item.Location}}</div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+</perfect-scrollbar>

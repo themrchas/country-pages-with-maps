@@ -1,0 +1,6 @@
+<table class="table" *ngIf="singleItem">
+    <tr *ngFor="let column of settings.columns">
+      <td class="label">{{column.displayName}}</td>
+      <td>{{singleItem[column.columnName]}}</td>
+    </tr>
+</table>

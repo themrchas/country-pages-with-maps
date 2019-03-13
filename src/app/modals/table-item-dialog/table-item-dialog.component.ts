@@ -16,7 +16,7 @@ export class TableItemDialogComponent implements OnInit {
   }
 
   constructor(private dialogRef: MatDialogRef<TableItemDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) data) { 
+              @Inject(MAT_DIALOG_DATA) data) {
 
                 this.modalData = data;
 

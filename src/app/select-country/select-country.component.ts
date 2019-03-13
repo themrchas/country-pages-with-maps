@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { Observable, of } from 'rxjs';
 import { Country } from '../model/country';
@@ -6,10 +6,9 @@ import { Country } from '../model/country';
 @Component({
   selector: 'app-select-country',
   templateUrl: './select-country.component.html',
-  styleUrls: ['./select-country.component.css']
+  styleUrls: ['./select-country.component.scss']
 })
 export class SelectCountryComponent implements OnInit {
-
   countriesEA: Array<Country>;
   countriesNWA: Array<Country>;
 

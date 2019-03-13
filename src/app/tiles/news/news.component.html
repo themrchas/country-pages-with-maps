@@ -1,12 +1,15 @@
-<mat-card-content>
-    <perfect-scrollbar style="height:250px">
-      <div *ngFor="let newsItem of newsItems" style="width: 90%">
-        <div class="news-item">
-          <a href="{{newsItem.url}}" class="fg-white news-title"><i *ngIf="newsItem.source.type === 'docLibrary'" class="fa fa-file-o"></i><span>{{newsItem.title}}</span></a>
-          <div *ngIf="newsItem.body" class="news-body">{{ (newsItem.body.length>110) ? (newsItem.body | slice:0:110)+'...':(newsItem.body) }}</div>
-          <div class="news-meta"><a href="{{newsItem.source.sourceURL}}" class='news-source'>{{newsItem.source.sourceName}}</a><span class='news-time'>{{newsItem.date.fromNow()}}</span></div>
-        </div>
-        <hr>
+<perfect-scrollbar style="height:250px">
+  <div *ngIf="!newsItems || newsItems.length === 0; else news_list">
+    No news items found for {{country.value.title}}
+  </div>
+  <ng-template #news_list>
+    <div *ngFor="let newsItem of newsItems" style="width: 90%">
+      <div class="news-item">
+        <a href="{{newsItem.url}}" class="fg-white news-title"><i *ngIf="newsItem.source.type === 'docLibrary'" class="fa fa-file-o"></i><span>{{newsItem.title}}</span></a>
+        <div *ngIf="newsItem.body" class="news-body">{{ (newsItem.body.length>110) ? (newsItem.body | slice:0:110)+'...':(newsItem.body) }}</div>
+        <div class="news-meta"><a href="{{newsItem.source.url}}" class='news-source'>{{newsItem.source.displayName}}</a><span class='news-time'>{{newsItem.date.fromNow()}}</span></div>
       </div>
-    </perfect-scrollbar>
-</mat-card-content>
+      <hr class="m-1">
+    </div>
+  </ng-template>
+</perfect-scrollbar>

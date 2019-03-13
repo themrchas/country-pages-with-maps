@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { TopicService } from '../services/topic.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ConfigProvider } from '../providers/configProvider';
 
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
-  styleUrls: ['./main-layout.component.css']
+  styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent implements OnInit {
 
@@ -18,7 +19,14 @@ export class MainLayoutComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.countryService.changeCountry(params.get('countryCode'));
-      this.topicService.changeTopic(params.get('topicId'));
+    });
+    this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
+      const topic = queryParams.get('topic');
+      if (!topic) {
+        this.router.navigate([], { queryParams: { topic: ConfigProvider.settings.topics[0].topicId }});
+      } else {
+        this.topicService.changeTopic(topic);
+      }
     });
   }
 

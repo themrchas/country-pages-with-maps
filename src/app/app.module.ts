@@ -26,14 +26,11 @@ const appRoutes: Routes = [
     ),
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   declarations: [
     AppComponent,
     PageNotFoundComponent
-   
-    
-    
   ],
   providers: [
     ConfigProvider,

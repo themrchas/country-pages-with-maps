@@ -3,9 +3,8 @@ import { Input, Component, OnInit } from '@angular/core';
 import { MatListModule } from '@angular/material'
 import { SpRestService } from '../../services/sp-rest.service';
 
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-
 import * as moment from 'moment';
+import { DataLayerService } from '../../services/data-layer.service';
 
 @Component({
   selector: 'app-links',
@@ -20,6 +19,7 @@ export class LinksComponent implements OnInit {
   readonly defaultIconUrl:string ="/assets/images/links-images/info42x42.png";
 
   listItems: Array<any> = Array<any>();
+  columnMappings: Array<any>;
 
   //Open chsoen link in a new browser tab
    openInTab(event: any): void {
@@ -32,18 +32,21 @@ export class LinksComponent implements OnInit {
 
  
 
-  constructor(private spRestService: SpRestService, private sanitizer:DomSanitizer) { }
+ // constructor(private spRestService: SpRestService) { }
+  constructor(private dataLayerService: DataLayerService) { }
 
   ngOnInit() {
 
-    this.spRestService.getListItems(this.settings.source.webURL, this.settings.source.listName,
-      this.settings.source.order, this.settings.source.filter, this.settings.source.rowLimit).subscribe({
-        next: response => {
-                 
-          console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', response, 'with settings.columns',this.settings.columns);
+    this.columnMappings = this.settings.columnMappings;
+
+    // TODO: subscribe & filter on country, process columns if needed
+    this.dataLayerService.getItemsFromSource(this.settings.source).subscribe({
+        next: results => {
+
+          console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', results, 'with settings.columns',this.settings.columns);
 
           //Loop over raw results
-          for (const result of response['d'].results) {
+          for (const result of results['d'].results) {
 
             //Object that will contain columnName:value combination for each value returned in the response 
             result.columns = {};
@@ -71,10 +74,9 @@ export class LinksComponent implements OnInit {
 
       
         } //next
+      });  // subscribe
 
-      });  //subscribe
-
-  } //ngOnInit
+  } // ngOnInit
 
 
 }

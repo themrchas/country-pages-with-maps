@@ -1,66 +1,37 @@
-import * as moment from 'moment';
 import * as $ from 'jquery';
+import * as moment from 'moment';
+import { DataSource } from './dataSource';
 
 export class NewsItem {
-    title: string;
-    body: string;
-    url: string;
-    source: NewsSource;
-    date: any;
     friendlyDate: any;
 
-    constructor(title: string, body: string, url: string, source: NewsSource, date: any) {
-        this.title = title;
-        this.body = body;
-        this.source = source;
-        this.date = date;
-        this.url = url;
+    constructor(public title: string,
+        public body: string,
+        public url: string,
+        public source: DataSource,
+        public date: any) {
         this.friendlyDate = moment(date).format('DD MMM').toUpperCase();
     }
-
 }
 
 const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
-export function createNewsItemFromSharePointResult(result: any, source: NewsSource) {
+export function createNewsItemFromSharePointResult(result: any, source: DataSource, columns?: Array<any>) {
     let newsItem, itemURL, resultText, resultTitle;
     if (source.type === 'docLibrary') {
         itemURL = result.ServerRelativeUrl;
         resultTitle = result.Title || result.Name;
         resultText = null;
     } else if (source.type === 'list') {
-        itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}` + '&Source=' + window.location.href;
+        itemURL = `${source.listWeb}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}` + '&Source=' + window.location.href;
         resultTitle = result.Title;
         resultText = source.contentField ? $(result[source.contentField], ownerDocument).text() : null;
         // TODO: if contentField is not an HTML field, just grab it directly
     } else {
-        itemURL = `${source.webURL}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
+        itemURL = `${source.listWeb}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
         resultText = $(result.Body, ownerDocument).text();
         resultTitle = result.Title;
     }
     newsItem = new NewsItem(resultTitle, resultText, itemURL, source, moment(result[source.dateField]));
     return newsItem;
-}
-
-export class NewsSource {
-    listName: string;
-    sourceName: string;
-    webURL: string;
-    sourceURL: string;
-    displayForm: string;
-    dateField: string;
-    contentField: string;
-    type: string;  // todo: enum?
-
-    // For document library sources, the folder path should be used as the listName
-    constructor(listName: string, sourceName: string, webURL: string, sourceURL: string,
-        displayForm: string, dateField: string, type: string, contentField: string) {
-        this.listName = listName;
-        this.sourceName = sourceName;
-        this.webURL = webURL;
-        this.sourceURL = sourceURL;
-        this.displayForm = displayForm;
-        this.type = type;
-        this.contentField = type;
-    }
 }

@@ -1,48 +1,64 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { EventsService } from '../../services/events.service';
-import { ConfigProvider } from '../../providers/configProvider';
 import * as moment from 'moment';
-import * as _ from 'lodash';
-import { Observable, from, empty } from 'rxjs';
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { from, BehaviorSubject } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { TileComponent } from '../tile/tile.component';
+import { Country } from '../../model/country';
 
 @Component({
   selector: 'app-upcoming-events',
   templateUrl: './upcoming-events.component.html',
   styleUrls: ['./upcoming-events.component.css']
 })
-export class UpcomingEventsComponent implements OnInit {
-
+export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent {
+  @Input() settings: any;
+  @Input() country: BehaviorSubject<Country>;
   upcomingEvents: Array<any>;
+  subscription: any;
   constructor( private eventsService: EventsService ) { }
 
   ngOnInit() {
-    let tempEvents = new Array<any>();
-    const upcomingEventsObserver = {
-      next: x => {
-        if (x && x.length > 0) {
-          tempEvents = tempEvents.concat(x);
-        }
-      },
-      complete: () => {
-        this.upcomingEvents = _.sortBy(tempEvents, 'StartTime');
-      }
-    };
-
-    from(ConfigProvider.settings.events.sources).pipe(mergeMap(eventSource => {
-
-      return this.eventsService.getNonExpandedEvents(moment().startOf('day').toISOString(),
-        moment().startOf('day').add(30, 'day').toISOString(), eventSource);
-    })).subscribe(upcomingEventsObserver);
+    this.subscription = this.country.subscribe(selectedCountry => {
+      this.loadEvents(selectedCountry);
+    });
 
   }
 
+  loadEvents(country) {
+    let tempEvents = new Array<any>();
+
+    from(this.settings.sources).pipe(mergeMap(eventSource => {
+      return this.eventsService.getNonExpandedEvents(moment().startOf('day').toISOString(),
+        moment().startOf('day').add(this.settings.numDays, 'day').toISOString(), eventSource);
+    })).subscribe({next: x => {
+          if (x && x.length > 0) {
+            tempEvents = tempEvents.concat(x);
+          }
+        },
+        complete: () => this.upcomingEvents = tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1)
+    });
+
+    /* from(this.settings.sources).pipe(mergeMap(eventSource => {
+      return this.eventsService.getEventsForRange(moment().startOf('day').toISOString(),
+        eventSource, undefined, 'Month');
+    })).subscribe({next: x => {
+          if (x && x.length > 0) {
+            tempEvents = tempEvents.concat(x);
+          }
+        },
+        complete: () => this.upcomingEvents = tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1)
+    }); */
+
+  }
+
+  // To Do: Tie in with Modal?
   onItemClicked(event: any) {
     this.eventsService.openEvent(event);
   }
 
-  goToEventsView() {
-    window.open(ConfigProvider.settings.events.calendarURL + '/' + ConfigProvider.settings.events.defaultView, '_blank');
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
 

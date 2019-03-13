@@ -4,6 +4,7 @@ export class Country {
 
     constructor(
         public title: string,
+        public countryMM: string,
         public countryCode2: string,
         public countryCode3: string,
         public region: string,
@@ -14,6 +15,7 @@ export class Country {
 export function createCountryFromSharePointResult(result: any) {
     return new Country(
         result.Title,
+        result.CountryMM.Label,
         result.ISO_2_CountryCode,
         result.ISO_3_CountryCode,
         result.Region,
@@ -23,8 +25,8 @@ export function createCountryFromSharePointResult(result: any) {
 
 export function createCountryArrayFromSharePointResponse(resp) {
     let retVal: Array<Country>;
-    if (resp && resp['d'] && resp['d'].results) {
-        retVal = resp['d'].results.map(createCountryFromSharePointResult);
+    if (resp) {
+        retVal = resp.map(createCountryFromSharePointResult);
     } else {
         console.error('Unable to retrieve countries from SP response');
         retVal = new Array<Country>();
