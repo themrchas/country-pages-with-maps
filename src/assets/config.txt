@@ -71,7 +71,7 @@
                         "heading": "Sample Links List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/dev/SOCAFDEV",
+                                "webURL": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "CountryLinks"
                                 
                             },
