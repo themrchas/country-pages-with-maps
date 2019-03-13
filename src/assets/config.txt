@@ -125,6 +125,26 @@
                         }
                     },
                     { 
+                        "type": "gen-table",
+                        "colspan": 2,
+                        "heading": "Sample Document Library",
+                        "settings": {
+                            "source": {
+                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",
+                                "listName": "Documents",
+                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/Shared%20Documents",
+                                "select": "File/Name,File_x0020_Type,Created",
+                                "expand": "File"
+                            },
+                            "columns": [
+                                { "columnName": "File_x0020_Type", "displayName": "Type", "type": "docTypeIcon" },
+                                { "columnName": "File/Name", "displayName": "Name", "type": "expanded" },
+                                { "columnName": "Created", "displayName": "Created Date", "type": "date" }
+                            ]
+                        }
+    
+                    },
+                    { 
                         "type": "upcoming-events",
                         "colspan": 1,
                         "heading": "Upcoming Events",

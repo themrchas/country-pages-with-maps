@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../services/country.service';
-import {BehaviorSubject, Observable } from 'rxjs';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { BehaviorSubject} from 'rxjs';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Country } from '../model/country';
 import { TopicService } from '../services/topic.service';
 import { combineLatest } from 'rxjs';

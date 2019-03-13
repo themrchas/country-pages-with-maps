@@ -53,9 +53,16 @@ export class DataLayerService {
                 result.processedColumns[colName] = result[colName].Label;
               } else if (column.type === 'date') {
                 result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
+              } else if (column.type === 'expanded') {
+                const splitName = column.columnName.split('/');
+                result.processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
               } else if (column.type === 'url') {
                 // does anything actually need to be processed?
                 result.processedColumns[colName] = result[colName];
+              } else if (column.type === 'docTypeIcon') {
+                const fileType = result[colName];
+                result.processedColumns[colName] = fileType !== 'html' && fileType != null ?
+                  '/_layouts/15/images/ic' + fileType + '.png' : null;
               } else {
                 result.processedColumns[colName] = result[colName];
               }
