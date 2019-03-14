@@ -16,18 +16,16 @@ export class TableItemDialogComponent implements OnInit {
   }
 
   constructor(private dialogRef: MatDialogRef<TableItemDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) data) {
+    @Inject(MAT_DIALOG_DATA) data) {
 
-                this.modalData = data;
+    this.modalData = data;
+  }
 
-                console.log('data passed to modal is', this.modalData);
-              }
 
- // onNoClick() : void {
-   close() {
-     console.log('dialog is closing');
-this.dialogRef.close('Dialog has been closed');
-}
+  close() {
+    this.dialogRef.close('Dialog has been closed');
+  }
+
   ngOnInit() {
 
 

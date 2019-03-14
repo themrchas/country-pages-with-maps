@@ -33,6 +33,7 @@ export class DataSource {
         this.filter = json.filter;
         this.order = json.order;
         this.rowLimit = json.rowLimit;
+        this.dateField = json.dateField;  // For use on news items
 
         if (json.dateFilter) {
             if (json.dateFilter.startDate) {
@@ -51,10 +52,6 @@ export class DataSource {
             }
         }
     }
-}
-
-export function createDataSource(dsJson) {
-
 }
 
 export function replacePlaceholdersWithFieldValues(str: string, item) {
