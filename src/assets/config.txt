@@ -134,7 +134,8 @@
                                 "listName": "Documents",
                                 "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/Shared%20Documents",
                                 "select": "File/Name,File_x0020_Type,Created",
-                                "expand": "File"
+                                "expand": "File",
+                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='DocCountry'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                 { "columnName": "File_x0020_Type", "displayName": "Type", "type": "docTypeIcon" },

@@ -28,7 +28,7 @@ export class DataLayerService {
     if (source.camlQuery) {
       const viewXml = JSON.stringify({ViewXml: `${camlQuery}`});
       asyncRequest = this.spRestService.getListItemsCamlQuery(source.listWeb, source.listName, viewXml,
-        ConfigProvider.requestDigest);
+        source.select, source.expand, ConfigProvider.requestDigest);
     } else {
       if (source.type === 'docLibrary') {
         // TODO: support filtering & camlQuery
