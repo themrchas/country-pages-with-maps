@@ -1,5 +1,6 @@
 
  <mat-card-content>
+
   <perfect-scrollbar style="height:230px">
   
     <mat-list>
@@ -9,15 +10,13 @@
         <div mat-list-item class="container">
   
         <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ')','background-color': link.backgroundColor  }"></div> 
-       <!-- <div class="icon" [ngStyle]="{'background-image': 'url(' + link.iconUrl + ') ' }"></div> -->
-  
+         
           <div class="link">
             <a href="{{link.Url}}" (click)="openInTab($event)">{{link.Description}}</a>
           </div>
   
           <div class="description">
             {{link.Comments}}
-  
           </div>
   
   
@@ -28,5 +27,7 @@
   
   
     </mat-list>
+
   </perfect-scrollbar>
+
 </mat-card-content>

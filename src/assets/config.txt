@@ -37,8 +37,8 @@
                             "DEU": {
                                 "source": {
                                     "listWeb": "http://localhost:8080/sites/dev/SOCAFDEV",
-                                    "listName": "CountryLinks",
-                                    "url":  "http://localhost:8080/sites/dev/SOCAFDEV/Lists/CountryLinks"
+                                    "listName": "CountryData",
+                                    "url":  "http://localhost:8080/sites/dev/SOCAFDEV/Lists/CountryData"
                                 },
                                 "columns": [
                                     { "columnName": "Title", "displayName": "Title" },
@@ -87,17 +87,18 @@
                         "heading": "Sample Links List",
                         "settings": {
                             "source": {
-                                "webURL": "http://localhost:8080/sites/dev/socafdev",
-                                "listName": "CountryLinks"
-                                
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
+                                "listName": "CountryLinks",
+                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
-                                 { "columnName": "Url", "displayName": "Destination", "columnOrder":1 },
-                                 { "columnName": "Description", "displayName": "Description", "columnOrder":2 },
-                                 { "columnName": "Comments", "displayName": "Comments", "columnOrder":3 },
-                                 { "columnName": "iconUrl", "displayName": "iconUrl", "columnOrder":4 },
-                                 { "columnName": "backgroundColor", "displayName": "backgroundColor", "columnOrder":5 },
-                                 { "columnName": "Country", "displayName": "Country", "type": "mm" }
+                                 { "columnName": "Url", "displayName": "Destination" },
+                                 { "columnName": "Description", "displayName": "Description"},
+                                 { "columnName": "Comments", "displayName": "Comments"},
+                                 { "columnName": "iconUrl", "displayName": "iconUrl"},
+                                 { "columnName": "backgroundColor", "displayName": "backgroundColor" },
+                                 { "columnName": "CountryMM", "displayName": "Country", "type": "mm" }
 
                             ]
                         }

@@ -103,6 +103,9 @@ export class SpRestService {
 
   // const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}${optParams}`;
   const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems?${optParams}`;
+
+  console.log('reqUrl in sp-rest.service.ts is',reqUrl,'and optParams are:', optParams,'**', 'and data is',data );
+
   return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
 }
 

@@ -1,9 +1,4 @@
 import { Input, Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { SpRestService } from '../../services/sp-rest.service';
-
-import { Observable, of } from 'rxjs';
-import * as moment from 'moment';
-import { formatDate } from '@angular/common';
 
 import { MatTableDataSource } from '@angular/material';
 import { MatPaginator} from '@angular/material';
@@ -120,7 +115,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     // Get columns to display
     this.matTableCols = this.settings.columns;
 
-    console.log('this.settings', this.settings);
+    console.log('generic-table.ts this.settings', this.settings);
 
     // Create table display column order.  This is determined by the 'columnOrder' property of each table column entry
     // found in settings.columns
@@ -134,8 +129,11 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   loadTable(country) {
-    // this.listItems = Array<any>();
+
+    console.log('loading country', country, 'in generic-table.component.ts');
+   
     const listItems: Array<any> = Array<any>();
+    
     this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
       next: results => {
 

@@ -18,6 +18,9 @@ export class DataLayerService {
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
+    console.log('source passed to  getItemsFromSource in data-layer,service is',source);
+    console.log('filterObj is ',filterObj);
+
     if (filterObj) {
       camlQuery = source.camlQuery ?
           this.replacePlaceholdersWithFieldValues(source.camlQuery, filterObj) : source.camlQuery;
@@ -82,6 +85,8 @@ export class DataLayerService {
       for (const matchedItem of matchedItems) {
           str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
       }
+
+      console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is',str );
       return str;
   }
 
