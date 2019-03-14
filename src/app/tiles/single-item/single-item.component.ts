@@ -4,7 +4,6 @@ import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
 import { DataLayerService } from '../../services/data-layer.service';
 import { DataSource } from '../../model/dataSource';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-single-item',
@@ -33,11 +32,13 @@ export class SingleItemComponent implements OnInit, OnDestroy, TileComponent {
       this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source),
         this.country, this.settings.columns).subscribe(arrResp => {
           if (arrResp && arrResp.length > 0) {
-            this.singleItem = arrResp[0];
+            this.singleItem = arrResp[0].processedColumns;
           }
         });
+    } else if (this.settings.item) {
+      this.singleItem = this.settings.item;
     } else {
-      // If no source is provided, default to using the current country
+      // If no source or item is provided, default to using the current country
       this.singleItem = country;
     }
   }

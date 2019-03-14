@@ -23,6 +23,7 @@ export class SpRestService {
       headers: new HttpHeaders({
         Accept: 'application/json;odata=verbose',
         'Content-Type': 'application/json;odata=verbose',
+        'X-HTTP-Method': 'POST',
         'X-RequestDigest': requestDigest ? requestDigest :
           String((document.getElementById('__REQUESTDIGEST') as HTMLInputElement).value),
       })
@@ -75,10 +76,55 @@ export class SpRestService {
     return this.httpClient.get(reqUrl, this.spGetHttpOptions());
   }
 
-  getListItemsCamlQuery(listWeb: string, listName: string, camlQuery: string, requestDigest?: string): Observable<Object>  {
-    const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}`;
-    return this.httpClient.post(reqUrl, '{}', this.spPostHttpOptions(requestDigest));
+  getListItemsCamlQuery(listWeb: string,
+    listName: string,
+    camlQuery: string,
+    select?: string,
+    expand?: string,
+    requestDigest?: string): Observable<Object>  {
+
+  const data = {
+    query: {
+      __metadata: {
+        type: 'SP.CamlQuery'
+      },
+      ViewXml: camlQuery
+    }
+  };
+
+  let optParams = '';
+  if (select) {
+    optParams += '&$select=' + select;
   }
+  if (expand) {
+    optParams += select ? '&' : '';
+    optParams += '$expand=' + expand;
+  }
+
+  // const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}${optParams}`;
+  const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems?${optParams}`;
+  return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
+}
+
+  /*getListItemsCamlQuery(listWeb: string,
+      listName: string,
+      camlQuery: string,
+      select?: string,
+      expand?: string,
+      requestDigest?: string): Observable<Object>  {
+
+    let optParams = '';
+    if (select) {
+      optParams += '&$select=' + select;
+    }
+    if (expand) {
+      optParams += select ? '&' : '';
+      optParams += '$expand=' + expand;
+    }
+
+    const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}${optParams}`;
+    return this.httpClient.post(reqUrl, '{}', this.spPostHttpOptions(requestDigest));
+  }*/
 
   getView(listWeb: string, listName: string, viewGuid: string): Observable<Object>  {
     return this.httpClient.get(`${listWeb}/_api/web/lists/getByTitle('${listName}')/views(guid'${viewGuid}')`,

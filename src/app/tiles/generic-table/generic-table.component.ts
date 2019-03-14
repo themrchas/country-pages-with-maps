@@ -58,12 +58,13 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   Example entry- {columnName: "Created", displayName: "Created Date", columnOrder: 1}
   */
   matTableCols: Array<any>;
+  rawResults: any[];
 
   // Fire off when row in table clicked
-  onRowClicked(event: any) {
+  onRowClicked(event: any, index: number) {
 
     console.log('Row clicked with event:', event);
-    this.openTableItemDialog();
+    this.openTableItemDialog(index);
   }
 
   // Used to filter rows based on user provided input
@@ -76,15 +77,20 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   constructor(private dataLayerService: DataLayerService, private dialog: MatDialog) { }
 
-  openTableItemDialog() {
+  openTableItemDialog(index) {
 
     const dialogConfig: MatDialogConfig  = new MatDialogConfig();
 
     dialogConfig.width = '400px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = { name: 'Beavis', friend: 'Butthead'};
-
+    dialogConfig.data = {
+      country: this.country,
+      settings: {
+        columns: this.settings.modalColumns || this.settings.columns,
+        item: this.rawResults[index]
+      }
+    };
 
     this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent, dialogConfig);
 
@@ -133,7 +139,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
       next: results => {
 
-        console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', results);
+        this.rawResults = results;
 
         // Loop over raw results
         for (const result of results) {
