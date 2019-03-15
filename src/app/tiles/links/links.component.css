@@ -24,13 +24,16 @@
 .linksEntry {
     display:inline-block; 
     height:50px; 
-    width: auto;
+    width:calc(100% - 20px);
+    
 
 }
 
 .linksEntryComment {
 
     font-size:11px;
+    display:inline-block;
+    line-height: 80%;
 }
  
  
