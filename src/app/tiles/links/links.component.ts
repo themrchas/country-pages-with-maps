@@ -28,10 +28,12 @@ export class LinksComponent implements OnInit {
   //Open chosen link in a new browser tab
    openInTab(event: any): void {
 
+    console.log('event is',event);
+
     event.preventDefault();
 
     //Might be a better way to get access to url clicked, but this works for now
-    let urlTarget: string  = event.target.childNodes['0'].attributes[3].nodeValue;
+    let urlTarget: string  = event.target.href;
     window.open(urlTarget,'_blank');
     
   } //openInTab
