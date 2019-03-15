@@ -18,6 +18,8 @@ import { TileComponent } from '../tile/tile.component';
 import { BehaviorSubject } from 'rxjs';
 import { Country } from '../../model/country';
 import { DataLayerService } from '../../services/data-layer.service';
+import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
+import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
 
 @Component({
   selector: 'app-generic-table',
@@ -37,6 +39,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   subscription: any;
 
   /*** modal start ***/
+  modalRef: MDBModalRef;
   tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
 
   /** modal end ***/
@@ -75,7 +78,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   /*** mat-table end ***/
 
-  constructor(private dataLayerService: DataLayerService, private dialog: MatDialog) { }
+  constructor(private dataLayerService: DataLayerService, private dialog: MatDialog, private modalService: MDBModalService) { }
 
   openTableItemDialog(index) {
 
@@ -86,13 +89,29 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       country: this.country,
+      modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
+        this.rawResults[index].processedColumns[this.settings.modal.titleColumn] :
+        this.rawResults[index]['Title'],
       settings: {
-        columns: this.settings.modalColumns || this.settings.columns,
-        item: this.rawResults[index]
+        columns: this.settings.modal && this.settings.modal.columns || this.settings.columns,
+        item: this.rawResults[index].processedColumns
       }
     };
 
-    this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent, dialogConfig);
+    this.modalRef = this.modalService.show(IframeModalComponent, {
+      class: 'modal-lg',
+      data: {
+        country: this.country,
+        modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
+          this.rawResults[index].processedColumns[this.settings.modal.titleColumn] :
+          this.rawResults[index]['Title'],
+        settings: {
+          url: this.rawResults[index][this.settings.modal.urlColumn] + '?web=1'
+        }
+      }
+    });
+
+    /* this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent, dialogConfig);
 
     this.tableItemDialogRef.afterClosed().subscribe(result => {
       console.log('Dialog result:', result);
@@ -103,7 +122,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
       console.log('Dialog result in beforeClosed:', result);
      // this.tableItemDialogRef.close('It closed');
      console.log('Dialog is closing - beforeClosed');
-    });
+    }); */
 
 
     this.tableItemDialogRef.afterOpened().subscribe(result => {
@@ -135,8 +154,12 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   loadTable(country) {
     // this.listItems = Array<any>();
+    const combinedColumns = [...this.settings.columns, ...(this.settings.modal && this.settings.modal.columns || [])];
     const listItems: Array<any> = Array<any>();
-    this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
+    this.dataLayerService.getItemsFromSource(this.settings.source,
+      country,
+      combinedColumns).subscribe({
+
       next: results => {
 
         this.rawResults = results;

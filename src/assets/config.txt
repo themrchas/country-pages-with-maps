@@ -76,7 +76,17 @@
                                 { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
                                 { "columnName": "Created", "displayName": "Created Date", "type": "date" },
                                 { "columnName": "Country", "displayName": "Country", "type": "mm" }
-                            ]
+                            ],
+                            "modal": {
+                                "titleColumn": "Title",
+                                "columns": [
+                                    { "columnName": "Title", "displayName": "Title" },
+                                    { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
+                                    { "columnName": "Created", "displayName": "Created Date", "type": "date" },
+                                    { "columnName": "Country", "displayName": "Country", "type": "mm" },
+                                    { "columnName": "Modified", "displayName": "Modified Date", "type": "date" }
+                                ]
+                            }
                         }
     
                     },
@@ -133,7 +143,7 @@
                                 "listWeb": "http://localhost:8080/sites/SOCAFDEV",
                                 "listName": "Documents",
                                 "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/Shared%20Documents",
-                                "select": "File/Name,File_x0020_Type,Created",
+                                "select": "File/Name,File_x0020_Type,Created,FileRef",
                                 "expand": "File",
                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='DocCountry'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
@@ -141,7 +151,11 @@
                                 { "columnName": "File_x0020_Type", "displayName": "Type", "type": "docTypeIcon" },
                                 { "columnName": "File/Name", "displayName": "Name", "type": "expanded" },
                                 { "columnName": "Created", "displayName": "Created Date", "type": "date" }
-                            ]
+                            ],
+                            "modal": {
+                                "titleColumn": "File/Name",
+                                "urlColumn": "FileRef"
+                            }
                         }
     
                     },
