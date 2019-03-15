@@ -131,9 +131,9 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   loadTable(country) {
 
     console.log('loading country', country, 'in generic-table.component.ts');
-   
+
     const listItems: Array<any> = Array<any>();
-    
+
     this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
       next: results => {
 
