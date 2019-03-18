@@ -1,0 +1,196 @@
+[1mdiff --git a/src/app/modals/iframe-modal/iframe-modal.component.scss b/src/app/modals/iframe-modal/iframe-modal.component.scss[m
+[1mindex e69de29..6f99b8e 100644[m
+[1m--- a/src/app/modals/iframe-modal/iframe-modal.component.scss[m
+[1m+++ b/src/app/modals/iframe-modal/iframe-modal.component.scss[m
+[36m@@ -0,0 +1,4 @@[m
+[32m+[m[32m:host ::ng-deep #ReadingToolbarPanel {[m
+[32m+[m[32m    display: none !important;[m
+[32m+[m[32m    height: 0px;[m
+[32m+[m[32m}[m
+\ No newline at end of file[m
+[1mdiff --git a/src/app/services/sp-rest.service.ts b/src/app/services/sp-rest.service.ts[m
+[1mindex ee07ac9..2198f72 100644[m
+[1m--- a/src/app/services/sp-rest.service.ts[m
+[1m+++ b/src/app/services/sp-rest.service.ts[m
+[36m@@ -159,4 +159,10 @@[m [mexport class SpRestService {[m
+         return this.getListItemsCamlQuery(listWeb, listName, camlQuery, requestDigest);[m
+       }));[m
+   }[m
+[32m+[m
+[32m+[m[32m  // Action is the SPWOPIFrameAction enumeration number (0 - 2)[m
+[32m+[m[32m  getWOPIFrameUrl(listWeb, listName, itemId, action: number) {[m
+[32m+[m[32m    return this.httpClient.post(`${listWeb}/_api/web/lists/getByTitle('${listName}')/items(${itemId})/getWOPIFrameUrl(${action})`,[m
+[32m+[m[32m      '{}', this.spPostHttpOptions());[m
+[32m+[m[32m  }[m
+ }[m
+[1mdiff --git a/src/app/tiles/generic-table/generic-table.component.ts b/src/app/tiles/generic-table/generic-table.component.ts[m
+[1mindex dd58417..131db38 100644[m
+[1m--- a/src/app/tiles/generic-table/generic-table.component.ts[m
+[1m+++ b/src/app/tiles/generic-table/generic-table.component.ts[m
+[36m@@ -78,7 +78,8 @@[m [mexport class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy,[m
+ [m
+   /*** mat-table end ***/[m
+ [m
+[31m-  constructor(private dataLayerService: DataLayerService, private dialog: MatDialog, private modalService: MDBModalService) { }[m
+[32m+[m[32m  constructor(private dataLayerService: DataLayerService,[m
+[32m+[m[32m    private spRestService: SpRestService, private dialog: MatDialog, private modalService: MDBModalService) { }[m
+ [m
+   openTableItemDialog(index) {[m
+ [m
+[36m@@ -98,18 +99,22 @@[m [mexport class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy,[m
+       }[m
+     };[m
+ [m
+[31m-    this.modalRef = this.modalService.show(IframeModalComponent, {[m
+[31m-      class: 'modal-lg',[m
+[31m-      data: {[m
+[31m-        country: this.country,[m
+[31m-        modalTitle: this.settings.modal && this.settings.modal.titleColumn ?[m
+[31m-          this.rawResults[index].processedColumns[this.settings.modal.titleColumn] :[m
+[31m-          this.rawResults[index]['Title'],[m
+[31m-        settings: {[m
+[31m-          url: this.rawResults[index][this.settings.modal.urlColumn] + '?web=1'[m
+[31m-        }[m
+[31m-      }[m
+[31m-    });[m
+[32m+[m[32m    this.spRestService.getWOPIFrameUrl(this.settings.source.listWeb, this.settings.source.listName,[m
+[32m+[m[32m      this.rawResults[index].Id, 3).subscribe(response => {[m
+[32m+[m[32m        const wopiFrame = response['d'].GetWOPIFrameUrl;[m
+[32m+[m[32m        this.modalRef = this.modalService.show(IframeModalComponent, {[m
+[32m+[m[32m          class: 'modal-lg',[m
+[32m+[m[32m          data: {[m
+[32m+[m[32m            country: this.country,[m
+[32m+[m[32m            modalTitle: this.settings.modal && this.settings.modal.titleColumn ?[m
+[32m+[m[32m              this.rawResults[index].processedColumns[this.settings.modal.titleColumn] :[m
+[32m+[m[32m              this.rawResults[index]['Title'],[m
+[32m+[m[32m            settings: {[m
+[32m+[m[32m              url: wopiFrame.length > 0 ? wopiFrame : this.rawResults[index][this.settings.modal.urlColumn][m
+[32m+[m[32m            }[m
+[32m+[m[32m          }[m
+[32m+[m[32m        });[m
+[32m+[m[32m      });[m
+ [m
+     /* this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent, dialogConfig);[m
+ [m
+[1mdiff --git a/src/assets/config.txt b/src/assets/config.txt[m
+[1mindex a482860..574d8f0 100644[m
+[1m--- a/src/assets/config.txt[m
+[1m+++ b/src/assets/config.txt[m
+[36m@@ -1,7 +1,7 @@[m
+ {[m
+         "env": "low",[m
+         "country": {[m
+[31m-            "listWeb": "http://localhost:8080/sites/socafdev",[m
+[32m+[m[32m            "listWeb": "/hq/j6/j6sandbox",[m
+             "listName": "CountryData",[m
+             "camlQueryAllCountries": "<View><Query></Query></View>",[m
+             "camlQueryFilterCountry": "<View><Query><Where><Eq><FieldRef Name='ISO_3_CountryCode'/><Value Type='Text'>{{countryCode}}</Value></Eq></Where></Query></View>"[m
+[36m@@ -36,9 +36,9 @@[m
+                         "customSettings": {[m
+                             "DEU": {[m
+                                 "source": {[m
+[31m-                                    "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                    "listWeb": "/hq/j6/j6sandbox",[m
+                                     "listName": "CountryLinks",[m
+[31m-                                    "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/CountryLinks"[m
+[32m+[m[32m                                    "url":  "/hq/j6/j6sandbox/Lists/CountryLinks"[m
+                                 },[m
+                                 "columns": [[m
+                                     { "columnName": "Title", "displayName": "Title" },[m
+[36m@@ -48,10 +48,10 @@[m
+                         },[m
+                         "settings": {[m
+                             "source": {[m
+[31m-                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                "listWeb": "/hq/j6/j6sandbox",[m
+                                 "listName": "SampleList",[m
+                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",[m
+[31m-                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"[m
+[32m+[m[32m                                "url":  "/hq/j6/j6sandbox/Lists/SampleList"[m
+                             },[m
+                             "columns": [[m
+                                 { "columnName": "Title", "displayName": "Title" },[m
+[36m@@ -66,9 +66,9 @@[m
+                         "heading": "Sample Gen List",[m
+                         "settings": {[m
+                             "source": {[m
+[31m-                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                "listWeb": "/hq/j6/j6sandbox",[m
+                                 "listName": "SampleList",[m
+[31m-                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList",[m
+[32m+[m[32m                                "url":  "/hq/j6/j6sandbox/Lists/SampleList",[m
+                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"[m
+                             },[m
+                             "columns": [[m
+[36m@@ -97,9 +97,9 @@[m
+                         "heading": "Sample Links List",[m
+                         "settings": {[m
+                             "source": {[m
+[31m-                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                "listWeb": "/hq/j6/j6sandbox",[m
+                                 "listName": "CountryLinks",[m
+[31m-                                "url": "http://localhost:8080/sites/SOCAFDEV/Lists/CountryLinks"[m
+[32m+[m[32m                                "url": "/hq/j6/j6sandbox/Lists/CountryLinks"[m
+                             },[m
+                             "columnMappings": {[m
+                                 "urlField": "Url",[m
+[36m@@ -122,8 +122,8 @@[m
+                                 {[m
+                                     "displayName": "AnnouncementsBlog",[m
+                                     "listName": "Posts",[m
+[31m-                                    "listWeb": "http://localhost:8080/sites/socafdev/announcementsBlog",[m
+[31m-                                    "url": "http://localhost:8080/sites/socafdev/announcementsBlog",[m
+[32m+[m[32m                                    "listWeb": "/hq/j6/j6sandbox/announcementsBlog",[m
+[32m+[m[32m                                    "url": "/hq/j6/j6sandbox/announcementsBlog",[m
+                                     "type": "blog",[m
+                                     "displayForm": "Post.aspx",[m
+                                     "dateField": "PublishedDate",[m
+[36m@@ -140,12 +140,11 @@[m
+                         "heading": "Sample Document Library",[m
+                         "settings": {[m
+                             "source": {[m
+[31m-                                "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                "listWeb": "/hq/j6/j6sandbox",[m
+                                 "listName": "Documents",[m
+[31m-                                "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/Shared%20Documents",[m
+[32m+[m[32m                                "url":  "/hq/j6/j6sandbox/Lists/Shared%20Documents",[m
+                                 "select": "File/Name,File_x0020_Type,Created,FileRef",[m
+[31m-                                "expand": "File",[m
+[31m-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='DocCountry'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"[m
+[32m+[m[32m                                "expand": "File"[m
+                             },[m
+                             "columns": [[m
+                                 { "columnName": "File_x0020_Type", "displayName": "Type", "type": "docTypeIcon" },[m
+[36m@@ -167,7 +166,7 @@[m
+                             "numDays": 30,[m
+                             "sources": [[m
+                                 {[m
+[31m-                                    "listWeb": "http://localhost:8080/sites/socafdev",[m
+[32m+[m[32m                                    "listWeb": "/hq/j6/j6sandbox",[m
+                                     "url": "/sites/socafdev/lists/DevCalendar",[m
+                                     "listName": "DevCalendar",[m
+                                     "defaultView": ""[m
+[36m@@ -185,9 +184,9 @@[m
+                                     "heading": "SOCAFRICA",[m
+                                     "settings": {[m
+                                         "source": {[m
+[31m-                                            "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                            "listWeb": "/hq/j6/j6sandbox",[m
+                                             "listName": "SampleList",[m
+[31m-                                            "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"[m
+[32m+[m[32m                                            "url":  "/hq/j6/j6sandbox/Lists/SampleList"[m
+                                         },[m
+                                         "columns": [[m
+                                             { "columnName": "Title", "displayName": "Title" },[m
+[36m@@ -199,9 +198,9 @@[m
+                                     "heading": "AFRICOM",[m
+                                     "settings": {[m
+                                         "source": {[m
+[31m-                                            "listWeb": "http://localhost:8080/sites/SOCAFDEV",[m
+[32m+[m[32m                                            "listWeb": "/hq/j6/j6sandbox",[m
+                                             "listName": "SampleList",[m
+[31m-                                            "url":  "http://localhost:8080/sites/SOCAFDEV/Lists/SampleList"[m
+[32m+[m[32m                                            "url":  "/hq/j6/j6sandbox/Lists/SampleList"[m
+                                         },[m
+                                         "columns": [[m
+                                             { "columnName": "Title", "displayName": "Title" },[m

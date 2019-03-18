@@ -103,6 +103,9 @@ export class SpRestService {
 
   // const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}${optParams}`;
   const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems?${optParams}`;
+
+  console.log('reqUrl in sp-rest.service.ts is', reqUrl, 'and optParams are:', optParams, '**', 'and data is', data );
+
   return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
 }
 
@@ -157,6 +160,24 @@ export class SpRestService {
         const viewQuery = '<Query>' + viewData['d'].ViewQuery + '</Query>';
         const camlQuery = JSON.stringify({ViewXml: `${viewQuery}`});
         return this.getListItemsCamlQuery(listWeb, listName, camlQuery, requestDigest);
+      }));
+  }
+
+  // Action is the SPWOPIFrameAction enumeration number (0 - 2)
+  getWOPIFrameUrl(listWeb, listName, itemId, action: number) {
+      return this.httpClient.post(`${listWeb}/_api/web/lists/getByTitle('${listName}')/items(${itemId})/getWOPIFrameUrl(${action})`,
+        '{}', this.spPostHttpOptions());
+  }
+
+  getDocIcon(listWeb: string, filename: string, size: number) {
+    return this.httpClient.get(`${listWeb}/_api/web/mapToIcon(filename='${filename}',progid='',size=${size})`,
+      this.spGetHttpOptions());
+  }
+
+  getDisplayForm(listWeb: string, listName: string, itemId) {
+    return this.httpClient.get(`${listWeb}/_api/web/lists/getByTitle('${listName}')/Forms?select=ServerRelativeUrl&$filter=FormType eq 4`,
+      this.spGetHttpOptions()).pipe(map(resp => {
+        return resp['d'].results[0].ServerRelativeUrl + '?ID=' + itemId;
       }));
   }
 }

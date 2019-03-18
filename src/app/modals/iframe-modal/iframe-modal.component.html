@@ -1,10 +1,18 @@
 <!--Content-->
-<div class="modal-content">
+<div class="modal-content" [ngClass]="{'sp-modal': isSpModal}">
 
     <!--Body-->
     <div class="modal-body mb-0 p-0">
       <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-        <iframe class="embed-responsive-item" [src]="url" allowfullscreen></iframe>
+        <ng-container *ngIf="cannotPreview; else iframe_preview">
+          <div class="cannot-preview">Cannot preview this file type</div>
+        </ng-container>
+        <ng-template #iframe_preview>
+          <iframe #iframe class="embed-responsive-item" [hidden]="!iframeLoaded" [src]="webViewUrl" allowfullscreen></iframe>
+        </ng-template>
+        <div *ngIf="!iframeLoaded" class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
 
@@ -12,17 +20,23 @@
     <div class="modal-footer justify-content-center flex-column flex-md-row">
       <span class="mr-4">{{modalTitle}}</span>
       <div>
-        <a type="button" mdbBtn floating="true" size="sm" class="btn-fb waves-light" mdbWavesEffect>
-          Download
-        </a>
-        <!--Twitter-->
-        <a type="button" mdbBtn floating="true" size="sm" class="btn-tw waves-light" mdbWavesEffect>
-          Full Screen
-        </a>
-        <!--Google +-->
-        <a type="button" mdbBtn floating="true" size="sm" class="btn-gplus waves-light" mdbWavesEffect>
-          Open in SharePoint
-        </a>
+        <ng-container *ngIf="downloadUrl$ | async as downloadUrl$">
+          <a mdbTooltip="Download File" [href]="downloadUrl$" type="button" mdbBtn floating="true" size="sm">
+            <img src="./assets/images/download.png">
+          </a>
+        </ng-container>
+        <ng-container *ngIf="!cannotPreview">
+            <ng-container *ngIf="fullScreenUrl$ | async as fullScreenUrl$">
+                <a mdbTooltip="Full Screen" target="_blank" [href]="fullScreenUrl$" type="button" mdbBtn floating="true" size="sm">
+                  <img src="./assets/images/window-restore.png">
+                </a>
+              </ng-container>
+        </ng-container>
+        <ng-container *ngIf="spUrl$ | async as spUrl$">
+          <a mdbTooltip="View item in SharePoint" target="_blank" [href]="spUrl$" type="button" mdbBtn floating="true" size="sm">
+            <img src="./assets/images/sp-black.ico">
+          </a>
+        </ng-container>
       </div>
       <button type="button" mdbBtn color="primary" outline="true" rounded="true" class="ml-4 waves-light" mdbWavesEffect data-dismiss="modal"
         (click)="modalRef.hide()">Close</button>

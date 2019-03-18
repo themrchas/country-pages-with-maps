@@ -1,23 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MDBModalRef} from 'angular-bootstrap-md';
 import { BehaviorSubject } from 'rxjs';
 import { Country } from '../../model/country';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { ConfigProvider } from 'src/app/providers/configProvider';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-iframe-modal',
   templateUrl: './iframe-modal.component.html',
   styleUrls: ['./iframe-modal.component.scss']
 })
-export class IframeModalComponent implements OnInit {
+export class IframeModalComponent implements OnInit, AfterViewInit {
+  @ViewChild('iframe') iframe: any;
   modalTitle: string;
   settings: any;
   country: BehaviorSubject<Country>;
-  url: SafeResourceUrl;
-  constructor(public modalRef: MDBModalRef, public sanitizer: DomSanitizer) { }
+  webViewUrl: SafeResourceUrl;
+  fullScreenUrl$: string;
+  spUrl$: string;
+  downloadUrl$: string;
+  fileType: string;
+  iframeLoaded: boolean;
+  cannotPreview: boolean;
+  isSpModal: boolean;
+  constructor(public modalRef: MDBModalRef, public sanitizer: DomSanitizer, public location: Location) { }
 
   ngOnInit() {
-    this.url = this.sanitizer.bypassSecurityTrustResourceUrl(this.settings.url);
+    this.cannotPreview = this.settings.fileType &&
+      !ConfigProvider.settings.docPreviewSupportedTypes.includes(this.settings.fileType.toUpperCase());
+    this.iframeLoaded = this.cannotPreview;
+    this.isSpModal = this.settings.fileType ? false : true;
+    this.settings.webViewUrl$.subscribe(x => {
+      this.webViewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(x);
+    });
+    this.fullScreenUrl$ = this.settings.fullScreenUrl$;
+    this.downloadUrl$ = this.settings.downloadUrl$;
+    this.spUrl$ = this.settings.spUrl$;
+  }
+
+  ngAfterViewInit() {
+    if (!this.cannotPreview) {
+      this.iframe.nativeElement.addEventListener('load', this.onLoad.bind(this));
+    }
+  }
+
+  onLoad(e) {
+
+    if (this.isSpModal) {
+      const iframeDoc = e.currentTarget.contentWindow.document;
+      let cssUrl = this.location.prepareExternalUrl('assets/sp-iframe.css');
+      cssUrl = cssUrl.replace('/index.aspx', '');
+
+      const cssLink = document.createElement('link');
+      cssLink.href = cssUrl;
+      cssLink.rel = 'stylesheet';
+      cssLink.type = 'text/css';
+
+      iframeDoc.head.appendChild(cssLink);
+    }
+    this.iframeLoaded = true;
   }
 
 }

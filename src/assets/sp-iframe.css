@@ -1,0 +1,11 @@
+#s4-ribbonrow {
+    display: none;
+}
+
+#s4-workspace {
+    height: 450px;
+}
+
+input[value="Close"] {
+    display: none;
+}

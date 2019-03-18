@@ -1,9 +1,4 @@
 import { Input, Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { SpRestService } from '../../services/sp-rest.service';
-
-import { Observable, of } from 'rxjs';
-import * as moment from 'moment';
-import { formatDate } from '@angular/common';
 
 import { MatTableDataSource } from '@angular/material';
 import { MatPaginator} from '@angular/material';
@@ -15,11 +10,14 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { TableItemDialogComponent } from '../../modals/table-item-dialog/table-item-dialog.component';
 
 import { TileComponent } from '../tile/tile.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { Country } from '../../model/country';
 import { DataLayerService } from '../../services/data-layer.service';
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
+import { SpRestService } from 'src/app/services/sp-rest.service';
+
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-generic-table',
@@ -40,7 +38,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   /*** modal start ***/
   modalRef: MDBModalRef;
-  tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
+  // tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
 
   /** modal end ***/
   // listItems: Array<any>;
@@ -78,57 +76,28 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   /*** mat-table end ***/
 
-  constructor(private dataLayerService: DataLayerService, private dialog: MatDialog, private modalService: MDBModalService) { }
+  constructor(private dataLayerService: DataLayerService,
+    private spRestService: SpRestService, private dialog: MatDialog, private modalService: MDBModalService) { }
 
   openTableItemDialog(index) {
-
-    const dialogConfig: MatDialogConfig  = new MatDialogConfig();
-
-    dialogConfig.width = '400px';
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      country: this.country,
-      modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
-        this.rawResults[index].processedColumns[this.settings.modal.titleColumn] :
-        this.rawResults[index]['Title'],
-      settings: {
-        columns: this.settings.modal && this.settings.modal.columns || this.settings.columns,
-        item: this.rawResults[index].processedColumns
-      }
-    };
+    index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
+    const rawResult = this.rawResults[index];
 
     this.modalRef = this.modalService.show(IframeModalComponent, {
       class: 'modal-lg',
       data: {
         country: this.country,
         modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
-          this.rawResults[index].processedColumns[this.settings.modal.titleColumn] :
-          this.rawResults[index]['Title'],
+          rawResult.processedColumns[this.settings.modal.titleColumn] :
+          rawResult.Title,
         settings: {
-          url: this.rawResults[index][this.settings.modal.urlColumn] + '?web=1'
+          spUrl$: rawResult.spUrl$,
+          downloadUrl$: rawResult.downloadUrl$,
+          webViewUrl$: rawResult.webViewUrl$,
+          fullScreenUrl$: rawResult.fullScreenUrl$,
+          fileType: rawResult.File_x0020_Type
         }
       }
-    });
-
-    /* this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent, dialogConfig);
-
-    this.tableItemDialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result:', result);
-      this.tableItemDialogRef.close('It closed');
-    });
-
-    this.tableItemDialogRef.beforeClosed().subscribe(result => {
-      console.log('Dialog result in beforeClosed:', result);
-     // this.tableItemDialogRef.close('It closed');
-     console.log('Dialog is closing - beforeClosed');
-    }); */
-
-
-    this.tableItemDialogRef.afterOpened().subscribe(result => {
-      console.log('Dialog result in afterOpened:', result);
-     // this.tableItemDialogRef.close('It closed');
-     // console.log('Dialog is closing - beforeClosed');
     });
   }
 
@@ -139,7 +108,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     // Get columns to display
     this.matTableCols = this.settings.columns;
 
-    console.log('this.settings', this.settings);
+    console.log('generic-table.ts this.settings', this.settings);
 
     // Create table display column order.  This is determined by the 'columnOrder' property of each table column entry
     // found in settings.columns
