@@ -9,6 +9,7 @@ export class NewsItem {
         public body: string,
         public url: string,
         public source: DataSource,
+        public Id: any,
         public date: any) {
         this.friendlyDate = moment(date).format('DD MMM').toUpperCase();
     }
@@ -32,6 +33,6 @@ export function createNewsItemFromSharePointResult(result: any, source: DataSour
         resultText = $(result.Body, ownerDocument).text();
         resultTitle = result.Title;
     }
-    newsItem = new NewsItem(resultTitle, resultText, itemURL, source, moment(result[source.dateField]));
+    newsItem = new NewsItem(resultTitle, resultText, itemURL, source, result.Id, moment(result[source.dateField]));
     return newsItem;
 }

@@ -13,86 +13,70 @@ export class LinksComponent implements OnInit {
   @Input() settings: any;
   @Input() country: BehaviorSubject<Country>;
 
-  
-  //Default background color for icons
-  readonly defaultBackgroundColor:string ="#BEBEBE";
 
-  //Default icon to use for link.  Used if not specified in in the links list.
-  readonly defaultIconUrl:string ="./assets/images/links-images/info42x42.png";
+  // Default icon to use for link.  Used if not specified in in the links list.
+  readonly defaultIconUrl: string = './assets/images/links-images/info42x42.png';
 
-  //Items read from links list
+  // Items read from links list
   listItems: Array<any> = Array<any>();
-  
+
   subscription: any;
 
-  //Open chosen link in a new browser tab
-   openInTab(event: any): void {
-
-    console.log('event is',event);
-
-    event.preventDefault();
-
-    //Might be a better way to get access to url clicked, but this works for now
-    let urlTarget: string  = event.target.href;
-    window.open(urlTarget,'_blank');
-    
-  } //openInTab
-
- 
   constructor(private dataLayerService: DataLayerService) {}
 
   ngOnInit() {
 
-    
+
    console.log('****Starting processing on links component in ngOnInit*****');
 
     this.subscription = this.country.subscribe(selectedCountry => {
       this.loadLinks(selectedCountry);
     });
-    
 
-     
   } // ngOnInit
 
   loadLinks(country): void {
 
-    console.log('link.component this.settings.source:',this.settings.source,'with country',country);
+    console.log('link.component this.settings.source:', this.settings.source, 'with country', country);
 
     // TODO: subscribe & filter on country, process columns if needed
-    this.dataLayerService.getItemsFromSource(this.settings.source,country).subscribe({
+    this.dataLayerService.getItemsFromSource(this.settings.source, country).subscribe({
         next: results => {
 
-          console.log('List', this.settings.source.listName, 'raw response data in table.components.ts is', results, 'with settings.columns',this.settings.columns);
+          console.log('List', this.settings.source.listName,
+            'raw response data in table.components.ts is', results, 'with settings.columns', this.settings.columns);
 
-          //Loop over raw results returned from list query
+          // Loop over raw results returned from list query
          for (const result of results) {
 
-            //Object that will contain columnName:value combination for each value returned in the response 
+            // Object that will contain columnName:value combination for each value returned in the response
             result.columns = {};
 
             for (const column of this.settings.columns) {
 
-              console.log('result item:', result, 'and current column name',column.columnName);
+              console.log('result item:', result, 'and current column name', column.columnName);
 
-              //Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl, and backgroundColor are first level properties
-             result.columns[column.columnName] = (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
-             
-            
-            } //for
+            // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
+            // and backgroundColor are first level properties
+             result.columns[column.columnName] =
+              (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
 
-            //Set default values as required
+
+            } // for
+
+            // Set default values as required
             !result.columns['iconUrl']  && (result.columns['iconUrl'] = this.defaultIconUrl);
             !result.columns['backgroundColor'] && (result.columns['backgroundColor'] = this.defaultBackgroundColor);
 
-            //Add formated object to list of items to be returned
+            // Add formated object to list of items to be returned
             this.listItems.push(result.columns);
-        
-          } //for
 
-          console.log('links to display are',this.listItems);
+          } // for
 
-      
-        } //next
+          console.log('links to display are', this.listItems);
+
+
+        } // next
       });  // subscribe
 
 

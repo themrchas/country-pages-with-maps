@@ -19,6 +19,7 @@ tr:hover {
 
 tr {
     height: 25px !important;
+    cursor: pointer;
 }
 
 td {

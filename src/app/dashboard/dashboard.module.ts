@@ -36,6 +36,7 @@ import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
 import { SingleItemComponent } from '../tiles/single-item/single-item.component';
 import { LinksComponent } from '../tiles/links/links.component';
+import { IframeModalComponent } from '../modals/iframe-modal/iframe-modal.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -56,7 +57,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TabsComponent,
     SingleItemComponent,
     TableItemDialogComponent,
-    LinksComponent
+    LinksComponent,
+    IframeModalComponent
   ],
   imports: [
     DashboardRoutingModule,
@@ -90,7 +92,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UpcomingEventsComponent,
     SingleItemComponent,
     LinksComponent,
-    TableItemDialogComponent
+    TableItemDialogComponent,
+    IframeModalComponent
   ],
 })
 export class DashboardModule { }
