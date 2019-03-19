@@ -21,8 +21,7 @@ export class DataLayerService {
     console.log('--> source passed to  getItemsFromSource in data-layer,service is ' ,source);
     console.log(' --> filterObj is ',filterObj);
     console.log('--> columns are ', columns);
-    console.log('source passed to  getItemsFromSource in data-layer,service is', source);
-    console.log('filterObj is ', filterObj);
+    
 
     if (filterObj) {
       camlQuery = source.camlQuery ?
@@ -40,16 +39,35 @@ export class DataLayerService {
           source.select, source.expand, source.rowLimit);
     }
     return asyncRequest.pipe(map(resp => {
+
+      console.log('resp in data-layer.service is', resp);
       let retVal = null;
       if (resp && resp['d'] && resp['d'].results) {
         retVal = resp['d'].results;
 
+          //iterate over list items returned
           retVal = retVal.map(result => {
             result.processedColumns = [];
             // process columns
+
+            console.log('Processing columns in data-layer.service.ts using result',result);
+
             if (columns) {
               for (const column of columns) {
                 const colName = column.columnName;
+
+
+                console.log('in data-layer.service column is:', column, 'and colName is',colName);
+
+
+                if (column.type === "mmm") {
+
+
+
+                }
+
+
+
                 if (column.type === 'mm') {
                   result.processedColumns[colName] = result[colName].Label;
                 } else if (column.type === 'date') {
