@@ -14,13 +14,16 @@ export class SpRestService {
   absRoot: string;
 
   constructor(private httpClient: HttpClient) {
-    this.currSiteCollection = _spPageContextInfo.siteServerRelativeUrl;
-    this.absRoot = _spPageContextInfo.siteAbsoluteUrl.replace(this.currSiteCollection, '');
+    if (_spPageContextInfo) {
+      this.currSiteCollection = _spPageContextInfo.siteServerRelativeUrl;
+      this.absRoot = _spPageContextInfo.siteAbsoluteUrl.replace(this.currSiteCollection, '');
+    }
   }
 
   // TODO: This won't work if current site collection is root '/'
   isSameSiteCollectionAsCurrent(url) {
-    return url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection);
+    return _spPageContextInfo &&
+      (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));
   }
 
   spGetHttpOptions() {
