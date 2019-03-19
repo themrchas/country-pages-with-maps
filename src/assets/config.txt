@@ -90,7 +90,7 @@
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
                                 "listName": "CountryLinks",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination" },
@@ -98,7 +98,7 @@
                                  { "columnName": "Comments", "displayName": "Comments"},
                                  { "columnName": "iconUrl", "displayName": "iconUrl"},
                                  { "columnName": "backgroundColor", "displayName": "backgroundColor" },
-                                 { "columnName": "CountryMM", "displayName": "Country", "type": "mm" }
+                                 { "columnName": "testMMM", "displayName": "Country", "type": "mmm" }
 
                             ]
                         }
