@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, empty } from 'rxjs';
+import { Observable, empty, of } from 'rxjs';
 import { map, catchError, mergeMap } from 'rxjs/operators';
+import { ConfigProvider } from '../providers/configProvider';
+
+declare var _spPageContextInfo: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpRestService {
+  currSiteCollection: string;
+  absRoot: string;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    this.currSiteCollection = _spPageContextInfo.siteServerRelativeUrl;
+    this.absRoot = _spPageContextInfo.siteAbsoluteUrl.replace(this.currSiteCollection, '');
+  }
+
+  // TODO: This won't work if current site collection is root '/'
+  isSameSiteCollectionAsCurrent(url) {
+    return url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection);
+  }
 
   spGetHttpOptions() {
     return {
@@ -80,8 +93,7 @@ export class SpRestService {
     listName: string,
     camlQuery: string,
     select?: string,
-    expand?: string,
-    requestDigest?: string): Observable<Object>  {
+    expand?: string): Observable<Object>  {
 
   const data = {
     query: {
@@ -106,7 +118,11 @@ export class SpRestService {
 
   console.log('reqUrl in sp-rest.service.ts is', reqUrl, 'and optParams are:', optParams, '**', 'and data is', data );
 
-  return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
+
+  return this.getRequestDigest(listWeb).pipe(mergeMap(requestDigest => {
+    return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
+  }));
+
 }
 
   /*getListItemsCamlQuery(listWeb: string,
@@ -151,6 +167,18 @@ export class SpRestService {
       }));
   }
 
+  getRequestDigest(listWeb: string): Observable<any> {
+    let asyncRequest;
+    if (this.isSameSiteCollectionAsCurrent(listWeb)) {
+      asyncRequest = of(ConfigProvider.requestDigest);
+    } else {
+      asyncRequest = this.getContextInfo(listWeb).pipe(map((contextInfo) => {
+        return contextInfo['d'].GetContextWebInformation.FormDigestValue;
+      }));
+    }
+    return asyncRequest;
+  }
+
   getListItemsByView(listWeb, listName, viewGuid, requestDigest?) {
     return this.getView(listWeb, listName, viewGuid).pipe(
         catchError(error => {
@@ -165,8 +193,12 @@ export class SpRestService {
 
   // Action is the SPWOPIFrameAction enumeration number (0 - 2)
   getWOPIFrameUrl(listWeb, listName, itemId, action: number) {
-      return this.httpClient.post(`${listWeb}/_api/web/lists/getByTitle('${listName}')/items(${itemId})/getWOPIFrameUrl(${action})`,
-        '{}', this.spPostHttpOptions());
+    return this.getRequestDigest(listWeb).pipe(mergeMap(requestDigest => {
+      return this.httpClient.post(
+        `${listWeb}/_api/web/lists/getByTitle('${listName}')/items(${itemId})/getWOPIFrameUrl(${action})`,
+        '{}',
+        this.spPostHttpOptions(requestDigest));
+    }));
   }
 
   getDocIcon(listWeb: string, filename: string, size: number) {

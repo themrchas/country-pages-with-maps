@@ -22,14 +22,14 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
   downloadUrl$: string;
   fileType: string;
   iframeLoaded: boolean;
-  cannotPreview: boolean;
+  noPreview: boolean;
   isSpModal: boolean;
   constructor(public modalRef: MDBModalRef, public sanitizer: DomSanitizer, public location: Location) { }
 
   ngOnInit() {
-    this.cannotPreview = this.settings.fileType &&
+    this.noPreview = this.settings.fileType &&
       !ConfigProvider.settings.docPreviewSupportedTypes.includes(this.settings.fileType.toUpperCase());
-    this.iframeLoaded = this.cannotPreview;
+    this.iframeLoaded = this.noPreview;
     this.isSpModal = this.settings.fileType ? false : true;
     this.settings.webViewUrl$.subscribe(x => {
       this.webViewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(x);
@@ -40,7 +40,7 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (!this.cannotPreview) {
+    if (!this.noPreview) {
       this.iframe.nativeElement.addEventListener('load', this.onLoad.bind(this));
     }
   }

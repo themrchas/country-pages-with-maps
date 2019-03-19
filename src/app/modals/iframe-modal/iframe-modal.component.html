@@ -4,7 +4,7 @@
     <!--Body-->
     <div class="modal-body mb-0 p-0">
       <div class="embed-responsive embed-responsive-16by9 z-depth-1-half">
-        <ng-container *ngIf="cannotPreview; else iframe_preview">
+        <ng-container *ngIf="noPreview; else iframe_preview">
           <div class="cannot-preview">Cannot preview this file type</div>
         </ng-container>
         <ng-template #iframe_preview>
@@ -25,7 +25,7 @@
             <img src="./assets/images/download.png">
           </a>
         </ng-container>
-        <ng-container *ngIf="!cannotPreview">
+        <ng-container *ngIf="!noPreview">
             <ng-container *ngIf="fullScreenUrl$ | async as fullScreenUrl$">
                 <a mdbTooltip="Full Screen" target="_blank" [href]="fullScreenUrl$" type="button" mdbBtn floating="true" size="sm">
                   <img src="./assets/images/window-restore.png">
