@@ -1,14 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, empty } from 'rxjs';
+import { Observable, empty, of } from 'rxjs';
 import { map, catchError, mergeMap } from 'rxjs/operators';
+import { ConfigProvider } from '../providers/configProvider';
+
+declare const _spPageContextInfo: any;
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpRestService {
+  currSiteCollection: string;
+  absRoot: string;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+    if (typeof _spPageContextInfo  !== 'undefined') {
+      this.currSiteCollection = _spPageContextInfo.siteServerRelativeUrl;
+      this.absRoot = _spPageContextInfo.siteAbsoluteUrl.replace(this.currSiteCollection, '');
+    }
+  }
+
+  // TODO: This won't work if current site collection is root '/'
+  isSameSiteCollectionAsCurrent(url) {
+    return (typeof _spPageContextInfo  !== 'undefined') &&
+      (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));
+  }
 
   spGetHttpOptions() {
     return {
@@ -80,8 +96,7 @@ export class SpRestService {
     listName: string,
     camlQuery: string,
     select?: string,
-    expand?: string,
-    requestDigest?: string): Observable<Object>  {
+    expand?: string): Observable<Object>  {
 
   const data = {
     query: {
@@ -104,9 +119,13 @@ export class SpRestService {
   // const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}${optParams}`;
   const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems?${optParams}`;
 
-  console.log('reqUrl in sp-rest.service.ts is',reqUrl,'and optParams are:', optParams,'**', 'and data is',data );
+  console.log('reqUrl in sp-rest.service.ts is', reqUrl, 'and optParams are:', optParams, '**', 'and data is', data );
 
-  return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
+
+  return this.getRequestDigest(listWeb).pipe(mergeMap(requestDigest => {
+    return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
+  }));
+
 }
 
   /*getListItemsCamlQuery(listWeb: string,
@@ -151,6 +170,18 @@ export class SpRestService {
       }));
   }
 
+  getRequestDigest(listWeb: string): Observable<any> {
+    let asyncRequest;
+    if (this.isSameSiteCollectionAsCurrent(listWeb)) {
+      asyncRequest = of(ConfigProvider.requestDigest);
+    } else {
+      asyncRequest = this.getContextInfo(listWeb).pipe(map((contextInfo) => {
+        return contextInfo['d'].GetContextWebInformation.FormDigestValue;
+      }));
+    }
+    return asyncRequest;
+  }
+
   getListItemsByView(listWeb, listName, viewGuid, requestDigest?) {
     return this.getView(listWeb, listName, viewGuid).pipe(
         catchError(error => {
@@ -160,6 +191,28 @@ export class SpRestService {
         const viewQuery = '<Query>' + viewData['d'].ViewQuery + '</Query>';
         const camlQuery = JSON.stringify({ViewXml: `${viewQuery}`});
         return this.getListItemsCamlQuery(listWeb, listName, camlQuery, requestDigest);
+      }));
+  }
+
+  // Action is the SPWOPIFrameAction enumeration number (0 - 2)
+  getWOPIFrameUrl(listWeb, listName, itemId, action: number) {
+    return this.getRequestDigest(listWeb).pipe(mergeMap(requestDigest => {
+      return this.httpClient.post(
+        `${listWeb}/_api/web/lists/getByTitle('${listName}')/items(${itemId})/getWOPIFrameUrl(${action})`,
+        '{}',
+        this.spPostHttpOptions(requestDigest));
+    }));
+  }
+
+  getDocIcon(listWeb: string, filename: string, size: number) {
+    return this.httpClient.get(`${listWeb}/_api/web/mapToIcon(filename='${filename}',progid='',size=${size})`,
+      this.spGetHttpOptions());
+  }
+
+  getDisplayForm(listWeb: string, listName: string, itemId) {
+    return this.httpClient.get(`${listWeb}/_api/web/lists/getByTitle('${listName}')/Forms?select=ServerRelativeUrl&$filter=FormType eq 4`,
+      this.spGetHttpOptions()).pipe(map(resp => {
+        return resp['d'].results[0].ServerRelativeUrl + '?ID=' + itemId;
       }));
   }
 }

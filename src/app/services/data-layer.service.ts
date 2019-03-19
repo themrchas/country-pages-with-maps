@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SpRestService } from './sp-rest.service';
 import { DataSource } from '../model/dataSource';
 import { ConfigProvider } from '../providers/configProvider';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
@@ -10,7 +10,7 @@ import * as moment from 'moment';
   providedIn: 'root'
 })
 export class DataLayerService {
-
+  docIconPaths = new Map<string, string>();
   constructor(private spRestService: SpRestService) {}
 
   getItemsFromSource(source: DataSource, filterObj?, columns?): Observable<Array<any>>  {
@@ -18,8 +18,10 @@ export class DataLayerService {
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
-    console.log('source passed to  getItemsFromSource in data-layer,service is',source);
-    console.log('filterObj is ',filterObj);
+    console.log('--> source passed to  getItemsFromSource in data-layer,service is ' ,source);
+    console.log(' --> filterObj is ',filterObj);
+    console.log('--> columns are ', columns);
+    
 
     if (filterObj) {
       camlQuery = source.camlQuery ?
@@ -31,48 +33,96 @@ export class DataLayerService {
     if (source.camlQuery) {
       // const viewXml = JSON.stringify({ViewXml: `${camlQuery}`});
       asyncRequest = this.spRestService.getListItemsCamlQuery(source.listWeb, source.listName, camlQuery,
-        source.select, source.expand, ConfigProvider.requestDigest);
+        source.select, source.expand);
     } else {
-      if (source.type === 'docLibrary') {
-        // TODO: support filtering & camlQuery
-        asyncRequest = this.spRestService.getDocuments(source.listWeb, source.listName);
-      } else {
-        asyncRequest = this.spRestService.getListItems(source.listWeb, source.listName, source.order, filter,
+      asyncRequest = this.spRestService.getListItems(source.listWeb, source.listName, source.order, filter,
           source.select, source.expand, source.rowLimit);
-      }
     }
     return asyncRequest.pipe(map(resp => {
+
+      console.log('resp in data-layer.service is', resp);
       let retVal = null;
       if (resp && resp['d'] && resp['d'].results) {
         retVal = resp['d'].results;
 
-        if (columns) {
+          //iterate over list items returned
           retVal = retVal.map(result => {
             result.processedColumns = [];
             // process columns
-            for (const column of columns) {
-              const colName = column.columnName;
-              if (column.type === 'mm') {
-                result.processedColumns[colName] = result[colName].Label;
-              } else if (column.type === 'date') {
-                result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
-              } else if (column.type === 'expanded') {
-                const splitName = column.columnName.split('/');
-                result.processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
-              } else if (column.type === 'url') {
-                // does anything actually need to be processed?
-                result.processedColumns[colName] = result[colName];
-              } else if (column.type === 'docTypeIcon') {
-                const fileType = result[colName];
-                result.processedColumns[colName] = fileType !== 'html' && fileType != null ?
-                  '/_layouts/15/images/ic' + fileType + '.png' : null;
-              } else {
-                result.processedColumns[colName] = result[colName];
+
+            console.log('Processing columns in data-layer.service.ts using result',result);
+
+            if (columns) {
+              for (const column of columns) {
+                const colName = column.columnName;
+
+
+                console.log('in data-layer.service column is:', column, 'and colName is',colName);
+
+
+                if (column.type === "mmm") {
+
+
+
+                }
+
+
+
+                if (column.type === 'mm') {
+                  result.processedColumns[colName] = result[colName].Label;
+                } else if (column.type === 'date') {
+                  result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
+                } else if (column.type === 'expanded') {
+                  const splitName = column.columnName.split('/');
+                  result.processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
+                } else if (column.type === 'url') {
+                  // does anything actually need to be processed?
+                  result.processedColumns[colName] = result[colName];
+                } else if (column.type === 'docTypeIcon') {
+                  const fileType = result[colName];
+                  if (this.docIconPaths.has(fileType)) {
+                    result.processedColumns[colName] = of(this.docIconPaths.get(fileType));
+                  } else {
+                    result.processedColumns[colName] =
+                    this.spRestService.getDocIcon(source.listWeb, 'filename.' + fileType, 0).pipe(map(icon => {
+                      const iconPath = '/_layouts/15/images/' + icon['d'].MapToIcon;
+                      this.docIconPaths.set(fileType, iconPath);
+                      return iconPath;
+                    }));
+                  }
+                } else {
+                  result.processedColumns[colName] = result[colName];
+                }
               }
             }
+
+            // Format URLs for displayform, web preview, full screen, download
+            if (source.type === 'docLibrary') {
+              const fileRef = result['FileRef'];
+              result.spUrl$ = this.spRestService.getDisplayForm(source.listWeb,
+                source.listName, result.Id);
+              result.downloadUrl$ = of(source.listWeb + '/_layouts/15/download.aspx?SourceUrl=' + fileRef);
+              result.webViewUrl$ = this.spRestService.getWOPIFrameUrl(source.listWeb, source.listName,
+                result.Id, 3).pipe(map(response => {
+                  const wopiFrame = response['d'].GetWOPIFrameUrl;
+                  return wopiFrame.length > 0 ? wopiFrame : fileRef;
+                }));
+              result.fullScreenUrl$ = result.webViewUrl$.pipe(map(webViewUrl => {
+                return (webViewUrl as string).replace('action=interactivepreview', 'action=view');
+              }));
+            } else {
+              result.spUrl$ = this.spRestService.getDisplayForm(source.listWeb,
+                source.listName, result.Id);
+              result.webViewUrl$ = result.spUrl$.pipe(map(x => {
+                return x + '&IsDlg=1';
+              }));
+            }
+
+            // Always add the source back to the result
+            result.source = source;
+
             return result;
           });
-        }
       }
       return retVal;
     }));
@@ -86,7 +136,7 @@ export class DataLayerService {
           str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
       }
 
-      console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is',str );
+      console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
       return str;
   }
 
