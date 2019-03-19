@@ -33,8 +33,8 @@
     </ng-container>
     <ng-container *ngIf="tblCol.type === 'docTypeIcon'">
         <td mat-cell *matCellDef="let tableItem">
-          <ng-container *ngIf="tableItem[tblCol.columnName]">
-            <img [src]="tableItem[tblCol.columnName]"/>
+          <ng-container *ngIf="(tableItem[tblCol.columnName]) | async as docIconPath">
+            <img [src]="docIconPath"/>
           </ng-container>
         </td>
     </ng-container>

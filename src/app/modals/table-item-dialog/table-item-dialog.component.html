@@ -1,6 +1,9 @@
-<h2 mat-dialog-title>Modal Title</h2>
+<h2 mat-dialog-title>{{modalData.modalTitle}}</h2>
 <mat-dialog-content>
-  <app-single-item [settings]="modalData.settings" [country]="modalData.country"></app-single-item>
+  <!--<app-single-item [settings]="modalData.settings" [country]="modalData.country"></app-single-item>-->
+  <iframe src="http://ekm-sp13/sites/SOCAFDev/Shared%20Documents/Blah%20blah%20blah.docx?web=1">
+
+  </iframe>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="closeTheModal()">Close</button>

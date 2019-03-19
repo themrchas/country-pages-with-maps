@@ -5,7 +5,6 @@ import { Observable, from, empty } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, mergeMap, catchError } from 'rxjs/operators';
 import { SpServicesWrapperService } from './sp-services-wrapper.service';
-import { ConfigProvider } from '../providers/configProvider';
 import { SpRestService } from './sp-rest.service';
 
 @Injectable({
@@ -21,14 +20,16 @@ export class EventsService {
                     <FieldRef Name="EventType0"/>\
                     <FieldRef Name="fRecurrence"/>\
                     <FieldRef Name="fAllDayEvent"/>\
+                    <FieldRef Name="Location"/>\
                 </ViewFields>';
   _spServicesJsonMapping = {
-    ows_ID: {mappedName: 'id', objectType: 'Text'},
-    ows_Title: {mappedName: 'title', objectType: 'Text'},
-    ows_EventDate: {mappedName: 'eventDate', objectType: 'DateTime'},
-    ows_EndDate: {mappedName: 'endDate', objectType: 'DateTime'},
-    ows_EventType0: {mappedName: 'eventType', objectType: 'Text'},
-    ows_fAllDayEvent: {mappedName: 'isAllDayEvent', objectType: 'Boolean'}
+    ows_ID: {mappedName: 'ID', objectType: 'Text'},
+    ows_Title: {mappedName: 'Title', objectType: 'Text'},
+    ows_EventDate: {mappedName: 'StartTime', objectType: 'DateTime'},
+    ows_EndDate: {mappedName: 'EndTime', objectType: 'DateTime'},
+    ows_EventType0: {mappedName: 'EventType', objectType: 'Text'},
+    ows_fAllDayEvent: {mappedName: 'IsAllDayEvent', objectType: 'Boolean'},
+    ows_Location: { mappedName: 'Location', objectType: 'Text'}
   };
 
   constructor( private httpClient: HttpClient, private spRestService: SpRestService,
@@ -47,8 +48,9 @@ export class EventsService {
   }
 
   openEvent(event) {
-    const id = event.Id ? event.Id : event.id;
-    window.open(event.source.calendarURL + '/DispForm.aspx?ID=' + id, '_blank');
+    this.spRestService.getDisplayForm(event.source.listWeb, event.source.listName, event.ID).subscribe(
+      formUrl => window.open(formUrl, '_blank')
+    );
   }
 
   getEventsForSelectedDayMultipleViews(start, viewGuids: Array<string>, eventSource) {
@@ -94,7 +96,7 @@ export class EventsService {
                               <FieldRef Name="EventDate"/>\
                               <FieldRef Name="EndDate"/>\
                               <FieldRef Name="RecurrenceID"/>\
-                              <Value Type="DateTime"><Today /></Value>\
+                              <Value Type="DateTime"><' + recurrenceRange + ' /></Value>\
                             </DateRangesOverlap>\
                         </Where>\
                         <OrderBy><FieldRef Name="EventDate" Ascending="TRUE" /></OrderBy>\
@@ -115,9 +117,24 @@ export class EventsService {
     const _temp = _;
     return from(this.spServicesWrapper.executeQuery(queryOpts).then(function(json) {
       const startOfSelectedDay = moment(start).startOf('day');
-      json = self._reshapeAfterSpServicesJsonMapping(json, startOfSelectedDay, eventSource);
-      json = _temp.filter(json, {endedPriorToSelectedDate: false });
+      // json = self._reshapeAfterSpServicesJsonMapping(json, startOfSelectedDay, eventSource);
+      // json = _temp.filter(json, {endedPriorToSelectedDate: false });
       json = _temp.chain(json).map(function(item) {
+                item.StartTime = moment(item.StartTime);
+                item.EndTime = moment(item.EndTime);
+                const startUtc = moment.utc(item.StartTime).startOf('day');
+                const endUtc = moment.utc(item.EndTime).startOf('day');
+                const isSameDay = startUtc.toString() === endUtc.toString();
+                const isSameMonth = startUtc.startOf('month').toString() === endUtc.startOf('month').toString();
+
+                if (isSameDay) {
+                  item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase();
+                } else if (isSameMonth) {
+                  item.friendlyDate = item.StartTime.format('DD') + '-' + item.EndTime.format('DD') + ' ' +
+                    item.StartTime.format('MMM').toUpperCase();
+                } else {
+                  item.friendlyDate = item.StartTime.format('DD MMM').toUpperCase() + '-' + item.EndTime.format('DD MMM').toUpperCase();
+                }
         item.source = eventSource;
         return item;
       }).value();

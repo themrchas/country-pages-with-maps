@@ -10,9 +10,14 @@ import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { TableItemDialogComponent } from '../../modals/table-item-dialog/table-item-dialog.component';
 
 import { TileComponent } from '../tile/tile.component';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { Country } from '../../model/country';
 import { DataLayerService } from '../../services/data-layer.service';
+import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
+import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
+import { SpRestService } from 'src/app/services/sp-rest.service';
+
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-generic-table',
@@ -32,7 +37,8 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   subscription: any;
 
   /*** modal start ***/
-  tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
+  modalRef: MDBModalRef;
+  // tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
 
   /** modal end ***/
   // listItems: Array<any>;
@@ -70,41 +76,28 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   /*** mat-table end ***/
 
-  constructor(private dataLayerService: DataLayerService, private dialog: MatDialog) { }
+  constructor(private dataLayerService: DataLayerService,
+    private spRestService: SpRestService, private dialog: MatDialog, private modalService: MDBModalService) { }
 
   openTableItemDialog(index) {
+    index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
+    const rawResult = this.rawResults[index];
 
-    const dialogConfig: MatDialogConfig  = new MatDialogConfig();
-
-    dialogConfig.width = '400px';
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      country: this.country,
-      settings: {
-        columns: this.settings.modalColumns || this.settings.columns,
-        item: this.rawResults[index]
+    this.modalRef = this.modalService.show(IframeModalComponent, {
+      class: 'modal-lg',
+      data: {
+        country: this.country,
+        modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
+          rawResult.processedColumns[this.settings.modal.titleColumn] :
+          rawResult.Title,
+        settings: {
+          spUrl$: rawResult.spUrl$,
+          downloadUrl$: rawResult.downloadUrl$,
+          webViewUrl$: rawResult.webViewUrl$,
+          fullScreenUrl$: rawResult.fullScreenUrl$,
+          fileType: rawResult.File_x0020_Type
+        }
       }
-    };
-
-    this.tableItemDialogRef = this.dialog.open(TableItemDialogComponent, dialogConfig);
-
-    this.tableItemDialogRef.afterClosed().subscribe(result => {
-      console.log('Dialog result:', result);
-      this.tableItemDialogRef.close('It closed');
-    });
-
-    this.tableItemDialogRef.beforeClosed().subscribe(result => {
-      console.log('Dialog result in beforeClosed:', result);
-     // this.tableItemDialogRef.close('It closed');
-     console.log('Dialog is closing - beforeClosed');
-    });
-
-
-    this.tableItemDialogRef.afterOpened().subscribe(result => {
-      console.log('Dialog result in afterOpened:', result);
-     // this.tableItemDialogRef.close('It closed');
-     // console.log('Dialog is closing - beforeClosed');
     });
   }
 
@@ -129,12 +122,13 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   loadTable(country) {
-
-    console.log('loading country', country, 'in generic-table.component.ts');
-   
+    // this.listItems = Array<any>();
+    const combinedColumns = [...this.settings.columns, ...(this.settings.modal && this.settings.modal.columns || [])];
     const listItems: Array<any> = Array<any>();
-    
-    this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
+    this.dataLayerService.getItemsFromSource(this.settings.source,
+      country,
+      combinedColumns).subscribe({
+
       next: results => {
 
         this.rawResults = results;

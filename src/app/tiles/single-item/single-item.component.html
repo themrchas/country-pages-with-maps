@@ -1,6 +1,11 @@
 <table class="table" *ngIf="singleItem">
     <tr *ngFor="let column of settings.columns">
       <td class="label">{{column.displayName}}</td>
-      <td>{{singleItem[column.columnName]}}</td>
+      <ng-container *ngIf="column.type === 'url'; else col_text">
+          <td><a [href]="singleItem[column.columnName].Url">{{singleItem[column.columnName].Description}}</a></td>
+      </ng-container>
+      <ng-template #col_text>
+        <td>{{singleItem[column.columnName]}}</td>
+      </ng-template>
     </tr>
 </table>

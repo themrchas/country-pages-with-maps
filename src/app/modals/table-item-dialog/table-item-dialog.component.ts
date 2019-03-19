@@ -11,7 +11,6 @@ export class TableItemDialogComponent implements OnInit {
   modalData: any;
 
   closeTheModal() {
-    console.log('you clikced the close button');
     this.dialogRef.close('Dialog has been closed in dialog component');
   }
 
