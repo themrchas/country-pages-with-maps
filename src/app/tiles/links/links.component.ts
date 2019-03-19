@@ -18,7 +18,7 @@ export class LinksComponent implements OnInit {
   readonly defaultBackgroundColor:string ="#BEBEBE";
 
   //Default icon to use for link.  Used if not specified in in the links list.
-  readonly defaultIconUrl:string ="/assets/images/links-images/info42x42.png";
+  readonly defaultIconUrl:string ="./assets/images/links-images/info42x42.png";
 
   //Items read from links list
   listItems: Array<any> = Array<any>();
