@@ -13,6 +13,8 @@ export class LinksComponent implements OnInit {
   @Input() settings: any;
   @Input() country: BehaviorSubject<Country>;
 
+  // Default background color for icons
+  readonly defaultBackgroundColor: string = '#BEBEBE';
 
   // Default icon to use for link.  Used if not specified in in the links list.
   readonly defaultIconUrl: string = './assets/images/links-images/info42x42.png';
