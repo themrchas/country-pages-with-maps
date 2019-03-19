@@ -18,8 +18,9 @@ export class DataLayerService {
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
-    console.log('source passed to  getItemsFromSource in data-layer,service is',source);
-    console.log('filterObj is ',filterObj);
+    console.log('--> source passed to  getItemsFromSource in data-layer,service is ' ,source);
+    console.log(' --> filterObj is ',filterObj);
+    console.log('--> columns are ', columns);
 
     if (filterObj) {
       camlQuery = source.camlQuery ?

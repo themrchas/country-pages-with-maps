@@ -72,7 +72,7 @@ export class LinksComponent implements OnInit {
 
             for (const column of this.settings.columns) {
 
-              console.log('result item:', result, 'and current column name',column.columnName);
+             // console.log('result item:', result, 'and current column name',column.columnName);
 
               //Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl, and backgroundColor are first level properties
              result.columns[column.columnName] = (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
