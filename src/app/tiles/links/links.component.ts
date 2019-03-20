@@ -39,10 +39,10 @@ export class LinksComponent implements OnInit {
 
   loadLinks(country): void {
 
-    console.log('link.component this.settings.source:', this.settings.source, 'with country', country);
+    console.log('link.component this.settings.source:', this.settings.source, 'with country', country, 'and columns', this.settings.columns);
 
     // TODO: subscribe & filter on country, process columns if needed
-    this.dataLayerService.getItemsFromSource(this.settings.source, country).subscribe({
+    this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
         next: results => {
 
           console.log('List', this.settings.source.listName,

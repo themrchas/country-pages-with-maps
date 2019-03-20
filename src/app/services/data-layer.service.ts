@@ -59,16 +59,24 @@ export class DataLayerService {
 
                 console.log('in data-layer.service column is:', column, 'and colName is',colName);
 
-
+                //Process a multi-valued managed metada column
                 if (column.type === "mmm") {
 
+                  console.log(' *** Processing column type mmm ***')
 
+                  console.log(' *** result[colName] is ', result[colName], '***');
+                  console.log(' *** result[colName][results] is ', result[colName]["results"], '***');
+
+                  let labelMaker = function (previous, current) { return previous ? previous + "," + current.Label : current.Label; };
+
+                  console.log(' *** result.processedColumns[colName] is ', result.processedColumns[colName], 'with colName', colName, ' ***');
+
+
+                  result.processedColumns[colName] = result[colName]['results'].reduce(labelMaker, null);
 
                 }
 
-
-
-                if (column.type === 'mm') {
+                else if (column.type === 'mm') {
                   result.processedColumns[colName] = result[colName].Label;
                 } else if (column.type === 'date') {
                   result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
@@ -120,6 +128,8 @@ export class DataLayerService {
 
             // Always add the source back to the result
             result.source = source;
+
+            console.log(' *** Returning the following in data-layer.service', result, ' ***');
 
             return result;
           });
