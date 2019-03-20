@@ -69,13 +69,18 @@
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "SampleList",
                                 "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "camlQuery": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
                                 { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
                                 { "columnName": "Created", "displayName": "Created Date", "type": "date" },
-                                { "columnName": "Country", "displayName": "Country", "type": "mm" }
+                                { "columnName": "Country", "displayName": "Country", "type": "mm" },
+                                { "columnName": "CountryMMM", "displayName": "Country Multi", "type": "mmm" },
+                                { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "choice" }
+
                             ],
                             "modal": {
                                 "titleColumn": "Title",

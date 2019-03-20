@@ -11,7 +11,10 @@ import * as moment from 'moment';
 })
 export class DataLayerService {
   docIconPaths = new Map<string, string>();
+  doLog: boolean = false;
+
   constructor(private spRestService: SpRestService) {}
+
 
   getItemsFromSource(source: DataSource, filterObj?, columns?): Observable<Array<any>>  {
     let asyncRequest: Observable<Object>;
@@ -62,14 +65,14 @@ export class DataLayerService {
                 //Process a multi-valued managed metada column
                 if (column.type === "mmm") {
 
-                  console.log(' *** Processing column type mmm ***')
+                 this.doLog &&  console.log(' *** Processing column type mmm ***')
 
-                  console.log(' *** result[colName] is ', result[colName], '***');
-                  console.log(' *** result[colName][results] is ', result[colName]["results"], '***');
+                  this.doLog && console.log(' *** result[colName] is ', result[colName], '***');
+                  this.doLog && console.log(' *** result[colName][results] is ', result[colName]["results"], '***');
 
                   let labelMaker = function (previous, current) { return previous ? previous + "," + current.Label : current.Label; };
 
-                  console.log(' *** result.processedColumns[colName] is ', result.processedColumns[colName], 'with colName', colName, ' ***');
+                  this.doLog && console.log(' *** result.processedColumns[colName] is ', result.processedColumns[colName], 'with colName', colName, ' ***');
 
 
                   result.processedColumns[colName] = result[colName]['results'].reduce(labelMaker, null);

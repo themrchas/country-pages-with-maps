@@ -22,6 +22,9 @@ export class LinksComponent implements OnInit {
   // Items read from links list
   listItems: Array<any> = Array<any>();
 
+  //False if logging not enabled
+  doLog:boolean = false;
+
   subscription: any;
 
   constructor(private dataLayerService: DataLayerService) {}
@@ -56,7 +59,7 @@ export class LinksComponent implements OnInit {
 
             for (const column of this.settings.columns) {
 
-              console.log('result item:', result, 'and current column name', column.columnName);
+              this.doLog && console.log('result item:', result, 'and current column name', column.columnName);
 
             // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
             // and backgroundColor are first level properties
