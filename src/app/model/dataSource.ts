@@ -1,5 +1,16 @@
 import * as moment from 'moment';
 
+export interface DateFilter {
+    startDate: string;
+    startDateOffset: number;  // Ex: Days from <startDate>, ex: -30 days from today
+    startDateOffset_unit: string; // moment offset, ex: 'days', 'months', 'years'
+    startDateField: string;
+    endDate: string;
+    endDateOffset: number; // Ex: Days from <endDate>
+    endDateOffset_unit: string; // moment offset, ex: 'days', 'months', 'years'
+    endDateField: string;
+}
+
 export class DataSource {
 
     listName: string;
@@ -16,7 +27,7 @@ export class DataSource {
     filter?: string;
     order?: string;
     rowLimit?: number;
-    dateFilter?: any;
+    dateFilter?: DateFilter;
 
     // For document library sources, the folder path should be used as the listName
     constructor(json) {
@@ -34,21 +45,24 @@ export class DataSource {
         this.order = json.order;
         this.rowLimit = json.rowLimit;
         this.dateField = json.dateField;  // For use on news items
+        this.dateFilter = json.dateFilter as DateFilter;
 
         if (json.dateFilter) {
             if (json.dateFilter.startDate) {
                 let startDate = json.dateFilter.startDate.toUpperCase() === 'TODAY' ? moment() :
                     moment(json.dateFilter.startDate);
-                startDate = startDate.startOf('day').add(json.dateFilter.startDateOffset_days, 'days');
+                startDate = startDate.startOf('day').add(json.dateFilter.startDateOffset,
+                    json.dateFilter.startDateOffset_unit);
                 this.filter += this.filter ? ' and ' : '';
-                this.filter += `${json.dateFilter.dateField} ge dateTime'${startDate}.toISOString()}`;
+                this.filter += `${json.dateFilter.startDateField} ge dateTime'${startDate.toISOString()}'`;
             }
             if (json.dateFilter.endDate) {
                 let endDate = json.dateFilter.endDate.toUpperCase() === 'TODAY' ? moment() :
                     moment(json.dateFilter.endDate);
-                endDate = endDate.startOf('day').add(json.dateFilter.endDateOffset_days, 'days');
+                endDate = endDate.startOf('day').add(json.dateFilter.endDateOffset,
+                    json.dateFilter.endDateOffset_unit);
                 this.filter += this.filter ? ' and ' : '';
-                this.filter += `${json.dateFilter.dateField} ge dateTime'${endDate}.toISOString()}`;
+                this.filter += `${json.dateFilter.endDateField} le dateTime'${endDate.toISOString()}'`;
             }
         }
     }

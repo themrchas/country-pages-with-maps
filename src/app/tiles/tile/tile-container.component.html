@@ -33,7 +33,7 @@
               <section class="mb-3" *ngIf="sources">
                 <h6>Sources</h6> 
                   <ul *ngFor="let source of sources">
-                      <li><a class="waves-light" mdbWavesEffect [href]="source.url" target="_blank">{{source.listName}}</a></li>
+                      <li><a class="waves-light" mdbWavesEffect [href]="source.url" target="_blank">{{source.displayName || source.listName}}</a></li>
                   </ul>
                 </section>
               </div>
@@ -43,8 +43,17 @@
       </links>
   </mdb-navbar>
 
-  <div class="card-body">
-    <ng-container tile-host></ng-container>   
+  <div class="card-body" [ngClass]="{'pt-0': showTabs }">
+    <ng-container *ngIf="!showTabs; else tabbed_tile" tile-host></ng-container>
+    <ng-template #tabbed_tile>
+        <mat-tab-group>
+          <ng-container *ngFor="let tab of tile.settings.tabs">
+            <mat-tab [label]="tab.heading">
+                <ng-container tile-host></ng-container>
+            </mat-tab>
+          </ng-container>
+        </mat-tab-group>
+    </ng-template>
   </div>
 </div>
         
