@@ -16,6 +16,7 @@ export class CountryService {
 
   constructor(private dataLayerService: DataLayerService) {
     this.countrySource = ConfigProvider.settings.country;
+    console.log('ConfigProvider.settings.country in country.service.ts is',this.countrySource);
   }
 
   // Use ISO 3 for country code

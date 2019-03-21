@@ -62,6 +62,8 @@ export class DataLayerService {
 
                 if (column.type === "mmm") {
 
+                  console.log(' ## encounted mmm: ##',result[colName]);
+
 
 
                 }
