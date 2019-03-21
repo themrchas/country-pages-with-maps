@@ -22,6 +22,9 @@ export class LinksComponent implements OnInit {
   // Items read from links list
   listItems: Array<any> = Array<any>();
 
+  //False if logging not enabled
+  doLog:boolean = false;
+
   subscription: any;
 
   constructor(private dataLayerService: DataLayerService) {}
@@ -39,10 +42,10 @@ export class LinksComponent implements OnInit {
 
   loadLinks(country): void {
 
-    console.log('link.component this.settings.source:', this.settings.source, 'with country', country);
+    console.log('link.component this.settings.source:', this.settings.source, 'with country', country, 'and columns', this.settings.columns);
 
     // TODO: subscribe & filter on country, process columns if needed
-    this.dataLayerService.getItemsFromSource(this.settings.source, country).subscribe({
+    this.dataLayerService.getItemsFromSource(this.settings.source, country, this.settings.columns).subscribe({
         next: results => {
 
           console.log('List', this.settings.source.listName,
@@ -56,8 +59,7 @@ export class LinksComponent implements OnInit {
 
             for (const column of this.settings.columns) {
 
-            //  console.log('result item:', result, 'and current column name',column.columnName);
-              console.log('result item:', result, 'and current column name', column.columnName);
+              this.doLog && console.log('result item:', result, 'and current column name', column.columnName);
 
             // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
             // and backgroundColor are first level properties
