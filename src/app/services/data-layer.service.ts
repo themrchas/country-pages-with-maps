@@ -60,7 +60,7 @@ export class DataLayerService {
                 console.log('in data-layer.service column is:', column, 'and colName is',colName);
 
 
-                if (column.type === "mmm") {
+                if (column.type === 'mmm') {
 
                   console.log(' ## encounted mmm: ##',result[colName]);
 
