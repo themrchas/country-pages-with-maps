@@ -11,7 +11,11 @@ import * as moment from 'moment';
 })
 export class DataLayerService {
   docIconPaths = new Map<string, string>();
+
+  //control logging
   doLog: boolean = false;
+
+  newDays: number = 1;
 
   constructor(private spRestService: SpRestService) {}
 
@@ -21,9 +25,9 @@ export class DataLayerService {
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
-    console.log('--> source passed to  getItemsFromSource in data-layer,service is ' ,source);
-    console.log(' --> filterObj is ',filterObj);
-    console.log('--> columns are ', columns);
+    this.doLog && console.log('--> source passed to  getItemsFromSource in data-layer,service is ' ,source);
+    this.doLog && console.log(' --> filterObj is ',filterObj);
+    this.doLog && console.log('--> columns are ', columns);
     
 
     if (filterObj) {
@@ -60,7 +64,7 @@ export class DataLayerService {
                 const colName = column.columnName;
 
 
-                console.log('in data-layer.service column is:', column, 'and colName is',colName);
+                this.doLog && console.log('in data-layer.service column is:', column, 'and colName is',colName);
 
                 //Process a multi-valued managed metada column
                 if (column.type === "mmm") {
@@ -128,6 +132,9 @@ export class DataLayerService {
                 return x + '&IsDlg=1';
               }));
             }
+
+            //True if item was created less than 1 day ago
+            result.processedColumns['isNew'] = moment().diff(moment(result.Created),'days') > 1;
 
             // Always add the source back to the result
             result.source = source;

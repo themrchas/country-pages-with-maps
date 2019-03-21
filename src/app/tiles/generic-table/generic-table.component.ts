@@ -36,6 +36,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   subscription: any;
 
+
+  //Control component logging to console
+  doLog: boolean = true;
+
   /*** modal start ***/
   modalRef: MDBModalRef;
   // tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
@@ -108,7 +112,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     // Get columns to display
     this.matTableCols = this.settings.columns;
 
-    console.log('generic-table.ts this.settings', this.settings);
+    this.doLog && console.log('generic-table.ts this.settings', this.settings);
 
     // Create table display column order.  This is determined by the 'columnOrder' property of each table column entry
     // found in settings.columns
@@ -139,10 +143,14 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
           // Add formated object to list of items to be returned
          listItems.push(result.processedColumns);
 
+         this.doLog && console.log('dataSource in generic-table.components is ',listItems);
+
         } // for
 
         // Update the table datasource info
         this.dataSource.data = listItems;
+
+
 
       } // next
 
