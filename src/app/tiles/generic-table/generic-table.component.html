@@ -22,7 +22,7 @@
 
  <!--  <ng-container *ngFor="let tblCol of matTableCols" > -->
 
-  <ng-container *ngFor="let tblCol of settings.columns" matColumnDef="{{tblCol.columnName}}">
+  <ng-container *ngFor="let tblCol of settings.columns; let z = index" matColumnDef="{{tblCol.columnName}}">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{tblCol.displayName}}</th>
     <ng-container *ngIf="tblCol.type === 'url'">
         <td mat-cell *matCellDef="let tableItem">
@@ -39,7 +39,7 @@
         </td>
     </ng-container>
     <ng-container *ngIf="tblCol.type !== 'url' && tblCol.type !== 'docTypeIcon'">
-        <td mat-cell *matCellDef="let tableItem">{{tblCol.columnName != firstColumnInTable ? tableItem[tblCol.columnName] : 'gah'+ tableItem[tblCol.columnName] }}</td>
+      <td mat-cell *matCellDef="let tableItem;">{{ tableItem[tblCol.columnName] }} {{z}}</td>
     </ng-container>
 
     

@@ -17,6 +17,8 @@ import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
 import { SpRestService } from 'src/app/services/sp-rest.service';
 
+//import { AddHtmlPipe } from 'src/app/pipes/add-html.pipe';
+
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -80,6 +82,11 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     // console.log('filtering on',value);
     this.dataSource.filter = value.trim();
   }
+
+  doIt(colValue:string, colName:string): string {
+    return colName == this.firstColumnInTable ? "<h3>"+colValue+"</h3>" : colValue;
+  }
+
 
   /*** mat-table end ***/
 
