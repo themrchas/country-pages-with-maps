@@ -37,7 +37,7 @@ import { GenericTableComponent } from '../tiles/generic-table/generic-table.comp
 import { SingleItemComponent } from '../tiles/single-item/single-item.component';
 import { LinksComponent } from '../tiles/links/links.component';
 import { IframeModalComponent } from '../modals/iframe-modal/iframe-modal.component';
-import { AddHtmlPipe } from '../pipes/add-html.pipe';
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -60,7 +60,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TableItemDialogComponent,
     LinksComponent,
     IframeModalComponent,
-    AddHtmlPipe
+    
   ],
   imports: [
     DashboardRoutingModule,
