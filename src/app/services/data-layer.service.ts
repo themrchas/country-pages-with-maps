@@ -134,7 +134,7 @@ export class DataLayerService {
             }
 
             //True if item was created less than 1 day ago
-            result.processedColumns['isNew'] = moment().diff(moment(result.Created),'days') > 1;
+            result.processedColumns['isNew'] = moment().diff(moment(result.Created),'days') < 1;
 
             // Always add the source back to the result
             result.source = source;

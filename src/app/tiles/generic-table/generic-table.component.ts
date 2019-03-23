@@ -67,9 +67,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   matTableCols: Array<any>;
   rawResults: any[];
 
-  //Column name of first (left most) column in the table
-  firstColumnInTable:any;
-
   // Fire off when row in table clicked
   onRowClicked(event: any, index: number) {
 
@@ -82,11 +79,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     // console.log('filtering on',value);
     this.dataSource.filter = value.trim();
   }
-
-  doIt(colValue:string, colName:string): string {
-    return colName == this.firstColumnInTable ? "<h3>"+colValue+"</h3>" : colValue;
-  }
-
 
   /*** mat-table end ***/
 
@@ -127,9 +119,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     // Create table display column order.  This is determined by the 'columnOrder' property of each table column entry
     // found in settings.columns
     this.columnsToDisplay = this.matTableCols.map((columnEntry) => columnEntry.columnName );
-
-    //Get column name of first table column entry
-    this.firstColumnInTable = this.columnsToDisplay[0];
 
     this.subscription = this.country.subscribe(selectedCountry => {
       this.loadTable(selectedCountry);
