@@ -34,7 +34,7 @@ export class LinksComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
 
-   console.log('****Starting processing on links component in ngOnInit*****');
+   this.doLog && console.log('****Starting processing on links component in ngOnInit*****');
 
     this.subscription = this.country.subscribe(selectedCountry => {
       this.loadLinks(selectedCountry);
@@ -43,6 +43,8 @@ export class LinksComponent implements OnInit, OnDestroy {
   } // ngOnInit
 
   loadLinks(country): void {
+
+    this.doLog && console.log('---->links.component.ts with country',country,'and settings.sources',this.settings.sources);
 
     from(this.settings.sources).pipe(mergeMap(source => {
       return this.dataLayerService.getItemsFromSource(new DataSource(source), country, this.settings.columns);
@@ -57,7 +59,7 @@ export class LinksComponent implements OnInit, OnDestroy {
 
           for (const column of this.settings.columns) {
 
-            console.log('result item:', result, 'and current column name', column.columnName);
+            this.doLog && console.log('result item:', result, 'and current column name', column.columnName);
 
             // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
             // and backgroundColor are first level properties
@@ -75,7 +77,7 @@ export class LinksComponent implements OnInit, OnDestroy {
 
         } // for
 
-        console.log('links to display are', this.listItems);
+        this.doLog && console.log('links to display are', this.listItems);
       } // next
     });  // subscribe
 

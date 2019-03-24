@@ -1,5 +1,6 @@
 {
         "env": "low",
+        "feedbackUrl": "/",
         "country": {
             "listWeb": "http://localhost:8080/sites/dev/socafdev",
             "listName": "CountryData",
@@ -71,7 +72,7 @@
                                 "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
                                 "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
                                 "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                                "camlQuery": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQueryC": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
@@ -101,12 +102,12 @@
                         "colspan": 1,
                         "heading": "Sample Links List",
                         "settings": {
-                            "source": {
+                            "sources": [{
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
                                 "listName": "CountryLinks",
                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
-                            },
+                            }],
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination" },
                                  { "columnName": "Description", "displayName": "Description"},
