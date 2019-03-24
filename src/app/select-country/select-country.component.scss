@@ -13,8 +13,22 @@ button {
 }
 
 .dropdown-menu {
-    width: 100%;
+    right: 0;
+    left: auto;
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    width: 400px;
+}
+
+@media(min-width:992px){
+    .dropdown-menu {
+        width: 750px;
+    }
+}
+
+@media(max-width:768px){
+    .dropdown-menu {
+        width: 100%;
+    }
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
@@ -23,4 +37,8 @@ button {
 
 h6.sub-title {
     padding: 0 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #555;
+    border-bottom: 1px solid #e0e0e0;
 }

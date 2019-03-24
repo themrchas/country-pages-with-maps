@@ -107,7 +107,7 @@ export class EventsService {
                                 <ExpandRecurrence>TRUE</ExpandRecurrence>\
                               </QueryOptions>';
     const defaultOpts = {
-      listWeb: eventSource.listWeb,
+      webURL: eventSource.listWeb,
       listName: eventSource.listName,
       spServicesJsonMapping: this._spServicesJsonMapping,
       CAMLViewFields: this._viewFields

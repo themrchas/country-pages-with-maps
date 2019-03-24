@@ -5,14 +5,17 @@
     </button>
   
     <div class="dropdown-menu dropdown-primary">
-        <h6 class="sub-title">East Africa</h6>
-        <ng-container *ngFor="let country of countriesEA">
-            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
-        </ng-container>
-        <div class="divider dropdown-divider"></div>
-        <h6 class="sub-title">North &amp; West Africa</h6>
-        <ng-container *ngFor="let country of countriesNWA">
-            <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
-        </ng-container>
+        <div class="container-fluid">
+            <div class="row">
+            <ng-container *ngFor='let region of regions | keyvalue'>
+                <div class="col-lg-4">
+                <h6 class="sub-title">{{region.key}}</h6>
+                <ng-container *ngFor="let country of region.value">
+                    <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
+                </ng-container>
+                </div>
+            </ng-container>
+            </div>
+        </div>
       </div>
   </div>

@@ -14,6 +14,7 @@
 
 .news-title {
     line-height: 1.6em;
+    font-size: .87rem;
 }
 
 .news-item {
@@ -21,7 +22,7 @@
 }
 
 .news-body {
-    font-size: .95em;
+    font-size: .85rem;
     word-wrap: break-word;
 }
 

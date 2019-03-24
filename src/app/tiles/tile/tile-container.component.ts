@@ -1,34 +1,29 @@
-import { Component, OnInit, Input, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ComponentFactoryResolver, ViewChild, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
 import { TileDirective } from './tile.directive';
-import { TableComponent } from '../table/table.component';
-import { NewsComponent } from '../news/news.component';
-import { MapComponent } from '../map/map.component';
 import { TileComponent } from './tile.component';
-import { TabsComponent } from '../tabs/tabs.component';
-
-
-// Chas
-import { LinksComponent } from '../links/links.component';
-import { GenericTableComponent } from '../generic-table/generic-table.component';
-
 
 import { Country } from '../../model/country';
 import { BehaviorSubject } from 'rxjs';
+import { TableComponent } from '../table/table.component';
+import { NewsComponent } from '../news/news.component';
+import { MapComponent } from '../map/map.component';
 import { CountryFactBoxComponent } from '../country-fact-box/country-fact-box.component';
+import { GenericTableComponent } from '../generic-table/generic-table.component';
 import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.component';
 import { SingleItemComponent } from '../single-item/single-item.component';
+import { LinksComponent } from '../links/links.component';
 
 @Component({
   selector: 'app-tile',
   templateUrl: './tile-container.component.html',
   styleUrls: ['./tile-container.component.css']
 })
-export class TileContainerComponent implements OnInit {
+export class TileContainerComponent implements OnInit, AfterViewInit {
   @Input() tile: any;
   @Input() country: BehaviorSubject<Country>;
-  @ViewChild(TileDirective) tileDirective: TileDirective;
+  @ViewChildren(TileDirective) tileDirectives: QueryList<TileDirective>;
   sources: Array<any>;
-
+  showTabs: boolean;
   tileTypes = {
     TABLE: 'table',
     NEWS: 'news',
@@ -39,30 +34,46 @@ export class TileContainerComponent implements OnInit {
     UPCOMING_EVENTS: 'upcoming-events',
     SINGLE_ITEM: 'single-item',
     LINKS: 'links'
-
   };
+
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
-    const tileComponent = this.getTileComponent(this.tile.type);
+    this.showTabs = this.tile.type === this.tileTypes.TABS;
+  }
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-      tileComponent);
-
-    const viewContainerRef = this.tileDirective.viewContainerRef;
-    viewContainerRef.clear();
-
-    const componentRef = viewContainerRef.createComponent(componentFactory);
-    (componentRef.instance as TileComponent).settings = this.tile.settings;
-    (componentRef.instance as TileComponent).country = this.country;
-
-    if (this.tile.settings) {
-      if (this.tile.settings.source) {
-        this.sources = [this.tile.settings.source];
+  getSourcesForTile(tile) {
+    let sources: any;
+    if (tile.settings) {
+      if (tile.settings.source) {
+        sources = [tile.settings.source];
       } else {
-        this.sources = this.tile.settings.sources;
+        sources = tile.settings.sources;
       }
     }
+    return sources;
+  }
+
+  ngAfterViewInit() {
+    const tileSources = Array<any>();
+    this.tileDirectives.forEach((currentDirective, index) => {
+      const currentTile = !this.showTabs ? this.tile : this.tile.settings.tabs[index];
+
+      const tileComponent = this.getTileComponent(currentTile.type);
+      const tileSettings = currentTile.settings;
+      tileSources.push(...this.getSourcesForTile(currentTile));
+
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+        tileComponent);
+
+      const viewContainerRef = currentDirective.viewContainerRef;
+      viewContainerRef.clear();
+
+      const componentRef = viewContainerRef.createComponent(componentFactory);
+      (componentRef.instance as TileComponent).settings = tileSettings;
+      (componentRef.instance as TileComponent).country = this.country;
+    });
+    this.sources = tileSources;
   }
 
   getTileComponent(tileType) {
@@ -86,10 +97,6 @@ export class TileContainerComponent implements OnInit {
       }
       case this.tileTypes.GENTABLE: {
         tileComponent = GenericTableComponent;
-        break;
-      }
-      case this.tileTypes.TABS: {
-        tileComponent = TabsComponent;
         break;
       }
       case this.tileTypes.UPCOMING_EVENTS: {

@@ -25,7 +25,6 @@ import { NewsComponent } from '../tiles/news/news.component';
 import { TableComponent } from '../tiles/table/table.component';
 import { CountryFactBoxComponent } from '../tiles/country-fact-box/country-fact-box.component';
 import { MapComponent } from '../tiles/map/map.component';
-import { TabsComponent } from '../tiles/tabs/tabs.component';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -55,7 +54,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CountryFactBoxComponent,
     MapComponent,
     GenericTableComponent,
-    TabsComponent,
     SingleItemComponent,
     TableItemDialogComponent,
     LinksComponent,
@@ -90,7 +88,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NewsComponent,
     GenericTableComponent,
     CountryFactBoxComponent,
-    TabsComponent,
     UpcomingEventsComponent,
     SingleItemComponent,
     LinksComponent,

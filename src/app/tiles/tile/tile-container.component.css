@@ -1,5 +1,5 @@
 .card {
-    height: 100%;
+    height: 345px;
 }
 
 .card-body {
@@ -43,3 +43,33 @@
 :host ::ng-deep .navbar {
     box-shadow: none;
 }
+
+:host ::ng-deep .mat-tab-label {
+    height: 30px;
+}
+
+:host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, :host ::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+    background: #4abde8;
+}
+
+:host ::ng-deep .mat-tab-label-active {
+    background-color: #4abde8;
+    color: #000;
+}
+
+:host ::ng-deep .mat-tab-group.mat-primary :not(.mat-tab-disabled).mat-tab-label.cdk-keyboard-focused,
+:host ::ng-deep .mat-tab-group.mat-primary :not(.mat-tab-disabled).mat-tab-label.cdk-program-focused,
+:host ::ng-deep .mat-tab-group.mat-primary :not(.mat-tab-disabled).mat-tab-link.cdk-keyboard-focused,
+:host ::ng-deep .mat-tab-group.mat-primary :not(.mat-tab-disabled).mat-tab-link.cdk-program-focused,
+:host ::ng-deep .mat-tab-nav-bar.mat-primary :not(.mat-tab-disabled).mat-tab-label.cdk-keyboard-focused,
+:host ::ng-deep .mat-tab-nav-bar.mat-primary :not(.mat-tab-disabled).mat-tab-label.cdk-program-focused,
+:host ::ng-deep .mat-tab-nav-bar.mat-primary :not(.mat-tab-disabled).mat-tab-link.cdk-keyboard-focused,
+:host ::ng-deep .mat-tab-nav-bar.mat-primary :not(.mat-tab-disabled).mat-tab-link.cdk-program-focused {
+    background-color: #4abde8;
+    opacity: 0.6;
+    color: #000;
+}
+
+/*:host ::ng-deep .mat-tab-header {
+    background-color: rgb(209,234,241);
+}*/
