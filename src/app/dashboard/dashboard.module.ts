@@ -37,6 +37,7 @@ import { SingleItemComponent } from '../tiles/single-item/single-item.component'
 import { LinksComponent } from '../tiles/links/links.component';
 import { IframeModalComponent } from '../modals/iframe-modal/iframe-modal.component';
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -56,7 +57,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SingleItemComponent,
     TableItemDialogComponent,
     LinksComponent,
-    IframeModalComponent
+    IframeModalComponent,
+    
   ],
   imports: [
     DashboardRoutingModule,

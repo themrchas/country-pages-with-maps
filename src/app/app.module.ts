@@ -12,6 +12,7 @@ import { MainLayoutModule } from './main-layout/main-layout.module';
 
 
 
+
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/country' },
   { path: '**', component: PageNotFoundComponent }
@@ -31,6 +32,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PageNotFoundComponent
+    
   ],
   providers: [
     ConfigProvider,

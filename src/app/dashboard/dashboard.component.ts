@@ -24,8 +24,13 @@ export class DashboardComponent implements OnInit {
     private topicService: TopicService) { }
 
   ngOnInit() {
+    console.log(' --> calling ngOnInit in dashboard.component.ts');
     this.selectedCountry = this.countryService.selectedCountry;
+    console.log(' --> this.selectedCountry in dashboard.components.ts ngOnInit is',this.selectedCountry);
+
     this.selectedTopic = this.topicService.selectedTopic;
+
+    console.log(' --> this.selectedTopic in dashboard.components.ts ngOnInit is',this.selectedTopic);
 
     combineLatest(this.selectedCountry, this.selectedTopic).subscribe(combined => {
       const country = combined[0];
