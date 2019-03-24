@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CountryService } from '../services/country.service';
-import { Observable, of } from 'rxjs';
 import { Country } from '../model/country';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-select-country',
@@ -9,14 +9,9 @@ import { Country } from '../model/country';
   styleUrls: ['./select-country.component.scss']
 })
 export class SelectCountryComponent implements OnInit {
+  regions: Array<Array<Country>>;
   countriesEA: Array<Country>;
   countriesNWA: Array<Country>;
-
-
-  // Return array of countries based on region
-  private groupCountries(countries: Country[], region: string): Array<Country> {
-    return countries.filter(el => el.region === region);
-  }
 
   constructor(private countryService: CountryService) { }
 
@@ -24,8 +19,7 @@ export class SelectCountryComponent implements OnInit {
 
     this.countryService.getCountries().subscribe({
       next: obsCountries =>  {
-          this.countriesEA = this.groupCountries(obsCountries, 'EA');
-          this.countriesNWA = this.groupCountries(obsCountries, 'NWA');
+          this.regions = _.groupBy(obsCountries, 'region');
         }
     });
  }

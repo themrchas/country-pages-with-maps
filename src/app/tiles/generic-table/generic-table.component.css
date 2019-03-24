@@ -37,4 +37,13 @@ td {
 :host ::ng-deep .mat-paginator-container {
     padding: 0;
     justify-content: flex-start;
+    min-height: 0;
+}
+
+:host ::ng-deep .mat-paginator-page-size-select {
+    margin-top: 0;
+}
+
+.mat-paginator {
+    display: inline;
 }

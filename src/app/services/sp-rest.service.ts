@@ -4,7 +4,7 @@ import { Observable, empty, of } from 'rxjs';
 import { map, catchError, mergeMap } from 'rxjs/operators';
 import { ConfigProvider } from '../providers/configProvider';
 
-declare var _spPageContextInfo: any;
+declare const _spPageContextInfo: any;
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class SpRestService {
   absRoot: string;
 
   constructor(private httpClient: HttpClient) {
-    if (_spPageContextInfo) {
+    if (typeof _spPageContextInfo  !== 'undefined') {
       this.currSiteCollection = _spPageContextInfo.siteServerRelativeUrl;
       this.absRoot = _spPageContextInfo.siteAbsoluteUrl.replace(this.currSiteCollection, '');
     }
@@ -22,7 +22,7 @@ export class SpRestService {
 
   // TODO: This won't work if current site collection is root '/'
   isSameSiteCollectionAsCurrent(url) {
-    return _spPageContextInfo &&
+    return (typeof _spPageContextInfo  !== 'undefined') &&
       (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));
   }
 

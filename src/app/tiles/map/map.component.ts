@@ -5,6 +5,9 @@ import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldHigh from '@amcharts/amcharts4-geodata/worldHigh';
 import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+
+am4core.useTheme(am4themes_animated);
 
 @Component({
   selector: 'app-map',
@@ -25,16 +28,24 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
           const map = am4core.create('mapdiv', am4maps.MapChart);
           const polygonSeries = new am4maps.MapPolygonSeries();
           polygonSeries.useGeodata = true;
+          polygonSeries.exclude = ['AQ'];
           map.series.push(polygonSeries);
           map.geodata = am4geodata_worldHigh;
 
           const polygonTemplate = polygonSeries.mapPolygons.template;
-          polygonTemplate.tooltipText = country.title;
+          polygonTemplate.tooltipText = '{name}';
           polygonTemplate.fill = am4core.color('#74B266');
 
           // Create active state
           const as = polygonTemplate.states.create('active');
           as.properties.fill = am4core.color('#7B3625');
+
+          // Setting map's initial zoom
+          map.homeZoomLevel = 5;
+          map.homeGeoPoint = {
+            latitude: 7,
+            longitude: 20
+          };
 
           map.events.on('ready', function(ev) {
             const zoomCountry = polygonSeries.getPolygonById(country.countryCode2);

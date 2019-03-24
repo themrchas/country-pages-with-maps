@@ -24,6 +24,9 @@ export class LinksComponent implements OnInit, OnDestroy {
   // Items read from links list
   listItems: Array<any> = Array<any>();
 
+  // False if logging not enabled
+  doLog: false;
+
   subscription: any;
 
   constructor(private dataLayerService: DataLayerService) {}
@@ -42,7 +45,7 @@ export class LinksComponent implements OnInit, OnDestroy {
   loadLinks(country): void {
 
     from(this.settings.sources).pipe(mergeMap(source => {
-      return this.dataLayerService.getItemsFromSource(new DataSource(source), country);
+      return this.dataLayerService.getItemsFromSource(new DataSource(source), country, this.settings.columns);
     })).subscribe({
       next: results => {
 
@@ -56,11 +59,10 @@ export class LinksComponent implements OnInit, OnDestroy {
 
             console.log('result item:', result, 'and current column name', column.columnName);
 
-          // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
-          // and backgroundColor are first level properties
-           result.columns[column.columnName] =
-            (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
-
+            // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
+            // and backgroundColor are first level properties
+            result.columns[column.columnName] =
+              (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
 
           } // for
 
