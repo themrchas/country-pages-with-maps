@@ -80,7 +80,7 @@ export class DataLayerService {
                     result.processedColumns[colName], 'with colName', colName, ' ***');
                   result.processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMMM, null);
                 } else if (column.type === 'mm') {
-                  result.processedColumns[colName] = result[colName].Label;
+                  result.processedColumns[colName] = result[colName] ? result[colName].Label : '';
                 } else if (column.type === 'date') {
                   result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
                 } else if (column.type === 'expanded') {
