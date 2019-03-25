@@ -40,7 +40,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
 
   //Control component logging to console
-  doLog: boolean = true;
+  doLog: boolean = false;
 
   /*** modal start ***/
   modalRef: MDBModalRef;

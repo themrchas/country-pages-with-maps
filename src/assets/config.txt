@@ -122,108 +122,268 @@
                 ]
             },
             {
-                "name": "Facts & Contacts",
-                "topicId": "facts",
-                "tiles": [
-                    { 
-                        "type": "news",
-                        "colspan": 1,
-                        "heading": "News",
-                        "settings": {
-                            "sources": [
-                                {
-                                    "displayName": "AnnouncementsBlog",
-                                    "listName": "Posts",
-                                    "listWeb": "http://localhost:8080/sites/dev/socafdev/announcementsBlog",
-                                    "url": "http://localhost:8080/sites/dev/socafdev/announcementsBlog",
-                                    "type": "blog",
-                                    "displayForm": "Post.aspx",
-                                    "dateField": "PublishedDate",
-                                    "select": "PostCategory/Title,Body,Title,PublishedDate",
-                                    "expand": "PostCategory",
-                                    "filter": "OData__ModerationStatus eq 0 and PostCategory/Title eq '{{countryMM}}'"
+            "name": "Facts & Contacts",
+            "topicId": "facts",
+            "tiles": [
+                {
+                    "type": "news",
+                    "colspan": 1,
+                    "heading": "News",
+                    "settings": {
+                        "sources": [
+                            {
+                                "displayName": "TestBlog",
+                                "listName": "Posts",
+                                "listWeb": "/hq/j6/j6sandbox/TestBlog",
+                                "url": "/hq/j6/j6sandbox/TestBlog",
+                                "type": "blog",
+                                "displayForm": "Post.aspx",
+                                "dateField": "PublishedDate",
+                                "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                "expand": "PostCategory",
+                                "filter": "OData__ModerationStatus eq 0 and PostCategory/Title eq '{{countryMM}}'",
+                                "dateFilter": {
+                                    "startDate": "TODAY",
+                                    "startDateOffset": -3,
+                                    "startDateOffset_unit": "months",
+                                    "startDateField": "PublishedDate"
                                 }
-                            ]
-                        }
-                    },
-                    { 
-                        "type": "gen-table",
-                        "colspan": 2,
-                        "heading": "Sample Document Library",
-                        "settings": {
-                            "source": {
-                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                            },
+                            {
+                                "displayName": "Remote Blog",
+                                "listName": "Posts",
+                                "listWeb": "/hq/km/remoteblog",
+                                "url": "/hq/km/remoteblog",
+                                "type": "blog",
+                                "displayForm": "Post.aspx",
+                                "dateField": "PublishedDate",
+                                "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                "expand": "PostCategory",
+                                "filter": "OData__ModerationStatus eq 0",
+                                "dateFilter": {
+                                    "startDate": "TODAY",
+                                    "startDateOffset": -3,
+                                    "startDateOffset_unit": "months",
+                                    "startDateField": "PublishedDate"
+                                }
+                            }
+                        ]
+                    }
+                },
+                { 
+                    "type": "gen-table",
+                    "colspan": 2,
+                    "heading": "Sample Document Library",
+                    "settings": {
+                        "source": 
+                            {
+                                "listWeb": "/hq/j6/j6sandbox",
                                 "listName": "Documents",
-                                "url":  "http://localhost:8080/sites/socafdev/dev/Shared%20Documents",
+                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
                                 "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
                                 "expand": "File",
                                 "type": "docLibrary"
                             },
-                            "columns": [
-                                { "columnName": "File_x0020_Type", "displayName": "Type", "type": "docTypeIcon" },
-                                { "columnName": "File/Name", "displayName": "Name", "type": "expanded" },
-                                { "columnName": "Created", "displayName": "Created Date", "type": "date" }
-                            ],
-                            "modal": {
-                                "titleColumn": "File/Name"
+                        "columns": [
+                            {
+                                "columnName": "File_x0020_Type",
+                                "displayName": "Type",
+                                "type": "docTypeIcon"
+                            },
+                            {
+                                "columnName": "File/Name",
+                                "displayName": "Name",
+                                "type": "expanded"
+                            },
+                            {
+                                "columnName": "Created",
+                                "displayName": "Created Date",
+                                "type": "date"
                             }
-                        }
-    
-                    },
-                    { 
-                        "type": "upcoming-events",
-                        "colspan": 1,
-                        "heading": "Upcoming Events",
-                        "settings": {
-                            "sources": [
-                                {
-                                    "listWeb": "http://localhost:8080/sites/dev/socafdev",
-                                    "url": "http://localhost:8080/sites/dev/socafdev/DevCalendar",
-                                    "listName": "DevCalendar",
-                                    "defaultView": ""
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "type": "tabs",
-                        "colspan": 2,
-                        "heading": "US Contacts",
-                        "settings": {
-                            "tabs": [
-                                {
-                                    "heading": "SOCAFRICA",
-                                    "settings": {
-                                        "source": {
-                                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
-                                            "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/socafdev/dev/Lists/SampleList"
-                                        },
-                                        "columns": [
-                                            { "columnName": "Title", "displayName": "Title" },
-                                            { "columnName": "Created", "displayName": "Created Date"}
-                                        ]
-                                    }
-                                },
-                                {
-                                    "heading": "AFRICOM",
-                                    "settings": {
-                                        "source": {
-                                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
-                                            "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList"
-                                        },
-                                        "columns": [
-                                            { "columnName": "Title", "displayName": "Title" },
-                                            { "columnName": "Created", "displayName": "Created Date"}
-                                        ]
-                                    }
-                                }
-                            ]
-                        }
+                        ]
                     }
-                ]
-            }
+                },
+                {
+                    "type": "upcoming-events",
+                    "colspan": 1,
+                    "heading": "Upcoming Events",
+                    "settings": {
+                        "sources": [
+                            {
+                                "listWeb": "/hq/j6/j6sandbox",
+                                "url": "/hq/j6/j6sandbox/Lists/DevCalendar",
+                                "listName": "DevCalendar",
+                                "defaultView": ""
+                            },
+                            {
+                                "listWeb": "/hq/km",
+                                "url": "/hq/km/Lists/TestTDYCAl",
+                                "listName": "TestTDYCAl",
+                                "defaultView": ""
+                            }
+                        ]
+                    }
+                }
+                
+            ]
+        },
+        {
+            "name": "Testing",
+            "topicId": "testing",
+            "tiles": [
+             {
+                    "type": "tabs",
+                    "colspan": 2,
+                    "heading": "US Contacts",
+                    "settings": {
+                        "tabs": [
+                            {
+                                "type": "news",
+                                "heading": "SOCAFRICA",
+                                "settings": {
+                                    "sources": [
+                                        {
+                                            "displayName": "TestBlog",
+                                            "listName": "Posts",
+                                            "listWeb": "/hq/j6/j6sandbox/TestBlog",
+                                            "url": "/hq/j6/j6sandbox/TestBlog",
+                                            "type": "blog",
+                                            "displayForm": "Post.aspx",
+                                            "dateField": "PublishedDate",
+                                            "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                            "expand": "PostCategory",
+                                            "filter": "OData__ModerationStatus eq 0 and PostCategory/Title eq '{{countryMM}}'",
+                                            "dateFilter": {
+                                                "startDate": "TODAY",
+                                                "startDateOffset": -3,
+                                                "startDateOffset_unit": "months",
+                                                "startDateField": "PublishedDate"
+                                            }
+                                        },
+                                        {
+                                            "displayName": "Remote Blog",
+                                            "listName": "Posts",
+                                            "listWeb": "/hq/km/remoteblog",
+                                            "url": "/hq/km/remoteblog",
+                                            "type": "blog",
+                                            "displayForm": "Post.aspx",
+                                            "dateField": "PublishedDate",
+                                            "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                            "expand": "PostCategory",
+                                            "filter": "OData__ModerationStatus eq 0",
+                                            "dateFilter": {
+                                                "startDate": "TODAY",
+                                                "startDateOffset": -3,
+                                                "startDateOffset_unit": "months",
+                                                "startDateField": "PublishedDate"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "gen-table",
+                                "heading": "Another Site Collection Doc Library",
+                                "settings": {
+                                    "hideFilter": true,
+                                    "source": {
+                                        "listWeb": "/hq/km",
+                                        "listName": "Documents",
+                                        "url": "/hq/km/Shared%20Documents",
+                                        "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
+                                        "expand": "File",
+                                        "type": "docLibrary"
+                                    },
+                                    "columns": [
+                                        {
+                                            "columnName": "File_x0020_Type",
+                                            "displayName": "Type",
+                                            "type": "docTypeIcon"
+                                        },
+                                        {
+                                            "columnName": "File/Name",
+                                            "displayName": "Name",
+                                            "type": "expanded"
+                                        },
+                                        {
+                                            "columnName": "Created",
+                                            "displayName": "Created Date",
+                                            "type": "date"
+                                        }
+                                    ],
+                                    "modal": {
+                                        "titleColumn": "File/Name"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "gen-table",
+                                "heading": "Sample Gen List",
+                                "settings": {
+                                    "hideFilter": true,
+                                    "source": {
+                                        "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                        "listName": "SampleList",
+                                        "url": "http://localhost:8080/sites/dev/socafdev/SampleList",
+                                        "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                    },
+                                    "columns": [
+                                        {
+                                            "columnName": "Title",
+                                            "displayName": "Title"
+                                        },
+                                        {
+                                            "columnName": "MyUrl",
+                                            "displayName": "Url",
+                                            "type": "url"
+                                        },
+                                        {
+                                            "columnName": "Created",
+                                            "displayName": "Created Date",
+                                            "type": "date"
+                                        },
+                                        {
+                                            "columnName": "Country",
+                                            "displayName": "Country",
+                                            "type": "mm"
+                                        }
+                                    ],
+                                    "modal": {
+                                        "titleColumn": "Title",
+                                        "columns": [
+                                            {
+                                                "columnName": "Title",
+                                                "displayName": "Title"
+                                            },
+                                            {
+                                                "columnName": "MyUrl",
+                                                "displayName": "Url",
+                                                "type": "url"
+                                            },
+                                            {
+                                                "columnName": "Created",
+                                                "displayName": "Created Date",
+                                                "type": "date"
+                                            },
+                                            {
+                                                "columnName": "Country",
+                                                "displayName": "Country",
+                                                "type": "mm"
+                                            },
+                                            {
+                                                "columnName": "Modified",
+                                                "displayName": "Modified Date",
+                                                "type": "date"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
         ],
         "docPreviewSupportedTypes": [
             "AI","PDF","PSB","PSD","3G2","3GP","ASF","BMP","M2TS","M4V","MOV","MP3","MP4","MP4V",
