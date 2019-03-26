@@ -10,9 +10,6 @@ import { ConfigProvider, configProviderFactory } from './providers/configProvide
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainLayoutModule } from './main-layout/main-layout.module';
 
-
-
-
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/country' },
   { path: '**', component: PageNotFoundComponent }
@@ -32,7 +29,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PageNotFoundComponent
-    
   ],
   providers: [
     ConfigProvider,

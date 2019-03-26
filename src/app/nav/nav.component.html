@@ -6,7 +6,7 @@
                 <h2 class="toolbar-title">Country Pages</h2>
             </mat-toolbar-row>
         </mat-toolbar>
-        <ng-container>
+        <ng-container *ngIf="selectedCountry | async as selectedCountry">
             <mat-nav-list>
                 <ng-container *ngFor="let topic of topics" >
                 <a mat-list-item [routerLink]="[]" [queryParams]="{ topic: topic.topicId }" routerLinkActive="active-route">
@@ -19,14 +19,24 @@
             
             </mat-nav-list>
         </ng-container>
+        <div class="feedback"><a [href]="feedbackUrl" target="_blank"><img src="./assets/images/message-text-outline.png"> Submit Feedback</a></div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar>
-            <ng-container *ngIf="selectedCountry | async as selectedCountry">
+        <mat-toolbar *ngIf="selectedCountry | async as selectedCountry">
+            <ng-container>
                 <h3>{{selectedCountry.title}}</h3>
             </ng-container>
             <span class="fill-space"></span>
-            <app-select-country></app-select-country>
+            <div class="btn-group" mdbDropdown>
+                    <button mdbDropdownToggle type="button" mdbBtn color="info" class="dropdown-toggle waves-light"
+                      mdbWavesEffect>
+                      Change Country
+                    </button>
+                  
+                    <div class="dropdown-menu dropdown-primary">
+                        <app-select-country></app-select-country>
+                    </div>
+                  </div>
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>

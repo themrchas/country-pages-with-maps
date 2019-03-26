@@ -4,7 +4,6 @@ import { MatTableDataSource } from '@angular/material';
 import { MatPaginator} from '@angular/material';
 import { MatSort } from '@angular/material';
 
-
 // Modal
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
 import { TableItemDialogComponent } from '../../modals/table-item-dialog/table-item-dialog.component';
@@ -16,10 +15,6 @@ import { DataLayerService } from '../../services/data-layer.service';
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
 import { SpRestService } from 'src/app/services/sp-rest.service';
-
-//import { AddHtmlPipe } from 'src/app/pipes/add-html.pipe';
-
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-generic-table',
@@ -39,8 +34,8 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   subscription: any;
 
 
-  //Control component logging to console
-  doLog: boolean = true;
+  // Control component logging to console
+  doLog: true;
 
   /*** modal start ***/
   modalRef: MDBModalRef;
@@ -116,8 +111,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
     this.doLog && console.log('generic-table.ts this.settings', this.settings);
 
-    // Create table display column order.  This is determined by the 'columnOrder' property of each table column entry
-    // found in settings.columns
     this.columnsToDisplay = this.matTableCols.map((columnEntry) => columnEntry.columnName );
 
     this.subscription = this.country.subscribe(selectedCountry => {
@@ -145,7 +138,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
           // Add formated object to list of items to be returned
          listItems.push(result.processedColumns);
 
-         this.doLog && console.log('dataSource in generic-table.components is ',listItems);
+         this.doLog && console.log('dataSource in generic-table.components is ', listItems);
 
         } // for
 

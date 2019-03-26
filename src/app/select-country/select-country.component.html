@@ -1,4 +1,4 @@
-<div class="btn-group" mdbDropdown>
+<!--<div class="btn-group" mdbDropdown>
     <button mdbDropdownToggle type="button" mdbBtn color="info" class="dropdown-toggle waves-light"
       mdbWavesEffect>
       Change Country
@@ -18,4 +18,17 @@
             </div>
         </div>
       </div>
-  </div>
+  </div>-->
+
+  <div class="container-fluid">
+        <div class="row">
+        <ng-container *ngFor='let region of regions | keyvalue'>
+            <div class="col-lg-4 mb-3">
+            <h6 class="sub-title">{{region.key}}</h6>
+            <ng-container *ngFor="let country of region.value">
+                <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
+            </ng-container>
+            </div>
+        </ng-container>
+        </div>
+    </div>

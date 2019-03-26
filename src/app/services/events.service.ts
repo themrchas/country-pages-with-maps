@@ -89,18 +89,32 @@ export class EventsService {
         }));
   }
 
-  getEventsForRange(start, eventSource, query?: string, recurrenceRange = 'Today'): Observable<any> {
-    const camlQuery = query ? query : '<Query>\
-                        <Where>\
-                            <DateRangesOverlap>\
-                              <FieldRef Name="EventDate"/>\
-                              <FieldRef Name="EndDate"/>\
-                              <FieldRef Name="RecurrenceID"/>\
-                              <Value Type="DateTime"><' + recurrenceRange + ' /></Value>\
-                            </DateRangesOverlap>\
-                        </Where>\
-                        <OrderBy><FieldRef Name="EventDate" Ascending="TRUE" /></OrderBy>\
-                      </Query>';
+  getEventsForRange(start, eventSource, recurrenceRange = 'Today'): Observable<any> {
+    let camlQuery = eventSource.camlQuery;
+    if (!camlQuery) {
+      camlQuery = '<Query>\
+        <Where>\
+            <DateRangesOverlap>\
+              <FieldRef Name="EventDate"/>\
+              <FieldRef Name="EndDate"/>\
+              <FieldRef Name="RecurrenceID"/>\
+              <Value Type="DateTime"><' + recurrenceRange + ' /></Value>\
+            </DateRangesOverlap>\
+        </Where>\
+        <OrderBy><FieldRef Name="EventDate" Ascending="TRUE" /></OrderBy>\
+      </Query>';
+    } else if (camlQuery.indexOf('DateRangesOverlap') < 0) {
+      camlQuery = camlQuery.replace('<Where>', '\
+      <Where>\
+        <And>\
+          <DateRangesOverlap>\
+            <FieldRef Name="EventDate"/>\
+            <FieldRef Name="EndDate"/>\
+            <FieldRef Name="RecurrenceID"/>\
+            <Value Type="DateTime"><' + recurrenceRange + ' /></Value>\
+          </DateRangesOverlap>');
+      camlQuery = camlQuery.replace('</Where>', '</And></Where>');
+    }
     const camlQueryOptions = '<QueryOptions>\
                                 <CalendarDate>' + start + '</CalendarDate>\
                                 <RecurrencePatternXMLVersion>v3</RecurrencePatternXMLVersion>\

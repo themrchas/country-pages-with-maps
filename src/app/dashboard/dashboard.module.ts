@@ -57,8 +57,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SingleItemComponent,
     TableItemDialogComponent,
     LinksComponent,
-    IframeModalComponent,
-    
+    IframeModalComponent
   ],
   imports: [
     DashboardRoutingModule,

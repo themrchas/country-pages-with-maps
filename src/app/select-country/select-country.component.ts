@@ -10,8 +10,6 @@ import * as _ from 'lodash';
 })
 export class SelectCountryComponent implements OnInit {
   regions: Array<Array<Country>>;
-  countriesEA: Array<Country>;
-  countriesNWA: Array<Country>;
 
   constructor(private countryService: CountryService) { }
 

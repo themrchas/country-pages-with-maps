@@ -18,11 +18,11 @@ export class DataLayerService {
   constructor(private spRestService: SpRestService) {}
 
   labelMakerMMM(previous, current) {
-    return previous ? previous + ',' + current.Label : current.Label;
+    return previous ? previous + ', ' + current.Label : current.Label;
   }
 
   labelMakerMultiChoice(previous, current) {
-    return previous ? previous + ',' + current : current;
+    return previous ? previous + ', ' + current : current;
   }
 
   getItemsFromSource(source: DataSource, filterObj?, columns?): Observable<Array<any>>  {
@@ -30,8 +30,8 @@ export class DataLayerService {
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
-    this.doLog && console.log('--> source passed to  getItemsFromSource in data-layer,service is ' ,source);
-    this.doLog && console.log(' --> filterObj is ',filterObj);
+    this.doLog && console.log('--> source passed to  getItemsFromSource in data-layer,service is ', source);
+    this.doLog && console.log(' --> filterObj is ', filterObj);
     this.doLog && console.log('--> columns are ', columns);
 
     if (filterObj) {
@@ -67,7 +67,7 @@ export class DataLayerService {
               for (const column of columns) {
                 const colName = column.columnName;
 
-                this.doLog && console.log('in data-layer.service column is:', column, 'and colName is',colName);
+                this.doLog && console.log('in data-layer.service column is:', column, 'and colName is', colName);
 
                 // Process a multi-valued managed metada column
                 if (column.type === 'mmm') {
@@ -91,8 +91,10 @@ export class DataLayerService {
                 } else if (column.type === 'url') {
                   // does anything actually need to be processed?
                   result.processedColumns[colName] = result[colName];
+                } else if (column.type === 'boolean') {
+                  result.processedColumns[colName] = result[colName] ? 'Yes' : 'No';
                 } else if (column.type === 'rich-text') {
-                  result.processedColumns[colName] = this.getHtmlTextContent(result[colName]);
+                  result.processedColumns[colName] = result[colName] ? this.getHtmlTextContent(result[colName]) : '';
                 } else if (column.type === 'docTypeIcon') {
                   const fileType = result[colName];
                   if (this.docIconPaths.has(fileType)) {

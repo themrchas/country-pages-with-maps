@@ -2,8 +2,9 @@
 
     <perfect-scrollbar style="height:230px">
         
-          
-        
+      <div *ngIf="!listItems || listItems.length === 0">
+         No links found for {{country.value.title}}
+      </div>
         
        <ng-container *ngFor="let link of listItems"> 
             
