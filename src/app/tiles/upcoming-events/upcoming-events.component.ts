@@ -10,6 +10,7 @@ import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.com
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { map } from 'rxjs/operators';
 import { SpRestService } from 'src/app/services/sp-rest.service';
+import { DataLayerService } from 'src/app/services/data-layer.service';
 
 @Component({
   selector: 'app-upcoming-events',
@@ -23,7 +24,8 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent
   subscription: any;
   modalRef: MDBModalRef;
   constructor( private eventsService: EventsService, private modalService: MDBModalService,
-    private spRestService: SpRestService) { }
+    private spRestService: SpRestService,
+    private dataLayerService: DataLayerService) { }
 
   ngOnInit() {
     this.subscription = this.country.subscribe(selectedCountry => {
@@ -46,14 +48,20 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent
     }); */
 
     from(this.settings.sources).pipe(mergeMap(eventSource => {
+
+      if (eventSource['camlQuery']) {
+        eventSource['camlQuery'] =
+          this.dataLayerService.replacePlaceholdersWithFieldValues(eventSource['camlQuery'], country);
+      }
+
       // today
       const today = moment().startOf('day');
       const req1 = this.eventsService.getEventsForRange(today.toISOString(),
-        eventSource, undefined, 'Month');
+        eventSource, 'Month');
       const req2 = this.eventsService.getEventsForRange(moment().add(1, 'months').toISOString(),
-      eventSource, undefined, 'Month');
+      eventSource, 'Month');
       const req3 = this.eventsService.getEventsForRange(moment().add(2, 'months').toISOString(),
-      eventSource, undefined, 'Month');
+      eventSource, 'Month');
 
       return forkJoin([req1, req2, req3]);
 

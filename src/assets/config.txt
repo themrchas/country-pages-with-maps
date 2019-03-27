@@ -1,7 +1,7 @@
 {
         "env": "low",
         "country": {
-            "listWeb": "http://localhost:8080/sites/socafdev",
+            "listWeb": "http://localhost:8080/sites/dev/socafdev",
             "listName": "CountryData",
             "camlQueryAllCountries": "<View><Query></Query></View>",
             "camlQueryFilterCountry": "<View><Query><Where><Eq><FieldRef Name='ISO_3_CountryCode'/><Value Type='Text'>{{countryCode}}</Value></Eq></Where></Query></View>"
@@ -36,9 +36,9 @@
                         "customSettings": {
                             "DEU": {
                                 "source": {
-                                    "listWeb": "http://localhost:8080/sites/socafdev",
+                                    "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                     "listName": "CountryData",
-                                    "url":  "http://localhost:8080/sites/socafdev/Lists/CountryData"
+                                    "url":  "http://localhost:8080/sites/dev/socafdev/Lists/CountryData"
                                 },
                                 "columns": [
                                     { "columnName": "Title", "displayName": "Title" },
@@ -48,10 +48,10 @@
                         },
                         "settings": {
                             "source": {
-                                "listWeb": "http://localhost:8080/sites/socafdev",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "SampleList",
                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                                "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
+                                "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
@@ -66,16 +66,21 @@
                         "heading": "Sample Gen List",
                         "settings": {
                             "source": {
-                                "listWeb": "http://localhost:8080/sites/socafdev",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "SampleList",
-                                "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
+                                "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "camlQuery": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
                                 { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
                                 { "columnName": "Created", "displayName": "Created Date", "type": "date" },
-                                { "columnName": "Country", "displayName": "Country", "type": "mm" }
+                                { "columnName": "Country", "displayName": "Country", "type": "mm" },
+                                { "columnName": "CountryMMM", "displayName": "Country Multi", "type": "mmm" },
+                                { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "choice" }
+
                             ],
                             "modal": {
                                 "titleColumn": "Title",
@@ -97,10 +102,10 @@
                         "heading": "Sample Links List",
                         "settings": {
                             "source": {
-                                "listWeb": "http://localhost:8080/sites/socafdev",
-                                "url": "http://localhost:8080/sites/socafdev/Lists/CountryLinks",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
                                 "listName": "CountryLinks",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                             },
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination" },
@@ -108,7 +113,7 @@
                                  { "columnName": "Comments", "displayName": "Comments"},
                                  { "columnName": "iconUrl", "displayName": "iconUrl"},
                                  { "columnName": "backgroundColor", "displayName": "backgroundColor" },
-                                 { "columnName": "CountryMM", "displayName": "Country", "type": "mm" }
+                                 { "columnName": "testMMM", "displayName": "Country", "type": "mmm" }
 
                             ]
                         }
@@ -128,8 +133,8 @@
                                 {
                                     "displayName": "AnnouncementsBlog",
                                     "listName": "Posts",
-                                    "listWeb": "http://localhost:8080/sites/socafdev/announcementsBlog",
-                                    "url": "http://localhost:8080/sites/socafdev/announcementsBlog",
+                                    "listWeb": "http://localhost:8080/sites/dev/socafdev/announcementsBlog",
+                                    "url": "http://localhost:8080/sites/dev/socafdev/announcementsBlog",
                                     "type": "blog",
                                     "displayForm": "Post.aspx",
                                     "dateField": "PublishedDate",
@@ -146,9 +151,9 @@
                         "heading": "Sample Document Library",
                         "settings": {
                             "source": {
-                                "listWeb": "http://localhost:8080/sites/socafdev",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "Documents",
-                                "url":  "http://localhost:8080/sites/socafdev/Shared%20Documents",
+                                "url":  "http://localhost:8080/sites/socafdev/dev/Shared%20Documents",
                                 "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
                                 "expand": "File",
                                 "type": "docLibrary"
@@ -171,8 +176,8 @@
                         "settings": {
                             "sources": [
                                 {
-                                    "listWeb": "http://localhost:8080/sites/socafdev",
-                                    "url": "http://localhost:8080/sites/socafdev/DevCalendar",
+                                    "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                    "url": "http://localhost:8080/sites/dev/socafdev/DevCalendar",
                                     "listName": "DevCalendar",
                                     "defaultView": ""
                                 }
@@ -189,9 +194,9 @@
                                     "heading": "SOCAFRICA",
                                     "settings": {
                                         "source": {
-                                            "listWeb": "http://localhost:8080/sites/socafdev",
+                                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                             "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
+                                            "url":  "http://localhost:8080/sites/socafdev/dev/Lists/SampleList"
                                         },
                                         "columns": [
                                             { "columnName": "Title", "displayName": "Title" },
@@ -203,9 +208,9 @@
                                     "heading": "AFRICOM",
                                     "settings": {
                                         "source": {
-                                            "listWeb": "http://localhost:8080/sites/socafdev",
+                                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                             "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
+                                            "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList"
                                         },
                                         "columns": [
                                             { "columnName": "Title", "displayName": "Title" },

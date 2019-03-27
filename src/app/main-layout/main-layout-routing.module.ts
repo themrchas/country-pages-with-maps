@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainLayoutComponent } from './main-layout.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { SplashPageComponent } from '../splash-page/splash-page.component';
 
 
 const routes: Routes = [
@@ -15,9 +16,9 @@ const routes: Routes = [
   {
     path: 'country',
     component: MainLayoutComponent,
-    /*children: [
-      { path: '', component: SelectCountryComponent }
-    ]*/
+    children: [
+      { path: '', component: SplashPageComponent }
+    ]
   }
 ];
 

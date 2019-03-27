@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SpRestService } from './sp-rest.service';
 import { DataSource } from '../model/dataSource';
-import { ConfigProvider } from '../providers/configProvider';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -11,15 +10,29 @@ import * as moment from 'moment';
 })
 export class DataLayerService {
   docIconPaths = new Map<string, string>();
+  doLog: false;
+  ownerDocument = document.implementation.createHTMLDocument('virtual');
+
+  newDays: 1;
+
   constructor(private spRestService: SpRestService) {}
+
+  labelMakerMMM(previous, current) {
+    return previous ? previous + ', ' + current.Label : current.Label;
+  }
+
+  labelMakerMultiChoice(previous, current) {
+    return previous ? previous + ', ' + current : current;
+  }
 
   getItemsFromSource(source: DataSource, filterObj?, columns?): Observable<Array<any>>  {
     let asyncRequest: Observable<Object>;
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
-    console.log('source passed to  getItemsFromSource in data-layer,service is', source);
-    console.log('filterObj is ', filterObj);
+    this.doLog && console.log('--> source passed to  getItemsFromSource in data-layer,service is ', source);
+    this.doLog && console.log(' --> filterObj is ', filterObj);
+    this.doLog && console.log('--> columns are ', columns);
 
     if (filterObj) {
       camlQuery = source.camlQuery ?
@@ -37,26 +50,51 @@ export class DataLayerService {
           source.select, source.expand, source.rowLimit);
     }
     return asyncRequest.pipe(map(resp => {
+
+      console.log('resp in data-layer.service is', resp);
       let retVal = null;
       if (resp && resp['d'] && resp['d'].results) {
         retVal = resp['d'].results;
 
+          // iterate over list items returned
           retVal = retVal.map(result => {
             result.processedColumns = [];
             // process columns
+
+            console.log('Processing columns in data-layer.service.ts using result', result);
+
             if (columns) {
               for (const column of columns) {
                 const colName = column.columnName;
-                if (column.type === 'mm') {
-                  result.processedColumns[colName] = result[colName].Label;
+
+                this.doLog && console.log('in data-layer.service column is:', column, 'and colName is', colName);
+
+                // Process a multi-valued managed metada column
+                if (column.type === 'mmm') {
+
+                  this.doLog && console.log(' *** Processing column type mmm ***');
+
+                  this.doLog && console.log(' *** result[colName] is ', result[colName], '***');
+                  this.doLog && console.log(' *** result[colName][results] is ', result[colName]['results'], '***');
+                  this.doLog && console.log(' *** result.processedColumns[colName] is ',
+                    result.processedColumns[colName], 'with colName', colName, ' ***');
+                  result.processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMMM, null);
+                } else if (column.type === 'mm') {
+                  result.processedColumns[colName] = result[colName] ? result[colName].Label : '';
                 } else if (column.type === 'date') {
                   result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
                 } else if (column.type === 'expanded') {
                   const splitName = column.columnName.split('/');
                   result.processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
+                } else if (column.type === 'multi-choice') {
+                  result.processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMultiChoice, null);
                 } else if (column.type === 'url') {
                   // does anything actually need to be processed?
                   result.processedColumns[colName] = result[colName];
+                } else if (column.type === 'boolean') {
+                  result.processedColumns[colName] = result[colName] ? 'Yes' : 'No';
+                } else if (column.type === 'rich-text') {
+                  result.processedColumns[colName] = result[colName] ? this.getHtmlTextContent(result[colName]) : '';
                 } else if (column.type === 'docTypeIcon') {
                   const fileType = result[colName];
                   if (this.docIconPaths.has(fileType)) {
@@ -97,8 +135,13 @@ export class DataLayerService {
               }));
             }
 
+            // True if item was created less than 1 day ago
+            result.processedColumns['isNew'] = moment().diff(moment(result.Created), 'days') < 1;
+
             // Always add the source back to the result
             result.source = source;
+
+            console.log(' *** Returning the following in data-layer.service', result, ' ***');
 
             return result;
           });
@@ -107,6 +150,11 @@ export class DataLayerService {
     }));
   }
 
+  getHtmlTextContent(htmlContent) {
+    const d = this.ownerDocument.createElement( 'div' );
+    d.innerHTML = htmlContent;
+    return d.textContent;
+  }
   replacePlaceholdersWithFieldValues(str: string, item) {
       // const matchedItems = str.match(/(?<=\{\{)(.*?)(?=\}\})/g);
       // const matchedItems = str.match(/(?<=\)/g);

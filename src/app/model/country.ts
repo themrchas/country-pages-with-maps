@@ -18,7 +18,7 @@ export function createCountryFromSharePointResult(result: any) {
         result.CountryMM.Label,
         result.ISO_2_CountryCode,
         result.ISO_3_CountryCode,
-        result.Region,
+        result.RegionMM.Label,
         result.Population,
         result.FlagImage ? result.FlagImage.Url : null);
 }

@@ -1,14 +1,16 @@
-import { Input, Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Input, Component, OnInit, OnDestroy } from '@angular/core';
+import { BehaviorSubject, from } from 'rxjs';
 import { Country } from '../../model/country';
 import { DataLayerService } from '../../services/data-layer.service';
+import { mergeMap } from 'rxjs/operators';
+import { DataSource } from 'src/app/model/dataSource';
 
 @Component({
   selector: 'app-links',
   templateUrl: './links.component.html',
   styleUrls: ['./links.component.css']
 })
-export class LinksComponent implements OnInit {
+export class LinksComponent implements OnInit, OnDestroy {
 
   @Input() settings: any;
   @Input() country: BehaviorSubject<Country>;
@@ -21,6 +23,9 @@ export class LinksComponent implements OnInit {
 
   // Items read from links list
   listItems: Array<any> = Array<any>();
+
+  // False if logging not enabled
+  doLog: false;
 
   subscription: any;
 
@@ -39,49 +44,45 @@ export class LinksComponent implements OnInit {
 
   loadLinks(country): void {
 
-    console.log('link.component this.settings.source:', this.settings.source, 'with country', country);
+    from(this.settings.sources).pipe(mergeMap(source => {
+      return this.dataLayerService.getItemsFromSource(new DataSource(source), country, this.settings.columns);
+    })).subscribe({
+      next: results => {
 
-    // TODO: subscribe & filter on country, process columns if needed
-    this.dataLayerService.getItemsFromSource(this.settings.source, country).subscribe({
-        next: results => {
+        // Loop over raw results returned from list query
+       for (const result of results) {
 
-          console.log('List', this.settings.source.listName,
-            'raw response data in table.components.ts is', results, 'with settings.columns', this.settings.columns);
+          // Object that will contain columnName:value combination for each value returned in the response
+          result.columns = {};
 
-          // Loop over raw results returned from list query
-         for (const result of results) {
+          for (const column of this.settings.columns) {
 
-            // Object that will contain columnName:value combination for each value returned in the response
-            result.columns = {};
-
-            for (const column of this.settings.columns) {
-
-              console.log('result item:', result, 'and current column name', column.columnName);
+            console.log('result item:', result, 'and current column name', column.columnName);
 
             // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
             // and backgroundColor are first level properties
-             result.columns[column.columnName] =
+            result.columns[column.columnName] =
               (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
-
-
-            } // for
-
-            // Set default values as required
-            !result.columns['iconUrl']  && (result.columns['iconUrl'] = this.defaultIconUrl);
-            !result.columns['backgroundColor'] && (result.columns['backgroundColor'] = this.defaultBackgroundColor);
-
-            // Add formated object to list of items to be returned
-            this.listItems.push(result.columns);
 
           } // for
 
-          console.log('links to display are', this.listItems);
+          // Set default values as required
+          !result.columns['iconUrl']  && (result.columns['iconUrl'] = this.defaultIconUrl);
+          !result.columns['backgroundColor'] && (result.columns['backgroundColor'] = this.defaultBackgroundColor);
 
+          // Add formated object to list of items to be returned
+          this.listItems.push(result.columns);
 
-        } // next
-      });  // subscribe
+        } // for
 
+        console.log('links to display are', this.listItems);
+      } // next
+    });  // subscribe
 
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 

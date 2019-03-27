@@ -10,6 +10,8 @@ import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { MainLayoutRoutingModule } from './main-layout-routing.module';
 import { DashboardModule } from '../dashboard/dashboard.module';
+import { SplashPageComponent } from '../splash-page/splash-page.component';
+
 import { NavComponent } from '../nav/nav.component';
 import { SelectCountryComponent } from '../select-country/select-country.component';
 
@@ -21,6 +23,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     MainLayoutComponent,
     SelectCountryComponent,
+    SplashPageComponent,
     NavComponent
   ],
   imports: [
