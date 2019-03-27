@@ -25,6 +25,7 @@
             "styles": [
               "./node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
               "./node_modules/angular-bootstrap-md/scss/mdb-free.scss",
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -59,7 +60,7 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "country-page-dashboardr:build:production"
+              "browserTarget": "country-page-dashboard:build:production"
             }
           }
         },
