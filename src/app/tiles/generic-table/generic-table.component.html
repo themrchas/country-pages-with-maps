@@ -41,11 +41,11 @@
 
     <ng-container *ngIf="tblCol.type !== 'url' && tblCol.type !== 'docTypeIcon'">
         <td mat-cell *matCellDef="let tableItem">
-          {{ (tableItem[tblCol.columnName] && tableItem[tblCol.columnName].length>110) ? (tableItem[tblCol.columnName]| slice:0:110)+'...':(tableItem[tblCol.columnName]) }}
+          {{ (tableItem[tblCol.columnName] && tableItem[tblCol.columnName].length>70) ? (tableItem[tblCol.columnName]| slice:0:70)+'...':(tableItem[tblCol.columnName]) }}
           <!-- First column in table so if isNew, add badge -->
-          <ng-container *ngIf="z == 0 && tableItem.isNew">
+          <!--<ng-container *ngIf="z == 0 && tableItem.isNew">
               <mdb-badge primary='true' style="position: absolute; left:10px;">new</mdb-badge>
-          </ng-container>
+          </ng-container>-->
         </td>
     </ng-container>
     </ng-container>

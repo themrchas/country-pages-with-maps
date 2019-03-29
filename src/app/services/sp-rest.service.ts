@@ -22,8 +22,9 @@ export class SpRestService {
 
   // TODO: This won't work if current site collection is root '/'
   isSameSiteCollectionAsCurrent(url) {
-    return (typeof _spPageContextInfo  !== 'undefined') &&
-      (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));
+    /*return (typeof _spPageContextInfo  !== 'undefined') &&
+      (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));*/
+      return false;
   }
 
   spGetHttpOptions() {

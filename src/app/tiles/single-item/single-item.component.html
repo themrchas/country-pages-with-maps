@@ -5,7 +5,7 @@
           <td><a [href]="singleItem[column.columnName].Url">{{singleItem[column.columnName].Description}}</a></td>
       </ng-container>
       <ng-template #col_text>
-        <td>{{singleItem[column.columnName]}}</td>
+        <td><span class="column-data">{{singleItem[column.columnName]}}</span></td>
       </ng-template>
     </tr>
 </table>

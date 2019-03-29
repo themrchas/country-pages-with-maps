@@ -15,6 +15,7 @@ import { DataLayerService } from '../../services/data-layer.service';
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
 import { SpRestService } from 'src/app/services/sp-rest.service';
+import { ConfigProvider } from '../../providers/configProvider';
 
 @Component({
   selector: 'app-generic-table',
@@ -35,7 +36,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
 
   // Control component logging to console
-  doLog: true;
+  doLog: boolean;
 
   /*** modal start ***/
   modalRef: MDBModalRef;
@@ -103,7 +104,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
    ngOnInit() {
-
+    this.doLog = ConfigProvider.settings.debugLog;
     this.dataSource.paginator = this.paginator;
 
     // Get columns to display

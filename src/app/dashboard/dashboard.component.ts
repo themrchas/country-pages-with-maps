@@ -26,11 +26,11 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     console.log(' --> calling ngOnInit in dashboard.component.ts');
     this.selectedCountry = this.countryService.selectedCountry;
-    console.log(' --> this.selectedCountry in dashboard.components.ts ngOnInit is',this.selectedCountry);
+    console.log(' --> this.selectedCountry in dashboard.components.ts ngOnInit is', this.selectedCountry);
 
     this.selectedTopic = this.topicService.selectedTopic;
 
-    console.log(' --> this.selectedTopic in dashboard.components.ts ngOnInit is',this.selectedTopic);
+    console.log(' --> this.selectedTopic in dashboard.components.ts ngOnInit is', this.selectedTopic);
 
     combineLatest(this.selectedCountry, this.selectedTopic).subscribe(combined => {
       const country = combined[0];
@@ -47,6 +47,10 @@ export class DashboardComponent implements OnInit {
               // Create new row
               tempRows.push([]);
               currColCountForRow = 0;
+            }
+            // Regions can have customized sources per tile
+            if (tile.customSettings && tile.customSettings[country.region]) {
+              tile.settings = tile.customSettings[country.region];
             }
             // Countries can have customized sources per tile
             if (tile.customSettings && tile.customSettings[country.countryCode3]) {

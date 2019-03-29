@@ -30,7 +30,7 @@ export class SingleItemComponent implements OnInit, OnDestroy, TileComponent {
     if (this.settings.source) {
       this.settings.source.rowLimit = 1;
       this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source),
-        this.country, this.settings.columns).subscribe(arrResp => {
+        country, this.settings.columns).subscribe(arrResp => {
           if (arrResp && arrResp.length > 0) {
             this.singleItem = arrResp[0].processedColumns;
           }

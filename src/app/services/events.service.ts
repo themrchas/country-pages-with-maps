@@ -21,6 +21,7 @@ export class EventsService {
                     <FieldRef Name="fRecurrence"/>\
                     <FieldRef Name="fAllDayEvent"/>\
                     <FieldRef Name="Location"/>\
+                    <FieldRef Name="EventCategory"/>\
                 </ViewFields>';
   _spServicesJsonMapping = {
     ows_ID: {mappedName: 'ID', objectType: 'Text'},
@@ -29,7 +30,8 @@ export class EventsService {
     ows_EndDate: {mappedName: 'EndTime', objectType: 'DateTime'},
     ows_EventType0: {mappedName: 'EventType', objectType: 'Text'},
     ows_fAllDayEvent: {mappedName: 'IsAllDayEvent', objectType: 'Boolean'},
-    ows_Location: { mappedName: 'Location', objectType: 'Text'}
+    ows_Location: { mappedName: 'Location', objectType: 'Text'},
+    ows_EventCategory: { mappedName: 'EventCategory', objectType: 'Text'}
   };
 
   constructor( private httpClient: HttpClient, private spRestService: SpRestService,
@@ -168,7 +170,7 @@ export class EventsService {
 
     return this.httpClient.get(eventSource.listWeb +
       '/_vti_bin/ListData.svc/' + eventSource.listName.replace(/ /g, '') + '?\
-        $select=Id,Title,StartTime,EndTime,Location&\
+        $select=Id,Title,StartTime,EndTime,EventCategory,Location&\
         $orderby=StartTime&$filter=StartTime ge datetime\'' +
         startISO + '\' and StartTime le datetime\'' + endISO + '\'', httpOptions).pipe(map (resp => {
             const d = resp['d'];
