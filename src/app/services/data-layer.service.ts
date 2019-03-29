@@ -54,7 +54,7 @@ export class DataLayerService {
     }
     return asyncRequest.pipe(map(resp => {
 
-      console.log('resp in data-layer.service is', resp);
+      this.doLog && console.log('resp in data-layer.service is', resp);
       let retVal = null;
       if (resp && resp['d'] && resp['d'].results) {
         retVal = resp['d'].results;
@@ -64,7 +64,7 @@ export class DataLayerService {
             result.processedColumns = [];
             // process columns
 
-            console.log('Processing columns in data-layer.service.ts using result', result);
+            this.doLog && console.log('Processing columns in data-layer.service.ts using result', result);
 
             if (columns) {
               for (const column of columns) {
@@ -144,7 +144,7 @@ export class DataLayerService {
             // Always add the source back to the result
             result.source = source;
 
-            console.log(' *** Returning the following in data-layer.service', result, ' ***');
+            this.doLog && console.log(' *** Returning the following in data-layer.service', result, ' ***');
 
             return result;
           });
@@ -166,7 +166,7 @@ export class DataLayerService {
           str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
       }
 
-      console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
+      this.doLog && console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
       return str;
   }
 
