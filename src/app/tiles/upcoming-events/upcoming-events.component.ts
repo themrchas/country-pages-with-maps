@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { EventsService } from '../../services/events.service';
 import * as moment from 'moment';
 import { from, BehaviorSubject, forkJoin } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, filter } from 'rxjs/operators';
 import { TileComponent } from '../tile/tile.component';
 import { Country } from '../../model/country';
 import * as _ from 'lodash';
@@ -47,29 +47,45 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent
         complete: () => this.upcomingEvents = tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1)
     }); */
 
-    from(this.settings.sources).pipe(mergeMap(eventSource => {
-
+    const today = moment().startOf('day');
+    const currentMonth = today.clone().startOf('month');
+    from(this.settings.sources).pipe(mergeMap(settingsSource => {
+      const eventSource = Object.assign({}, settingsSource);
       if (eventSource['camlQuery']) {
         eventSource['camlQuery'] =
           this.dataLayerService.replacePlaceholdersWithFieldValues(eventSource['camlQuery'], country);
       }
 
-      // today
-      const today = moment().startOf('day');
-      const req1 = this.eventsService.getEventsForRange(today.toISOString(),
-        eventSource, 'Month');
-      const req2 = this.eventsService.getEventsForRange(moment().add(1, 'months').toISOString(),
-      eventSource, 'Month');
-      const req3 = this.eventsService.getEventsForRange(moment().add(2, 'months').toISOString(),
-      eventSource, 'Month');
+      const arrReqs = [];
+      if (this.settings.past === true) {
+        // filter only events that end prior to today
+        arrReqs.push(this.eventsService.getEventsForRange(currentMonth.toISOString(),
+          eventSource, 'Month'));
+        arrReqs.push(this.eventsService.getEventsForRange(currentMonth.clone().add(-1, 'months').toISOString(),
+          eventSource, 'Month'));
+        arrReqs.push(this.eventsService.getEventsForRange(currentMonth.clone().add(-2, 'months').toISOString(),
+          eventSource, 'Month'));
+      } else {
+        // filter only events that end today or later
+        arrReqs.push(this.eventsService.getEventsForRange(today.toISOString(),
+          eventSource, 'Month'));
+        arrReqs.push(this.eventsService.getEventsForRange(currentMonth.clone().add(1, 'months').toISOString(),
+          eventSource, 'Month'));
+        arrReqs.push(this.eventsService.getEventsForRange(currentMonth.clone().add(2, 'months').toISOString(),
+          eventSource, 'Month'));
+      }
 
-      return forkJoin([req1, req2, req3]);
+      return forkJoin(arrReqs);
 
     })).subscribe({next: x => {
           if (x && x.length === 3) {
             tempEvents = tempEvents.concat(x[0], x[1], x[2]);
             tempEvents = _.uniqBy(tempEvents, 'ID');
-            this.upcomingEvents = tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1);
+            tempEvents = tempEvents.filter(event => {
+              return this.settings.past ? (today.diff(event.EndTime) > 0) : (today.diff(event.EndTime) <= 0 );
+            });
+            this.upcomingEvents = this.settings.past ? tempEvents.sort((a, b) => a.StartTime < b.StartTime ? 1 : -1) :
+              tempEvents.sort((a, b) => a.StartTime > b.StartTime ? 1 : -1);
           }
         }
     });

@@ -4,6 +4,7 @@ import { Country } from '../../model/country';
 import { DataLayerService } from '../../services/data-layer.service';
 import { mergeMap } from 'rxjs/operators';
 import { DataSource } from 'src/app/model/dataSource';
+import { ConfigProvider } from '../../providers/configProvider';
 
 @Component({
   selector: 'app-links',
@@ -25,14 +26,14 @@ export class LinksComponent implements OnInit, OnDestroy {
   listItems: Array<any> = Array<any>();
 
   // False if logging not enabled
-  doLog: false;
+  doLog: boolean;
 
   subscription: any;
 
   constructor(private dataLayerService: DataLayerService) {}
 
   ngOnInit() {
-
+  this.doLog = ConfigProvider.settings.debugLog;
 
    console.log('****Starting processing on links component in ngOnInit*****');
 

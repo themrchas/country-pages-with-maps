@@ -4,18 +4,21 @@ import { DataSource } from '../model/dataSource';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
+import { ConfigProvider } from '../providers/configProvider';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataLayerService {
   docIconPaths = new Map<string, string>();
-  doLog: false;
+  doLog: boolean;
   ownerDocument = document.implementation.createHTMLDocument('virtual');
 
   newDays: 1;
 
-  constructor(private spRestService: SpRestService) {}
+  constructor(private spRestService: SpRestService) {
+    this.doLog = ConfigProvider.settings.debugLog;
+  }
 
   labelMakerMMM(previous, current) {
     return previous ? previous + ', ' + current.Label : current.Label;

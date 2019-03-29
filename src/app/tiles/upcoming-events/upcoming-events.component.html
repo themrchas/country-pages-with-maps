@@ -1,9 +1,9 @@
 <perfect-scrollbar [scrollIndicators]="false" style="height:275px">
-    <div *ngFor="let item of upcomingEvents" style="width:260px">
+    <div *ngFor="let item of upcomingEvents">
       <div class="eventAllDay" (click)="onItemClicked(item)">
         <div>
           <div><strong>{{item.friendlyDate}}</strong>&nbsp;{{item.Title}}</div>
-          <div class="card-text">{{item.Location}}</div>
+          <div class="card-text">{{item.EventCategory}}<span *ngIf="item.EventCategory && item.Location"> | </span>{{item.Location}}</div>
         </div>
       </div>
     </div>

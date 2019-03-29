@@ -15,7 +15,6 @@
  .linksBox {
 
      display:flex;
-     border: solid 1px#A0A0A0;
      padding-top: 3px;
      margin-bottom: 7px;
      
@@ -25,8 +24,6 @@
     display:inline-block; 
     height:50px; 
     width:calc(100% - 20px);
-    
-
 }
 
 .linksEntryComment {
@@ -35,5 +32,9 @@
     display:inline-block;
     line-height: 80%;
 }
- 
+
+hr {
+    margin-top: 0;
+    margin-bottom: 0;
+}
  
