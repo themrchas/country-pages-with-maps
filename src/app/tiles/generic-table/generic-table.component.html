@@ -44,7 +44,7 @@
           {{ (tableItem[tblCol.columnName] && tableItem[tblCol.columnName].length>110) ? (tableItem[tblCol.columnName]| slice:0:110)+'...':(tableItem[tblCol.columnName]) }}
           <!-- First column in table so if isNew, add badge -->
           <ng-container *ngIf="z == 0 && tableItem.isNew">
-              <mdb-badge primary='true' style="position: absolute; left:10px;">new</mdb-badge>
+              <mdb-badge primary='true' style="position: absolute; left:0px;">new</mdb-badge>
           </ng-container>
         </td>
     </ng-container>
