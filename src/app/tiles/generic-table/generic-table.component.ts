@@ -6,7 +6,6 @@ import { MatSort } from '@angular/material';
 
 // Modal
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { TableItemDialogComponent } from '../../modals/table-item-dialog/table-item-dialog.component';
 
 import { TileComponent } from '../tile/tile.component';
 import { BehaviorSubject, of } from 'rxjs';

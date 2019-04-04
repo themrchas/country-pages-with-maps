@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, empty, of } from 'rxjs';
 import { map, catchError, mergeMap } from 'rxjs/operators';
 import { ConfigProvider } from '../providers/configProvider';
+import { environment } from '../../environments/environment';
 
 declare const _spPageContextInfo: any;
 
@@ -24,7 +25,7 @@ export class SpRestService {
   isSameSiteCollectionAsCurrent(url) {
     /*return (typeof _spPageContextInfo  !== 'undefined') &&
       (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));*/
-      return false;
+      return environment.mockSp;
   }
 
   spGetHttpOptions() {

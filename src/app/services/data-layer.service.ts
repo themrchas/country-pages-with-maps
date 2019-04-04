@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SpRestService } from './sp-rest.service';
-import { DataSource } from '../model/dataSource';
+import { DataSource, Column } from '../model/dataSource';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -28,7 +28,7 @@ export class DataLayerService {
     return previous ? previous + ', ' + current : current;
   }
 
-  getItemsFromSource(source: DataSource, filterObj?, columns?): Observable<Array<any>>  {
+  getItemsFromSource(source: DataSource, filterObj?, columns?: Array<Column>): Observable<Array<any>>  {
     let asyncRequest: Observable<Object>;
     let filter = source.filter;
     let camlQuery = source.camlQuery;

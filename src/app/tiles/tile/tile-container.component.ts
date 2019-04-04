@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
 import { TableComponent } from '../table/table.component';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
-import { CountryFactBoxComponent } from '../country-fact-box/country-fact-box.component';
 import { GenericTableComponent } from '../generic-table/generic-table.component';
 import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.component';
 import { SingleItemComponent } from '../single-item/single-item.component';
@@ -28,7 +27,6 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
     TABLE: 'table',
     NEWS: 'news',
     MAP: 'map',
-    FACTBOX: 'fact-box',
     GENTABLE: 'gen-table', // Chas
     TABS: 'tabs',
     UPCOMING_EVENTS: 'upcoming-events',
@@ -89,10 +87,6 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
       }
       case this.tileTypes.MAP: {
         tileComponent = MapComponent;
-        break;
-      }
-      case this.tileTypes.FACTBOX: {
-        tileComponent = CountryFactBoxComponent;
         break;
       }
       case this.tileTypes.GENTABLE: {

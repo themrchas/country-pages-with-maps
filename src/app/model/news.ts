@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import * as moment from 'moment';
-import { DataSource } from './dataSource';
+import { DataSource, Column } from './dataSource';
 
 export class NewsItem {
     friendlyDate: any;
@@ -17,7 +17,7 @@ export class NewsItem {
 
 const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
-export function createNewsItemFromSharePointResult(result: any, source: DataSource, columns?: Array<any>) {
+export function createNewsItemFromSharePointResult(result: any, source: DataSource, columns?: Array<Column>) {
     let newsItem, itemURL, resultText, resultTitle;
     if (source.type === 'docLibrary') {
         itemURL = result.ServerRelativeUrl;

@@ -11,6 +11,12 @@ export interface DateFilter {
     endDateField: string;
 }
 
+export interface Column {
+    columnName: string;
+    displayName: string;
+    type?: string;
+}
+
 export class DataSource {
 
     listName: string;

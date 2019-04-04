@@ -15,7 +15,6 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 
 // Modal support
 import { MatDialogModule } from '@angular/material';
-import { TableItemDialogComponent} from '../modals/table-item-dialog/table-item-dialog.component';
 
 import { DashboardComponent } from './dashboard.component';
 import { TileContainerComponent } from '../tiles/tile/tile-container.component';
@@ -23,14 +22,12 @@ import { UpcomingEventsComponent } from '../tiles/upcoming-events/upcoming-event
 import { TodayEventsComponent } from '../tiles/today-events/today-events.component';
 import { NewsComponent } from '../tiles/news/news.component';
 import { TableComponent } from '../tiles/table/table.component';
-import { CountryFactBoxComponent } from '../tiles/country-fact-box/country-fact-box.component';
 import { MapComponent } from '../tiles/map/map.component';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TileDirective } from '../tiles/tile/tile.directive';
 import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
 import { SingleItemComponent } from '../tiles/single-item/single-item.component';
@@ -51,16 +48,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TodayEventsComponent,
     NewsComponent,
     TableComponent,
-    CountryFactBoxComponent,
     MapComponent,
     GenericTableComponent,
     SingleItemComponent,
-    TableItemDialogComponent,
     LinksComponent,
     IframeModalComponent
   ],
   imports: [
-    DashboardRoutingModule,
     CommonModule,
     MDBBootstrapModule.forRoot(),
     MatCardModule,
@@ -86,11 +80,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MapComponent,
     NewsComponent,
     GenericTableComponent,
-    CountryFactBoxComponent,
     UpcomingEventsComponent,
     SingleItemComponent,
     LinksComponent,
-    TableItemDialogComponent,
     IframeModalComponent
   ],
 })

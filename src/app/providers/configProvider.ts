@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ConfigProvider {
@@ -10,12 +11,11 @@ export class ConfigProvider {
     constructor(private httpClient: HttpClient) {}
 
     load() {
-      const jsonFile = 'assets/config.txt';
+      const jsonFile = environment.configPath;
         return new Promise<void>((resolve, reject) => {
             this.httpClient.get(jsonFile).toPromise().then((response: Response) => {
               ConfigProvider.settings = response;
               ConfigProvider.env = ConfigProvider.settings.env;
-
             }).catch((response: any) => {
               reject(`Could not load file '${jsonFile}':${JSON.stringify(response)}`);
             }).then(() => {
@@ -25,6 +25,8 @@ export class ConfigProvider {
                 if (rdOnPage) {
                     ConfigProvider.requestDigest = String(rdOnPage.value);
                     resolve();
+                } else if (environment.mockSp) {
+                  resolve();
                 } else {
                     this.httpClient.post(`${ConfigProvider.settings.country.listWeb}/_api/contextinfo`, '{}', {
                         headers: new HttpHeaders({

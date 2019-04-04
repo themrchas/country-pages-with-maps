@@ -30,7 +30,7 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
     this.noPreview = this.settings.fileType &&
       !ConfigProvider.settings.docPreviewSupportedTypes.includes(this.settings.fileType.toUpperCase());
     this.iframeLoaded = this.noPreview;
-    this.isSpModal = this.settings.fileType ? false : true;
+    this.isSpModal = this.settings.spUrl$ ? false : true;
     this.settings.webViewUrl$.subscribe(x => {
       this.webViewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(x);
     });
@@ -46,7 +46,7 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
   }
 
   onLoad(e) {
-
+    // If the iframe loaded the SP display form, want to hide the edit ribbon and the Close button
     if (this.isSpModal) {
       const iframeDoc = e.currentTarget.contentWindow.document;
       let cssUrl = this.location.prepareExternalUrl('assets/sp-iframe.css');
