@@ -10,14 +10,16 @@ import { ConfigProvider } from '../providers/configProvider';
   providedIn: 'root'
 })
 export class DataLayerService {
+
   docIconPaths = new Map<string, string>();
-  doLog: boolean;
+  doLog: boolean = true;
   ownerDocument = document.implementation.createHTMLDocument('virtual');
 
   newDays: 1;
 
   constructor(private spRestService: SpRestService) {
-    this.doLog = ConfigProvider.settings.debugLog;
+    
+  //  this.doLog = ConfigProvider.settings.debugLog;
   }
 
   labelMakerMMM(previous, current) {
@@ -33,9 +35,12 @@ export class DataLayerService {
     let filter = source.filter;
     let camlQuery = source.camlQuery;
 
-    this.doLog && console.log('--> source passed to  getItemsFromSource in data-layer,service is ', source);
-    this.doLog && console.log(' --> filterObj is ', filterObj);
-    this.doLog && console.log('--> columns are ', columns);
+    
+
+
+    this.doLog && console.log('\n ----> source passed to  getItemsFromSource in data-layer,service is ', source);
+    this.doLog && console.log(' filterObj is ', filterObj);
+    this.doLog && console.log('columns are <----', columns,'\n');
 
     if (filterObj) {
       camlQuery = source.camlQuery ?
@@ -54,7 +59,7 @@ export class DataLayerService {
     }
     return asyncRequest.pipe(map(resp => {
 
-      this.doLog && console.log('resp in data-layer.service is', resp);
+      this.doLog && console.log('resp in data-layer.service is for list ', source.listName, ':',resp);
       let retVal = null;
       if (resp && resp['d'] && resp['d'].results) {
         retVal = resp['d'].results;
@@ -70,7 +75,7 @@ export class DataLayerService {
               for (const column of columns) {
                 const colName = column.columnName;
 
-                this.doLog && console.log('in data-layer.service column is:', column, 'and colName is', colName);
+            //    this.doLog && console.log('in data-layer.service column is:', column, 'and colName is', colName);
 
                 // Process a multi-valued managed metada column
                 if (column.type === 'mmm') {
@@ -105,7 +110,7 @@ export class DataLayerService {
                   } else {
                     result.processedColumns[colName] =
                     this.spRestService.getDocIcon(source.listWeb, 'filename.' + fileType, 0).pipe(map(icon => {
-                      const iconPath = '/_layouts/15/images/' + icon['d'].MapToIcon;
+                      const iconPath = source.listWeb + '/_layouts/15/images/' + icon['d'].MapToIcon;
                       this.docIconPaths.set(fileType, iconPath);
                       return iconPath;
                     }));
@@ -144,7 +149,7 @@ export class DataLayerService {
             // Always add the source back to the result
             result.source = source;
 
-            this.doLog && console.log(' *** Returning the following in data-layer.service', result, ' ***');
+         //   this.doLog && console.log(' *** Returning the following in data-layer.service for list ', source.listName, ':' , result, ' ***');
 
             return result;
           });

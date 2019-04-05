@@ -72,15 +72,17 @@
                                 "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
                                 "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
                                 "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                                "camlQueryC": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQueryC": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "camlQuery": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Or><Or><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>Africa</Value></Eq></Or><Eq><FieldRef Name='Country' /><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Or></Where></Query></View>"
+
                             },
                             "columns": [
                                 { "columnName": "Title", "displayName": "Title" },
                                 { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
                                 { "columnName": "Created", "displayName": "Created Date", "type": "date" },
                                 { "columnName": "Country", "displayName": "Country", "type": "mm" },
-                                { "columnName": "CountryMMM", "displayName": "Country Multi", "type": "mmm" },
-                                { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "choice" }
+                                { "columnName": "Countries", "displayName": "Country Multi", "type": "mmm" },
+                                { "columnName": "CountryChoice", "displayName": "SP Choice", "type": "choice" }
 
                             ],
                             "modal": {
@@ -106,7 +108,9 @@
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
                                 "listName": "CountryLinks",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                "camlQuery1": "<View><Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                                "camlQuery" : "<View><Query><Where><And><Or><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq><Eq><FieldRef Name='Countries'/><Value Type='Text'>Africa</Value></Eq></Or><Eq><FieldRef Name='Choice'/><Value Type='Text'>facts</Value></Eq></And></Where></Query></View>"
+
                             }],
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination" },
@@ -114,7 +118,7 @@
                                  { "columnName": "Comments", "displayName": "Comments"},
                                  { "columnName": "iconUrl", "displayName": "iconUrl"},
                                  { "columnName": "backgroundColor", "displayName": "backgroundColor" },
-                                 { "columnName": "testMMM", "displayName": "Country", "type": "mmm" }
+                                 { "columnName": "Countries", "displayName": "Country", "type": "mmm" }
 
                             ]
                         }
@@ -134,8 +138,8 @@
                             {
                                 "displayName": "TestBlog",
                                 "listName": "Posts",
-                                "listWeb": "/hq/j6/j6sandbox/TestBlog",
-                                "url": "/hq/j6/j6sandbox/TestBlog",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                "url": "http://localhost:8080/sites/dev/socafdev/TestBlog",
                                 "type": "blog",
                                 "displayForm": "Post.aspx",
                                 "dateField": "PublishedDate",
@@ -177,9 +181,9 @@
                     "settings": {
                         "source": 
                             {
-                                "listWeb": "/hq/j6/j6sandbox",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "Documents",
-                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
+                                "url":  "http://localhost:8080/sites/dev/socafdev/Shared%20Documents",
                                 "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
                                 "expand": "File",
                                 "type": "docLibrary"
@@ -210,8 +214,8 @@
                     "settings": {
                         "sources": [
                             {
-                                "listWeb": "/hq/j6/j6sandbox",
-                                "url": "/hq/j6/j6sandbox/Lists/DevCalendar",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                "url": "http://localhost:8080/sites/dev/socafdev/Lists/DevCalendar",
                                 "listName": "DevCalendar",
                                 "defaultView": ""
                             },
@@ -245,8 +249,8 @@
                                         {
                                             "displayName": "TestBlog",
                                             "listName": "Posts",
-                                            "listWeb": "/hq/j6/j6sandbox/TestBlog",
-                                            "url": "/hq/j6/j6sandbox/TestBlog",
+                                            "listWeb": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                            "url": "http://localhost:8080/sites/dev/socafdev/TestBlog",
                                             "type": "blog",
                                             "displayForm": "Post.aspx",
                                             "dateField": "PublishedDate",
@@ -287,9 +291,9 @@
                                 "settings": {
                                     "hideFilter": true,
                                     "source": {
-                                        "listWeb": "/hq/km",
-                                        "listName": "Documents",
-                                        "url": "/hq/km/Shared%20Documents",
+                                        "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                        "listName": "CountryDocs",
+                                        "url": "http://localhost:8080/sites/dev/socafdev/CountryDocs",
                                         "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
                                         "expand": "File",
                                         "type": "docLibrary"

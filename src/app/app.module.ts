@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     MainLayoutModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true } // <-- debugging purposes only
+      { enableTracing: false } // <-- debugging purposes only
     ),
     BrowserModule,
     HttpClientModule,
