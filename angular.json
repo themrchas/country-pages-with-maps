@@ -58,6 +58,14 @@
                   "with": "src/environments/environment.mock-sp.ts"
                 }
               ]
+            },
+            "hmc": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmc.ts"
+                }
+              ]
             }
           }
         },
@@ -71,7 +79,10 @@
               "browserTarget": "country-page-dashboard:build:production"
             },
             "mocksp": {
-              "browserTarget": "country-page-dashboard:build"
+              "browserTarget": "country-page-dashboard:build:mocksp"
+            },
+            "hmc": {
+              "browserTarget": "country-page-dashboard:build:hmc"
             }
           }
         },

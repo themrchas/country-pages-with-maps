@@ -21,8 +21,9 @@ export class SpRestService {
     }
   }
 
-  // TODO: This won't work if current site collection is root '/'
+  // For now, just always return false (which will force retrieving the contextinfo) EXCEPT when in the mock sp env
   isSameSiteCollectionAsCurrent(url) {
+    // TODO: This won't work if current site collection is root '/'
     /*return (typeof _spPageContextInfo  !== 'undefined') &&
       (url.startsWith(this.currSiteCollection) || url.startsWith(this.absRoot + this.currSiteCollection));*/
       return environment.mockSp;
