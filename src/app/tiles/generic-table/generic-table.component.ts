@@ -33,17 +33,11 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   subscription: any;
 
-
   // Control component logging to console
   doLog: boolean;
 
-  /*** modal start ***/
-  modalRef: MDBModalRef;
-  // tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
 
-  /** modal end ***/
-  // listItems: Array<any>;
-  modal: any;
+  modalRef: MDBModalRef;
 
   /*** mat-table start ***/
 
@@ -64,9 +58,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   // Fire off when row in table clicked
   onRowClicked(event: any, index: number) {
-
-    console.log('Row clicked with event:', event);
-    this.openTableItemDialog(index);
+    if (!this.settings.disableModal) {
+      console.log('Row clicked with event:', event);
+      this.openTableItemDialog(index);
+    }
   }
 
   // Used to filter rows based on user provided input
@@ -144,8 +139,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
         // Update the table datasource info
         this.dataSource.data = listItems;
-
-
 
       } // next
 

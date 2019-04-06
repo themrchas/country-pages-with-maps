@@ -105,7 +105,7 @@ export class DataLayerService {
                   } else {
                     result.processedColumns[colName] =
                     this.spRestService.getDocIcon(source.listWeb, 'filename.' + fileType, 0).pipe(map(icon => {
-                      const iconPath = '/_layouts/15/images/' + icon['d'].MapToIcon;
+                      const iconPath = source.listWeb + '/_layouts/15/images/' + icon['d'].MapToIcon;
                       this.docIconPaths.set(fileType, iconPath);
                       return iconPath;
                     }));

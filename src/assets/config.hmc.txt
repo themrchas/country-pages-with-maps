@@ -150,6 +150,7 @@
                         "colspan": 2,
                         "heading": "Sample Document Library",
                         "settings": {
+                            "disableModal": true,
                             "source": {
                                 "listWeb": "http://localhost:8080/sites/socafdev",
                                 "listName": "Documents",

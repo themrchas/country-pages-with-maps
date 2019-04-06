@@ -51,7 +51,7 @@
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnsToDisplay; let i = index;"
+    <tr mat-row [ngClass]="settings.disableModal ? 'unselectable': ''" *matRowDef="let row; columns: columnsToDisplay; let i = index;"
       (click)="onRowClicked($event, i)">
     </tr>
   
