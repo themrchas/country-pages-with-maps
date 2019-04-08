@@ -101,12 +101,12 @@
                         "colspan": 1,
                         "heading": "Sample Links List",
                         "settings": {
-                            "source": {
+                            "sources": [{
                                 "listWeb": "http://localhost:8080/sites/socafdev",
                                 "url": "http://localhost:8080/sites/socafdev/Lists/CountryLinks",
                                 "listName": "CountryLinks",
                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
-                            },
+                            }],
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination" },
                                  { "columnName": "Description", "displayName": "Description"},
@@ -193,6 +193,7 @@
                             "tabs": [
                                 {
                                     "heading": "SOCAFRICA",
+                                    "type": "table",
                                     "settings": {
                                         "source": {
                                             "listWeb": "http://localhost:8080/sites/socafdev",
@@ -207,6 +208,7 @@
                                 },
                                 {
                                     "heading": "AFRICOM",
+                                    "type": "table",
                                     "settings": {
                                         "source": {
                                             "listWeb": "http://localhost:8080/sites/socafdev",

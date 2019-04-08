@@ -53,7 +53,7 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent
       const eventSource = Object.assign({}, settingsSource);
       if (eventSource['camlQuery']) {
         eventSource['camlQuery'] =
-          this.dataLayerService.replacePlaceholdersWithFieldValues(eventSource['camlQuery'], country);
+          this.spRestService.replacePlaceholdersWithFieldValues(eventSource['camlQuery'], country);
       }
 
       const arrReqs = [];
@@ -93,15 +93,15 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent
   }
 
   onItemClicked(event: any) {
-    const spUrl$ = this.spRestService.getDisplayForm(event.source.listWeb, event.source.listName, event.ID);
+    const itemUrl$ = this.spRestService.getDisplayForm(event.source.listWeb, event.source.listName, event.ID);
     this.modalRef = this.modalService.show(IframeModalComponent, {
       class: 'modal-lg',
       data: {
         country: this.country,
         modalTitle: event.Title,
         settings: {
-          spUrl$: spUrl$,
-          webViewUrl$: spUrl$.pipe(map(x => {
+          itemUrl$: itemUrl$,
+          previewUrl$: itemUrl$.pipe(map(x => {
             return x + '&IsDlg=1';
           }))
         }

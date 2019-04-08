@@ -1,6 +1,6 @@
 import { Input, Component, OnInit, OnDestroy } from '@angular/core';
 import { NewsService } from '../../services/news.service';
-import { DataSource } from '../../model/dataSource';
+import { DataSource, SourceDataType } from '../../model/dataSource';
 import { NewsItem } from '../../model/news';
 import { TileComponent } from '../tile/tile.component';
 import { Country } from '../../model/country';
@@ -22,6 +22,7 @@ export class NewsComponent implements OnInit, OnDestroy, TileComponent {
   subscription: any;
   sources: Array<DataSource>;
   modalRef: MDBModalRef;
+  docLibraryType: string;
   constructor(private newsService: NewsService, private spRestService: SpRestService, private modalService: MDBModalService) { }
 
   ngOnInit() {
@@ -32,6 +33,8 @@ export class NewsComponent implements OnInit, OnDestroy, TileComponent {
     this.subscription = this.country.subscribe(selectedCountry => {
       this.loadNews(selectedCountry);
     });
+
+    this.docLibraryType = SourceDataType.DOC_LIBRARY;
   }
 
   loadNews(country) {
@@ -49,15 +52,15 @@ export class NewsComponent implements OnInit, OnDestroy, TileComponent {
   }
 
   openNewsItem(newsItem) {
-    const spUrl$ = this.spRestService.getDisplayForm(newsItem.source.listWeb, newsItem.source.listName, newsItem.Id);
+    const itemUrl$ = this.spRestService.getDisplayForm(newsItem.source.listWeb, newsItem.source.listName, newsItem.Id);
     this.modalRef = this.modalService.show(IframeModalComponent, {
       class: 'modal-lg',
       data: {
         country: this.country,
         modalTitle: newsItem.title,
         settings: {
-          spUrl$: spUrl$,
-          webViewUrl$: spUrl$.pipe(map(x => {
+          itemUrl$: itemUrl$,
+          previewUrl$: itemUrl$.pipe(map(x => {
             return x + '&IsDlg=1';
           }))
         }
