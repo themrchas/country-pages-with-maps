@@ -4,8 +4,9 @@ import { ConfigProvider } from '../providers/configProvider';
 import { Country, createCountryArrayFromSharePointResponse } from '../model/country';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DataSource, replacePlaceholdersWithFieldValues } from '../model/dataSource';
+import { DataSource } from '../model/dataSource';
 import { DataLayerService } from './data-layer.service';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,12 @@ export class CountryService {
 
     return this.dataLayerService.getItemsFromSource(this.countrySource).pipe(map(resp => {
         return createCountryArrayFromSharePointResponse(resp);
+    }));
+  }
+
+  getRegions(): Observable<Array<Array<Country>>> {
+    return this.getCountries().pipe(map(countries => {
+      return _.groupBy(countries, 'region');
     }));
   }
 

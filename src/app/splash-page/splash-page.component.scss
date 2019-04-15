@@ -6,3 +6,31 @@
 .mat-toolbar {
     background-color: transparent;
 }
+
+:host ::ng-deep .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+
+.region-legend-box {
+    width: 15px;
+    height: 12px;
+    display: inline-block;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: #d1ecf1;
+}
+
+h6.sub-title {
+    padding: 0 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #555;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 0;
+}
