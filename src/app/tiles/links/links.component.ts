@@ -54,7 +54,7 @@ export class LinksComponent implements OnInit, OnDestroy {
        for (const result of results) {
 
           // Object that will contain columnName:value combination for each value returned in the response
-          result.columns = {};
+          const columns = {};
 
           for (const column of this.settings.columns) {
 
@@ -62,17 +62,17 @@ export class LinksComponent implements OnInit, OnDestroy {
 
             // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
             // and backgroundColor are first level properties
-            result.columns[column.columnName] =
+            columns[column.columnName] =
               (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
 
           } // for
 
           // Set default values as required
-          !result.columns['iconUrl']  && (result.columns['iconUrl'] = this.defaultIconUrl);
-          !result.columns['backgroundColor'] && (result.columns['backgroundColor'] = this.defaultBackgroundColor);
+          !columns['iconUrl']  && (columns['iconUrl'] = this.defaultIconUrl);
+          !columns['backgroundColor'] && (columns['backgroundColor'] = this.defaultBackgroundColor);
 
           // Add formated object to list of items to be returned
-          this.listItems.push(result.columns);
+          this.listItems.push(columns);
 
         } // for
 
