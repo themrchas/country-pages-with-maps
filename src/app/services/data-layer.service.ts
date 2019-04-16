@@ -8,24 +8,16 @@ import { ConfigProvider } from '../providers/configProvider';
   providedIn: 'root'
 })
 export class DataLayerService {
-
-  docIconPaths = new Map<string, string>();
+  
   doLog: boolean = true;
-  ownerDocument = document.implementation.createHTMLDocument('virtual');
-
-  newDays: 1;
-  doLog: boolean;
-
+ 
   constructor(private spRestService: SpRestService) {
     
-  //  this.doLog = ConfigProvider.settings.debugLog;
+     this.doLog = ConfigProvider.settings.debugLog;
   }
 
   getItemsFromSource(source: DataSource, filterObj?, columns?: Array<Column>): Observable<Array<SourceResult>>  {
     let asyncRequest: Observable<Array<SourceResult>>;
-
-    
-
 
     this.doLog && console.log('\n ----> source passed to  getItemsFromSource in data-layer,service is ', source);
     this.doLog && console.log(' filterObj is ', filterObj);
@@ -36,127 +28,6 @@ export class DataLayerService {
     } else if (source.service === SourceServiceType.CIDNE) {
       // TO DO
     }
-<<<<<<< HEAD
-    return asyncRequest.pipe(map(resp => {
-
-      this.doLog && console.log('resp in data-layer.service is for list ', source.listName, ':',resp);
-      let retVal = null;
-      if (resp && resp['d'] && resp['d'].results) {
-        retVal = resp['d'].results;
-
-          // iterate over list items returned
-          retVal = retVal.map(result => {
-            result.processedColumns = [];
-            // process columns
-
-            this.doLog && console.log('Processing columns in data-layer.service.ts using result', result);
-
-            if (columns) {
-              for (const column of columns) {
-                const colName = column.columnName;
-
-            //    this.doLog && console.log('in data-layer.service column is:', column, 'and colName is', colName);
-
-                // Process a multi-valued managed metada column
-                if (column.type === 'mmm') {
-
-                  this.doLog && console.log(' *** Processing column type mmm ***');
-
-                  this.doLog && console.log(' *** result[colName] is ', result[colName], '***');
-                  this.doLog && console.log(' *** result[colName][results] is ', result[colName]['results'], '***');
-                  this.doLog && console.log(' *** result.processedColumns[colName] is ',
-                    result.processedColumns[colName], 'with colName', colName, ' ***');
-                  result.processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMMM, null);
-                } else if (column.type === 'mm') {
-                  result.processedColumns[colName] = result[colName] ? result[colName].Label : '';
-                } else if (column.type === 'date') {
-                  result.processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
-                } else if (column.type === 'expanded') {
-                  const splitName = column.columnName.split('/');
-                  result.processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
-                } else if (column.type === 'multi-choice') {
-                  result.processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMultiChoice, null);
-                } else if (column.type === 'url') {
-                  // does anything actually need to be processed?
-                  result.processedColumns[colName] = result[colName];
-                } else if (column.type === 'boolean') {
-                  result.processedColumns[colName] = result[colName] ? 'Yes' : 'No';
-                } else if (column.type === 'rich-text') {
-                  result.processedColumns[colName] = result[colName] ? this.getHtmlTextContent(result[colName]) : '';
-                } else if (column.type === 'docTypeIcon') {
-                  const fileType = result[colName];
-                  if (this.docIconPaths.has(fileType)) {
-                    result.processedColumns[colName] = of(this.docIconPaths.get(fileType));
-                  } else {
-                    result.processedColumns[colName] =
-                    this.spRestService.getDocIcon(source.listWeb, 'filename.' + fileType, 0).pipe(map(icon => {
-                      const iconPath = source.listWeb + '/_layouts/15/images/' + icon['d'].MapToIcon;
-                      this.docIconPaths.set(fileType, iconPath);
-                      return iconPath;
-                    }));
-                  }
-                } else {
-                  result.processedColumns[colName] = result[colName];
-                }
-              }
-            }
-
-            // Format URLs for displayform, web preview, full screen, download
-            if (source.type === 'docLibrary') {
-              const fileRef = result['FileRef'];
-              result.spUrl$ = this.spRestService.getDisplayForm(source.listWeb,
-                source.listName, result.Id);
-              result.downloadUrl$ = of(source.listWeb + '/_layouts/15/download.aspx?SourceUrl=' + fileRef);
-              result.webViewUrl$ = this.spRestService.getWOPIFrameUrl(source.listWeb, source.listName,
-                result.Id, 3).pipe(map(response => {
-                  const wopiFrame = response['d'].GetWOPIFrameUrl;
-                  return wopiFrame.length > 0 ? wopiFrame : fileRef;
-                }));
-              result.fullScreenUrl$ = result.webViewUrl$.pipe(map(webViewUrl => {
-                return (webViewUrl as string).replace('action=interactivepreview', 'action=view');
-              }));
-            } else {
-              result.spUrl$ = this.spRestService.getDisplayForm(source.listWeb,
-                source.listName, result.Id);
-              result.webViewUrl$ = result.spUrl$.pipe(map(x => {
-                return x + '&IsDlg=1';
-              }));
-            }
-
-            // True if item was created less than 1 day ago
-            result.processedColumns['isNew'] = moment().diff(moment(result.Created), 'days') < 1;
-
-            // Always add the source back to the result
-            result.source = source;
-
-         //   this.doLog && console.log(' *** Returning the following in data-layer.service for list ', source.listName, ':' , result, ' ***');
-
-            return result;
-          });
-      }
-      return retVal;
-    }));
-  }
-
-  getHtmlTextContent(htmlContent) {
-    const d = this.ownerDocument.createElement( 'div' );
-    d.innerHTML = htmlContent;
-    return d.textContent;
-  }
-  replacePlaceholdersWithFieldValues(str: string, item) {
-      // const matchedItems = str.match(/(?<=\{\{)(.*?)(?=\}\})/g);
-      // const matchedItems = str.match(/(?<=\)/g);
-      const matchedItems = str.match(/\{\{(.*?)\}\}/g) || [];
-      for (const matchedItem of matchedItems) {
-          str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
-      }
-
-      this.doLog && console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
-      return str;
-  }
-
-=======
     return asyncRequest;
   }
->>>>>>> eff69c80fb23a78d838ec2a7854f6a4703041c9f
 }
