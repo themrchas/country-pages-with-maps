@@ -2,8 +2,11 @@
     <mat-sidenav mode="side" opened>
         <mat-toolbar>
             <mat-toolbar-row>
-                <img src="./assets/images/SOCAF Patch 46 64 .png">
-                <h2 class="toolbar-title">Country Pages</h2>
+                <a routerLink="/">
+                    <h2 class="toolbar-title">
+                        <img src="./assets/images/SOCAF Patch 46 64 .png"> Country Pages
+                    </h2>
+                </a>
             </mat-toolbar-row>
         </mat-toolbar>
         <ng-container *ngIf="selectedCountry | async as selectedCountry">
@@ -22,7 +25,7 @@
         <div class="feedback"><a [href]="feedbackUrl" target="_blank"><img src="./assets/images/message-text-outline.png"> Submit Feedback</a></div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar *ngIf="selectedCountry | async as selectedCountry">
+        <mat-toolbar class="country-toolbar" *ngIf="selectedCountry | async as selectedCountry">
             <ng-container>
                 <h3><img [hidden]="flagHidden" (error)="flagHidden = true" (load)="flagHidden = false" class="flag-icon" [src]="'./assets/flags/' + selectedCountry.countryCode3 + '-flag-icon-64.png'"/> {{selectedCountry.title}}</h3>
             </ng-container>

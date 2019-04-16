@@ -26,6 +26,7 @@ export class SplashPageComponent implements OnInit {
 
   ngOnInit() {
     this.layers = {};
+    this.countryService.resetCountry();
     this.countryService.getRegions().subscribe(regions => this.regions = regions);
     const geoJsonPath = './assets/geo/africa.txt';
 

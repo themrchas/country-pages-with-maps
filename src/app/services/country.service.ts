@@ -51,4 +51,8 @@ export class CountryService {
   changeCountry(countryCode: string) {
       this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
   }
+
+  resetCountry() {
+    this.selectedCountry.next(null);
+  }
 }
