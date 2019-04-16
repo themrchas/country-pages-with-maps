@@ -14,13 +14,13 @@ export class Country {
 
 export function createCountryFromSharePointResult(result: any) {
     return new Country(
-        result.Title,
-        result.CountryMM.Label,
-        result.ISO_2_CountryCode,
-        result.ISO_3_CountryCode,
-        result.RegionMM.Label,
-        result.Population,
-        result.FlagImage ? result.FlagImage.Url : null);
+        result.rawData.Title,
+        result.rawData.CountryMM.Label,
+        result.rawData.ISO_2_CountryCode,
+        result.rawData.ISO_3_CountryCode,
+        result.rawData.RegionMM.Label,
+        result.rawData.Population,
+        result.rawData.FlagImage ? result.FlagImage.Url : null);
 }
 
 export function createCountryArrayFromSharePointResponse(resp) {

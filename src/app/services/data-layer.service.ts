@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SpRestService } from './sp-rest.service';
-import { DataSource } from '../model/dataSource';
+import { DataSource, Column, SourceResult, SourceServiceType } from '../model/dataSource';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as moment from 'moment';
 import { ConfigProvider } from '../providers/configProvider';
 
 @Injectable({
@@ -16,24 +14,15 @@ export class DataLayerService {
   ownerDocument = document.implementation.createHTMLDocument('virtual');
 
   newDays: 1;
+  doLog: boolean;
 
   constructor(private spRestService: SpRestService) {
     
   //  this.doLog = ConfigProvider.settings.debugLog;
   }
 
-  labelMakerMMM(previous, current) {
-    return previous ? previous + ', ' + current.Label : current.Label;
-  }
-
-  labelMakerMultiChoice(previous, current) {
-    return previous ? previous + ', ' + current : current;
-  }
-
-  getItemsFromSource(source: DataSource, filterObj?, columns?): Observable<Array<any>>  {
-    let asyncRequest: Observable<Object>;
-    let filter = source.filter;
-    let camlQuery = source.camlQuery;
+  getItemsFromSource(source: DataSource, filterObj?, columns?: Array<Column>): Observable<Array<SourceResult>>  {
+    let asyncRequest: Observable<Array<SourceResult>>;
 
     
 
@@ -42,21 +31,12 @@ export class DataLayerService {
     this.doLog && console.log(' filterObj is ', filterObj);
     this.doLog && console.log('columns are <----', columns,'\n');
 
-    if (filterObj) {
-      camlQuery = source.camlQuery ?
-          this.replacePlaceholdersWithFieldValues(source.camlQuery, filterObj) : source.camlQuery;
-      filter = source.filter ?
-          this.replacePlaceholdersWithFieldValues(source.filter, filterObj) : source.filter;
+    if (source.service === SourceServiceType.SHAREPOINT) {
+      asyncRequest = this.spRestService.getListItems(source, filterObj, columns);
+    } else if (source.service === SourceServiceType.CIDNE) {
+      // TO DO
     }
-
-    if (source.camlQuery) {
-      // const viewXml = JSON.stringify({ViewXml: `${camlQuery}`});
-      asyncRequest = this.spRestService.getListItemsCamlQuery(source.listWeb, source.listName, camlQuery,
-        source.select, source.expand);
-    } else {
-      asyncRequest = this.spRestService.getListItems(source.listWeb, source.listName, source.order, filter,
-          source.select, source.expand, source.rowLimit);
-    }
+<<<<<<< HEAD
     return asyncRequest.pipe(map(resp => {
 
       this.doLog && console.log('resp in data-layer.service is for list ', source.listName, ':',resp);
@@ -175,4 +155,8 @@ export class DataLayerService {
       return str;
   }
 
+=======
+    return asyncRequest;
+  }
+>>>>>>> eff69c80fb23a78d838ec2a7854f6a4703041c9f
 }

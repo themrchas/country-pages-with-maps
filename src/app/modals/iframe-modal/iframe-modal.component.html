@@ -8,7 +8,7 @@
           <div class="cannot-preview">Cannot preview this file type</div>
         </ng-container>
         <ng-template #iframe_preview>
-          <iframe #iframe class="embed-responsive-item" [hidden]="!iframeLoaded" [src]="webViewUrl" allowfullscreen></iframe>
+          <iframe #iframe class="embed-responsive-item" [hidden]="!iframeLoaded" [src]="previewUrl" allowfullscreen></iframe>
         </ng-template>
         <div *ngIf="!iframeLoaded" class="spinner-border text-primary" role="status">
             <span class="sr-only">Loading...</span>
@@ -32,8 +32,8 @@
                 </a>
               </ng-container>
         </ng-container>
-        <ng-container *ngIf="spUrl$ | async as spUrl$">
-          <a mdbTooltip="View item in SharePoint" target="_blank" [href]="spUrl$" type="button" mdbBtn floating="true" size="sm">
+        <ng-container *ngIf="itemUrl$ | async as itemUrl$">
+          <a mdbTooltip="View item in SharePoint" target="_blank" [href]="itemUrl$" type="button" mdbBtn floating="true" size="sm">
             <img src="./assets/images/sp-black.ico">
           </a>
         </ng-container>

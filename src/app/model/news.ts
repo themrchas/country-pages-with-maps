@@ -1,13 +1,12 @@
 import * as $ from 'jquery';
 import * as moment from 'moment';
-import { DataSource } from './dataSource';
+import { DataSource, Column, SourceDataType } from './dataSource';
 
 export class NewsItem {
     friendlyDate: any;
 
     constructor(public title: string,
         public body: string,
-        public url: string,
         public source: DataSource,
         public Id: any,
         public date: any) {
@@ -17,22 +16,19 @@ export class NewsItem {
 
 const ownerDocument = document.implementation.createHTMLDocument('virtual');
 
-export function createNewsItemFromSharePointResult(result: any, source: DataSource, columns?: Array<any>) {
-    let newsItem, itemURL, resultText, resultTitle;
-    if (source.type === 'docLibrary') {
-        itemURL = result.ServerRelativeUrl;
-        resultTitle = result.Title || result.Name;
+export function createNewsItemFromSharePointResult(result: any, source: DataSource) {
+    let newsItem, resultText, resultTitle;
+    if (source.type === SourceDataType.DOC_LIBRARY) {
+        resultTitle = result.rawData.Title || result.rawData.Name;
         resultText = null;
-    } else if (source.type === 'list') {
-        itemURL = `${source.listWeb}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}` + '&Source=' + window.location.href;
-        resultTitle = result.Title;
-        resultText = source.contentField ? $(result[source.contentField], ownerDocument).text() : null;
+    }  else if (source.type === 'list') {
+        resultTitle = result.rawData.Title;
+        resultText = source.contentField ? $(result.rawData[source.contentField], ownerDocument).text() : null;
         // TODO: if contentField is not an HTML field, just grab it directly
-    } else {
-        itemURL = `${source.listWeb}/Lists/${source.listName}/${source.displayForm}?ID=${result.Id}`;
-        resultText = $(result.Body, ownerDocument).text();
-        resultTitle = result.Title;
+    }  else {
+        resultText = $(result.rawData.Body, ownerDocument).text();
+        resultTitle = result.rawData.Title;
     }
-    newsItem = new NewsItem(resultTitle, resultText, itemURL, source, result.Id, moment(result[source.dateField]));
+    newsItem = new NewsItem(resultTitle, resultText, source, result.Id, moment(result[source.dateField]));
     return newsItem;
 }

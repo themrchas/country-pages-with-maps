@@ -6,7 +6,6 @@ import { MatSort } from '@angular/material';
 
 // Modal
 import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-import { TableItemDialogComponent } from '../../modals/table-item-dialog/table-item-dialog.component';
 
 import { TileComponent } from '../tile/tile.component';
 import { BehaviorSubject, of } from 'rxjs';
@@ -16,6 +15,7 @@ import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
 import { SpRestService } from 'src/app/services/sp-rest.service';
 import { ConfigProvider } from '../../providers/configProvider';
+import { SourceResult, DataSource } from '../../model/dataSource';
 
 @Component({
   selector: 'app-generic-table',
@@ -33,18 +33,13 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   @ViewChild(MatSort) sort: MatSort;
 
   subscription: any;
-
+  settingsSource: any;
 
   //Control component logging to console
   doLog: boolean = false;
 
-  /*** modal start ***/
-  modalRef: MDBModalRef;
-  // tableItemDialogRef: MatDialogRef<TableItemDialogComponent>;
 
-  /** modal end ***/
-  // listItems: Array<any>;
-  modal: any;
+  modalRef: MDBModalRef;
 
   /*** mat-table start ***/
 
@@ -61,13 +56,14 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   Example entry- {columnName: "Created", displayName: "Created Date", columnOrder: 1}
   */
   matTableCols: Array<any>;
-  rawResults: any[];
+  rawResults: Array<SourceResult>;
 
   // Fire off when row in table clicked
   onRowClicked(event: any, index: number) {
-
-    console.log('Row clicked with event:', event);
-    this.openTableItemDialog(index);
+    if (!this.settings.disableModal) {
+      console.log('Row clicked with event:', event);
+      this.openTableItemDialog(index);
+    }
   }
 
   // Used to filter rows based on user provided input
@@ -88,16 +84,15 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
     this.modalRef = this.modalService.show(IframeModalComponent, {
       class: 'modal-lg',
       data: {
-        country: this.country,
         modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
           rawResult.processedColumns[this.settings.modal.titleColumn] :
-          rawResult.Title,
+          rawResult.title,
         settings: {
-          spUrl$: rawResult.spUrl$,
+          itemUrl$: rawResult.itemUrl$,
           downloadUrl$: rawResult.downloadUrl$,
-          webViewUrl$: rawResult.webViewUrl$,
+          previewUrl$: rawResult.previewUrl$,
           fullScreenUrl$: rawResult.fullScreenUrl$,
-          fileType: rawResult.File_x0020_Type
+          fileType: rawResult.fileType
         }
       }
     });
@@ -106,6 +101,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
    ngOnInit() {
     this.doLog = ConfigProvider.settings.debugLog;
     this.dataSource.paginator = this.paginator;
+    this.settingsSource = new DataSource(this.settings.source);
 
     // Get columns to display
     this.matTableCols = this.settings.columns;
@@ -123,11 +119,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   loadTable(country) {
     // this.listItems = Array<any>();
-    const combinedColumns = [...this.settings.columns, ...(this.settings.modal && this.settings.modal.columns || [])];
     const listItems: Array<any> = Array<any>();
-    this.dataLayerService.getItemsFromSource(this.settings.source,
+    this.dataLayerService.getItemsFromSource(this.settingsSource,
       country,
-      combinedColumns).subscribe({
+      this.settings.columns).subscribe({
 
       next: results => {
 
@@ -145,8 +140,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
         // Update the table datasource info
         this.dataSource.data = listItems;
-
-
 
       } // next
 

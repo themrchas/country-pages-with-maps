@@ -14,16 +14,19 @@ export class CountryService {
 
   
   countrySource: any;
+  countrySettings: any;
+  countrySource: DataSource;
   selectedCountry = new BehaviorSubject<Country>(null);
 
   constructor(private dataLayerService: DataLayerService) {
-    this.countrySource = ConfigProvider.settings.country;
+    this.countrySettings = ConfigProvider.settings.country;
+    this.countrySource = new DataSource(this.countrySettings);
     console.log('ConfigProvider.settings.country in country.service.ts is', this.countrySource);
   }
 
   // Use ISO 3 for country code
   getCountry(countryCode): Observable<Country> {
-      this.countrySource.camlQuery = this.countrySource.camlQueryFilterCountry;
+      this.countrySource.camlQuery = this.countrySettings.camlQueryFilterCountry;
       const filterObj = { countryCode: countryCode.toUpperCase()};
 
       return this.dataLayerService.getItemsFromSource(this.countrySource,
@@ -34,9 +37,9 @@ export class CountryService {
   }
 
   getCountries(): Observable<Array<Country>> {
-    this.countrySource.camlQuery = this.countrySource.camlQueryAllCountries;
+    this.countrySource.camlQuery = this.countrySettings.camlQueryAllCountries;
 
-    return this.dataLayerService.getItemsFromSource(this.countrySource as DataSource).pipe(map(resp => {
+    return this.dataLayerService.getItemsFromSource(this.countrySource).pipe(map(resp => {
         return createCountryArrayFromSharePointResponse(resp);
     }));
   }

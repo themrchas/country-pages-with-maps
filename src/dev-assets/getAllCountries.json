@@ -1,0 +1,366 @@
+{
+    "d": {
+        "results": [
+            {
+                "__metadata": {
+                    "id": "Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)",
+                    "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)",
+                    "etag": "\"9\"",
+                    "type": "SP.Data.CountryDataListItem"
+                },
+                "FirstUniqueAncestorSecurableObject": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/FirstUniqueAncestorSecurableObject"
+                    }
+                },
+                "RoleAssignments": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/RoleAssignments"
+                    }
+                },
+                "AttachmentFiles": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/AttachmentFiles"
+                    }
+                },
+                "ContentType": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/ContentType"
+                    }
+                },
+                "FieldValuesAsHtml": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/FieldValuesAsHtml"
+                    }
+                },
+                "FieldValuesAsText": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/FieldValuesAsText"
+                    }
+                },
+                "FieldValuesForEdit": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/FieldValuesForEdit"
+                    }
+                },
+                "File": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/File"
+                    }
+                },
+                "Folder": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/Folder"
+                    }
+                },
+                "ParentList": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(1)/ParentList"
+                    }
+                },
+                "FileSystemObjectType": 0,
+                "Id": 1,
+                "ContentTypeId": "0x0100F61351EE62D9A84FA3F38904776463CE",
+                "Title": "Germany",
+                "Population": "100000",
+                "FlagImage": null,
+                "ISO_2_CountryCode": "DE",
+                "ISO_3_CountryCode": "DEU",
+                "CountryMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "Germany",
+                    "TermGuid": "03fe545e-f794-40fe-b020-1756f8f1efbc",
+                    "WssId": 7
+                },
+                "RegionMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "EA",
+                    "TermGuid": "c232701a-4aa5-4278-82cf-4823c55535cf",
+                    "WssId": 8
+                },
+                "ID": 1,
+                "Modified": "2019-04-01T19:53:15",
+                "Created": "2019-02-08T20:27:06",
+                "AuthorId": 1,
+                "EditorId": 1,
+                "OData__UIVersionString": "1.0",
+                "Attachments": false,
+                "GUID": "4010edc0-7a15-4c13-86a2-193369ee2aee"
+            },
+            {
+                "__metadata": {
+                    "id": "Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)",
+                    "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)",
+                    "etag": "\"8\"",
+                    "type": "SP.Data.CountryDataListItem"
+                },
+                "FirstUniqueAncestorSecurableObject": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/FirstUniqueAncestorSecurableObject"
+                    }
+                },
+                "RoleAssignments": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/RoleAssignments"
+                    }
+                },
+                "AttachmentFiles": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/AttachmentFiles"
+                    }
+                },
+                "ContentType": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/ContentType"
+                    }
+                },
+                "FieldValuesAsHtml": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/FieldValuesAsHtml"
+                    }
+                },
+                "FieldValuesAsText": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/FieldValuesAsText"
+                    }
+                },
+                "FieldValuesForEdit": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/FieldValuesForEdit"
+                    }
+                },
+                "File": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/File"
+                    }
+                },
+                "Folder": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/Folder"
+                    }
+                },
+                "ParentList": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(2)/ParentList"
+                    }
+                },
+                "FileSystemObjectType": 0,
+                "Id": 2,
+                "ContentTypeId": "0x0100F61351EE62D9A84FA3F38904776463CE",
+                "Title": "Ghana",
+                "Population": "1234234",
+                "FlagImage": null,
+                "ISO_2_CountryCode": "GH",
+                "ISO_3_CountryCode": "GHA",
+                "CountryMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "Ghana",
+                    "TermGuid": "625e1ecd-6aa2-4d86-9620-cabc341b4279",
+                    "WssId": 2
+                },
+                "RegionMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "EA",
+                    "TermGuid": "c232701a-4aa5-4278-82cf-4823c55535cf",
+                    "WssId": 8
+                },
+                "ID": 2,
+                "Modified": "2019-04-01T19:53:16",
+                "Created": "2019-02-08T20:27:26",
+                "AuthorId": 1,
+                "EditorId": 1,
+                "OData__UIVersionString": "1.0",
+                "Attachments": false,
+                "GUID": "d8ae17f6-043a-40d5-9f3b-c7fadd91ef5b"
+            },
+            {
+                "__metadata": {
+                    "id": "Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)",
+                    "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)",
+                    "etag": "\"9\"",
+                    "type": "SP.Data.CountryDataListItem"
+                },
+                "FirstUniqueAncestorSecurableObject": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/FirstUniqueAncestorSecurableObject"
+                    }
+                },
+                "RoleAssignments": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/RoleAssignments"
+                    }
+                },
+                "AttachmentFiles": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/AttachmentFiles"
+                    }
+                },
+                "ContentType": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/ContentType"
+                    }
+                },
+                "FieldValuesAsHtml": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/FieldValuesAsHtml"
+                    }
+                },
+                "FieldValuesAsText": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/FieldValuesAsText"
+                    }
+                },
+                "FieldValuesForEdit": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/FieldValuesForEdit"
+                    }
+                },
+                "File": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/File"
+                    }
+                },
+                "Folder": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/Folder"
+                    }
+                },
+                "ParentList": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(3)/ParentList"
+                    }
+                },
+                "FileSystemObjectType": 0,
+                "Id": 3,
+                "ContentTypeId": "0x0100F61351EE62D9A84FA3F38904776463CE",
+                "Title": "Gibraltar",
+                "Population": "456456",
+                "FlagImage": null,
+                "ISO_2_CountryCode": "GI",
+                "ISO_3_CountryCode": "GIB",
+                "CountryMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "Gibraltar",
+                    "TermGuid": "9780316e-30d1-4992-826d-342290aa5d94",
+                    "WssId": 3
+                },
+                "RegionMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "NWA",
+                    "TermGuid": "29d67523-1bde-4eef-bcad-9144847d4115",
+                    "WssId": 9
+                },
+                "ID": 3,
+                "Modified": "2019-04-01T19:53:21",
+                "Created": "2019-02-08T20:27:52",
+                "AuthorId": 1,
+                "EditorId": 1,
+                "OData__UIVersionString": "1.0",
+                "Attachments": false,
+                "GUID": "17dcecaf-d26c-427e-bb55-7d1289f284ba"
+            },
+            {
+                "__metadata": {
+                    "id": "Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)",
+                    "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)",
+                    "etag": "\"9\"",
+                    "type": "SP.Data.CountryDataListItem"
+                },
+                "FirstUniqueAncestorSecurableObject": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/FirstUniqueAncestorSecurableObject"
+                    }
+                },
+                "RoleAssignments": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/RoleAssignments"
+                    }
+                },
+                "AttachmentFiles": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/AttachmentFiles"
+                    }
+                },
+                "ContentType": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/ContentType"
+                    }
+                },
+                "FieldValuesAsHtml": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/FieldValuesAsHtml"
+                    }
+                },
+                "FieldValuesAsText": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/FieldValuesAsText"
+                    }
+                },
+                "FieldValuesForEdit": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/FieldValuesForEdit"
+                    }
+                },
+                "File": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/File"
+                    }
+                },
+                "Folder": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/Folder"
+                    }
+                },
+                "ParentList": {
+                    "__deferred": {
+                        "uri": "http://ekm-sp13/sites/SOCAFDev/_api/Web/Lists(guid'aa260011-42c7-4d27-9c29-930ccdab3cbe')/Items(4)/ParentList"
+                    }
+                },
+                "FileSystemObjectType": 0,
+                "Id": 4,
+                "ContentTypeId": "0x0100F61351EE62D9A84FA3F38904776463CE",
+                "Title": "Greece",
+                "Population": "83949384",
+                "FlagImage": null,
+                "ISO_2_CountryCode": "GR",
+                "ISO_3_CountryCode": "GRC",
+                "CountryMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "Greece",
+                    "TermGuid": "539eb83b-273b-4f0b-90cb-f0f1361e1a17",
+                    "WssId": 6
+                },
+                "RegionMM": {
+                    "__metadata": {
+                        "type": "SP.Taxonomy.TaxonomyFieldValue"
+                    },
+                    "Label": "NWA",
+                    "TermGuid": "29d67523-1bde-4eef-bcad-9144847d4115",
+                    "WssId": 9
+                },
+                "ID": 4,
+                "Modified": "2019-04-01T19:53:26",
+                "Created": "2019-02-08T20:28:10",
+                "AuthorId": 1,
+                "EditorId": 1,
+                "OData__UIVersionString": "1.0",
+                "Attachments": false,
+                "GUID": "ee149190-0fe1-40d7-8b05-29c33bc5bcd3"
+            }
+        ]
+    }
+}

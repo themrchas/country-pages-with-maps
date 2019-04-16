@@ -1,0 +1,23 @@
+{
+    "d": {
+        "GetContextWebInformation": {
+            "__metadata": {
+                "type": "SP.ContextWebInformation"
+            },
+            "FormDigestTimeoutSeconds": 1800,
+            "FormDigestValue": "0x5D6C45324057C90BE8A17D6241029318B6A5775AB229BE49A77B6E16339D0BAF26C8B8B91C87ED030444BDAE8E4F3F3B7FB2C408F531584F3C7F3FF720E84350,02 Apr 2019 00:02:15 -0000",
+            "LibraryVersion": "15.0.5109.1000",
+            "SiteFullUrl": "http://ekm-sp13/sites/socafdev",
+            "SupportedSchemaVersions": {
+                "__metadata": {
+                    "type": "Collection(Edm.String)"
+                },
+                "results": [
+                    "14.0.0.0",
+                    "15.0.0.0"
+                ]
+            },
+            "WebFullUrl": "http://ekm-sp13/sites/SOCAFDev"
+        }
+    }
+}
