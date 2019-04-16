@@ -14,10 +14,12 @@ export class NavComponent implements OnInit {
   selectedCountry: BehaviorSubject<Country>;
   topics: Array<any>;
   feedbackUrl: string;
+  flagHidden: boolean;
 
   constructor(private countryService: CountryService, private topicService: TopicService) { }
 
   ngOnInit() {
+    this.flagHidden = false;
     this.feedbackUrl = ConfigProvider.settings.feedbackUrl + '?source=' + window.location.href;
     this.selectedCountry = this.countryService.selectedCountry;
     this.topics = this.topicService.getTopics();

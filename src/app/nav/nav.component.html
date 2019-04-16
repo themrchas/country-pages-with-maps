@@ -24,7 +24,7 @@
     <mat-sidenav-content>
         <mat-toolbar *ngIf="selectedCountry | async as selectedCountry">
             <ng-container>
-                <h3>{{selectedCountry.title}}</h3>
+                <h3><img [hidden]="flagHidden" (error)="flagHidden = true" (load)="flagHidden = false" class="flag-icon" [src]="'./assets/flags/' + selectedCountry.countryCode3 + '-flag-icon-64.png'"/> {{selectedCountry.title}}</h3>
             </ng-container>
             <span class="fill-space"></span>
             <div class="btn-group" mdbDropdown>
