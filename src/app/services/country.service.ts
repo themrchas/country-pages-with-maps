@@ -11,9 +11,7 @@ import { DataLayerService } from './data-layer.service';
   providedIn: 'root'
 })
 export class CountryService {
-
   
-  countrySource: any;
   countrySettings: any;
   countrySource: DataSource;
   selectedCountry = new BehaviorSubject<Country>(null);

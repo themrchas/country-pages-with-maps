@@ -61,3 +61,8 @@ td {
 .unselectable {
     cursor: default;
 }
+
+/* Set width of first table column to fit mdb badge size */
+.cdk-column-isNew {
+    width:26px;
+}

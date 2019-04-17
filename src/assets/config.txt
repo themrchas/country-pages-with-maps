@@ -1,8 +1,8 @@
 {
     "env": "low",
-    "feedbackUrl": "/hq/km",
+    "feedbackUrl": "/",
     "country": {
-        "listWeb": "/hq/j6/j6sandbox",
+        "listWeb": "http://localhost:8080/sites/dev/socafdev",
         "listName": "CountryData",
         "camlQueryAllCountries": "<View><Query><Where><Eq><FieldRef Name='IsActive'/><Value Type='Integer'>1</Value></Eq></Where></Query></View>",
         "camlQueryFilterCountry": "<View><Query><Where><Eq><FieldRef Name='ISO_3_CountryCode'/><Value Type='Text'>{{countryCode}}</Value></Eq></Where></Query></View>"
@@ -19,17 +19,16 @@
                     "description": "Various information about the selected country",
                     "settings": {
 			"source": {
-				"listWeb": "/hq/j6/j6sandbox",
+				"listWeb": "http://localhost:8080/sites/dev/socafdev",
 				"listName": "CountryData",
-				"url": "/hq/j6/j6sandbox/Lists/CountryData",
+				"url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryData",
 				"displayName": "Country Data",
-				"camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+				"camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldValue'>{{countryMM}}</Value></Eq></Where></Query></View>"
 			},
                         "columns": [
                             {
                                 "columnName": "CountryMM",
-                                "displayName": "Country",
-				"type": "mm"
+                                "displayName": "Country", "type": "mm"
                             },
                             {
                                 "columnName": "RegionMM",
@@ -55,18 +54,18 @@
                     "heading": "Sample Links List",
                     "settings": {
                         "sources": [{
-                            "listWeb": "/hq/j6/j6sandbox",
-                            "url": "/hq/j6/j6sandbox/Lists/CountryLinks",
+                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                            "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
                             "listName": "CountryLinks",
-                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                         }],
                         "columns": [
-                                 { "columnName": "Url", "displayName": "Destination" },
-                                 { "columnName": "Description", "displayName": "Description"},
+                                 { "columnName": "Url", "displayName": "Destination", "type":"linksUrl" },
+                                 { "columnName": "Description", "displayName": "Description", "type":"linksUrl"},
                                  { "columnName": "Comments", "displayName": "Comments"},
                                  { "columnName": "iconUrl", "displayName": "iconUrl"},
                                  { "columnName": "backgroundColor", "displayName": "backgroundColor" },
-                                 { "columnName": "testMMM", "displayName": "Country", "type": "mmm" }
+                                 { "columnName": "Countries", "displayName": "Country", "type": "mmm" }
                         ],
                         "modal": {
                             "titleColumn": "Title"
@@ -79,27 +78,23 @@
                     "heading": "Sample Gen List",
                     "settings": {
                         "source": {
-                            "listWeb": "/hq/j6/j6sandbox",
+                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
                             "listName": "SampleList",
-			    "select": "ContentTypeId,Title,MyUrl,Created,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,Id",
-			    "expand": "FieldValuesAsText,ContentType",
-                            "url":  "/hq/j6/j6sandbox/Lists/SampleList",
+			                 "select": "ContentTypeId,Title,MyUrl,Created,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,Id",
+			                "expand": "FieldValuesAsText,ContentType",
+                            "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
                             "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
                             "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
                             "camlQuery": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
                         },
                         "columns": [
-			    { "columnName": "isNew", "displayName": "", "type": "newBadge" },
-			    { "columnName": "Title", "displayName": "Title" },
-                            { "columnName": "MyUrl", "displayName": "Url", "type": "url" },
+			                { "columnName": "isNew", "displayName": "", "type": "newBadge" },
+			                { "columnName": "Title", "displayName": "Title" },
                             { "columnName": "Created", "displayName": "Created Date", "type": "date" },
                             { "columnName": "Country", "displayName": "Country", "type": "mm" },
                             { "columnName": "CountryMMM", "displayName": "Country Multi", "type": "mmm" },
-                            { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "multi-choice" },
-    			    { "columnName": "SampleRichText", "displayName": "Rich Text", "type": "rich-text" },
-			    { "columnName": "FieldValuesAsText/UserColTest", "displayName": "UserColTest", "type": "expanded" },
-			    { "columnName": "ContentType/Name", "displayName": "Content Type", "type": "expanded" },
-			    { "columnName": "TestYesNo", "displayName": "TestYesNo", "type": "boolean" }
+                            { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "choice" }
+    			          
                         ],
                         "modal": {
                             "titleColumn": "Title"
@@ -121,8 +116,8 @@
                             {
                                 "displayName": "TestBlog",
                                 "listName": "Posts",
-                                "listWeb": "/hq/j6/j6sandbox/TestBlog",
-                                "url": "/hq/j6/j6sandbox/TestBlog",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                "url": "http://localhost:8080/sites/dev/socafdev/TestBlog",
                                 "type": "blog",
                                 "displayForm": "Post.aspx",
                                 "dateField": "PublishedDate",
@@ -164,9 +159,9 @@
                     "settings": {
                         "source": 
                             {
-                                "listWeb": "/hq/j6/j6sandbox",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "Documents",
-                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
+                                "url":  "http://localhost:8080/sites/dev/socafdev/Shared%20Documents",
                                 "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
                                 "expand": "File",
                                 "type": "docLibrary"
@@ -198,8 +193,8 @@
                         "sources": [
                             {
 				"past": false,
-                                "listWeb": "/hq/j6/j6sandbox",
-                                "url": "/hq/j6/j6sandbox/Lists/DevCalendar",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                "url": "http://localhost:8080/sites/dev/socafdev/Lists/DevCalendar",
                                 "listName": "DevCalendar",
                                 "defaultView": "",
 				"camlQuery": "<Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query>"
@@ -234,8 +229,8 @@
                                         {
                                             "displayName": "TestBlog",
                                             "listName": "Posts",
-                                            "listWeb": "/hq/j6/j6sandbox/TestBlog",
-                                            "url": "/hq/j6/j6sandbox/TestBlog",
+                                            "listWeb": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                            "url": "http://localhost:8080/sites/dev/socafdev/TestBlog",
                                             "type": "blog",
                                             "displayForm": "Post.aspx",
                                             "dateField": "PublishedDate",
@@ -313,12 +308,13 @@
                                 "settings": {
                                     "hideFilter": false,
                                     "source": {
-                                        "listWeb": "/hq/j6/j6sandbox",
+                                        "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                         "listName": "SampleList",
-                                        "url": "/hq/j6/j6sandbox/Lists/SampleList",
+                                        "url": "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
                                         "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
                                     },
                                     "columns": [
+                                        { "columnName": "isNew", "displayName": "", "type": "newBadge" },
                                         {
                                             "columnName": "Title",
                                             "displayName": "Title"

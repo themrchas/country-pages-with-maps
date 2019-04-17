@@ -98,6 +98,8 @@ export class SpRestService extends BaseDataService {
 
       console.log('resp in sp-rest.service is', resp);
       let retResults = null;
+  
+
       if (resp && resp['d'] && resp['d'].results) {
           const spResults = resp['d'].results;
 
@@ -112,7 +114,7 @@ export class SpRestService extends BaseDataService {
                 const colName = column.columnName;
 
                 // Process a multi-valued managed metada column
-                if (column.type === 'mmm') {
+               if (column.type === 'mmm') {
                   processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMMM, null);
                 } else if (column.type === 'mm') {
                   processedColumns[colName] = result[colName] ? result[colName].Label : '';
@@ -123,14 +125,24 @@ export class SpRestService extends BaseDataService {
                   processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
                 } else if (column.type === 'multi-choice') {
                   processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMultiChoice, null);
-                } else if (column.type === 'url') {
-                  // does anything actually need to be processed?
-                  processedColumns[colName] = result[colName];
+                } else if (column.type === 'linksUrl') {
+                  //Links list packages Url and Desription as URL: {Url:'', Description:''}
+                  processedColumns[colName] = result['URL'][colName];
                 } else if (column.type === 'boolean') {
                   processedColumns[colName] = result[colName] ? 'Yes' : 'No';
                 } else if (column.type === 'rich-text') {
                   processedColumns[colName] = result[colName] ? this.getHtmlTextContent(result[colName]) : '';
-                } else if (column.type === 'docTypeIcon') {
+                }
+                  else if (column.type === 'newBadge') {
+
+                    let itemCreated = moment(result['Created'], 'YYYY-MM-DDTHH:mm:SS');
+                    
+                    processedColumns[colName] = moment.duration(moment().diff(itemCreated)).as('hours') <= 24;
+              
+                
+                }
+
+                else if (column.type === 'docTypeIcon') {
                   const fileType = result[colName];
                   if (this.docIconPaths.has(fileType)) {
                     processedColumns[colName] = of(this.docIconPaths.get(fileType));
@@ -142,6 +154,7 @@ export class SpRestService extends BaseDataService {
                         return iconPath;
                       }));
                   }
+
                 } else {
                   processedColumns[colName] = result[colName];
                 }
