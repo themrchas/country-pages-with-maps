@@ -136,8 +136,13 @@ export class SpRestService extends BaseDataService {
                   else if (column.type === 'newBadge') {
 
                     let itemCreated = moment(result['Created'], 'YYYY-MM-DDTHH:mm:SS');
+                    let itemModified = moment(result['Modified'], 'YYYY-MM-DDTHH:mm:SS');
                     
-                    processedColumns[colName] = moment.duration(moment().diff(itemCreated)).as('hours') <= 24;
+                   if (moment.duration(moment().diff(itemCreated)).as('hours') <= 24)                    
+                       processedColumns[colName] = "New";
+                   else if (moment.duration(moment().diff(itemModified)).as('hours') <= 24)
+                        processedColumns[colName] = "Updated";
+                    
               
                 
                 }

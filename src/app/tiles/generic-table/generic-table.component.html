@@ -32,14 +32,22 @@
                  <img [src]="docIconPath"/>
                </ng-container>
              </td>
-         </ng-container>
+         </ng-container>/
   
          <ng-container *ngIf="tblCol.type =='newBadge' else notFirstCol">
            <td mat-cell *matCellDef="let tableItem;" >
-             <ng-container *ngIf="tableItem.isNew">
-                  <mdb-badge primary='true'>New!</mdb-badge>
+             
+             <ng-container *ngIf="tableItem.isNew === 'New' else showUpdated">
+               <!--  <mdb-badge primary='true'>{{tableItem[tblCol.columnName]}}</mdb-badge> -->
+               <mdb-badge default='true'>{{tableItem[tblCol.columnName]}}</mdb-badge>
               </ng-container>
+              <ng-template #showUpdated>
+                 <mdb-badge primary='true'>{{tableItem[tblCol.columnName]}}</mdb-badge>
+              </ng-template> 
+
             </td>
+
+            
         </ng-container> 
      
             <ng-template #notFirstCol>

@@ -80,7 +80,7 @@
                         "source": {
                             "listWeb": "http://localhost:8080/sites/dev/socafdev",
                             "listName": "SampleList",
-			                 "select": "ContentTypeId,Title,MyUrl,Created,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,Id",
+			                 "select": "ContentTypeId,Title,MyUrl,Created,Modified,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,Id",
 			                "expand": "FieldValuesAsText,ContentType",
                             "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
                             "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
@@ -89,8 +89,7 @@
                         },
                         "columns": [
 			                { "columnName": "isNew", "displayName": "", "type": "newBadge" },
-			                { "columnName": "Title", "displayName": "Title" },
-                            { "columnName": "Created", "displayName": "Created Date", "type": "date" },
+                            { "columnName": "Title", "displayName": "Title" },
                             { "columnName": "Country", "displayName": "Country", "type": "mm" },
                             { "columnName": "CountryMMM", "displayName": "Country Multi", "type": "mmm" },
                             { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "choice" }
