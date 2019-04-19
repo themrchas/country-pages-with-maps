@@ -16,6 +16,9 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 // Modal support
 import { MatDialogModule } from '@angular/material';
 
+// Chart support
+import { ChartsModule } from 'ng2-charts';
+
 import { DashboardComponent } from './dashboard.component';
 import { TileContainerComponent } from '../tiles/tile/tile-container.component';
 import { UpcomingEventsComponent } from '../tiles/upcoming-events/upcoming-events.component';
@@ -23,6 +26,7 @@ import { TodayEventsComponent } from '../tiles/today-events/today-events.compone
 import { NewsComponent } from '../tiles/news/news.component';
 import { TableComponent } from '../tiles/table/table.component';
 import { MapComponent } from '../tiles/map/map.component';
+import { ChartComponent } from '../tiles/chart/chart.component';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
@@ -52,7 +56,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GenericTableComponent,
     SingleItemComponent,
     LinksComponent,
-    IframeModalComponent
+    IframeModalComponent,
+    ChartComponent
   ],
   imports: [
     CommonModule,
@@ -70,7 +75,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatInputModule,
     MatDialogModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    ChartsModule
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
