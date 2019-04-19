@@ -19,7 +19,7 @@ import { LinksComponent } from '../links/links.component';
 })
 export class TileContainerComponent implements OnInit, AfterViewInit {
   @Input() tile: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   @ViewChildren(TileDirective) tileDirectives: QueryList<TileDirective>;
   sources: Array<any>;
   showTabs: boolean;
@@ -53,25 +53,29 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const tileSources = Array<any>();
-    this.tileDirectives.forEach((currentDirective, index) => {
-      const currentTile = !this.showTabs ? this.tile : this.tile.settings.tabs[index];
+    // This is to prevent the 'expression has changed after it was checked' error message
+    // Defer the code inside ngAfterViewInit to another Javascript turn
+    setTimeout(() => {
+      const tileSources = Array<any>();
+      this.tileDirectives.forEach((currentDirective, index) => {
+        const currentTile = !this.showTabs ? this.tile : this.tile.settings.tabs[index];
 
-      const tileComponent = this.getTileComponent(currentTile.type);
-      const tileSettings = currentTile.settings;
-      tileSources.push(...this.getSourcesForTile(currentTile));
+        const tileComponent = this.getTileComponent(currentTile.type);
+        const tileSettings = currentTile.settings;
+        tileSources.push(...this.getSourcesForTile(currentTile));
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        tileComponent);
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+          tileComponent);
 
-      const viewContainerRef = currentDirective.viewContainerRef;
-      viewContainerRef.clear();
+        const viewContainerRef = currentDirective.viewContainerRef;
+        viewContainerRef.clear();
 
-      const componentRef = viewContainerRef.createComponent(componentFactory);
-      (componentRef.instance as TileComponent).settings = tileSettings;
-      (componentRef.instance as TileComponent).country = this.country;
+        const componentRef = viewContainerRef.createComponent(componentFactory);
+        (componentRef.instance as TileComponent).settings = tileSettings;
+        (componentRef.instance as TileComponent).country = this.country;
+      });
+      this.sources = tileSources;
     });
-    this.sources = tileSources;
   }
 
   getTileComponent(tileType) {

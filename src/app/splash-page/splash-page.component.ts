@@ -4,6 +4,8 @@ import { getClosureSafeProperty } from '@angular/core/src/util/property';
 import { Country } from '../model/country';
 import { CountryService } from '../services/country.service';
 import { Router } from '@angular/router';
+import * as _ from 'lodash';
+import { MatTabChangeEvent } from '@angular/material';
 declare let L;
 
 @Component({
@@ -12,13 +14,30 @@ declare let L;
   styleUrls: ['./splash-page.component.scss']
 })
 export class SplashPageComponent implements OnInit {
+  // TODO: move these to config
   regionColorMapping = {
-    'Central Africa (CA)': 'blue',
-    'East Africa (EA)': 'green',
-    'North West Africa (NWA)': 'red'
+    'Central Africa (CA)': '#94802c',
+    'East Africa (EA)': 'orange',
+    'North West Africa (NWA)': 'green',
+    'Southern Africa': '#94802c'
   };
+  subregionMapping = {
+    'Northern Africa': 'North West Africa (NWA)',
+    'Western Africa': 'North West Africa (NWA)',
+    'Eastern Africa': 'East Africa (EA)',
+    'Middle Africa': 'Central Africa (CA)',
+    'Southern Africa': 'Southern Africa'
+  };
+  campaignColorMapping = {
+    'Campaign1': 'grey',
+    'Campaign2': 'blue',
+    'Campaign1,Campaign2': 'purple'
+  };
+
   layers: any;
   regions: Array<Array<Country>>;
+  campaigns: Array<Array<Country>>;
+  countriesByCode: Map<string, Country>;
   geoJson: any;
   info: any;
   map: any;
@@ -26,80 +45,91 @@ export class SplashPageComponent implements OnInit {
 
   ngOnInit() {
     this.layers = {};
-    this.countryService.resetCountry();
-    this.countryService.getRegions().subscribe(regions => this.regions = regions);
     const geoJsonPath = './assets/geo/africa.txt';
 
-    this.httpClient.get(geoJsonPath).subscribe(data => {
-      this.map = L.map('map').setView([0.1757, 19.4238], 3);
+    this.countryService.resetCountry();
+    this.countryService.getCountries().subscribe(countries => {
+      this.regions = _.groupBy(countries, 'region');
+      this.campaigns = _.groupBy(countries, 'campaigns');
+      this.countriesByCode = new Map(countries.map(country => [country.countryCode3, country] as [string, Country]));
 
-      this.info = L.control();
+      this.httpClient.get(geoJsonPath).subscribe(data => {
+        const self = this;
+        this.map = L.map('map').setView([0.1757, 19.4238], 3);
 
-      this.info.onAdd = function () {
-          this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-          this.update();
-          return this._div;
-      };
+        this.info = L.control();
 
-      // method that we will use to update the control based on feature properties passed
-      this.info.update = function (props) {
-          this._div.innerHTML = (props ? '<b>' + props.name + '</b><br />' + props.subregion
-              : 'Hover over a country');
-      };
-
-      this.info.addTo(this.map);
-
-      function getRegionColor(region) {
-        let retColor;
-        switch (region) {
-          case 'Northern Africa': {
-            retColor = 'red';
-            break;
-          }
-          case 'Western Africa': {
-            retColor = 'red';
-            break;
-          }
-          case 'Eastern Africa': {
-            retColor = 'green';
-            break;
-          }
-          case 'Middle Africa': {
-            retColor = 'blue';
-            break;
-          }
-          case 'Southern Africa': {
-            retColor = 'orange';
-            break;
-          }
-          default: {
-            retColor = 'black';
-            break;
-          }
-        }
-        return retColor;
-      }
-
-      L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
-          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-          subdomains: '1234'
-      }).addTo(this.map);
-
-      function style(feature) {
-        return {
-          color: getRegionColor(feature.properties.subregion),
-          weight: 1,
-          opacity: 0.7
+        this.info.onAdd = function () {
+            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+            this.update();
+            return this._div;
         };
-      }
 
-      this.geoJson = L.geoJson(data, {
-        onEachFeature: function(feature, layer) {
-          this.onEachFeature(feature, layer);
-        }.bind(this),
-        style: style
-      }).addTo(this.map);
+        // method that we will use to update the control based on feature properties passed
+        this.info.update = function (props) {
+          let hoverHtml = 'Hover over a country';
+          if (props) {
+            if (self.countriesByCode.has(props.iso_a3)) {
+              const currCountry = self.countriesByCode.get(props.iso_a3);
+              hoverHtml = `<b>${currCountry.title}</b><br />
+                          ${currCountry.region}<br />`;
+            } else {
+              hoverHtml = '<b>' + props.name + '</b><br />' + self.subregionMapping[props.subregion];
+            }
+          }
+          this._div.innerHTML = hoverHtml;
+        };
+
+        this.info.addTo(this.map);
+
+        L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: '1234'
+        }).addTo(this.map);
+
+        function style(feature) {
+          const countryIsActive = this.countriesByCode.has(feature.properties.iso_a3);
+          return {
+            color: this.getRegionColor(this.subregionMapping[feature.properties.subregion]) || 'black',
+            weight: 0,
+            className: countryIsActive ? 'active' : 'inactive'
+          };
+        }
+
+        this.geoJson = L.geoJson(data, {
+          onEachFeature: function(feature, layer) {
+            this.onEachFeature(feature, layer);
+          }.bind(this),
+          style: style.bind(this)
+        }).addTo(this.map);
+      });
+
     });
+  }
+
+  onTabChanged(event: MatTabChangeEvent) {
+    const self = this;
+    if (event.tab.textLabel === 'Regions') {
+
+    } else {
+      this.geoJson.eachLayer(function (layer) {
+        const countryCode = layer.feature.properties.iso_a3;
+        layer.setStyle({fillColor : self.getCampaignColor(countryCode) });
+      });
+    }
+  }
+
+  getCampaignColor(countryCode) {
+    let fillColor = 'black';
+    if (this.countriesByCode.has(countryCode)) {
+      const campaigns = this.countriesByCode.get(countryCode).campaigns;
+      fillColor = campaigns ? this.campaignColorMapping[campaigns.join(',')] : 'black';
+    }
+    return fillColor;
+  }
+
+  getRegionColor(region) {
+    return this.regionColorMapping[region];
   }
 
   onEachFeature = function(feature, layer) {
@@ -120,12 +150,8 @@ export class SplashPageComponent implements OnInit {
   goToCountryPage(e) {
     const layer = e.target;
     // check if country exists
-    for (const region of Object.keys(this.regions)) {
-      for (const country of this.regions[region]) {
-        if (country.countryCode3 === layer.feature.properties.iso_a3) {
-          this.router.navigate(['/country', layer.feature.properties.iso_a3]);
-        }
-      }
+    if (this.countriesByCode.has(layer.feature.properties.iso_a3)) {
+      this.router.navigate(['/country', layer.feature.properties.iso_a3]);
     }
   }
 
@@ -133,16 +159,18 @@ export class SplashPageComponent implements OnInit {
   highlightFeature(e) {
     const layer = e.target || this.layers[e];
 
-    layer.setStyle({
-        fillOpacity: .5,
-        weight: 3
-    });
+    if (this.countriesByCode.has(layer.feature.properties.iso_a3)) {
+      layer.setStyle({
+          fillOpacity: .5,
+          weight: 3
+      });
+    }
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
 
-    this.info.update(layer.feature.properties);
+    this.info.update(layer.feature.properties).bind(this);
   }
 
   resetHighlight(e) {

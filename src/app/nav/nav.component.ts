@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { Country } from '../model/country';
 import { TopicService } from '../services/topic.service';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { ConfigProvider } from '../providers/configProvider';
 
 @Component({
@@ -11,7 +11,7 @@ import { ConfigProvider } from '../providers/configProvider';
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-  selectedCountry: BehaviorSubject<Country>;
+  selectedCountry: Observable<Country>;
   topics: Array<any>;
   feedbackUrl: string;
   flagHidden: boolean;

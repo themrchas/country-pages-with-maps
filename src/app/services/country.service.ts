@@ -14,7 +14,8 @@ import * as _ from 'lodash';
 export class CountryService {
   countrySettings: any;
   countrySource: DataSource;
-  selectedCountry = new BehaviorSubject<Country>(null);
+  private countrySubject = new BehaviorSubject<Country>(null);
+  selectedCountry = this.countrySubject.asObservable();
 
   constructor(private dataLayerService: DataLayerService) {
     this.countrySettings = ConfigProvider.settings.country;
@@ -49,10 +50,10 @@ export class CountryService {
   }
 
   changeCountry(countryCode: string) {
-      this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
+      this.getCountry(countryCode).subscribe(country => this.countrySubject.next(country));
   }
 
   resetCountry() {
-    this.selectedCountry.next(null);
+    this.countrySubject.next(null);
   }
 }

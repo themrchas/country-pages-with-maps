@@ -6,8 +6,8 @@ import { ConfigProvider } from '../providers/configProvider';
   providedIn: 'root'
 })
 export class TopicService {
-
-  selectedTopic = new BehaviorSubject<any>(null);
+  private topicSubject = new BehaviorSubject<any>(null);
+  selectedTopic = this.topicSubject.asObservable();
 
   constructor() {}
 
@@ -20,6 +20,6 @@ export class TopicService {
   }
 
   changeTopic(topicId) {
-    this.selectedTopic.next(this.getTopic(topicId));
+    this.topicSubject.next(this.getTopic(topicId));
   }
 }

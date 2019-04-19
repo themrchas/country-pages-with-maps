@@ -10,19 +10,14 @@ import { DataSource } from '../../model/dataSource';
   templateUrl: './single-item.component.html',
   styleUrls: ['./single-item.component.scss']
 })
-export class SingleItemComponent implements OnInit, OnDestroy, TileComponent {
-  @Input() country: BehaviorSubject<Country>;
+export class SingleItemComponent implements OnInit, TileComponent {
+  @Input() country: Country;
   @Input() settings: any;
   singleItem: any;
-  subscription: any;
   constructor(private dataLayerService: DataLayerService) { }
 
   ngOnInit() {
-
-    this.subscription = this.country.subscribe(selectedCountry => {
-      this.loadItem(selectedCountry);
-    });
-
+    this.loadItem(this.country);
   }
 
   loadItem(country: Country) {
@@ -42,9 +37,4 @@ export class SingleItemComponent implements OnInit, OnDestroy, TileComponent {
       this.singleItem = country;
     }
   }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
 }
