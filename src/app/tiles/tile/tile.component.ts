@@ -3,5 +3,5 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface TileComponent {
     settings: any;
-    country: BehaviorSubject<Country>;
+    country: Country;
 }

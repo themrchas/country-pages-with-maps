@@ -1,6 +1,6 @@
 <perfect-scrollbar style="height:250px">
   <div *ngIf="!newsItems || newsItems.length === 0; else news_list">
-    No news items found for {{country.value.title}}
+    No news items found for {{country.title}}
   </div>
   <ng-template #news_list>
     <div *ngFor="let newsItem of newsItems" style="width: 90%">

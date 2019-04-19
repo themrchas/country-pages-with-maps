@@ -16,13 +16,12 @@ am4core.useTheme(am4themes_animated);
 })
 export class MapComponent implements OnInit, OnDestroy, TileComponent {
   private map: am4maps.MapChart;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   @Input() settings: any;
-  subscription: any;
   constructor(private zone: NgZone) { }
 
   ngOnInit() {
-    this.subscription = this.country.subscribe(country => {
+
         const self = this;
         this.zone.runOutsideAngular(() => {
           const map = am4core.create('mapdiv', am4maps.MapChart);
@@ -48,7 +47,7 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
           };
 
           map.events.on('ready', function(ev) {
-            const zoomCountry = polygonSeries.getPolygonById(country.countryCode2);
+            const zoomCountry = polygonSeries.getPolygonById(self.country.countryCode2);
 
             // Pre-zoom
             map.zoomToMapObject(zoomCountry);
@@ -60,12 +59,10 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
           });
           this.map = map;
         });
-    });
   }
 
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.zone.runOutsideAngular(() => {
       if (this.map) {
         this.map.dispose();

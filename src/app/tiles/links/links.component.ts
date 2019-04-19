@@ -11,10 +11,10 @@ import { ConfigProvider } from '../../providers/configProvider';
   templateUrl: './links.component.html',
   styleUrls: ['./links.component.css']
 })
-export class LinksComponent implements OnInit, OnDestroy {
+export class LinksComponent implements OnInit {
 
   @Input() settings: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
 
   // Default background color for icons
   readonly defaultBackgroundColor: string = '#BEBEBE';
@@ -28,18 +28,13 @@ export class LinksComponent implements OnInit, OnDestroy {
   // False if logging not enabled
   doLog: boolean;
 
-  subscription: any;
-
   constructor(private dataLayerService: DataLayerService) {}
 
   ngOnInit() {
-  this.doLog = ConfigProvider.settings.debugLog;
+    this.doLog = ConfigProvider.settings.debugLog;
 
-   console.log('****Starting processing on links component in ngOnInit*****');
-
-    this.subscription = this.country.subscribe(selectedCountry => {
-      this.loadLinks(selectedCountry);
-    });
+    console.log('****Starting processing on links component in ngOnInit*****');
+    this.loadLinks(this.country);
 
   } // ngOnInit
 
@@ -81,10 +76,5 @@ export class LinksComponent implements OnInit, OnDestroy {
     });  // subscribe
 
   }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
 
 }

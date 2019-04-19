@@ -15,7 +15,7 @@ import { Country } from '../../model/country';
 })
 export class TodayEventsComponent implements OnInit, TileComponent {
   @Input() settings: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   selectedDate: any;
   now: any;
   eventsList: Array<any>;
