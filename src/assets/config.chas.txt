@@ -1,0 +1,437 @@
+{
+    "env": "low",
+    "feedbackUrl": "/",
+    "country": {
+        "listWeb": "http://localhost:8080/sites/dev/socafdev",
+        "listName": "CountryData",
+        "camlQueryAllCountries": "<View><Query><Where><Eq><FieldRef Name='IsActive'/><Value Type='Integer'>1</Value></Eq></Where></Query></View>",
+        "camlQueryFilterCountry": "<View><Query><Where><Eq><FieldRef Name='ISO_3_CountryCode'/><Value Type='Text'>{{countryCode}}</Value></Eq></Where></Query></View>"
+    },
+    "topics": [
+        {
+            "name": "Overview",
+            "topicId": "overview",
+            "tiles": [
+                {
+                    "type": "single-item",
+                    "colspan": 1,
+                    "heading": "SOCAFRICA Country Overview",
+                    "description": "Various information about the selected country",
+                    "settings": {
+			"source": {
+				"listWeb": "http://localhost:8080/sites/dev/socafdev",
+				"listName": "CountryData",
+				"url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryData",
+				"displayName": "Country Data",
+				"camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldValue'>{{countryMM}}</Value></Eq></Where></Query></View>"
+			},
+                        "columns": [
+                            {
+                               "columnName": "CountryMM", "displayName": "Country", "type": "mm"
+                            },
+                            {
+                                "columnName": "RegionMM",
+                                "displayName": "Region",
+				"type": "mm"
+                            }
+                        ]
+                    },
+                    "displayForCountries": [
+                        "DEU",
+                        "GHA"
+                    ]
+                },
+                {
+                    "type": "map",
+                    "colspan": 1,
+                    "heading": "Map"
+                },
+                { 
+                    "type": "links",
+                    "rowspan": 1,
+                    "colspan": 1,
+                    "heading": "Sample Links List",
+                    "settings": {
+                        "sources": [{
+                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                            "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryLinks",
+                            "listName": "CountryLinks",
+                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                        }],
+                        "columns": [
+                                 { "columnName": "Url", "displayName": "Destination", "type":"linksUrl" },
+                                 { "columnName": "Description", "displayName": "Description", "type":"linksUrl"},
+                                 { "columnName": "Comments", "displayName": "Comments"},
+                                 { "columnName": "iconUrl", "displayName": "iconUrl"},
+                                 { "columnName": "backgroundColor", "displayName": "backgroundColor" },
+                                 { "columnName": "Countries", "displayName": "Country", "type": "mmm" }
+                        ],
+                        "modal": {
+                            "titleColumn": "Title"
+                        }
+                    }
+                },
+                { 
+                    "type": "gen-table",
+                    "colspan": 3,
+                    "heading": "Sample Gen List",
+                    "settings": {
+                        "source": {
+                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                            "listName": "SampleList",
+			                 "select": "ContentTypeId,Title,MyUrl,Created,Modified,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,Id",
+			                "expand": "FieldValuesAsText,ContentType",
+                            "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
+                            "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQuery": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                        },
+                        "columns": [
+			                { "columnName": "isNew", "displayName": "", "type": "newBadge" },
+                            { "columnName": "Title", "displayName": "Title" },
+                            { "columnName": "Country", "displayName": "Country", "type": "mm" },
+                            { "columnName": "CountryMMM", "displayName": "Country Multi", "type": "mmm" },
+                            { "columnName": "CountryChoice", "displayName": "Test Choice", "type": "choice" }
+    			          
+                        ],
+                        "modal": {
+                            "titleColumn": "Title"
+                        }
+                    }
+                },
+                { 
+                    "type": "chart",
+                    "colspan": 1,
+                    "heading": "Country Pages Chart",
+                    "settings": {
+                        "source": {
+                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                            "listName": "CountryCharts",
+			                 "select": "Country,Value,Created,Modified,Id",
+			                 "url":  "http://localhost:8080/sites/dev/socafdev/Lists/CountryCharts",
+                            "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQueryChoice": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                        },
+                        "columns": [
+			                
+                            { "columnName": "Value", "displayName": "Value" },
+                            { "columnName": "Country", "displayName": "Country", "type": "choice" }
+    			          
+                        ]
+                       
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Facts & Contacts",
+            "topicId": "facts",
+            "tiles": [
+                {
+                    "type": "news",
+                    "colspan": 1,
+                    "heading": "News",
+                    "settings": {
+                        "sources": [
+                            {
+                                "displayName": "TestBlog",
+                                "listName": "Posts",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                "url": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                "type": "blog",
+                                "displayForm": "Post.aspx",
+                                "dateField": "PublishedDate",
+                                "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                "expand": "PostCategory",
+                                "filter": "OData__ModerationStatus eq 0 and PostCategory/Title eq '{{countryMM}}'",
+                                "dateFilter": {
+                                    "startDate": "TODAY",
+                                    "startDateOffset": -3,
+                                    "startDateOffset_unit": "months",
+                                    "startDateField": "PublishedDate"
+                                }
+                            },
+                            {
+                                "displayName": "Remote Blog",
+                                "listName": "Posts",
+                                "listWeb": "/hq/km/remoteblog",
+                                "url": "/hq/km/remoteblog",
+                                "type": "blog",
+                                "displayForm": "Post.aspx",
+                                "dateField": "PublishedDate",
+                                "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                "expand": "PostCategory",
+                                "filter": "OData__ModerationStatus eq 0",
+                                "dateFilter": {
+                                    "startDate": "TODAY",
+                                    "startDateOffset": -3,
+                                    "startDateOffset_unit": "months",
+                                    "startDateField": "PublishedDate"
+                                }
+                            }
+                        ]
+                    }
+                },
+                { 
+                    "type": "gen-table",
+                    "colspan": 2,
+                    "heading": "Sample Document Library",
+                    "settings": {
+                        "source": 
+                            {
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                "listName": "Documents",
+                                "url":  "http://localhost:8080/sites/dev/socafdev/Shared%20Documents",
+                                "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
+                                "expand": "File",
+                                "type": "docLibrary"
+                            },
+                        "columns": [
+                            {
+                                "columnName": "File_x0020_Type",
+                                "displayName": "Type",
+                                "type": "docTypeIcon"
+                            },
+                            {
+                                "columnName": "File/Name",
+                                "displayName": "Name",
+                                "type": "expanded"
+                            },
+                            {
+                                "columnName": "Created",
+                                "displayName": "Created Date",
+                                "type": "date"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "upcoming-events",
+                    "colspan": 1,
+                    "heading": "Upcoming Events",
+                    "settings": {
+                        "sources": [
+                            {
+				"past": false,
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                "url": "http://localhost:8080/sites/dev/socafdev/Lists/DevCalendar",
+                                "listName": "DevCalendar",
+                                "defaultView": "",
+				"camlQuery": "<Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query>"
+                            },
+                            {
+                                "listWeb": "/hq/km",
+                                "url": "/hq/km/Lists/TestTDYCAl",
+                                "listName": "TestTDYCAl",
+                                "defaultView": ""
+                            }
+                        ]
+                    }
+                }
+                
+            ]
+        },
+        {
+            "name": "Testing",
+            "topicId": "testing",
+            "tiles": [
+                {
+                    "type": "tabs",
+                    "colspan": 2,
+                    "heading": "US Contacts",
+                    "settings": {
+                        "tabs": [
+                            {
+                                "type": "news",
+                                "heading": "SOCAFRICA",
+                                "settings": {
+                                    "sources": [
+                                        {
+                                            "displayName": "TestBlog",
+                                            "listName": "Posts",
+                                            "listWeb": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                            "url": "http://localhost:8080/sites/dev/socafdev/TestBlog",
+                                            "type": "blog",
+                                            "displayForm": "Post.aspx",
+                                            "dateField": "PublishedDate",
+                                            "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                            "expand": "PostCategory",
+                                            "filter": "OData__ModerationStatus eq 0 and PostCategory/Title eq '{{countryMM}}'",
+                                            "dateFilter": {
+                                                "startDate": "TODAY",
+                                                "startDateOffset": -3,
+                                                "startDateOffset_unit": "months",
+                                                "startDateField": "PublishedDate"
+                                            }
+                                        },
+                                        {
+                                            "displayName": "Remote Blog",
+                                            "listName": "Posts",
+                                            "listWeb": "/hq/km/remoteblog",
+                                            "url": "/hq/km/remoteblog",
+                                            "type": "blog",
+                                            "displayForm": "Post.aspx",
+                                            "dateField": "PublishedDate",
+                                            "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
+                                            "expand": "PostCategory",
+                                            "filter": "OData__ModerationStatus eq 0",
+                                            "dateFilter": {
+                                                "startDate": "TODAY",
+                                                "startDateOffset": -3,
+                                                "startDateOffset_unit": "months",
+                                                "startDateField": "PublishedDate"
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "gen-table",
+                                "heading": "Another Site Collection Doc Library",
+                                "settings": {
+                                    "hideFilter": false,
+                                    "source": {
+                                        "listWeb": "/hq/km",
+                                        "listName": "Documents",
+                                        "url": "/hq/km/Shared%20Documents",
+                                        "select": "File/Name,File_x0020_Type,Created,FileRef,Id,ContentTypeId,ContentType/Name",
+                                        "expand": "File,ContentType",
+					"filter": "ContentType eq 'SOCAFRICA Document'",
+                                        "type": "docLibrary"
+                                    },
+                                    "columns": [
+                                        {
+                                            "columnName": "File_x0020_Type",
+                                            "displayName": "Type",
+                                            "type": "docTypeIcon"
+                                        },
+                                        {
+                                            "columnName": "File/Name",
+                                            "displayName": "Name",
+                                            "type": "expanded"
+                                        },
+                                        {
+                                            "columnName": "Created",
+                                            "displayName": "Created Date",
+                                            "type": "date"
+                                        },
+					{ "columnName": "ContentType/Name", "displayName": "Content Type", "type": "expanded" }
+                                    ],
+                                    "modal": {
+                                        "titleColumn": "File/Name"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "gen-table",
+                                "heading": "Sample Gen List",
+                                "settings": {
+                                    "hideFilter": false,
+                                    "source": {
+                                        "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                                        "listName": "SampleList",
+                                        "url": "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
+                                        "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                                    },
+                                    "columns": [
+                                        { "columnName": "isNew", "displayName": "", "type": "newBadge" },
+                                        {
+                                            "columnName": "Title",
+                                            "displayName": "Title"
+                                        },
+                                        {
+                                            "columnName": "MyUrl",
+                                            "displayName": "Url",
+                                            "type": "url"
+                                        },
+                                        {
+                                            "columnName": "Created",
+                                            "displayName": "Created Date",
+                                            "type": "date"
+                                        },
+                                        {
+                                            "columnName": "Country",
+                                            "displayName": "Country",
+                                            "type": "mm"
+                                        }
+                                    ],
+                                    "modal": {
+                                        "titleColumn": "Title",
+                                        "columns": [
+                                            {
+                                                "columnName": "Title",
+                                                "displayName": "Title"
+                                            },
+                                            {
+                                                "columnName": "MyUrl",
+                                                "displayName": "Url",
+                                                "type": "url"
+                                            },
+                                            {
+                                                "columnName": "Created",
+                                                "displayName": "Created Date",
+                                                "type": "date"
+                                            },
+                                            {
+                                                "columnName": "Country",
+                                                "displayName": "Country",
+                                                "type": "mm"
+                                            },
+                                            {
+                                                "columnName": "Modified",
+                                                "displayName": "Modified Date",
+                                                "type": "date"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+	{
+		"name": "Test Events",
+		"topicId":  "events",
+		"tiles": [
+		{
+		    "type": "tabs",
+		    "heading": "Test tabs",
+		     "colspan": 1,
+		    "tabs": [
+                    
+
+
+
+		    ]
+
+                }
+		]
+	}
+    ],
+    "docPreviewSupportedTypes": [
+        "AI","PDF","PSB","PSD","3G2","3GP","ASF","BMP","M2TS","M4V","MOV","MP3","MP4","MP4V",
+        "MTS","TS","WMV","GIF","JPEG","JPG","JPE","MEF","MRW","NEF","NRW","ORF","PANO","PEF",
+        "PNG","SPM","TIF","TIFF","XBM","XCF","KEY","LOG","CSV","DIC","DOC","DOCM","DOCX","DOTM",
+        "DOTX","POT","POTM","POTX","PPS","PPSM","PPSX","PPT","PPTM","PPTX","XD","XLS","XLSB",
+        "XLSX","SLTX","EML","MSG","VSD","VSDX","CUR","ICO","ICON","ODP","ODS","ODT","ARW","CR2",
+        "CRW","DNG","RTF","ABAP","ADA","ADP","AHK","AS","AS3","ASC","ASCX","ASM","ASP","AWK","BAS",
+        "BASH","BASH_LOGIN","BASH_LOGOUT","BASH_PROFILE","BASHRC","BAT","BIB","BSH","BUILD",
+        "BUILDER","C","C++","CAPFILE","CBK","CC","CFC","CFM","CFML","CL","CLJ","CMAKE","CMD",
+        "COFFEE","CPP","CPT","CPY","CS","CSHTML","CSON","CSPROJ","CSS","CTP","CXX","D","DDL","DI.",
+        "DIF","DIFF","DISCO","DML","DTD","DTML","EL","EMAKE","ERB","ERL","F90","F95","FS","FSI",
+        "FSSCRIPT","FSX","GEMFILE","GEMSPEC","GITCONFIG","GO","GROOVY","GVY","H","H++","HAML",
+        "HANDLEBARS","HBS","HRL","HS","HTC","HTML","HXX","IDL","IIM","INC","INF","INI","INL","IPP",
+        "IRBRC","JADE","JAV","JAVA","JS","JSON","JSP","JSX","L","LESS","LHS","LISP","LOG","LST","LTX",
+        "LUA","M","MAKE","MARKDN","MARKDOWN","MD","MDOWN","MKDN","ML","MLI","MLL","MLY","MM","MUD",
+        "NFO","OPML","OSASCRIPT","OUT","P","PAS","PATCH","PHP","PHP2","PHP3","PHP4","PHP5","PL",
+        "PLIST","PM","POD","PP","PROFILE","PROPERTIES","PS","PS1","PT","PY","PYW","R","RAKE","RB",
+        "RBX","RC","RE","README","REG","REST","RESW","RESX","RHTML","RJS","RPROFILE","RPY","RSS",
+        "RST","RXML","S","SASS","SCALA","SCM","SCONSCRIPT","SCONSTRUCT","SCRIPT","SCSS","SGML",
+        "SH","SHTML","SML","SQL","STY","TCL","TEX","TEXT","TEXTILE","TLD","TLI","TMPL","TPL",
+        "TXT","VB","VI","VIM","WSDL","XAML","XHTML","XOML","XML","XSD","XSL","XSLT","YAML","YAWS",
+        "YML","ZSH","HTM","HTML","Markdown","MD","URL"
+    ]
+}
