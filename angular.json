@@ -94,7 +94,7 @@
             },
             "chas": {
               "browserTarget": "country-page-dashboard:build:chas"
-            },
+            }
           }
         },
         "extract-i18n": {
