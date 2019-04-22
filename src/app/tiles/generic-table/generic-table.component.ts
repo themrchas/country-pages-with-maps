@@ -16,6 +16,7 @@ import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.com
 import { SpRestService } from 'src/app/services/sp-rest.service';
 import { ConfigProvider } from '../../providers/configProvider';
 import { SourceResult, DataSource } from '../../model/dataSource';
+import { CountryService } from 'src/app/services/country.service';
 
 @Component({
   selector: 'app-generic-table',
@@ -23,16 +24,15 @@ import { SourceResult, DataSource } from '../../model/dataSource';
   styleUrls: ['./generic-table.component.css']
 })
 
-export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, TileComponent {
+export class GenericTableComponent implements OnInit, AfterViewInit, TileComponent {
 
   @Input() settings: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  subscription: any;
   settingsSource: any;
 
   //Control component logging to console
@@ -58,6 +58,31 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   matTableCols: Array<any>;
   rawResults: Array<SourceResult>;
 
+  constructor(private dataLayerService: DataLayerService,
+    private spRestService: SpRestService,
+    private countryService: CountryService,
+    private dialog: MatDialog,
+    private modalService: MDBModalService) { }
+
+  ngOnInit() {
+    this.doLog = ConfigProvider.settings.debugLog;
+    this.dataSource.paginator = this.paginator;
+    this.settingsSource = new DataSource(this.settings.source);
+
+    // Get columns to display
+    this.matTableCols = this.settings.columns;
+
+    this.doLog && console.log('generic-table.ts this.settings', this.settings);
+
+    this.columnsToDisplay = this.matTableCols.map((columnEntry) => columnEntry.columnName );
+
+    // this.subscription = this.countryService.selectedCountry.subscribe(selectedCountry => {
+      this.loadTable(this.country);
+    // });
+
+    // this.data
+  }
+
   // Fire off when row in table clicked
   onRowClicked(event: any, index: number) {
     if (!this.settings.disableModal) {
@@ -73,9 +98,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
   }
 
   /*** mat-table end ***/
-
-  constructor(private dataLayerService: DataLayerService,
-    private spRestService: SpRestService, private dialog: MatDialog, private modalService: MDBModalService) { }
 
   openTableItemDialog(index) {
     index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
@@ -96,25 +118,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
         }
       }
     });
-  }
-
-   ngOnInit() {
-    this.doLog = ConfigProvider.settings.debugLog;
-    this.dataSource.paginator = this.paginator;
-    this.settingsSource = new DataSource(this.settings.source);
-
-    // Get columns to display
-    this.matTableCols = this.settings.columns;
-
-    this.doLog && console.log('generic-table.ts this.settings', this.settings);
-
-    this.columnsToDisplay = this.matTableCols.map((columnEntry) => columnEntry.columnName );
-
-    this.subscription = this.country.subscribe(selectedCountry => {
-      this.loadTable(selectedCountry);
-    });
-
-   // this.data
   }
 
   loadTable(country) {
@@ -148,10 +151,6 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnDestroy, 
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;  // TODO: this should probably be done after each time country changes
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
 }

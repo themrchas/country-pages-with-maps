@@ -15,11 +15,10 @@ import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
-export class NewsComponent implements OnInit, OnDestroy, TileComponent {
+export class NewsComponent implements OnInit, TileComponent {
   @Input() settings: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   newsItems: Array<NewsItem>;
-  subscription: any;
   sources: Array<DataSource>;
   modalRef: MDBModalRef;
   docLibraryType: string;
@@ -30,10 +29,7 @@ export class NewsComponent implements OnInit, OnDestroy, TileComponent {
       return new DataSource(source);
     }) as Array<DataSource>;
 
-    this.subscription = this.country.subscribe(selectedCountry => {
-      this.loadNews(selectedCountry);
-    });
-
+    this.loadNews(this.country);
     this.docLibraryType = SourceDataType.DOC_LIBRARY;
   }
 
@@ -66,9 +62,5 @@ export class NewsComponent implements OnInit, OnDestroy, TileComponent {
         }
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

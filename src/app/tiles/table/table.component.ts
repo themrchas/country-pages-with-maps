@@ -13,17 +13,14 @@ import { DataLayerService } from '../../services/data-layer.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.css']
 })
-export class TableComponent implements OnInit, OnDestroy, TileComponent {
+export class TableComponent implements OnInit, TileComponent {
   @Input() settings: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   listItems: Array<any>;
-  subscription: any;
   constructor(private dataLayerService: DataLayerService, private countryService: CountryService) { }
 
   ngOnInit() {
-    this.subscription = this.country.subscribe(newCountry => {
-      this.loadListItems(newCountry);
-    });
+    this.loadListItems(this.country);
   }
 
   loadListItems(country: Country) {
@@ -52,10 +49,6 @@ export class TableComponent implements OnInit, OnDestroy, TileComponent {
         }
       }
     });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { Country } from '../model/country';
-import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-select-country',
@@ -15,11 +15,7 @@ export class SelectCountryComponent implements OnInit {
 
   ngOnInit() {
 
-    this.countryService.getCountries().subscribe({
-      next: obsCountries =>  {
-          this.regions = _.groupBy(obsCountries, 'region');
-        }
-    });
+    this.countryService.getRegions().subscribe(regions => this.regions = regions);
  }
 
 }

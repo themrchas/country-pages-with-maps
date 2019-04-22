@@ -17,20 +17,17 @@ import { DataLayerService } from 'src/app/services/data-layer.service';
   templateUrl: './upcoming-events.component.html',
   styleUrls: ['./upcoming-events.component.css']
 })
-export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent {
+export class UpcomingEventsComponent implements OnInit, TileComponent {
   @Input() settings: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   upcomingEvents: Array<any>;
-  subscription: any;
   modalRef: MDBModalRef;
   constructor( private eventsService: EventsService, private modalService: MDBModalService,
     private spRestService: SpRestService,
     private dataLayerService: DataLayerService) { }
 
   ngOnInit() {
-    this.subscription = this.country.subscribe(selectedCountry => {
-      this.loadEvents(selectedCountry);
-    });
+    this.loadEvents(this.country);
   }
 
   loadEvents(country) {
@@ -109,8 +106,5 @@ export class UpcomingEventsComponent implements OnInit, OnDestroy, TileComponent
     });
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 }
 
