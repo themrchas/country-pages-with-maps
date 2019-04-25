@@ -111,7 +111,9 @@
 			                 "url":  "http://localhost:8080/sites/dev/socafdev/Lists/CountryCharts",
                             "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
                             "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                            "camlQueryChoice": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                            "camlQueryChoice": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "xAxisColumnName": "Country",
+                            "chartLabel": "Test Data"
                         },
                         "columns": [
 			                
