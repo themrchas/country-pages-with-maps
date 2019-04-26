@@ -17,14 +17,15 @@ export class ChartComponent implements OnInit {
   @Input() settings: any;
   @Input() country: Country;
 
-  doLog: boolean = true;
+  doLog: boolean;
 
+  //True once list data has been loaded and parsed; ensures the canvas is not drawn without data
   dataReady: boolean = false;
 
   // Items read from SharePoint list
   listItems: Array<any> = Array<any>();
 
- 
+  //ng2 charts objects
   public lineChartData:Array<any>= []; 
   public lineChartLabels:Array<any> = [];
   public lineChartType:string = 'line';
@@ -39,6 +40,8 @@ export class ChartComponent implements OnInit {
 
 /*** End Test Data ***/
  
+
+//More n2 chart objects
   public lineChartColors:Array<any> = [
     { 
       backgroundColor: 'white',
@@ -58,8 +61,7 @@ export class ChartComponent implements OnInit {
 
     public lineChartOptions:any = {
       responsive: true
-     
-      
+   
     };
 
 
@@ -67,64 +69,68 @@ export class ChartComponent implements OnInit {
   constructor(private dataLayerService: DataLayerService) {}
 
   ngOnInit() {
-   // this.doLog = ConfigProvider.settings.debugLog;
-    this.doLog && console.log('****Starting processing on charts component in ngOnInit*****');
-    this.loadChartData(this.country);
+
+   this.doLog = ConfigProvider.settings.debugLog;
+   this.doLog && console.log('****Starting processing on charts component in ngOnInit*****');
+   this.loadChartData(this.country);
     
 } // ngOnInit
 
 
 loadChartData(country): void {
  
-  console.log('Charts component using the following settings in loadChartData:', this.settings);
-  this.doLog && console.log('----chart.component.ts with country',country,'and settings.sources',this.settings.source,'settings.columns',this.settings.columns);
+  this.doLog && this.doLog && console.log('----chart.component.ts with country',country,'and settings.sources',this.settings.source,'settings.columns',this.settings.columns);
    
-
-  console.log('lineChartData prior to observable is', this.lineChartData);
-
   //Data to be displayed in raw form
   let parsedLineChartData: Array<any> = [];
 
   //Name of column data to use as x-axis data
   let xAxisColumnName = this.settings.source.xAxisColumnName;
 
-  //Chart label
+  //Chart label/title
   let chartLabel = this.settings.source.chartLabel;
-  
-  
-    this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source), country, this.settings.columns)
-   .subscribe({
-        next: results => {
-
-      // Loop over raw results returned from list query
-     for (const result of results) {
-
-        // Object that will contain columnName:value combination for each value returned in the response
-        const columns = {};
    
-        for (const column of this.settings.columns) {
+  //Set axes names and rescale y-axis as required
+  this.lineChartOptions.scales  = {};
+  this.lineChartOptions.scales.xAxes = [  { scaleLabel: { display: true, labelString: this.settings.source.xAxisLabel} } ];
+  this.lineChartOptions.scales.yAxes =  [   { scaleLabel: { display: true, labelString: this.settings.source.yAxisLabel},  ticks: { beginAtZero: this.settings.source.scaleYAtOrigin } }   ] ; 
 
-          this.doLog && console.log('result processedColumns for item:', result, 'and current column name', column.columnName);
-          columns[column.columnName] = result.processedColumns[column.columnName];
   
-        //  column.columnName == 'Country' ? this.lineChartLabels.push(result.processedColumns[column.columnName])
-        column.columnName ==  xAxisColumnName ? this.lineChartLabels.push(result.processedColumns[column.columnName])
-                              : parsedLineChartData.push(result.processedColumns[column.columnName]);
-          
+  this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source), country, this.settings.columns)
+    .subscribe({
+      next: results => {
+
+        // Loop over raw results returned from list query
+        for (const result of results) {
+
+          // Object that will contain columnName:value combination for each value returned in the response
+          const columns = {};
+
+          for (const column of this.settings.columns) {
+
+            this.doLog && this.doLog && console.log('result processedColumns for item:', result, 'and current column name', column.columnName);
+            columns[column.columnName] = result.processedColumns[column.columnName];
+
+            //Save data based on whether column is x or y
+            column.columnName == xAxisColumnName ? this.lineChartLabels.push(result.processedColumns[column.columnName])
+              : parsedLineChartData.push(result.processedColumns[column.columnName]);
+
+          } // for
+
+          // Add formated 'columns' object to list of items to be returned
+          this.listItems.push(columns);
+
         } // for
 
-       
-        // Add formated object to list of items to be returned
-        this.listItems.push(columns);
-        
-      } // for
 
-      this.doLog && console.log('Chart data to display is', this.listItems);
-      this.lineChartData.push({'data':parsedLineChartData, 'label':chartLabel});
-      this.doLog  && console.log('charts.js data is lineChartLabels:', this.lineChartLabels, 'lineChartData:',this.lineChartData);
-      this.dataReady = true;
-    
-    } // next
+        this.doLog && console.log('Chart data to display is', this.listItems);
+        this.lineChartData.push({ 'data': parsedLineChartData, 'label': chartLabel });
+        this.doLog && console.log('charts.js data is lineChartLabels:', this.lineChartLabels, 'lineChartData:', this.lineChartData);
+        
+        //Data reeady to be displayed
+        this.dataReady = true;
+
+      } // next
   });  // subscribe
 
 }

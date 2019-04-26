@@ -31,12 +31,9 @@ export class LinksComponent implements OnInit {
   constructor(private dataLayerService: DataLayerService) {}
 
   ngOnInit() {
-      this.doLog = ConfigProvider.settings.debugLog;
- 
+    this.doLog = ConfigProvider.settings.debugLog;
+    this.doLog && console.log('****Starting processing on links component in ngOnInit*****');
 
-   this.doLog && console.log('****Starting processing on links component in ngOnInit*****');
-
-    console.log('****Starting processing on links component in ngOnInit*****');
     this.loadLinks(this.country);
 
   } // ngOnInit
