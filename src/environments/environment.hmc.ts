@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   mockSp: false,
-  configPath: 'assets/config.hmc.txt'
+  configPath: 'assets/config/config.hmc.txt'
 };

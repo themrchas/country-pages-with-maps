@@ -13,7 +13,7 @@ export class ConfigProvider {
     load() {
       const jsonFile = environment.configPath;
         return new Promise<void>((resolve, reject) => {
-            this.httpClient.get(jsonFile).toPromise().then((response: Response) => {
+            this.httpClient.get(jsonFile).toPromise().then((response: any) => {
               ConfigProvider.settings = response;
               ConfigProvider.env = ConfigProvider.settings.env;
             }).catch((response: any) => {

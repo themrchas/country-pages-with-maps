@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { getClosureSafeProperty } from '@angular/core/src/util/property';
 import { Country } from '../model/country';
 import { CountryService } from '../services/country.service';
 import { Router } from '@angular/router';
+import union from '@turf/union';
 import * as _ from 'lodash';
 import { MatTabChangeEvent } from '@angular/material';
+import { ConfigProvider } from '../providers/configProvider';
 declare let L;
 
 @Component({
@@ -14,49 +15,69 @@ declare let L;
   styleUrls: ['./splash-page.component.scss']
 })
 export class SplashPageComponent implements OnInit {
-  // TODO: move these to config
-  regionColorMapping = {
-    'Central Africa (CA)': '#94802c',
-    'East Africa (EA)': 'orange',
-    'North West Africa (NWA)': 'green',
-    'Southern Africa': '#94802c'
-  };
-  subregionMapping = {
-    'Northern Africa': 'North West Africa (NWA)',
-    'Western Africa': 'North West Africa (NWA)',
-    'Eastern Africa': 'East Africa (EA)',
-    'Middle Africa': 'Central Africa (CA)',
-    'Southern Africa': 'Southern Africa'
-  };
-  campaignColorMapping = {
-    'Campaign1': 'grey',
-    'Campaign2': 'blue',
-    'Campaign1,Campaign2': 'purple'
-  };
 
-  layers: any;
-  regions: Array<Array<Country>>;
-  campaigns: Array<Array<Country>>;
-  countriesByCode: Map<string, Country>;
-  geoJson: any;
+  countryLayersDict: any;  // country code to layer
+  regionLayersDict: any; // region name to layer
+  campaignLayersDict: any; // campaign name to layer
+
+  countryLayerGroup: any;
+  regionLayerGroup: any;
+  campaignLayerGroup: any;
+
+  regions: any;  // countries grouped by region
+  campaigns: any; // countries grouped by campaign
+  countries: Array<Country>; // flat countries array
+  countriesByCode: Map<string, Country>;  // Map country code to country
+
+  regionColorMapping: any;
+  campaignColorMapping: any;
+  subregionMapping: any; // map geoJson regions to Region MM field
+
+  selectedTab: string;
+
   info: any;
   map: any;
+
   constructor(private router: Router, private httpClient: HttpClient, private countryService: CountryService) { }
 
   ngOnInit() {
-    this.layers = {};
+    this.countryLayersDict = {};
     const geoJsonPath = './assets/geo/africa.txt';
+
+    this.regionColorMapping = ConfigProvider.settings.country.regionColorMapping;
+    this.campaignColorMapping = ConfigProvider.settings.country.campaignColorMapping;
+    this.subregionMapping = ConfigProvider.settings.country.subregionMapping;
 
     this.countryService.resetCountry();
     this.countryService.getCountries().subscribe(countries => {
-      this.regions = _.groupBy(countries, 'region');
-      this.campaigns = _.groupBy(countries, 'campaigns');
+      this.countries = countries;
+      this.regions = _.groupBy(this.countries, 'region');
+
+      // Group by Campaigns.  For countries that have multiple campaigns, add them once per group
+      const campObj = {};
+      this.countries.forEach(country => {
+        if (country.campaigns) {
+          country.campaigns.forEach(campaign => {
+            if (!campObj[campaign]) {
+              campObj[campaign] = [country];
+            } else {
+              campObj[campaign].push(country);
+            }
+          });
+        }
+      });
+      this.campaigns = campObj;
       this.countriesByCode = new Map(countries.map(country => [country.countryCode3, country] as [string, Country]));
 
+      // Get the Africa GeoJSON
       this.httpClient.get(geoJsonPath).subscribe(data => {
         const self = this;
-        this.map = L.map('map').setView([0.1757, 19.4238], 3);
 
+        this.map = L.map('map', {
+          zoomSnap: 0.05
+        }).setView([6.4096, 16.7600], 3.6);
+
+        // Create the hover info box
         this.info = L.control();
 
         this.info.onAdd = function () {
@@ -65,7 +86,6 @@ export class SplashPageComponent implements OnInit {
             return this._div;
         };
 
-        // method that we will use to update the control based on feature properties passed
         this.info.update = function (props) {
           let hoverHtml = 'Hover over a country';
           if (props) {
@@ -82,11 +102,13 @@ export class SplashPageComponent implements OnInit {
 
         this.info.addTo(this.map);
 
+        // Add tile layers
         L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
             attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
             subdomains: '1234'
         }).addTo(this.map);
 
+        // Styling per country layer
         function style(feature) {
           const countryIsActive = this.countriesByCode.has(feature.properties.iso_a3);
           return {
@@ -96,34 +118,159 @@ export class SplashPageComponent implements OnInit {
           };
         }
 
-        this.geoJson = L.geoJson(data, {
+        // GeoJSON layer for all the countries
+        this.countryLayerGroup = L.geoJson(data, {
           onEachFeature: function(feature, layer) {
             this.onEachFeature(feature, layer);
           }.bind(this),
-          style: style.bind(this)
-        }).addTo(this.map);
+          style: style.bind(self)
+        });
+
+        this.map.addLayer(this.countryLayerGroup);
+        this.addRegionsGeoJson();
       });
 
     });
   }
 
+  getUnifiedGeoJson(polyList, properties) {
+    let unionTemp;
+    let i = 0;
+    for (const key of Object.keys(polyList)) {
+      const polyItem = polyList[key];
+      if (i === 0) {
+        unionTemp = polyItem.toGeoJSON();
+      } else {
+        unionTemp = union(unionTemp, polyItem.toGeoJSON());
+      }
+      i++;
+    }
+    unionTemp.properties = properties;
+    return unionTemp;
+  }
+
+  addRegionsGeoJson() {
+    const self = this;
+
+    // Styling for region layer
+    function regionStyle(feature) {
+      return {
+        color: this.getRegionColor(feature.properties.region),
+        fillOpacity: 0,
+        weight: 3
+      };
+    }
+
+    // Merge regions
+    if (this.regionLayerGroup) {
+      this.map.addLayer(this.regionLayerGroup);
+    } else {
+      this.regionLayersDict = {};
+      const regionLayers = [];
+      Object.keys(this.regions).forEach(regionKey => {
+        const countryLayers = this.regions[regionKey].map(country => {
+          return this.countryLayersDict[country.countryCode3];
+        });
+        const layer = L.geoJson(this.getUnifiedGeoJson(countryLayers, {region: regionKey }), {
+          style: regionStyle.bind(self)
+        });
+        this.regionLayersDict[regionKey] = layer;
+        regionLayers.push(layer);
+      });
+      this.regionLayerGroup = L.layerGroup(regionLayers);
+      this.map.addLayer(this.regionLayerGroup);
+    }
+
+    // Need to bring the country layer to the front, otherwise the region geoJson layer
+    // will be on top and will hide country hover effects
+    this.countryLayerGroup.bringToFront();
+  }
+
+  removeRegionsGeoJson() {
+    if (this.regionLayerGroup) {
+      this.map.removeLayer(this.regionLayerGroup);
+    }
+  }
+
+  addCampaignsGeoJson() {
+    const self = this;
+
+    // Styling for region layer
+    function campaignStyle(feature) {
+      return {
+        color: this.campaignColorMapping[feature.properties.campaign],
+        fillOpacity: 0,
+        weight: 3
+      };
+    }
+
+    // Merge Campaigns
+    if (this.campaignLayerGroup) {
+      this.map.addLayer(this.campaignLayerGroup);
+    } else {
+      this.campaignLayersDict = {};
+      const campaignLayers = [];
+      Object.keys(this.campaigns).forEach(campaignKey => {
+        const countryLayers = this.campaigns[campaignKey].map(country => {
+          return this.countryLayersDict[country.countryCode3];
+        });
+        const layer = L.geoJson(this.getUnifiedGeoJson(countryLayers, { campaign: campaignKey }), {
+          style: campaignStyle.bind(self)
+        });
+        this.campaignLayersDict[campaignKey] = layer;
+        campaignLayers.push(layer);
+      });
+      this.campaignLayerGroup = L.layerGroup(campaignLayers);
+      this.map.addLayer(this.campaignLayerGroup);
+    }
+
+    // Need countries to always be top layer for hover effect & click to work
+    this.countryLayerGroup.bringToFront();
+  }
+
+  removeCampaignsGeoJson() {
+    if (this.campaignLayerGroup) {
+      this.map.removeLayer(this.campaignLayerGroup);
+    }
+  }
+
   onTabChanged(event: MatTabChangeEvent) {
     const self = this;
+    this.selectedTab = event.tab.textLabel;
     if (event.tab.textLabel === 'Regions') {
-
-    } else {
-      this.geoJson.eachLayer(function (layer) {
+      this.removeCampaignsGeoJson();
+      this.addRegionsGeoJson();
+      this.countryLayerGroup.eachLayer(function (layer) {
+        self.countryLayerGroup.resetStyle(layer);
+      });
+    } else if (event.tab.textLabel === 'Campaigns') {
+      this.removeRegionsGeoJson();
+      this.addCampaignsGeoJson();
+      this.countryLayerGroup.eachLayer(function (layer) {
         const countryCode = layer.feature.properties.iso_a3;
-        layer.setStyle({fillColor : self.getCampaignColor(countryCode) });
+        const color = self.getCampaignColor(countryCode);
+        layer.setStyle({
+          fillColor : color,
+          color: color
+        });
+      });
+    } else {
+      this.removeRegionsGeoJson();
+      this.removeCampaignsGeoJson();
+      this.countryLayerGroup.eachLayer(function (layer) {
+        layer.setStyle({
+          fillColor : '#94802c',
+          color: '#94802c'
+        });
       });
     }
   }
 
   getCampaignColor(countryCode) {
-    let fillColor = 'black';
+    let fillColor = '#94802c';
     if (this.countriesByCode.has(countryCode)) {
       const campaigns = this.countriesByCode.get(countryCode).campaigns;
-      fillColor = campaigns ? this.campaignColorMapping[campaigns.join(',')] : 'black';
+      fillColor = campaigns ? this.campaignColorMapping[campaigns.join(',')] : '#94802c';
     }
     return fillColor;
   }
@@ -133,49 +280,91 @@ export class SplashPageComponent implements OnInit {
   }
 
   onEachFeature = function(feature, layer) {
-    this.layers[feature.properties.iso_a3] = layer;
+    this.countryLayersDict[feature.properties.iso_a3] = layer;
     layer.on({
-        mouseover: function(e) {
-          this.highlightFeature(e);
-        }.bind(this),
-        mouseout: function(e) {
-          this.resetHighlight(e);
-        }.bind(this),
-        click: function(e) {
-          this.goToCountryPage(e);
-        }.bind(this)
-      });
+      mouseover: function(e) {
+        this.highlightCountry(e);
+      }.bind(this),
+      mouseout: function(e) {
+        this.resetHighlightCountry(e);
+      }.bind(this),
+      click: function(e) {
+        this.goToCountryPage(e);
+      }.bind(this)
+    });
   };
 
   goToCountryPage(e) {
     const layer = e.target;
     // check if country exists
     if (this.countriesByCode.has(layer.feature.properties.iso_a3)) {
-      this.router.navigate(['/country', layer.feature.properties.iso_a3]);
+      this.router.navigate(['/country', layer.feature.properties.iso_a3],
+        { queryParamsHandling: 'preserve'});
     }
   }
 
+  highlightRegion(region) {
+    const layer = this.regionLayersDict[region];
+    layer.setStyle({
+      fillOpacity: .5
+    });
+    layer.bringToFront();
+  }
+
+  resetHighlightRegion() {
+    this.regionLayerGroup.eachLayer(function(layer) {
+      layer.setStyle({
+        fillOpacity: .2
+      });
+    });
+    this.countryLayerGroup.bringToFront();
+  }
+
+  highlightCampaign(campaign) {
+    const layer = this.campaignLayersDict[campaign];
+    layer.setStyle({
+      fillOpacity: .5
+    });
+    layer.bringToFront();
+  }
+
+  resetHighlightCampaign() {
+    this.campaignLayerGroup.eachLayer(function(layer) {
+      layer.setStyle({
+        fillOpacity: .2
+      });
+    });
+    this.countryLayerGroup.bringToFront();
+  }
+
   // Pass either the click event or the iso code
-  highlightFeature(e) {
-    const layer = e.target || this.layers[e];
+  highlightCountry(e) {
+    const layer = e.target || this.countryLayersDict[e];
 
     if (this.countriesByCode.has(layer.feature.properties.iso_a3)) {
-      layer.setStyle({
-          fillOpacity: .5,
-          weight: 3
-      });
+      const country = this.countriesByCode.get(layer.feature.properties.iso_a3);
+      // Only highlight campaign countries if Campaigns tab is selected
+      if (this.selectedTab !== 'Campaigns' || country.campaigns) {
+        layer.setStyle({
+            fillOpacity: .5,
+            weight: 3
+        });
+      }
     }
 
     if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
         layer.bringToFront();
     }
 
-    this.info.update(layer.feature.properties).bind(this);
+    this.info.update(layer.feature.properties);
   }
 
-  resetHighlight(e) {
-    const layer = e.target || this.layers[e];
-    this.geoJson.resetStyle(layer);
+  resetHighlightCountry(e) {
+    const layer = e.target || this.countryLayersDict[e];
+    layer.setStyle({
+      fillOpacity: .2,
+      weight: 0
+    });
     this.info.update();
   }
 }

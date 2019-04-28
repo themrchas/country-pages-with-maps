@@ -9,3 +9,23 @@ h6.sub-title {
     color: #555;
     border-bottom: 1px solid #e0e0e0;
 }
+
+mat-expansion-panel {
+    border-radius: 0;
+}
+
+.flat-countries {
+    font-size: 14px;
+}
+
+.flat-countries .row {
+    justify-content: center;
+}
+
+.flat-countries .dropdown-item {
+    padding: 0 1.5rem;
+}
+
+:host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, :host ::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+    background: #4abde8;
+}
