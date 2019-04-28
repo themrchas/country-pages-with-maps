@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatSidenavModule, MatToolbarModule, MatListModule,
-  MatIconModule, MatButtonModule, MatMenuModule, MatTabsModule } from '@angular/material';
+  MatIconModule, MatButtonModule, MatMenuModule, MatTabsModule,
+  MatExpansionModule } from '@angular/material';
 import { MainLayoutComponent } from './main-layout.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
@@ -39,6 +40,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatButtonModule,
     MatMenuModule,
     MatTabsModule,
+    MatExpansionModule,
     MDBBootstrapModule.forRoot()
   ],
   providers: [

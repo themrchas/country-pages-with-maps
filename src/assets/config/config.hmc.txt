@@ -1,8 +1,28 @@
 {
         "env": "low",
         "country": {
-            "listWeb": "http://localhost:3000",
-            "listName": "CountryData"
+            "listWeb": "http://localhost:8080/sites/socafdev",
+            "listName": "CountryData",
+            "camlQueryAllCountries": "<View><Query></Query></View>",
+            "camlQueryFilterCountry": "<View><Query><Where><Eq><FieldRef Name='ISO_3_CountryCode'/><Value Type='Text'>{{countryCode}}</Value></Eq></Where></Query></View>",
+            "regionColorMapping": {
+                "Central Africa (CA)": "#94802c",
+                "East Africa (EA)": "#D2691E",
+                "North West Africa (NWA)": "#006400",
+                "Southern Africa": "#94802c"
+            },
+            "subregionMapping": {
+                "Northern Africa": "North West Africa (NWA)",
+                "Western Africa": "North West Africa (NWA)",
+                "Eastern Africa": "East Africa (EA)",
+                "Middle Africa": "Central Africa (CA)",
+                "Southern Africa": "Southern Africa"
+            },
+            "campaignColorMapping": {
+                "Campaign1": "#A20000",
+                "Campaign2": "#52B3D9",
+                "Campaign1,Campaign2": "purple"
+            }
         },
         "topics": [
             {
@@ -99,12 +119,12 @@
                         "colspan": 1,
                         "heading": "Sample Links List",
                         "settings": {
-                            "source": {
+                            "sources": [{
                                 "listWeb": "http://localhost:8080/sites/socafdev",
                                 "url": "http://localhost:8080/sites/socafdev/Lists/CountryLinks",
                                 "listName": "CountryLinks",
                                 "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
-                            },
+                            }],
                             "columns": [
                                  { "columnName": "Url", "displayName": "Destination" },
                                  { "columnName": "Description", "displayName": "Description"},
@@ -148,10 +168,11 @@
                         "colspan": 2,
                         "heading": "Sample Document Library",
                         "settings": {
+                            "disableModal": true,
                             "source": {
                                 "listWeb": "http://localhost:8080/sites/socafdev",
                                 "listName": "Documents",
-                                "url":  "http://localhost:8080/sites/socafdev/dev/Shared%20Documents",
+                                "url":  "http://localhost:8080/sites/socafdev/Shared%20Documents",
                                 "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
                                 "expand": "File",
                                 "type": "docLibrary"
@@ -190,11 +211,12 @@
                             "tabs": [
                                 {
                                     "heading": "SOCAFRICA",
+                                    "type": "table",
                                     "settings": {
                                         "source": {
                                             "listWeb": "http://localhost:8080/sites/socafdev",
                                             "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/socafdev/dev/Lists/SampleList"
+                                            "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
                                         },
                                         "columns": [
                                             { "columnName": "Title", "displayName": "Title" },
@@ -204,6 +226,7 @@
                                 },
                                 {
                                     "heading": "AFRICOM",
+                                    "type": "table",
                                     "settings": {
                                         "source": {
                                             "listWeb": "http://localhost:8080/sites/socafdev",

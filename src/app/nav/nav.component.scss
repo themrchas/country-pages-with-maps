@@ -68,7 +68,7 @@ button {
 
 @media(min-width:992px){
     .dropdown-menu {
-        width: 750px;
+        width: 550px;
     }
 }
 
@@ -124,4 +124,8 @@ h6.sub-title {
 
 :host ::ng-deep .country-toolbar.mat-toolbar-single-row {
     padding: 0 20px;
+}
+
+.collapsed .show-expanded {
+    display: none;
 }
