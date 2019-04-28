@@ -89,7 +89,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     UpcomingEventsComponent,
     SingleItemComponent,
     LinksComponent,
-    IframeModalComponent
+    IframeModalComponent,
+    ChartComponent
   ],
 })
 export class DashboardModule { }

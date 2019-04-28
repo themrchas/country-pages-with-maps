@@ -11,6 +11,7 @@ import { GenericTableComponent } from '../generic-table/generic-table.component'
 import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.component';
 import { SingleItemComponent } from '../single-item/single-item.component';
 import { LinksComponent } from '../links/links.component';
+import { ChartComponent } from '../chart/chart.component';
 
 @Component({
   selector: 'app-tile',
@@ -27,11 +28,12 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
     TABLE: 'table',
     NEWS: 'news',
     MAP: 'map',
-    GENTABLE: 'gen-table', // Chas
+    GENTABLE: 'gen-table', 
     TABS: 'tabs',
     UPCOMING_EVENTS: 'upcoming-events',
     SINGLE_ITEM: 'single-item',
-    LINKS: 'links'
+    LINKS: 'links',
+    CHART: 'chart'
   };
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
@@ -107,6 +109,10 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
       }
       case this.tileTypes.LINKS: {
         tileComponent = LinksComponent;
+        break;
+      }
+      case this.tileTypes.CHART: {
+        tileComponent = ChartComponent;
         break;
       }
       default: {

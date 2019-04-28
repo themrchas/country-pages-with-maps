@@ -1,6 +1,7 @@
 {
     "env": "low",
     "feedbackUrl": "/",
+    "debugLog":true,
     "country": {
         "listWeb": "http://localhost:8080/sites/dev/socafdev",
         "listName": "CountryData",
@@ -104,6 +105,7 @@
                     "colspan": 1,
                     "heading": "Country Pages Chart",
                     "settings": {
+                        
                         "source": {
                             "listWeb": "http://localhost:8080/sites/dev/socafdev",
                             "listName": "CountryCharts",
@@ -111,7 +113,12 @@
 			                 "url":  "http://localhost:8080/sites/dev/socafdev/Lists/CountryCharts",
                             "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
                             "camlQueryMMM": "<View><Query><Where><Eq><FieldRef Name='CountryMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                            "camlQueryChoice": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                            "camlQueryChoice": "<View><Query><OrderBy><FieldRef Name='ID' /></OrderBy><Where><Eq><FieldRef Name='CountryChoice' /><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "xAxisColumnName": "Country",
+                            "chartLabel": "Test Data",
+                            "scaleYAtOrigin": true,
+                            "xAxisLabel":"Country",
+                            "yAxisLabel":"Values"
                         },
                         "columns": [
 			                
