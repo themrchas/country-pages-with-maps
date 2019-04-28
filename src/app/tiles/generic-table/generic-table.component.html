@@ -1,67 +1,64 @@
-<!-- <mat-card class="mat-elevation-z3"> -->
- <!-- <mat-card-header>
-    
-      <mat-card-title>{{settings.title}}</mat-card-title>
-  </mat-card-header> -->
-  
   <mat-card-content>
- 
- <div> 
-
-  <div  id="flexIt" *ngIf="!settings.hideFilter">
-    <mat-form-field  style="display: inline-block">
-      <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
-  </div>
-
-<perfect-scrollbar [ngStyle]="{'height': settings.hideFilter ? '215px' : '175px'}">
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" [ngClass]="{'mt-3': settings.hideFilter}" matSort>
-
-
- <!--  <ng-container *ngFor="let tblCol of matTableCols" > -->
-
-  <ng-container *ngFor="let tblCol of settings.columns; let z = index" matColumnDef="{{tblCol.columnName}}">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>{{tblCol.displayName}}</th>
-    <ng-container *ngIf="tblCol.type === 'url'">
-        <td mat-cell *matCellDef="let tableItem">
-          <ng-container *ngIf="tableItem[tblCol.columnName]">
-            <a [href]="tableItem[tblCol.columnName].Url">{{tableItem[tblCol.columnName].Description}}</a>
-          </ng-container>
-        </td>
-    </ng-container>
-    <ng-container *ngIf="tblCol.type === 'docTypeIcon'">
-        <td mat-cell *matCellDef="let tableItem">
-          <ng-container *ngIf="(tableItem[tblCol.columnName]) | async as docIconPath">
-            <img [src]="docIconPath"/>
-          </ng-container>
-        </td>
-    </ng-container>
-
-
-
-    <ng-container *ngIf="tblCol.type !== 'url' && tblCol.type !== 'docTypeIcon'">
-        <td mat-cell *matCellDef="let tableItem">
-          {{ (tableItem[tblCol.columnName] && tableItem[tblCol.columnName].length>70) ? (tableItem[tblCol.columnName]| slice:0:70)+'...':(tableItem[tblCol.columnName]) }}
-          <!-- First column in table so if isNew, add badge -->
-          <!--<ng-container *ngIf="z == 0 && tableItem.isNew">
-              <mdb-badge primary='true' style="position: absolute; left:10px;">new</mdb-badge>
-          </ng-container>-->
-        </td>
-    </ng-container>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-    <tr mat-row [ngClass]="settings.disableModal ? 'unselectable': ''" *matRowDef="let row; columns: columnsToDisplay; let i = index;"
-      (click)="onRowClicked($event, i)">
-    </tr>
-  
-  </table>
-</perfect-scrollbar>
-  
-  <mat-paginator [pageSizeOptions]="[5,10]"></mat-paginator>
-
    
+       <div  id="flexIt">
+         <mat-form-field  style="display: inline-block">
+           <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+         </mat-form-field>
+     
+         <mat-paginator [pageSizeOptions]="[5,10]"></mat-paginator>
+     
+       </div>
+     
+     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+     
+       <ng-container *ngFor="let tblCol of settings.columns;" matColumnDef="{{tblCol.columnName}}">
 
-  </div> 
-  </mat-card-content>
- <!--  </mat-card> -->
+         <th mat-header-cell *matHeaderCellDef mat-sort-header>{{tblCol.displayName}}</th>
+         <ng-container *ngIf="tblCol.type === 'url'">
+             <td mat-cell *matCellDef="let tableItem">
+               <ng-container *ngIf="tableItem[tblCol.columnName]">
+                 <a [href]="tableItem[tblCol.columnName].Url">{{tableItem[tblCol.columnName].Description}}</a>
+               </ng-container>
+             </td>
+         </ng-container>
+         <ng-container *ngIf="tblCol.type === 'docTypeIcon'">
+             <td mat-cell *matCellDef="let tableItem">
+               <ng-container *ngIf="(tableItem[tblCol.columnName]) | async as docIconPath">
+                 <img [src]="docIconPath"/>
+               </ng-container>
+             </td>
+         </ng-container>/
+  
+         <ng-container *ngIf="tblCol.type =='newBadge' else notFirstCol">
+            <td mat-cell *matCellDef="let tableItem;">
+            
+              <ng-container *ngIf="tableItem.isNew === 'New'">
+                <mdb-badge default='true'>{{tableItem[tblCol.columnName]}}</mdb-badge>
+              </ng-container>
+            
+              <ng-container *ngIf="tableItem.isNew === 'Updated'">
+                <mdb-badge primary='true'>{{tableItem[tblCol.columnName]}}</mdb-badge>
+              </ng-container>
+            
+            </td>
+            </ng-container>
+            
+            
+            <ng-template #notFirstCol>
+              <td mat-cell *matCellDef="let tableItem;">
+                {{ (tableItem[tblCol.columnName] != null && tableItem[tblCol.columnName].length>110) ? (tableItem[tblCol.columnName] | slice:0:110)+'...' : tableItem[tblCol.columnName] }}
+              </td>
+            </ng-template>
+       </ng-container>
+       
+         <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+         
+         <tr mat-row *matRowDef="let row; columns: columnsToDisplay; let i = index;"
+           (click)="onRowClicked($event, i)">
+         </tr>
+         
+       </table>
+     
+   
+       </mat-card-content>
+     

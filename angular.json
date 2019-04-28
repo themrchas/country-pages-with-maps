@@ -68,6 +68,14 @@
                   "with": "src/environments/environment.hmc.ts"
                 }
               ]
+            },
+            "chas": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.chas.ts"
+                }
+              ]
             }
           }
         },
@@ -85,6 +93,9 @@
             },
             "hmc": {
               "browserTarget": "country-page-dashboard:build:hmc"
+            },
+            "chas": {
+              "browserTarget": "country-page-dashboard:build:chas"
             }
           }
         },

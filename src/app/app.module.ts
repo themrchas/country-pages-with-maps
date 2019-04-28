@@ -19,7 +19,9 @@ const appRoutes: Routes = [
   imports: [
     MainLayoutModule,
     RouterModule.forRoot(
-      appRoutes
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+     
     ),
     BrowserModule,
     HttpClientModule,
@@ -28,6 +30,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PageNotFoundComponent
+    
   ],
   providers: [
     ConfigProvider,

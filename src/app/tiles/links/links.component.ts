@@ -31,7 +31,10 @@ export class LinksComponent implements OnInit {
   constructor(private dataLayerService: DataLayerService) {}
 
   ngOnInit() {
-    this.doLog = ConfigProvider.settings.debugLog;
+      this.doLog = ConfigProvider.settings.debugLog;
+ 
+
+   this.doLog && console.log('****Starting processing on links component in ngOnInit*****');
 
     console.log('****Starting processing on links component in ngOnInit*****');
     this.loadLinks(this.country);
@@ -39,6 +42,8 @@ export class LinksComponent implements OnInit {
   } // ngOnInit
 
   loadLinks(country): void {
+
+    this.doLog && console.log('---->links.component.ts with country',country,'and settings.sources',this.settings.sources,'settings.columns',this.settings.columns);
 
     from(this.settings.sources).pipe(mergeMap(source => {
       return this.dataLayerService.getItemsFromSource(new DataSource(source), country, this.settings.columns);
@@ -53,13 +58,9 @@ export class LinksComponent implements OnInit {
 
           for (const column of this.settings.columns) {
 
-            console.log('result item:', result, 'and current column name', column.columnName);
-
-            // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
-            // and backgroundColor are first level properties
-            columns[column.columnName] =
-              (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ? result['URL'][column.columnName] : result[column.columnName];
-
+            this.doLog && console.log('result processedColumns for item:', result, 'and current column name', column.columnName);
+            columns[column.columnName] = result.processedColumns[column.columnName];
+    
           } // for
 
           // Set default values as required
@@ -71,7 +72,7 @@ export class LinksComponent implements OnInit {
 
         } // for
 
-        console.log('links to display are', this.listItems);
+        this.doLog && console.log('links to display are', this.listItems);
       } // next
     });  // subscribe
 

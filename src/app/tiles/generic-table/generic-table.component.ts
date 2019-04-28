@@ -35,8 +35,8 @@ export class GenericTableComponent implements OnInit, AfterViewInit, TileCompone
 
   settingsSource: any;
 
-  // Control component logging to console
-  doLog: boolean;
+  //Control component logging to console
+  doLog: boolean = false;
 
 
   modalRef: MDBModalRef;

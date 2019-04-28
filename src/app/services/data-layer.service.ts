@@ -8,18 +8,20 @@ import { ConfigProvider } from '../providers/configProvider';
   providedIn: 'root'
 })
 export class DataLayerService {
-  doLog: boolean;
-
+  
+  doLog: boolean = true;
+ 
   constructor(private spRestService: SpRestService) {
-    this.doLog = ConfigProvider.settings.debugLog;
+    
+     this.doLog = ConfigProvider.settings.debugLog;
   }
 
   getItemsFromSource(source: DataSource, filterObj?, columns?: Array<Column>): Observable<Array<SourceResult>>  {
     let asyncRequest: Observable<Array<SourceResult>>;
 
-    this.doLog && console.log('--> source passed to  getItemsFromSource in data-layer,service is ', source);
-    this.doLog && console.log(' --> filterObj is ', filterObj);
-    this.doLog && console.log('--> columns are ', columns);
+    this.doLog && console.log('\n ----> source passed to  getItemsFromSource in data-layer,service is ', source);
+    this.doLog && console.log(' filterObj is ', filterObj);
+    this.doLog && console.log('columns are <----', columns,'\n');
 
     if (source.service === SourceServiceType.SHAREPOINT) {
       asyncRequest = this.spRestService.getListItems(source, filterObj, columns);
