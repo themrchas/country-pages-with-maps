@@ -4,16 +4,19 @@ import { ConfigProvider } from '../providers/configProvider';
 import { Country, createCountryArrayFromSharePointResponse } from '../model/country';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DataSource, replacePlaceholdersWithFieldValues } from '../model/dataSource';
+import { DataSource } from '../model/dataSource';
 import { DataLayerService } from './data-layer.service';
+import * as _ from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
+  
   countrySettings: any;
   countrySource: DataSource;
-  selectedCountry = new BehaviorSubject<Country>(null);
+  private countrySubject = new BehaviorSubject<Country>(null);
+  selectedCountry = this.countrySubject.asObservable();
 
   constructor(private dataLayerService: DataLayerService) {
     this.countrySettings = ConfigProvider.settings.country;
@@ -41,7 +44,17 @@ export class CountryService {
     }));
   }
 
+  getRegions(): Observable<Array<Array<Country>>> {
+    return this.getCountries().pipe(map(countries => {
+      return _.groupBy(countries, 'region');
+    }));
+  }
+
   changeCountry(countryCode: string) {
-      this.getCountry(countryCode).subscribe(country => this.selectedCountry.next(country));
+      this.getCountry(countryCode).subscribe(country => this.countrySubject.next(country));
+  }
+
+  resetCountry() {
+    this.countrySubject.next(null);
   }
 }

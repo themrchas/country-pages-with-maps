@@ -9,7 +9,7 @@ export class Country {
         public countryCode3: string,
         public region: string,
         public population: number,
-        public flagUrl: string) {}
+        public campaigns: Array<string>) {}
 }
 
 export function createCountryFromSharePointResult(result: any) {
@@ -20,7 +20,7 @@ export function createCountryFromSharePointResult(result: any) {
         result.rawData.ISO_3_CountryCode,
         result.rawData.RegionMM.Label,
         result.rawData.Population,
-        result.rawData.FlagImage ? result.FlagImage.Url : null);
+        result.rawData.Campaign ? result.rawData.Campaign.results : null);
 }
 
 export function createCountryArrayFromSharePointResponse(resp) {

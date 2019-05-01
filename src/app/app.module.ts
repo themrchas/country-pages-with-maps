@@ -19,15 +19,18 @@ const appRoutes: Routes = [
   imports: [
     MainLayoutModule,
     RouterModule.forRoot(
-      appRoutes
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+     
     ),
     BrowserModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
     PageNotFoundComponent
+    
   ],
   providers: [
     ConfigProvider,

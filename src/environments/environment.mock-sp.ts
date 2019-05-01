@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
     mockSp: true,
-    configPath: 'assets/config.mocksp.txt'
+    configPath: 'assets/config/config.mocksp.txt'
 };

@@ -4,13 +4,13 @@ import { TileComponent } from './tile.component';
 
 import { Country } from '../../model/country';
 import { BehaviorSubject } from 'rxjs';
-import { TableComponent } from '../table/table.component';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
-import { GenericTableComponent } from '../generic-table/generic-table.component';
+import { TableComponent } from '../table/table.component';
 import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.component';
 import { SingleItemComponent } from '../single-item/single-item.component';
 import { LinksComponent } from '../links/links.component';
+import { ChartComponent } from '../chart/chart.component';
 
 @Component({
   selector: 'app-tile',
@@ -19,7 +19,7 @@ import { LinksComponent } from '../links/links.component';
 })
 export class TileContainerComponent implements OnInit, AfterViewInit {
   @Input() tile: any;
-  @Input() country: BehaviorSubject<Country>;
+  @Input() country: Country;
   @ViewChildren(TileDirective) tileDirectives: QueryList<TileDirective>;
   sources: Array<any>;
   showTabs: boolean;
@@ -27,11 +27,11 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
     TABLE: 'table',
     NEWS: 'news',
     MAP: 'map',
-    GENTABLE: 'gen-table', // Chas
     TABS: 'tabs',
     UPCOMING_EVENTS: 'upcoming-events',
     SINGLE_ITEM: 'single-item',
-    LINKS: 'links'
+    LINKS: 'links',
+    CHART: 'chart'
   };
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
@@ -53,25 +53,29 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    const tileSources = Array<any>();
-    this.tileDirectives.forEach((currentDirective, index) => {
-      const currentTile = !this.showTabs ? this.tile : this.tile.settings.tabs[index];
+    // This is to prevent the 'expression has changed after it was checked' error message
+    // Defer the code inside ngAfterViewInit to another Javascript turn
+    setTimeout(() => {
+      const tileSources = Array<any>();
+      this.tileDirectives.forEach((currentDirective, index) => {
+        const currentTile = !this.showTabs ? this.tile : this.tile.settings.tabs[index];
 
-      const tileComponent = this.getTileComponent(currentTile.type);
-      const tileSettings = currentTile.settings;
-      tileSources.push(...this.getSourcesForTile(currentTile));
+        const tileComponent = this.getTileComponent(currentTile.type);
+        const tileSettings = currentTile.settings;
+        tileSources.push(...this.getSourcesForTile(currentTile));
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
-        tileComponent);
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+          tileComponent);
 
-      const viewContainerRef = currentDirective.viewContainerRef;
-      viewContainerRef.clear();
+        const viewContainerRef = currentDirective.viewContainerRef;
+        viewContainerRef.clear();
 
-      const componentRef = viewContainerRef.createComponent(componentFactory);
-      (componentRef.instance as TileComponent).settings = tileSettings;
-      (componentRef.instance as TileComponent).country = this.country;
+        const componentRef = viewContainerRef.createComponent(componentFactory);
+        (componentRef.instance as TileComponent).settings = tileSettings;
+        (componentRef.instance as TileComponent).country = this.country;
+      });
+      this.sources = tileSources;
     });
-    this.sources = tileSources;
   }
 
   getTileComponent(tileType) {
@@ -89,10 +93,6 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
         tileComponent = MapComponent;
         break;
       }
-      case this.tileTypes.GENTABLE: {
-        tileComponent = GenericTableComponent;
-        break;
-      }
       case this.tileTypes.UPCOMING_EVENTS: {
         tileComponent = UpcomingEventsComponent;
         break;
@@ -103,6 +103,10 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
       }
       case this.tileTypes.LINKS: {
         tileComponent = LinksComponent;
+        break;
+      }
+      case this.tileTypes.CHART: {
+        tileComponent = ChartComponent;
         break;
       }
       default: {

@@ -2,7 +2,25 @@
         "env": "low",
         "country": {
             "listWeb": "http://localhost:3000",
-            "listName": "CountryData"
+            "listName": "CountryData",
+            "regionColorMapping": {
+                "Central Africa (CA)": "#94802c",
+                "East Africa (EA)": "#D2691E",
+                "North West Africa (NWA)": "#006400",
+                "Southern Africa": "#94802c"
+            },
+            "subregionMapping": {
+                "Northern Africa": "North West Africa (NWA)",
+                "Western Africa": "North West Africa (NWA)",
+                "Eastern Africa": "East Africa (EA)",
+                "Middle Africa": "Central Africa (CA)",
+                "Southern Africa": "Southern Africa"
+            },
+            "campaignColorMapping": {
+                "Campaign1": "#A20000",
+                "Campaign2": "#52B3D9",
+                "Campaign1,Campaign2": "purple"
+            }
         },
         "topics": [
             {
@@ -29,37 +47,6 @@
                     },
                     { 
                         "type": "table",
-                        "colspan": 1,
-                        "heading": "Sample List",
-                        "customSettings": {
-                            "DEU": {
-                                "source": {
-                                    "listWeb": "http://localhost:8080/sites/socafdev",
-                                    "listName": "CountryData",
-                                    "url":  "http://localhost:8080/sites/socafdev/Lists/CountryData"
-                                },
-                                "columns": [
-                                    { "columnName": "Title", "displayName": "Title" },
-                                    { "columnName": "Modified", "displayName": "Modified Date", "type": "date"}
-                                ]
-                            }
-                        },
-                        "settings": {
-                            "source": {
-                                "listWeb": "http://localhost:8080/sites/socafdev",
-                                "listName": "SampleList",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                                "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
-                            },
-                            "columns": [
-                                { "columnName": "Title", "displayName": "Title" },
-                                { "columnName": "Created", "displayName": "Created Date", "type": "date"},
-                                { "columnName": "Country", "displayName": "Country", "type": "mm"}
-                            ]
-                        }
-                    },
-                    { 
-                        "type": "gen-table",
                         "colspan": 2,
                         "heading": "Sample Gen List",
                         "settings": {
@@ -144,7 +131,7 @@
                         }
                     },
                     { 
-                        "type": "gen-table",
+                        "type": "table",
                         "colspan": 2,
                         "heading": "Sample Document Library",
                         "settings": {
