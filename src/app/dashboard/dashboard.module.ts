@@ -24,7 +24,6 @@ import { TileContainerComponent } from '../tiles/tile/tile-container.component';
 import { UpcomingEventsComponent } from '../tiles/upcoming-events/upcoming-events.component';
 import { TodayEventsComponent } from '../tiles/today-events/today-events.component';
 import { NewsComponent } from '../tiles/news/news.component';
-import { TableComponent } from '../tiles/table/table.component';
 import { MapComponent } from '../tiles/map/map.component';
 import { ChartComponent } from '../tiles/chart/chart.component';
 
@@ -33,7 +32,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 import { TileDirective } from '../tiles/tile/tile.directive';
-import { GenericTableComponent } from '../tiles/generic-table/generic-table.component';
+import { TableComponent } from '../tiles/table/table.component';
 import { SingleItemComponent } from '../tiles/single-item/single-item.component';
 import { LinksComponent } from '../tiles/links/links.component';
 import { IframeModalComponent } from '../modals/iframe-modal/iframe-modal.component';
@@ -53,7 +52,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NewsComponent,
     TableComponent,
     MapComponent,
-    GenericTableComponent,
+    TableComponent,
     SingleItemComponent,
     LinksComponent,
     IframeModalComponent,
@@ -85,7 +84,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TableComponent,
     MapComponent,
     NewsComponent,
-    GenericTableComponent,
+    TableComponent,
     UpcomingEventsComponent,
     SingleItemComponent,
     LinksComponent,

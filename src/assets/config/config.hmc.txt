@@ -49,37 +49,6 @@
                     },
                     { 
                         "type": "table",
-                        "colspan": 1,
-                        "heading": "Sample List",
-                        "customSettings": {
-                            "DEU": {
-                                "source": {
-                                    "listWeb": "http://localhost:8080/sites/socafdev",
-                                    "listName": "CountryData",
-                                    "url":  "http://localhost:8080/sites/socafdev/Lists/CountryData"
-                                },
-                                "columns": [
-                                    { "columnName": "Title", "displayName": "Title" },
-                                    { "columnName": "Modified", "displayName": "Modified Date", "type": "date"}
-                                ]
-                            }
-                        },
-                        "settings": {
-                            "source": {
-                                "listWeb": "http://localhost:8080/sites/socafdev",
-                                "listName": "SampleList",
-                                "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                                "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
-                            },
-                            "columns": [
-                                { "columnName": "Title", "displayName": "Title" },
-                                { "columnName": "Created", "displayName": "Created Date", "type": "date"},
-                                { "columnName": "Country", "displayName": "Country", "type": "mm"}
-                            ]
-                        }
-                    },
-                    { 
-                        "type": "gen-table",
                         "colspan": 2,
                         "heading": "Sample Gen List",
                         "settings": {
@@ -164,7 +133,7 @@
                         }
                     },
                     { 
-                        "type": "gen-table",
+                        "type": "table",
                         "colspan": 2,
                         "heading": "Sample Document Library",
                         "settings": {
@@ -199,45 +168,6 @@
                                     "url": "http://localhost:8080/sites/socafdev/DevCalendar",
                                     "listName": "DevCalendar",
                                     "defaultView": ""
-                                }
-                            ]
-                        }
-                    },
-                    {
-                        "type": "tabs",
-                        "colspan": 2,
-                        "heading": "US Contacts",
-                        "settings": {
-                            "tabs": [
-                                {
-                                    "heading": "SOCAFRICA",
-                                    "type": "table",
-                                    "settings": {
-                                        "source": {
-                                            "listWeb": "http://localhost:8080/sites/socafdev",
-                                            "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
-                                        },
-                                        "columns": [
-                                            { "columnName": "Title", "displayName": "Title" },
-                                            { "columnName": "Created", "displayName": "Created Date"}
-                                        ]
-                                    }
-                                },
-                                {
-                                    "heading": "AFRICOM",
-                                    "type": "table",
-                                    "settings": {
-                                        "source": {
-                                            "listWeb": "http://localhost:8080/sites/socafdev",
-                                            "listName": "SampleList",
-                                            "url":  "http://localhost:8080/sites/socafdev/Lists/SampleList"
-                                        },
-                                        "columns": [
-                                            { "columnName": "Title", "displayName": "Title" },
-                                            { "columnName": "Created", "displayName": "Created Date"}
-                                        ]
-                                    }
                                 }
                             ]
                         }
