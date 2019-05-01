@@ -73,7 +73,7 @@
                     }
                 },
                 { 
-                    "type": "gen-table",
+                    "type": "table",
                     "colspan": 3,
                     "heading": "Sample Gen List",
                     "settings": {
@@ -181,7 +181,7 @@
                     }
                 },
                 { 
-                    "type": "gen-table",
+                    "type": "table",
                     "colspan": 2,
                     "heading": "Sample Document Library",
                     "settings": {
@@ -294,7 +294,7 @@
                                 }
                             },
                             {
-                                "type": "gen-table",
+                                "type": "table",
                                 "heading": "Another Site Collection Doc Library",
                                 "settings": {
                                     "hideFilter": false,
@@ -331,7 +331,7 @@
                                 }
                             },
                             {
-                                "type": "gen-table",
+                                "type": "table",
                                 "heading": "Sample Gen List",
                                 "settings": {
                                     "hideFilter": false,

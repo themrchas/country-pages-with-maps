@@ -10,6 +10,17 @@
     padding: 0;
 }
 
+.navbar-toggler-icon {
+    opacity: 0.6;
+    height: 20px;
+}
+
+.tile-heading {
+    color: #404145;
+    font-size: 17.5px;
+    opacity: 0.7;
+    font-weight: 400;
+}
 
 .dropdown .dropdown-menu {
     -webkit-transform: translate3d(-175px, 25px, 0px);
