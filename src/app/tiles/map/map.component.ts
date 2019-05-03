@@ -1,7 +1,6 @@
 import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
 import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
-import { HttpClient } from '@angular/common/http';
 import { GeospatialService } from 'src/app/services/geospatial.service';
 declare let L;
 
@@ -15,9 +14,8 @@ export class MapComponent implements OnInit, TileComponent {
   @Input() country: Country;
   @Input() settings: any;
   map: any;
-  geoJsonPath = './assets/geo/africa.txt';
 
-  constructor(private httpClient: HttpClient, private geospatialService: GeospatialService) { }
+  constructor(private geospatialService: GeospatialService) { }
 
   ngOnInit() {
 
