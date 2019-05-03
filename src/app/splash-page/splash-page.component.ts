@@ -7,6 +7,7 @@ import union from '@turf/union';
 import * as _ from 'lodash';
 import { MatTabChangeEvent } from '@angular/material';
 import { ConfigProvider } from '../providers/configProvider';
+import { GeospatialService } from '../services/geospatial.service';
 declare let L;
 
 @Component({
@@ -38,11 +39,13 @@ export class SplashPageComponent implements OnInit {
   info: any;
   map: any;
 
-  constructor(private router: Router, private httpClient: HttpClient, private countryService: CountryService) { }
+  constructor(private router: Router,
+    private httpClient: HttpClient,
+    private countryService: CountryService,
+    private geospatialService: GeospatialService) { }
 
   ngOnInit() {
     this.countryLayersDict = {};
-    const geoJsonPath = './assets/geo/africa.txt';
 
     this.regionColorMapping = ConfigProvider.settings.country.regionColorMapping;
     this.campaignColorMapping = ConfigProvider.settings.country.campaignColorMapping;
@@ -70,7 +73,7 @@ export class SplashPageComponent implements OnInit {
       this.countriesByCode = new Map(countries.map(country => [country.countryCode3, country] as [string, Country]));
 
       // Get the Africa GeoJSON
-      this.httpClient.get(geoJsonPath).subscribe(data => {
+      this.geospatialService.getAfricaGeoJson().subscribe(data => {
         const self = this;
 
         this.map = L.map('map', {

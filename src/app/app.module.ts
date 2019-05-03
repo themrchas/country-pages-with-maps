@@ -21,7 +21,6 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: false } // <-- debugging purposes only
-     
     ),
     BrowserModule,
     HttpClientModule,
@@ -30,7 +29,6 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PageNotFoundComponent
-    
   ],
   providers: [
     ConfigProvider,

@@ -4,10 +4,9 @@ import { TileComponent } from './tile.component';
 
 import { Country } from '../../model/country';
 import { BehaviorSubject } from 'rxjs';
-import { TableComponent } from '../table/table.component';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
-import { GenericTableComponent } from '../generic-table/generic-table.component';
+import { TableComponent } from '../table/table.component';
 import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.component';
 import { SingleItemComponent } from '../single-item/single-item.component';
 import { LinksComponent } from '../links/links.component';
@@ -28,7 +27,6 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
     TABLE: 'table',
     NEWS: 'news',
     MAP: 'map',
-    GENTABLE: 'gen-table', 
     TABS: 'tabs',
     UPCOMING_EVENTS: 'upcoming-events',
     SINGLE_ITEM: 'single-item',
@@ -93,10 +91,6 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
       }
       case this.tileTypes.MAP: {
         tileComponent = MapComponent;
-        break;
-      }
-      case this.tileTypes.GENTABLE: {
-        tileComponent = GenericTableComponent;
         break;
       }
       case this.tileTypes.UPCOMING_EVENTS: {

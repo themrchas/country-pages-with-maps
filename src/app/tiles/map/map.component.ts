@@ -1,71 +1,45 @@
 import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4maps from '@amcharts/amcharts4/maps';
-import am4geodata_worldHigh from '@amcharts/amcharts4-geodata/worldHigh';
 import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-
-am4core.useTheme(am4themes_animated);
+import { GeospatialService } from 'src/app/services/geospatial.service';
+declare let L;
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit, OnDestroy, TileComponent {
-  private map: am4maps.MapChart;
+export class MapComponent implements OnInit, TileComponent {
+
   @Input() country: Country;
   @Input() settings: any;
-  constructor(private zone: NgZone) { }
+  map: any;
+
+  constructor(private geospatialService: GeospatialService) { }
 
   ngOnInit() {
 
-        const self = this;
-        this.zone.runOutsideAngular(() => {
-          const map = am4core.create('mapdiv', am4maps.MapChart);
-          const polygonSeries = new am4maps.MapPolygonSeries();
-          polygonSeries.useGeodata = true;
-          polygonSeries.exclude = ['AQ'];
-          map.series.push(polygonSeries);
-          map.geodata = am4geodata_worldHigh;
+    this.geospatialService.getAfricaGeoJson().subscribe(data => {
+      this.map = L.map('map', {
+        zoomSnap: 0.05
+      }).setView([6.4096, 16.7600], 3.6);
 
-          const polygonTemplate = polygonSeries.mapPolygons.template;
-          polygonTemplate.tooltipText = '{name}';
-          polygonTemplate.fill = am4core.color('#74B266');
+      // Add tile layers
+      L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
+          subdomains: '1234'
+      }).addTo(this.map);
 
-          // Create active state
-          const as = polygonTemplate.states.create('active');
-          as.properties.fill = am4core.color('#7B3625');
+      L.geoJson(data, {
+        filter: countryFilter.bind(this),
+        onEachFeature: onEachFeature.bind(this)  // should just be one feature
+      }).addTo(this.map);
 
-          // Setting map's initial zoom
-          map.homeZoomLevel = 5;
-          map.homeGeoPoint = {
-            latitude: 7,
-            longitude: 20
-          };
+      function countryFilter(feature) {
+        return feature.properties.iso_a3 === this.country.countryCode3;
+      }
 
-          map.events.on('ready', function(ev) {
-            const zoomCountry = polygonSeries.getPolygonById(self.country.countryCode2);
-
-            // Pre-zoom
-            map.zoomToMapObject(zoomCountry);
-
-            // Set active state
-            setTimeout(function() {
-              zoomCountry.isActive = true;
-            }, 1000);
-          });
-          this.map = map;
-        });
-  }
-
-
-  ngOnDestroy() {
-    this.zone.runOutsideAngular(() => {
-      if (this.map) {
-        this.map.dispose();
+      function onEachFeature(feature, layer) {
+        this.map.fitBounds(layer.getBounds());
       }
     });
   }

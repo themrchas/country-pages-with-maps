@@ -22,7 +22,8 @@
             
             </mat-nav-list>
         </ng-container>
-        <div class="feedback"><a [href]="feedbackUrl" target="_blank"><img src="./assets/images/message-text-outline.png"><span class="show-expanded"> Submit Feedback</span></a></div>
+        <div class="feedback mat-list-item"><a [href]="feedbackUrl" mdbPopover="Submit Feedback"
+            placement="right" triggers="hover" target="_blank"><img src="./assets/images/message-text-outline.png"><span class="show-expanded"> Submit Feedback</span></a></div>
     </mat-sidenav>
     <mat-sidenav-content>
         <mat-toolbar class="country-toolbar" *ngIf="selectedCountry | async as selectedCountry">
