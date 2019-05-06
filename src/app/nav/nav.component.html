@@ -32,15 +32,18 @@
             </ng-container>
             <span class="fill-space"></span>
             <div class="btn-group" mdbDropdown>
-                    <button mdbDropdownToggle type="button" mdbBtn color="info" class="dropdown-toggle waves-light"
-                      mdbWavesEffect>
-                      Change Country
-                    </button>
-                  
-                    <div class="dropdown-menu dropdown-primary">
-                        <app-select-country></app-select-country>
-                    </div>
-                  </div>
+                <button mdbDropdownToggle type="button" mdbBtn outline="true" class="dropdown-toggle waves-light"
+                    mdbWavesEffect>
+                    <img src="./assets/images/countryArrow.png"/> Change Country
+                </button>
+                
+                <div class="dropdown-menu dropdown-primary">
+                    <app-select-country></app-select-country>
+                </div>
+            </div>
+            <button routerLink="/" type="button" mdbBtn outline="true" class="waves-light mr-0" mdbWavesEffect>
+                  <img src="./assets/images/home.png"/>
+            </button>
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>
