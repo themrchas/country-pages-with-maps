@@ -24,7 +24,6 @@
 
 .mat-toolbar img {
     height: 40px;
-    margin-right: 5px;
 }
 
 .toolbar-title {
@@ -54,9 +53,19 @@
 }
 
 button {
-    color: #fff;
-    background-color: #16b6c6;
     font-weight: bold;
+    box-shadow: none;
+    color: rgba(0,0,0,0.7);
+}
+
+.country-toolbar button img {
+    height: auto !important;
+}
+
+:host ::ng-deep .country-toolbar .btn {
+    padding: 0.7rem 0.75rem;
+    text-transform: none;
+    font-size: .9rem;
 }
 
 .dropdown-menu {
@@ -121,6 +130,7 @@ h6.sub-title {
 .flag-icon {
     /* box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16), 0px 2px 10px 0px rgba(0,0,0,0.12); */
     box-shadow: 2px 3px 3px 0 rgba(0, 0, 0, 0.2);
+    margin-right: 5px;
 }
 
 :host ::ng-deep .country-toolbar.mat-toolbar-single-row {
