@@ -23,7 +23,6 @@ export class SourceResult {
         public source: DataSource,
         public processedColumns: Array<Column>,
         public rawData: any,
-        public isNew: boolean,
         public title: string,
         public id: string,
         public itemUrl$?: Observable<any>,
@@ -36,7 +35,7 @@ export class SourceResult {
 
 export const enum SourceServiceType {
     SHAREPOINT = 'SharePoint',
-    CIDNE = 'CIDNE'
+    WEBTAS = 'WebTAS'
 }
 
 export const enum SourceDataType {

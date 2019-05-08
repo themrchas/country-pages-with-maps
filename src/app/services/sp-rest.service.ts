@@ -190,14 +190,8 @@ export class SpRestService extends BaseDataService {
               source,
               processedColumns,
               result,
-              moment().diff(moment(result.Created), 'days') < 1, // True if item was created less than 1 day ago
               (source.type === SourceDataType.DOC_LIBRARY ? result.File.Name : result.Title),
-              result.Id,
-              itemUrl$,
-              result.File_x0020_Type,
-              downloadUrl$,
-              previewUrl$,
-              fullScreenUrl$
+              result.Id
             );
           });
       }

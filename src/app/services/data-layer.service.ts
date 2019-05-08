@@ -3,16 +3,16 @@ import { SpRestService } from './sp-rest.service';
 import { DataSource, Column, SourceResult, SourceServiceType } from '../model/dataSource';
 import { Observable, of } from 'rxjs';
 import { ConfigProvider } from '../providers/configProvider';
+import { WebtasService } from './webtas.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataLayerService {
-  
-  doLog: boolean = true;
- 
-  constructor(private spRestService: SpRestService) {
-    
+
+  doLog = true;
+
+  constructor(private spRestService: SpRestService, private webTasService: WebtasService) {
      this.doLog = ConfigProvider.settings.debugLog;
   }
 
@@ -25,8 +25,8 @@ export class DataLayerService {
 
     if (source.service === SourceServiceType.SHAREPOINT) {
       asyncRequest = this.spRestService.getListItems(source, filterObj, columns);
-    } else if (source.service === SourceServiceType.CIDNE) {
-      // TO DO
+    } else if (source.service === SourceServiceType.WEBTAS) {
+      asyncRequest = this.webTasService.getListItems(source, filterObj, columns);
     }
     return asyncRequest;
   }

@@ -30,11 +30,11 @@
          <ng-container *ngIf="tblCol.type =='newBadge' else notFirstCol">
             <td mat-cell *matCellDef="let tableItem;">
             
-              <ng-container *ngIf="tableItem.isNew === 'New'">
+              <ng-container *ngIf="tableItem[tblCol.columnName] === 'New'">
                 <mdb-badge default='true'>{{tableItem[tblCol.columnName]}}</mdb-badge>
               </ng-container>
             
-              <ng-container *ngIf="tableItem.isNew === 'Updated'">
+              <ng-container *ngIf="tableItem[tblCol.columnName] === 'Updated'">
                 <mdb-badge primary='true'>{{tableItem[tblCol.columnName]}}</mdb-badge>
               </ng-container>
             
