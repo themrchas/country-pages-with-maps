@@ -38,11 +38,6 @@
     flex: 1 1 auto;
 }
 
-.active-route {
-    background-color: #3a3a3e;
-    border-left: 5px solid #81c9ff;
-}
-
 
 .region-text {
     font-size: 12px;
@@ -66,6 +61,11 @@ button {
     padding: 0.7rem 0.75rem;
     text-transform: none;
     font-size: .9rem;
+}
+
+:host ::ng-deep .mat-list-icon {
+    font-size: 14px !important;
+    padding: 4px 0 4px 4px !important;
 }
 
 .dropdown-menu {
@@ -143,6 +143,12 @@ h6.sub-title {
 
 :host ::ng-deep .mat-list-base .mat-list-item {
     font-size: 14px;
+    border-left: 5px solid transparent;
+}
+
+.active-route {
+    background-color: #3a3a3e;
+    border-left: 5px solid #81c9ff !important;
 }
 
 :host ::ng-deep .mat-list-base .mat-list-item.mat-list-item-with-avatar,
@@ -187,4 +193,8 @@ h6.sub-title {
 
 mat-sidenav .mat-toolbar-row {
     background-color: rgba(0,0,0,0.1);
+}
+
+mat-sidenav mat-toolbar-row img {
+    padding-right: 2px;
 }
