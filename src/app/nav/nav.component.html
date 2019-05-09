@@ -13,7 +13,7 @@
             <mat-nav-list>
                 <ng-container *ngFor="let topic of topics" >
                 <a mat-list-item [routerLink]="[]" [queryParams]="{ topic: topic.topicId }" routerLinkActive="active-route">
-                    <mat-icon matListIcon class="app-nav-list-icon"></mat-icon>
+                    <mat-icon matListIcon class="app-nav-list-icon"><img *ngIf="topic.iconPath" [src]="topic.iconPath"/></mat-icon>
                     {{topic.name}}
                 </a>
             </ng-container>

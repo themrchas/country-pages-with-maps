@@ -29,6 +29,7 @@
         {
             "name": "Overview",
             "topicId": "overview",
+            "iconPath": "./assets/images/topic-icons/flag.png",
             "tiles": [
                 {
                     "type": "single-item",
@@ -154,6 +155,7 @@
         {
             "name": "Facts & Contacts",
             "topicId": "facts",
+            "iconPath": "./assets/images/topic-icons/account-card-details-outline.png",
             "tiles": [
                 {
                     "type": "news",
@@ -261,8 +263,9 @@
             ]
         },
         {
-            "name": "Testing",
-            "topicId": "testing",
+            "name": "Intel",
+            "topicId": "intel",
+            "iconPath": "./assets/images/topic-icons/brain.png",
             "tiles": [
                 {
                     "type": "tabs",
@@ -420,24 +423,18 @@
                 }
             ]
         },
-	{
-		"name": "Test Events",
-		"topicId":  "events",
-		"tiles": [
-		{
-		    "type": "tabs",
-		    "heading": "Test tabs",
-		     "colspan": 1,
-		    "tabs": [
-                    
-
-
-
-		    ]
-
-                }
-		]
-	}
+        {
+            "name": "Strategy & Plans",
+            "topicId":  "strategy",
+            "iconPath": "./assets/images/topic-icons/Maps%20-02.png",
+            "tiles": []
+        },
+        {
+            "name": "Assessments",
+            "topicId":  "assessments",
+            "iconPath": "./assets/images/topic-icons/clipboard-text.png",
+            "tiles": []
+        }
     ],
     "docPreviewSupportedTypes": [
         "AI","PDF","PSB","PSD","3G2","3GP","ASF","BMP","M2TS","M4V","MOV","MP3","MP4","MP4V",
