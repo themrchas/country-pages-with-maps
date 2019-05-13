@@ -38,9 +38,9 @@ export class SplashPageComponent implements OnInit {
 
   info: any;
   map: any;
+  geoData: any;
 
   constructor(private router: Router,
-    private httpClient: HttpClient,
     private countryService: CountryService,
     private geospatialService: GeospatialService) { }
 
@@ -75,10 +75,12 @@ export class SplashPageComponent implements OnInit {
       // Get the Africa GeoJSON
       this.geospatialService.getAfricaGeoJson().subscribe(data => {
         const self = this;
+        this.geoData = data;
 
         this.map = L.map('map', {
+          crs: L.CRS.EPSG4326,
           zoomSnap: 0.05
-        }).setView([6.4096, 16.7600], 3.6);
+        }).setView([4.9342, 18.5038], 2.6);
 
         // Create the hover info box
         this.info = L.control();
@@ -105,11 +107,8 @@ export class SplashPageComponent implements OnInit {
 
         this.info.addTo(this.map);
 
-        // Add tile layers
-        L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-            subdomains: '1234'
-        }).addTo(this.map);
+        // Add tile layer
+        this.geospatialService.getTileLayer(L).addTo(this.map);
 
         // Styling per country layer
         function style(feature) {
@@ -130,7 +129,7 @@ export class SplashPageComponent implements OnInit {
         });
 
         this.map.addLayer(this.countryLayerGroup);
-        this.addRegionsGeoJson();
+        this.addRegionsGeoJson(data);
       });
 
     });
@@ -152,7 +151,7 @@ export class SplashPageComponent implements OnInit {
     return unionTemp;
   }
 
-  addRegionsGeoJson() {
+  addRegionsGeoJson(geoJson) {
     const self = this;
 
     // Styling for region layer
@@ -171,9 +170,19 @@ export class SplashPageComponent implements OnInit {
       this.regionLayersDict = {};
       const regionLayers = [];
       Object.keys(this.regions).forEach(regionKey => {
-        const countryLayers = this.regions[regionKey].map(country => {
+        /*const countryLayers = this.regions[regionKey].map(country => {
           return this.countryLayersDict[country.countryCode3];
+        });*/
+        // Get all country layers in the region based on the subregion in the geoJson
+
+
+        // I want to get the subregion from the feature, determine if the subregion matches current region key
+        const countryLayers = geoJson.features.filter(feature => {
+          return this.subregionMapping[feature.properties.subregion] === regionKey;
+        }).map(countryFeature => {
+          return this.countryLayersDict[countryFeature.properties.iso_a3];
         });
+
         const layer = L.geoJson(this.getUnifiedGeoJson(countryLayers, {region: regionKey }), {
           style: regionStyle.bind(self)
         });
@@ -242,7 +251,7 @@ export class SplashPageComponent implements OnInit {
     this.selectedTab = event.tab.textLabel;
     if (event.tab.textLabel === 'Regions') {
       this.removeCampaignsGeoJson();
-      this.addRegionsGeoJson();
+      this.addRegionsGeoJson(this.geoData);
       this.countryLayerGroup.eachLayer(function (layer) {
         self.countryLayerGroup.resetStyle(layer);
       });
@@ -292,6 +301,7 @@ export class SplashPageComponent implements OnInit {
         this.resetHighlightCountry(e);
       }.bind(this),
       click: function(e) {
+        console.log(this.map.getCenter());
         this.goToCountryPage(e);
       }.bind(this)
     });

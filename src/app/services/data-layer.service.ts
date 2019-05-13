@@ -21,7 +21,7 @@ export class DataLayerService {
 
     this.doLog && console.log('\n ----> source passed to  getItemsFromSource in data-layer,service is ', source);
     this.doLog && console.log(' filterObj is ', filterObj);
-    this.doLog && console.log('columns are <----', columns,'\n');
+    this.doLog && console.log('columns are <----', columns, '\n');
 
     if (source.service === SourceServiceType.SHAREPOINT) {
       asyncRequest = this.spRestService.getListItems(source, filterObj, columns);

@@ -40,7 +40,8 @@ export class LinksComponent implements OnInit {
 
   loadLinks(country): void {
 
-    this.doLog && console.log('---->links.component.ts with country',country,'and settings.sources',this.settings.sources,'settings.columns',this.settings.columns);
+    this.doLog && console.log('---->links.component.ts with country', country, 'and settings.sources',
+      this.settings.sources, 'settings.columns', this.settings.columns);
 
     from(this.settings.sources).pipe(mergeMap(source => {
       return this.dataLayerService.getItemsFromSource(new DataSource(source), country, this.settings.columns);
@@ -57,7 +58,6 @@ export class LinksComponent implements OnInit {
 
             this.doLog && console.log('result processedColumns for item:', result, 'and current column name', column.columnName);
             columns[column.columnName] = result.processedColumns[column.columnName];
-    
           } // for
 
           // Set default values as required

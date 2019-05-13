@@ -36,6 +36,7 @@ import { TableComponent } from '../tiles/table/table.component';
 import { SingleItemComponent } from '../tiles/single-item/single-item.component';
 import { LinksComponent } from '../tiles/links/links.component';
 import { IframeModalComponent } from '../modals/iframe-modal/iframe-modal.component';
+import { DetailsModalComponent } from '../modals/details-modal/details-modal.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -56,6 +57,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SingleItemComponent,
     LinksComponent,
     IframeModalComponent,
+    DetailsModalComponent,
     ChartComponent
   ],
   imports: [
@@ -89,6 +91,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SingleItemComponent,
     LinksComponent,
     IframeModalComponent,
+    DetailsModalComponent,
     ChartComponent
   ],
 })

@@ -29,6 +29,6 @@ export function createNewsItemFromSharePointResult(result: any, source: DataSour
         resultText = $(result.rawData.Body, ownerDocument).text();
         resultTitle = result.rawData.Title;
     }
-    newsItem = new NewsItem(resultTitle, resultText, source, result.Id, moment(result[source.dateField]));
+    newsItem = new NewsItem(resultTitle, resultText, source, result.id, moment(result[source.dateField]));
     return newsItem;
 }

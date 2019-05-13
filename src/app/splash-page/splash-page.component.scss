@@ -9,7 +9,7 @@
 
 .splash-container .info-area {
     height: 100%;
-    padding: 20px 0;
+    padding: 15px 0;
 }
 
 .card {
@@ -29,6 +29,11 @@
 
 :host ::ng-deep .mat-tab-label {
     min-width: 0;
+}
+
+:host ::ng-deep .leaflet-control {
+    margin-top: 15px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important;
 }
 
 mat-toolbar {
@@ -72,6 +77,10 @@ h6.sub-title {
 
 mat-tab-group {
     height: 100%;
+}
+
+.splash-container .col-md-8, .splash-container .col-md-4 {
+    min-height: 400px;
 }
 
 :host ::ng-deep .mat-tab-body-wrapper {

@@ -104,62 +104,70 @@ export class SpRestService extends BaseDataService {
 
           // iterate over list items returned
           retResults = spResults.map(result => {
-            console.log('Processing columns in sp-rest.service.ts using result', result);
 
             // process columns
             const processedColumns = [];
+            const modalColumns = [];
             if (columns) {
               for (const column of columns) {
                 const colName = column.columnName;
+                let colValue;
 
                 // Process a multi-valued managed metada column
-               if (column.type === 'mmm') {
-                  processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMMM, null);
+                if (column.type === 'mmm') {
+                  colValue = result[colName]['results'].reduce(this.labelMakerMMM, null);
                 } else if (column.type === 'mm') {
-                  processedColumns[colName] = result[colName] ? result[colName].Label : '';
+                  colValue = result[colName] ? result[colName].Label : '';
                 } else if (column.type === 'date') {
-                  processedColumns[colName] = moment(result[colName]).format('MM/DD/YYYY');
+                  colValue = moment(result[colName]).format('MM/DD/YYYY');
                 } else if (column.type === 'expanded') {
                   const splitName = column.columnName.split('/');
-                  processedColumns[colName] = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
+                  colValue = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
                 } else if (column.type === 'multi-choice') {
-                  processedColumns[colName] = result[colName]['results'].reduce(this.labelMakerMultiChoice, null);
+                  colValue = result[colName]['results'].reduce(this.labelMakerMultiChoice, null);
                 } else if (column.type === 'linksUrl') {
                   // Links list packages Url and Desription as URL: {Url:'', Description:''}
-                  processedColumns[colName] = result['URL'][colName];
+                  colValue = result['URL'][colName];
                 } else if (column.type === 'boolean') {
-                  processedColumns[colName] = result[colName] ? 'Yes' : 'No';
+                  colValue = result[colName] ? 'Yes' : 'No';
                 } else if (column.type === 'rich-text') {
-                  processedColumns[colName] = result[colName] ? this.getHtmlTextContent(result[colName]) : '';
+                  colValue = result[colName] ? this.getHtmlTextContent(result[colName]) : '';
                 } else if (column.type === 'newBadge') {
                   const itemCreated = moment(result['Created'], 'YYYY-MM-DDTHH:mm:SS');
                   const itemModified = moment(result['Modified'], 'YYYY-MM-DDTHH:mm:SS');
                     if (moment.duration(moment().diff(itemCreated)).as('hours') <= 24) {
-                        processedColumns[colName] = 'New';
+                      colValue = 'New';
                     } else if (moment.duration(moment().diff(itemModified)).as('hours') <= 24) {
-                      processedColumns[colName] = 'Updated';
+                      colValue = 'Updated';
                     }
                 } else if (column.type === 'docTypeIcon') {
-                  const fileType = result[colName];
-                  if (this.docIconPaths.has(fileType)) {
-                    processedColumns[colName] = of(this.docIconPaths.get(fileType));
+                  const fileTypeStr = result[colName];
+                  if (this.docIconPaths.has(fileTypeStr)) {
+                    colValue = of(this.docIconPaths.get(fileTypeStr));
                   } else {
-                    processedColumns[colName] =
-                      this.getDocIcon(source.listWeb, 'filename.' + fileType, 0).pipe(map(icon => {
+                    colValue =
+                      this.getDocIcon(source.listWeb, 'filename.' + fileTypeStr, 0).pipe(map(icon => {
                         const iconPath = source.listWeb + '/_layouts/15/images/' + icon['d'].MapToIcon;
                         this.docIconPaths.set(fileType, iconPath);
                         return iconPath;
                       }));
                   }
-
                 } else {
-                  processedColumns[colName] = result[colName];
+                  colValue = result[colName];
+                }
+                processedColumns[colName] = colValue;
+
+                if (column.showInModal !== false) {
+                  modalColumns.push({
+                    'displayName': column.displayName,
+                    'value': colValue
+                  });
                 }
               }
             }
 
             // Format URLs for displayform, web preview, full screen, download
-            let itemUrl$, downloadUrl$, previewUrl$, fullScreenUrl$;
+            let itemUrl$, downloadUrl$, previewUrl$, fullScreenUrl$, fileType;
             if (source.type === SourceDataType.DOC_LIBRARY) {
               const fileRef = result['FileRef'];
               itemUrl$ = this.getDisplayForm(source.listWeb,
@@ -173,6 +181,7 @@ export class SpRestService extends BaseDataService {
               fullScreenUrl$ = previewUrl$.pipe(map(previewUrl => {
                 return (previewUrl as string).replace('action=interactivepreview', 'action=view');
               }));
+              fileType = result['File_x0020_Type'];
             } else {
               itemUrl$ = this.getDisplayForm(source.listWeb,
                 source.listName, result.Id);
@@ -184,14 +193,21 @@ export class SpRestService extends BaseDataService {
             // TODO:  Right now we rely on the source configuration being right.  We should make this smarter.
             // Created, Title, Id need to always be requested if there is a select
             // File needs to be always expanded if source is a docLibrary,
-            // with File Type and FileRef always being requested in the select
+            // with File_x0020_Type and FileRef always being requested in the select
 
             return new SourceResult(
               source,
               processedColumns,
+              modalColumns,
               result,
               (source.type === SourceDataType.DOC_LIBRARY ? result.File.Name : result.Title),
-              result.Id
+              result.Id,
+              result.Modified,
+              itemUrl$,
+              fileType,
+              downloadUrl$,
+              previewUrl$,
+              fullScreenUrl$
             );
           });
       }

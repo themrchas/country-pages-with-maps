@@ -15,16 +15,20 @@ export interface DateFilter {
 export interface Column {
     columnName: string;
     displayName: string;
+    value?: any;
     type?: string;
+    showInModal?: boolean;
 }
 
 export class SourceResult {
     constructor(
         public source: DataSource,
         public processedColumns: Array<Column>,
+        public modalColumns: Array<Column>,
         public rawData: any,
         public title: string,
         public id: string,
+        public modifiedDate: string,
         public itemUrl$?: Observable<any>,
         public fileType?: string,
         public downloadUrl$?: Observable<any>,

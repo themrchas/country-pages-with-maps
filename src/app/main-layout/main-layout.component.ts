@@ -23,7 +23,7 @@ export class MainLayoutComponent implements OnInit {
     this.route.queryParamMap.subscribe((queryParams: ParamMap) => {
       const topic = queryParams.get('topic');
       if (!topic) {
-        this.router.navigate([], { queryParams: { topic: ConfigProvider.settings.topics[0].topicId }});
+        this.router.navigate([], { queryParams: { topic: ConfigProvider.settings.topics[0].topicId }, replaceUrl: true});
       } else {
         this.topicService.changeTopic(topic);
       }

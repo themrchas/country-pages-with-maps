@@ -21,11 +21,9 @@ export class WebtasService extends BaseDataService {
     const url = `${source.listWeb}?ddclass=${source.listName}&isall=true${where}`;
 
     return this.httpClient.get(url).pipe(map(resp => {
-
       let retResults = null;
-      if (resp && resp['results']) {
-        retResults = resp['results'].map(result => {
-          result.json();
+      if (resp) {
+        retResults = (resp as Array<Object>).map(result => {
           const processedColumns = [];
           if (columns) {
             for (const column of columns) {
@@ -47,7 +45,10 @@ export class WebtasService extends BaseDataService {
           return new SourceResult(
             source,
             processedColumns,
+            null,
             result,
+            null,
+            null,
             null,
             null,
             null);

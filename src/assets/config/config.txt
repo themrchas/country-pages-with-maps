@@ -23,7 +23,19 @@
             "Campaign1": "#A20000",
             "Campaign2": "#52B3D9",
             "Campaign1,Campaign2": "purple"
+        },
+        "webTasCountryOverrides": {
+            "Ivory Coast": "Cote de Ivoir"
         }
+    },
+    "mapService": {
+        "url": "https://maps.gvs.nga.mil/arcgis/services/Basemap/World_StreetMap_2D/MapServer/WmsServer?",
+        "options":
+        {
+            "layers": "0",
+            "version": "1.3.0"
+        },
+        "type": "WMS"
     },
     "topics": [
         {
@@ -265,7 +277,7 @@
         {
             "name": "Intel",
             "topicId": "intel",
-            "iconPath": "./assets/images/topic-icons/brain.png",
+            "iconPath": "./assets/images/topic-icons/chart-bubble.png",
             "tiles": [
                 {
                     "type": "tabs",
@@ -369,52 +381,31 @@
                                     "columns": [
                                         {
                                             "columnName": "Title",
-                                            "displayName": "Title"
+                                            "displayName": "Title",
+                                            "showInModal": true
                                         },
                                         {
                                             "columnName": "MyUrl",
                                             "displayName": "Url",
-                                            "type": "url"
+                                            "type": "url",
+                                            "showInModal": true
                                         },
                                         {
                                             "columnName": "Created",
                                             "displayName": "Created Date",
-                                            "type": "date"
+                                            "type": "date",
+                                            "showInModal": true
                                         },
                                         {
                                             "columnName": "Country",
                                             "displayName": "Country",
-                                            "type": "mm"
+                                            "type": "mm",
+                                            "showInModal": true
                                         }
                                     ],
                                     "modal": {
                                         "titleColumn": "Title",
-                                        "columns": [
-                                            {
-                                                "columnName": "Title",
-                                                "displayName": "Title"
-                                            },
-                                            {
-                                                "columnName": "MyUrl",
-                                                "displayName": "Url",
-                                                "type": "url"
-                                            },
-                                            {
-                                                "columnName": "Created",
-                                                "displayName": "Created Date",
-                                                "type": "date"
-                                            },
-                                            {
-                                                "columnName": "Country",
-                                                "displayName": "Country",
-                                                "type": "mm"
-                                            },
-                                            {
-                                                "columnName": "Modified",
-                                                "displayName": "Modified Date",
-                                                "type": "date"
-                                            }
-                                        ]
+                                        "type": "details"
                                     }
                                 }
                             }
@@ -427,7 +418,40 @@
             "name": "Strategy & Plans",
             "topicId":  "strategy",
             "iconPath": "./assets/images/topic-icons/Maps%20-02.png",
-            "tiles": []
+            "tiles": [
+                {  
+                    "type": "table",
+                    "colspan": 1,
+                    "heading": "WebTAS Example",
+                    "settings": {
+                        "disableModal": true,
+                        "source": 
+                            {
+                                "listWeb": "/hq/j6/j6sandbox/CountryPages/dist/assets/mockWebTas.txt",
+                                "listName": "ACLED_Africa",
+                                "displayName": "Mock WebTAS data",
+                                "url":  "/hq/j6/j6sandbox/CountryPages/dist/assets/mockWebTas.txt",
+                                "filter": "Country = {{countryWebTas}}",
+                                "service": "WebTAS"
+                            },
+                        "columns": [
+                            {
+                                "columnName": "EventTitle",
+                                "displayName": "Event Title"
+                            },
+                            {
+                                "columnName": "PalantirReportLink",
+                                "displayName": "Palantir Report Link",
+                                "type": "url"
+                            },
+                            {
+                                "columnName": "MilgridLatLon",
+                                "displayName": "MGRS"
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             "name": "Assessments",
