@@ -1,6 +1,7 @@
 
 import { Observable } from 'rxjs';
 import { DataSource, Column, SourceResult } from '../model/dataSource';
+import * as moment from 'moment';
 
 export abstract class BaseDataService {
     docIconPaths = new Map<string, string>();
@@ -13,6 +14,16 @@ export abstract class BaseDataService {
         const d = this.ownerDocument.createElement( 'div' );
         d.innerHTML = htmlContent;
         return d.textContent;
+    }
+
+    getIsNewOrModified(createdDate, modifiedDate) {
+        let retVal = null;
+        if (moment.duration(moment().diff(createdDate)).as('hours') <= 24) {
+            retVal = 'New';
+        } else if (moment.duration(moment().diff(modifiedDate)).as('hours') <= 24) {
+            retVal = 'Updated';
+        }
+        return retVal;
     }
 
     replacePlaceholdersWithFieldValues(str: string, item) {

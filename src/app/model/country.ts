@@ -1,10 +1,12 @@
 import * as moment from 'moment';
+import { ConfigProvider } from '../providers/configProvider';
 
 export class Country {
 
     constructor(
         public title: string,
         public countryMM: string,
+        public countryWebTas: string,
         public countryCode2: string,
         public countryCode3: string,
         public region: string,
@@ -13,14 +15,23 @@ export class Country {
 }
 
 export function createCountryFromSharePointResult(result: any) {
+    // WebTAS and SharePoint may have different namings for countries
+    const webTasOverrides = ConfigProvider.settings.country.webTasCountryOverrides;
+    const countrySpLabel = result.rawData.CountryMM.Label;
+    const countryWebTasLabel = webTasOverrides && webTasOverrides[countrySpLabel] ?
+        webTasOverrides[countrySpLabel] : countrySpLabel;
+    const campaigns = result.rawData.Campaign ? result.rawData.Campaign.results : null;
+
     return new Country(
         result.rawData.Title,
-        result.rawData.CountryMM.Label,
+        countrySpLabel,
+        countryWebTasLabel,
         result.rawData.ISO_2_CountryCode,
         result.rawData.ISO_3_CountryCode,
-        result.rawData.RegionMM.Label,
+        result.rawData.RegionMM ? result.rawData.RegionMM.Label : null,
         result.rawData.Population,
-        result.rawData.Campaign ? result.rawData.Campaign.results : null);
+        campaigns ? campaigns.map(campaign => campaign.Label) : null
+    );
 }
 
 export function createCountryArrayFromSharePointResponse(resp) {

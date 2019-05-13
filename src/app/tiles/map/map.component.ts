@@ -22,12 +22,9 @@ export class MapComponent implements OnInit, TileComponent {
     this.geospatialService.getAfricaGeoJson().subscribe(data => {
       this.map = L.map('map', {
         zoomSnap: 0.05
-      }).setView([6.4096, 16.7600], 3.6);
+      }).setView([6.4096, 16.7600], 5);
 
-      // Add tile layers
-      L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
-          subdomains: '1234'
-      }).addTo(this.map);
+      this.geospatialService.getTileLayer(L).addTo(this.map);
 
       L.geoJson(data, {
         filter: countryFilter.bind(this),

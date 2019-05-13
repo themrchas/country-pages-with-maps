@@ -1,0 +1,20 @@
+[
+    {
+        "EventTitle": "Event Title 1",
+        "Country": "Egypt",
+        "PalantirReportLink": "http://test.com",
+        "MilgridLatLon": "36RUU3128825616"
+    },
+    {
+        "EventTitle": "Event Title 2",
+        "Country": "Egypt",
+        "PalantirReportLink": "http://test.com",
+        "MilgridLatLon": "36RUU3128825616"
+    },
+    {
+        "EventTitle": "Event Title 3",
+        "Country": "Egypt",
+        "PalantirReportLink": "http://test.com",
+        "MilgridLatLon": "36RUU3128825616"
+    }
+]

@@ -31,19 +31,21 @@
                 <h3><img [hidden]="flagHidden" (error)="flagHidden = true" (load)="flagHidden = false" class="flag-icon" [src]="'./assets/flags/' + selectedCountry.countryCode3 + '-flag-icon-64.png'"/> {{selectedCountry.title}}</h3>
             </ng-container>
             <span class="fill-space"></span>
-            <div class="btn-group" mdbDropdown>
-                <button mdbDropdownToggle type="button" mdbBtn outline="true" class="dropdown-toggle waves-light"
-                    mdbWavesEffect>
-                    <img src="./assets/images/countryArrow.png"/> Change Country
-                </button>
-                
-                <div class="dropdown-menu dropdown-primary">
-                    <app-select-country></app-select-country>
+            <div class="right-nav">
+                <div class="btn-group" mdbDropdown>
+                    <button mdbDropdownToggle type="button" mdbBtn outline="true" class="dropdown-toggle waves-light"
+                        mdbWavesEffect>
+                        Change Country
+                    </button>
+                    
+                    <div class="dropdown-menu dropdown-primary">
+                        <app-select-country></app-select-country>
+                    </div>
                 </div>
+                <button routerLink="/" type="button" mdbBtn outline="true" class="waves-light mr-0" mdbWavesEffect>
+                      <img src="./assets/images/home.png"/>
+                </button>
             </div>
-            <button routerLink="/" type="button" mdbBtn outline="true" class="waves-light mr-0" mdbWavesEffect>
-                  <img src="./assets/images/home.png"/>
-            </button>
         </mat-toolbar>
         <router-outlet></router-outlet>
     </mat-sidenav-content>

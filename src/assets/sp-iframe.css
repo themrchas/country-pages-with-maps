@@ -4,6 +4,7 @@
 
 #s4-workspace {
     height: 450px;
+    padding: 10px;
 }
 
 input[value="Close"] {

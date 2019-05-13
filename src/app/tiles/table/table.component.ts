@@ -17,6 +17,7 @@ import { SpRestService } from 'src/app/services/sp-rest.service';
 import { ConfigProvider } from '../../providers/configProvider';
 import { SourceResult, DataSource } from '../../model/dataSource';
 import { CountryService } from 'src/app/services/country.service';
+import { DetailsModalComponent } from 'src/app/modals/details-modal/details-modal.component';
 
 @Component({
   selector: 'app-table',
@@ -58,9 +59,6 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   rawResults: Array<SourceResult>;
 
   constructor(private dataLayerService: DataLayerService,
-    private spRestService: SpRestService,
-    private countryService: CountryService,
-    private dialog: MatDialog,
     private modalService: MDBModalService) { }
 
   ngOnInit() {
@@ -100,21 +98,38 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
     index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
     const rawResult = this.rawResults[index];
 
-    this.modalRef = this.modalService.show(IframeModalComponent, {
-      class: 'modal-lg',
-      data: {
-        modalTitle: this.settings.modal && this.settings.modal.titleColumn ?
-          rawResult.processedColumns[this.settings.modal.titleColumn] :
-          rawResult.title,
-        settings: {
-          itemUrl$: rawResult.itemUrl$,
-          downloadUrl$: rawResult.downloadUrl$,
-          previewUrl$: rawResult.previewUrl$,
-          fullScreenUrl$: rawResult.fullScreenUrl$,
-          fileType: rawResult.fileType
-        }
+    // Determine if we want to show an iframe or details modal
+    if (this.settings.modal) {
+      const modalTitle = this.settings.modal.titleColumn ?
+        rawResult.processedColumns[this.settings.modal.titleColumn] :
+        rawResult.title;
+
+
+      if (this.settings.modal.type === 'details') {
+        this.modalRef = this.modalService.show(DetailsModalComponent, {
+          class: 'modal-lg',
+          data: {
+            modalTitle: modalTitle,
+            sourceResult: rawResult
+          }
+        });
+      } else {
+        // Iframe
+        this.modalRef = this.modalService.show(IframeModalComponent, {
+          class: 'modal-lg',
+          data: {
+            modalTitle: modalTitle,
+            settings: {
+              itemUrl$: rawResult.itemUrl$,
+              downloadUrl$: rawResult.downloadUrl$,
+              previewUrl$: rawResult.previewUrl$,
+              fullScreenUrl$: rawResult.fullScreenUrl$,
+              fileType: rawResult.fileType
+            }
+          }
+        });
       }
-    });
+    }
   }
 
   loadTable(country) {

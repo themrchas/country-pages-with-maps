@@ -29,3 +29,9 @@ mat-expansion-panel {
 :host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, :host ::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background: #4abde8;
 }
+
+:host ::ng-deep .initial-tabs .mat-ink-bar {
+    visibility: visible !important;
+    left: 320px !important;
+    width: 160px !important;
+}
