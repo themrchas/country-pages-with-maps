@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ConfigProvider } from '../../providers/configProvider';
 import { DataLayerService } from '../../services/data-layer.service';
 import { Country } from '../../model/country';
-import { mergeMap } from 'rxjs/operators';
 import { DataSource } from 'src/app/model/dataSource';
 
 
@@ -60,8 +59,8 @@ export class ChartComponent implements OnInit {
     } ];
 
     public lineChartOptions: any = {
-      responsive: true
-
+      responsive: true,
+      maintainAspectRatio: false
     };
 
 
