@@ -23,8 +23,6 @@ export class GeospatialService {
     let mapLayer;
     const mapServiceSettings = ConfigProvider.settings.mapService || {};
     const mapServiceType = mapServiceSettings.type || 'OSM';
-    const mapServiceUrl = mapServiceSettings.url;
-    const mapServiceOptions = mapServiceSettings.options;
 
     // NIPR OSM
     // 'https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png'
@@ -35,7 +33,7 @@ export class GeospatialService {
     // { 'layers': '0', 'version': '1.3.0' }
 
     if (mapServiceType === 'OSM') {
-      L.tileLayer(
+      mapLayer = L.tileLayer(
         ConfigProvider.settings.mapService.url,
         ConfigProvider.settings.mapService.options || {
           subdomains: '1234'

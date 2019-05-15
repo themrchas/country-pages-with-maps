@@ -77,10 +77,17 @@ export class SplashPageComponent implements OnInit {
         const self = this;
         this.geoData = data;
 
-        this.map = L.map('map', {
-          crs: L.CRS.EPSG4326,
-          zoomSnap: 0.05
-        }).setView([4.9342, 18.5038], 2.6);
+        if (ConfigProvider.settings.mapService.type === 'OSM') {
+          this.map = L.map('map', {
+            zoomSnap: 0.05
+          }).setView([6.4096, 16.7600], 3.6);
+        } else {
+          // WMS
+          this.map = L.map('map', {
+            crs: L.CRS.EPSG4326,
+            zoomSnap: 0.05
+          }).setView([4.9342, 18.5038], 2.6);
+        }
 
         // Create the hover info box
         this.info = L.control();

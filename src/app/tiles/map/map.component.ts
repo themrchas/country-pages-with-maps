@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input } from '@ang
 import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
 import { GeospatialService } from 'src/app/services/geospatial.service';
+import { ConfigProvider } from 'src/app/providers/configProvider';
 declare let L;
 
 @Component({
@@ -20,9 +21,16 @@ export class MapComponent implements OnInit, TileComponent {
   ngOnInit() {
 
     this.geospatialService.getAfricaGeoJson().subscribe(data => {
-      this.map = L.map('map', {
-        zoomSnap: 0.05
-      }).setView([6.4096, 16.7600], 5);
+      if (ConfigProvider.settings.mapService.type === 'OSM') {
+        this.map = L.map('map', {
+          zoomSnap: 0.05
+        }).setView([6.4096, 16.7600], 3.6);
+      } else {
+        // WMS
+        this.map = L.map('map', {
+          zoomSnap: 0.05
+        }).setView([4.9342, 18.5038], 2.6);
+      }
 
       this.geospatialService.getTileLayer(L).addTo(this.map);
 
