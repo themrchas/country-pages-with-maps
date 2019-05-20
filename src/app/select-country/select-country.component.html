@@ -36,7 +36,7 @@
 </div>-->
 <div (click)="handleClick($event)" *ngIf="regions && campaigns && countries">
     <div class="container-fluid">
-        <mat-tab-group selectedIndex=2>
+        <mat-tab-group selectedIndex=2 (selectedTabChange)="onTabChanged($event)" [ngClass]="{'initial-tabs': !tabChanged}">
             <mat-tab label="Regions">
                 <mat-expansion-panel *ngFor='let region of regions | keyvalue'>
                     <mat-expansion-panel-header>

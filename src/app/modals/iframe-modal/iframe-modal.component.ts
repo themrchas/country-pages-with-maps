@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MDBModalRef} from 'angular-bootstrap-md';
-import { BehaviorSubject } from 'rxjs';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ConfigProvider } from 'src/app/providers/configProvider';
 import { Location } from '@angular/common';
+import { SourceServiceType } from 'src/app/model/dataSource';
 
 @Component({
   selector: 'app-iframe-modal',
@@ -25,6 +25,7 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
   iframeLoaded: boolean;
   noPreview: boolean;
   isSpModal: boolean;
+  sourceService: SourceServiceType;
 
   constructor(public modalRef: MDBModalRef, public sanitizer: DomSanitizer, public location: Location) { }
 
@@ -32,7 +33,8 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
     this.noPreview = this.settings.fileType &&
       !ConfigProvider.settings.docPreviewSupportedTypes.includes(this.settings.fileType.toUpperCase());
     this.iframeLoaded = this.noPreview;
-    this.isSpModal = this.settings.itemUrl$ ? false : true;
+    this.isSpModal = !this.settings.sourceServiceType || this.settings.sourceServiceType === SourceServiceType.SHAREPOINT ?
+      true : false;
     this.settings.previewUrl$.subscribe(x => {
       this.previewUrl = this.sanitizer.bypassSecurityTrustResourceUrl(x);
     });
@@ -49,7 +51,7 @@ export class IframeModalComponent implements OnInit, AfterViewInit {
 
   onLoad(e) {
     // If the iframe loaded the SP display form, want to hide the edit ribbon and the Close button
-    if (this.isSpModal) {
+    if (this.isSpModal && !this.settings.fileType) {
       const iframeDoc = e.currentTarget.contentWindow.document;
       let cssUrl = this.location.prepareExternalUrl('assets/sp-iframe.css');
       cssUrl = cssUrl.replace('/index.aspx', '');

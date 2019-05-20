@@ -1,0 +1,53 @@
+h4 {
+    color: #717171;
+    font-weight: 500;
+}
+
+.item {
+    margin: 10px 0;
+}
+
+.label {
+    color: #777;
+    font-size: .9em;
+    font-weight: 500;
+}
+
+.value {
+    font-family: "Helvetica Neue",sans-serif;
+}
+
+.modal-body {
+    padding: 10px 20px;
+    height: 410px;
+    overflow-y: auto;
+}
+
+.details-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.modal-footer {
+    background-color: #eee;
+}
+
+.modal-header {
+    padding-bottom: 5px;
+}
+
+button {
+    color: #fff;
+    background-color: #16b6c6 !important;
+    font-weight: bold;
+}
+
+.meta-item {
+    font-size: .9em;
+}
+
+.meta-group {
+    margin-top: -8px;
+    font-weight: 300;
+}

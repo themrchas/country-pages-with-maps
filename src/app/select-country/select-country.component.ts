@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { Country } from '../model/country';
 import * as _ from 'lodash';
+import { MatTabChangeEvent } from '@angular/material';
 
 
 @Component({
@@ -13,6 +14,7 @@ export class SelectCountryComponent implements OnInit {
   regions: any;  // countries grouped by region
   campaigns: any; // countries grouped by campaign
   countries: Array<Country>; // flat countries array
+  tabChanged = false;
 
   constructor(private countryService: CountryService) { }
 
@@ -43,6 +45,13 @@ export class SelectCountryComponent implements OnInit {
     if (!e.target.classList.contains('dropdown-item')) {
       event.stopPropagation();
     }
+  }
+
+  // For some reason the inkbar does not display initially on the drop down for the tab headings
+  // until a tab is selected. To fix this, initially set the inkbar position and once the tab is changed,
+  // remove the class
+  onTabChanged(event: MatTabChangeEvent) {
+    this.tabChanged = true;
   }
 
 }

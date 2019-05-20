@@ -2,6 +2,7 @@ import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input } from '@ang
 import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
 import { GeospatialService } from 'src/app/services/geospatial.service';
+import { ConfigProvider } from 'src/app/providers/configProvider';
 declare let L;
 
 @Component({
@@ -20,14 +21,18 @@ export class MapComponent implements OnInit, TileComponent {
   ngOnInit() {
 
     this.geospatialService.getAfricaGeoJson().subscribe(data => {
-      this.map = L.map('map', {
-        zoomSnap: 0.05
-      }).setView([6.4096, 16.7600], 3.6);
+      if (ConfigProvider.settings.mapService.type === 'OSM') {
+        this.map = L.map('map', {
+          zoomSnap: 0.05
+        }).setView([6.4096, 16.7600], 3.6);
+      } else {
+        // WMS
+        this.map = L.map('map', {
+          zoomSnap: 0.05
+        }).setView([4.9342, 18.5038], 2.6);
+      }
 
-      // Add tile layers
-      L.tileLayer('https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png', {
-          subdomains: '1234'
-      }).addTo(this.map);
+      this.geospatialService.getTileLayer(L).addTo(this.map);
 
       L.geoJson(data, {
         filter: countryFilter.bind(this),

@@ -43,6 +43,10 @@ td {
     margin-top: 0;
 }
 
+:host ::ng-deep .mat-paginator-range-label {
+    margin: 0 20px 0 0px;
+}
+
 .mat-paginator {
     display: inline;
 }

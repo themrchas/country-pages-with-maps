@@ -22,6 +22,15 @@
                 "Campaign1,Campaign2": "purple"
             }
         },
+        "mapService": {
+            "url": "https://maps.gvs.nga.mil/arcgis/services/Basemap/World_StreetMap_2D/MapServer/WmsServer?",
+            "options":
+            {
+                "layers": "0",
+                "version": "1.3.0"
+            },
+            "type": "WMS"
+        },
         "topics": [
             {
                 "name": "Overview",
