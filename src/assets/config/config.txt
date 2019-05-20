@@ -29,7 +29,7 @@
             "Ivory Coast": "Cote de Ivoir"
         }
     },
-    "mapService": {
+    "mapService_wms": {
         "url": "https://maps.gvs.nga.mil/arcgis/services/Basemap/World_StreetMap_2D/MapServer/WmsServer?",
         "options":
         {
@@ -38,7 +38,7 @@
         },
         "type": "WMS"
     },
-    "mapService_osm": {
+    "mapService": {
         "url": "https://osm-{s}.gs.mil/tiles/default/{z}/{x}/{y}.png",
         "options":
         {
@@ -98,15 +98,14 @@
                             "listWeb": "/hq/j6/j6sandbox",
                             "url": "/hq/j6/j6sandbox/Lists/CountryLinks",
                             "listName": "CountryLinks",
-                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='testMMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
                         }],
                         "columns": [
-                                 { "columnName": "Url", "displayName": "Destination" },
-                                 { "columnName": "Description", "displayName": "Description"},
+                                 { "columnName": "URL", "displayName": "Destination", "type": "url" },
                                  { "columnName": "Comments", "displayName": "Comments"},
                                  { "columnName": "iconUrl", "displayName": "iconUrl"},
                                  { "columnName": "backgroundColor", "displayName": "backgroundColor" },
-                                 { "columnName": "testMMM", "displayName": "Country", "type": "mmm" }
+                                 { "columnName": "CountryMM", "displayName": "Country", "type": "mm" }
                         ],
                         "modal": {
                             "titleColumn": "Title"

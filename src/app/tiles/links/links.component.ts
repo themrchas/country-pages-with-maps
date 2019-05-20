@@ -57,7 +57,20 @@ export class LinksComponent implements OnInit {
           for (const column of this.settings.columns) {
 
             this.doLog && console.log('result processedColumns for item:', result, 'and current column name', column.columnName);
-            columns[column.columnName] = result.processedColumns[column.columnName];
+            // columns[column.columnName] = result.processedColumns[column.columnName];
+
+            // Sharepoint link list returns URL as URL { Url:, Description: } and Comments,iconUrl,
+            // and backgroundColor are first level properties
+            // columns[column.columnName] =
+            //  (!/Comments|iconUrl|backgroundColor/.test(column.columnName)) ?
+            // result['URL'][column.columnName] : result[column.columnName];
+
+            if (column.type === 'url') {
+              columns['Url'] = result.processedColumns[column.columnName]['Url'];
+              columns['Description'] = result.processedColumns[column.columnName]['Description'];
+            } else {
+              columns[column.columnName] = result.processedColumns[column.columnName];
+            }
           } // for
 
           // Set default values as required
