@@ -177,13 +177,8 @@ export class SplashPageComponent implements OnInit {
       this.regionLayersDict = {};
       const regionLayers = [];
       Object.keys(this.regions).forEach(regionKey => {
-        /*const countryLayers = this.regions[regionKey].map(country => {
-          return this.countryLayersDict[country.countryCode3];
-        });*/
-        // Get all country layers in the region based on the subregion in the geoJson
 
-
-        // I want to get the subregion from the feature, determine if the subregion matches current region key
+        // Get the subregion from the feature, determine if the subregion matches current region key
         const countryLayers = geoJson.features.filter(feature => {
           return this.subregionMapping[feature.properties.subregion] === regionKey;
         }).map(countryFeature => {

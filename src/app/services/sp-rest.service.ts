@@ -125,9 +125,6 @@ export class SpRestService extends BaseDataService {
                   colValue = splitName.length === 2 ? result[splitName[0]][splitName[1]] : null;
                 } else if (column.type === 'multi-choice') {
                   colValue = result[colName]['results'].reduce(this.labelMakerMultiChoice, null);
-                } else if (column.type === 'linksUrl') {
-                  // Links list packages Url and Desription as URL: {Url:'', Description:''}
-                  colValue = result[colName];
                 } else if (column.type === 'boolean') {
                   colValue = result[colName] ? 'Yes' : 'No';
                 } else if (column.type === 'rich-text') {
