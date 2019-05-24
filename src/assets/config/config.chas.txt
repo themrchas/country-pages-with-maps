@@ -44,6 +44,7 @@
         {
             "name": "Overview",
             "topicId": "overview",
+            "iconPath":"./assets/images/topic-icons/Flag.png",
             "tiles": [
                 {
                     "type": "single-item",
@@ -70,7 +71,7 @@
                         ]
                     },
                     "displayForCountries": [
-                        "DEU",
+                        "SOM",
                         "GHA"
                     ]
                 },
@@ -98,10 +99,7 @@
                                  { "columnName": "iconUrl", "displayName": "iconUrl"},
                                  { "columnName": "backgroundColor", "displayName": "backgroundColor" },
                                  { "columnName": "Countries", "displayName": "Country", "type": "mmm" }
-                        ],
-                        "modal": {
-                            "titleColumn": "Title"
-                        }
+                        ]
                     }
                 },
                 { 
@@ -166,6 +164,7 @@
         {
             "name": "Facts & Contacts",
             "topicId": "facts",
+            "iconPath":"./assets/images/topic-icons/account-card-details-outline.png",
             "tiles": [
                 {
                     "type": "news",
