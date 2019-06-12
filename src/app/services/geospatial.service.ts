@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { ConfigProvider } from '../providers/configProvider';
 
 @Injectable({
@@ -9,6 +9,8 @@ import { ConfigProvider } from '../providers/configProvider';
 export class GeospatialService {
   private africaGeoJson: Observable<any>;
   private geoJsonPath = './assets/geo/africa.txt';
+  public currentMap = new BehaviorSubject<any>(null);
+
   constructor(private httpClient: HttpClient) { }
 
   // Only retrieve the geoJson once
@@ -50,5 +52,21 @@ export class GeospatialService {
       );
     }
     return mapLayer;
+  }
+
+  setCurrentMap(map) {
+    this.currentMap.next(map);
+  }
+
+  clearCurrentMap() {
+    this.currentMap.next(null);
+  }
+
+  getMarkerIcon(L) {
+    return L.divIcon({html: '<div><div class="pin"></div><div class="pulse"></div></div>'});
+  }
+
+  getHighlightedIcon(L) {
+    return L.divIcon({html: '<div><div class="pin red"></div><div class="pulse"></div></div>'});
   }
 }
