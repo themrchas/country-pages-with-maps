@@ -12,7 +12,6 @@ import { ConfigProvider } from '../../providers/configProvider';
 import { SourceResult, DataSource } from '../../model/dataSource';
 import { DetailsModalComponent } from 'src/app/modals/details-modal/details-modal.component';
 import { GeospatialService } from 'src/app/services/geospatial.service';
-import * as mgrs from 'mgrs';
 declare let L;
 
 @Component({
@@ -33,9 +32,6 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   doLog: false; // Control component logging to console
   modalRef: MDBModalRef;
   hasGeoData: boolean;
-  map: any; // reference to map tile, if table contains geodata
-  markerDict = {};
-  selectedMapMarker: any;
   selectedRowIndex: number;
 
   // Data source used to control the table
@@ -75,7 +71,8 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
       console.log('Row clicked with event:', event);
       this.openTableItemDialog(index);
     } else if (this.hasGeoData) {
-      this.highlightRowOnMap(index);
+      this.geospatialService.highlightItemOnMap(L, index);
+      this.selectedRowIndex = index;
     }
   }
 
@@ -124,7 +121,6 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   loadTable(country) {
 
     const geoDataCols = [];
-    const mgrsPoints = [];
     // Find any geodata columns
     for (const column of this.settings.columns) {
       if (column.type === 'geo') {
@@ -132,10 +128,8 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
       }
     }
     this.hasGeoData = geoDataCols.length > 0;
-    const markerIcon = this.geospatialService.getMarkerIcon(L);
 
-    // this.listItems = Array<any>();
-    const listItems: Array<any> = Array<any>();
+    const listItems = Array<any>();
     this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source),
       country,
       this.settings.columns).subscribe({
@@ -151,30 +145,33 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
 
           // Add formated object to list of items to be returned
           listItems.push(result.processedColumns);
+
           for (const geoCol of geoDataCols) {
             // mgrsPoints.push(result.processedColumns[geoCol.name]);
             const mgrsData = result.processedColumns[geoCol.columnName];
             if (mgrsData) {
-
-              /* const marker = L.marker(mgrs.toPoint(mgrsData), { icon: markerIcon, riseOnHover: true, rowIndex: resultIndex })
-                .addTo(this.map)
-                .on('click', this.handleMarkerClick.bind(this));
-              marker.bindPopup('<div>Test</div>'); */
-              const marker = L.marker(mgrs.toPoint(mgrsData), { icon: markerIcon, riseOnHover: true, rowIndex: resultIndex });
-              markers.push(marker);
+              markers.push({
+                mgrsStr: mgrsData,
+                identifier: resultIndex
+              });
             }
           }
           resultIndex++;
         } // for
 
-        this.map = this.geospatialService.currentMap.value;
-        if (!this.map) {
-          this.geospatialService.currentMap.subscribe(map => {
-            this.map = map;
-            this.addMarkersOnMap(markers);
+        if (this.hasGeoData && markers.length > 0) {
+          this.geospatialService.addMarkersOnMap(L, markers, true, (e) => {
+            this.geospatialService.updateMarkerIcon(L, e.layer);
+            const rowIndex = e.layer.options.identifier;
+
+            // switch page if needed
+            const pageNumber = Math.floor(rowIndex / this.dataSource.paginator.pageSize);
+            this.dataSource.paginator.pageIndex = pageNumber;
+            this.paginator._changePageSize(this.dataSource.paginator.pageSize); // hack to force pager to update
+
+            // highlight row
+            this.selectedRowIndex = rowIndex;
           });
-        } else {
-          this.addMarkersOnMap(markers);
         }
 
         // Update the table datasource info
@@ -183,52 +180,6 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
       } // next
 
     });
-  }
-
-  addMarkersOnMap(markers: Array<any>) {
-    if (markers.length > 0  && this.map) {
-      const group = L.featureGroup(markers)
-      .on('click', this.handleMarkerClick.bind(this))
-      .addTo(this.map);
-
-      group.eachLayer(layer => {
-        layer.bindPopup('<div>Test</div>');
-        this.markerDict['' + layer.options.rowIndex] = layer; // Map row index to marker to retrieve later
-      });
-
-      // zoom to bounds
-      this.map.fitBounds(group.getBounds(), { padding: [50, 50]});
-    }
-  }
-
-  highlightRowOnMap(index) {
-    const mapMarker = this.markerDict[index];
-    mapMarker.openPopup();
-    this.updateMarkerIcon(mapMarker);
-    this.selectedRowIndex = index;
-  }
-
-  handleMarkerClick(e) {
-    this.updateMarkerIcon(e.layer);
-    const rowIndex = e.layer.options.rowIndex;
-
-    // switch page if needed
-    const pageNumber = Math.floor(rowIndex / this.dataSource.paginator.pageSize);
-    this.dataSource.paginator.pageIndex = pageNumber;
-    this.paginator._changePageSize(this.dataSource.paginator.pageSize); // hack to force pager to update
-
-    // highlight row
-    this.selectedRowIndex = rowIndex;
-  }
-
-  updateMarkerIcon(marker) {
-    if (this.selectedMapMarker) {
-      this.selectedMapMarker.setIcon(this.geospatialService.getMarkerIcon(L));
-      this.selectedMapMarker.setZIndexOffset(0);
-    }
-    marker.setIcon(this.geospatialService.getHighlightedIcon(L));
-    marker.setZIndexOffset(300);
-    this.selectedMapMarker = marker;
   }
 
   ngAfterViewInit() {
