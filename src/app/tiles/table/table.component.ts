@@ -3,21 +3,16 @@ import { Input, Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@
 import { MatTableDataSource } from '@angular/material';
 import { MatPaginator} from '@angular/material';
 import { MatSort } from '@angular/material';
-
-// Modal
-import { MatDialog, MatDialogRef, MatDialogConfig } from '@angular/material';
-
 import { TileComponent } from '../tile/tile.component';
-import { BehaviorSubject, of } from 'rxjs';
 import { Country } from '../../model/country';
 import { DataLayerService } from '../../services/data-layer.service';
 import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { IframeModalComponent } from '../../modals/iframe-modal/iframe-modal.component';
-import { SpRestService } from 'src/app/services/sp-rest.service';
 import { ConfigProvider } from '../../providers/configProvider';
 import { SourceResult, DataSource } from '../../model/dataSource';
-import { CountryService } from 'src/app/services/country.service';
 import { DetailsModalComponent } from 'src/app/modals/details-modal/details-modal.component';
+import { GeospatialService } from 'src/app/services/geospatial.service';
+declare let L;
 
 @Component({
   selector: 'app-table',
@@ -34,14 +29,10 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  settingsSource: any;
-
-  // Control component logging to console
-  doLog: false;
-
+  doLog: false; // Control component logging to console
   modalRef: MDBModalRef;
-
-  /*** mat-table start ***/
+  hasGeoData: boolean;
+  selectedRowIndex: number;
 
   // Data source used to control the table
   dataSource  = new MatTableDataSource<any>();
@@ -59,43 +50,38 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   rawResults: Array<SourceResult>;
 
   constructor(private dataLayerService: DataLayerService,
-    private modalService: MDBModalService) { }
+    private modalService: MDBModalService,
+    private geospatialService: GeospatialService) { }
 
   ngOnInit() {
     this.doLog = ConfigProvider.settings.debugLog;
     this.dataSource.paginator = this.paginator;
-    this.settingsSource = new DataSource(this.settings.source);
 
     // Get columns to display
     this.matTableCols = this.settings.columns;
-
     this.columnsToDisplay = this.matTableCols.map((columnEntry) => columnEntry.columnName );
 
-    // this.subscription = this.countryService.selectedCountry.subscribe(selectedCountry => {
-      this.loadTable(this.country);
-    // });
-
-    // this.data
+    this.loadTable(this.country);
   }
 
   // Fire off when row in table clicked
   onRowClicked(event: any, index: number) {
+    index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
     if (!this.settings.disableModal) {
       console.log('Row clicked with event:', event);
       this.openTableItemDialog(index);
+    } else if (this.hasGeoData) {
+      this.geospatialService.highlightItemOnMap(L, index);
+      this.selectedRowIndex = index;
     }
   }
 
   // Used to filter rows based on user provided input
   doFilter(value: string): void  {
-    // console.log('filtering on',value);
     this.dataSource.filter = value.trim();
   }
 
-  /*** mat-table end ***/
-
   openTableItemDialog(index) {
-    index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
     const rawResult = this.rawResults[index];
 
     // Determine if we want to show an iframe or details modal
@@ -133,9 +119,18 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   }
 
   loadTable(country) {
-    // this.listItems = Array<any>();
-    const listItems: Array<any> = Array<any>();
-    this.dataLayerService.getItemsFromSource(this.settingsSource,
+
+    const geoDataCols = [];
+    // Find any geodata columns
+    for (const column of this.settings.columns) {
+      if (column.type === 'geo') {
+        geoDataCols.push(column);
+      }
+    }
+    this.hasGeoData = geoDataCols.length > 0;
+
+    const listItems = Array<any>();
+    this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source),
       country,
       this.settings.columns).subscribe({
 
@@ -144,12 +139,40 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
         this.rawResults = results;
 
         // Loop over raw results
+        let resultIndex = 0;
+        const markers = [];
         for (const result of results) {
 
           // Add formated object to list of items to be returned
-         listItems.push(result.processedColumns);
+          listItems.push(result.processedColumns);
 
+          for (const geoCol of geoDataCols) {
+            // mgrsPoints.push(result.processedColumns[geoCol.name]);
+            const mgrsData = result.processedColumns[geoCol.columnName];
+            if (mgrsData) {
+              markers.push({
+                mgrsStr: mgrsData,
+                identifier: resultIndex
+              });
+            }
+          }
+          resultIndex++;
         } // for
+
+        if (this.hasGeoData && markers.length > 0) {
+          this.geospatialService.addMarkersOnMap(L, markers, true, (e) => {
+            this.geospatialService.updateMarkerIcon(L, e.layer);
+            const rowIndex = e.layer.options.identifier;
+
+            // switch page if needed
+            const pageNumber = Math.floor(rowIndex / this.dataSource.paginator.pageSize);
+            this.dataSource.paginator.pageIndex = pageNumber;
+            this.paginator._changePageSize(this.dataSource.paginator.pageSize); // hack to force pager to update
+
+            // highlight row
+            this.selectedRowIndex = rowIndex;
+          });
+        }
 
         // Update the table datasource info
         this.dataSource.data = listItems;

@@ -70,3 +70,15 @@ td {
     width:26px;
     
 }
+
+.action-icon {
+    height: 18px;
+    vertical-align: top;
+    margin-top: 1px;
+}
+
+.highlight {
+    background-color: #bbb;
+}
+
+

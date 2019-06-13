@@ -465,7 +465,48 @@
             "name": "Assessments",
             "topicId":  "assessments",
             "iconPath": "./assets/images/topic-icons/clipboard-text.png",
-            "tiles": []
+            "tiles": [
+                {
+                    "type": "map",
+                    "colspan": 1,
+                    "heading": "Map",
+                    "settings": {
+                        "zoomToCountry": true,
+                        "highlightCountry": false
+                    }
+                },
+                {
+                    "type": "table",
+                    "heading": "Geodata List",
+                    "settings": {
+                        "disableModal": true,
+                        "hideFilter": false,
+                        "source": {
+                            "listWeb": "/hq/j6/j6sandbox",
+                            "listName": "SampleList",
+                            "url": "/hq/j6/j6sandbox/Lists/SampleList",
+                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                        },
+                        "columns": [
+                            {
+                                "columnName": "Title",
+                                "displayName": "Title",
+                                "showInModal": true
+                            },
+                            {
+                                "columnName": "MGRS",
+                                "displayName": "MGRS",
+                                "showInModal": true,
+                                "type": "geo"
+                            }
+                        ],
+                        "modal": {
+                            "titleColumn": "Title",
+                            "type": "details"
+                        }
+                    }
+                }
+            ]
         }
     ],
     "docPreviewSupportedTypes": [
