@@ -1,0 +1,21 @@
+.main-container {
+    justify-content: center;
+    height: 100%;
+}
+
+.chart-col {
+    width: 75%;
+    height: 100vh;
+    top:0;
+    right: 0;
+    left: 25%;
+    bottom: 0;
+}
+
+.chart-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+

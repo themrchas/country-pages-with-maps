@@ -3,15 +3,14 @@ import { ConfigProvider } from '../../providers/configProvider';
 import { DataLayerService } from '../../services/data-layer.service';
 import { Country } from '../../model/country';
 import { DataSource } from 'src/app/model/dataSource';
-
-
+import { TileComponent } from '../tile/tile.component';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, TileComponent {
 
   @Input() settings: any;
   @Input() country: Country;

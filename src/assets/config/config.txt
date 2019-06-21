@@ -478,6 +478,7 @@
                 {
                     "type": "table",
                     "heading": "Geodata List",
+                    "colspan": 1,
                     "settings": {
                         "disableModal": true,
                         "hideFilter": false,
@@ -504,6 +505,79 @@
                             "titleColumn": "Title",
                             "type": "details"
                         }
+                    }
+                },
+                {
+                    "type": "cards",
+                    "heading": "Cards Example",
+                    "colspan": 2,
+                    "settings": {
+                        "source": {
+                            "listWeb": "/hq/j6/j6sandbox",
+                            "listName": "CountryCharts",
+			                "url":  "/hq/j6/j6sandbox/Lists/CountryCharts",
+                            "camlQuery_oneCountry": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQuery": "<View><Query><Where></Where></Query></View>"
+                        },
+                        "columns_oneCountry": [
+                            {
+                                "columnName": "Value",
+                                "displayName": "Value"
+                            },
+                            {
+                                "columnName": "Population",
+                                "displayName": "Population"
+                            }
+                        ],
+                        "columns": [
+                            {
+                                "columnName": "Value"
+                            },
+                            {
+                                "columnName": "CountryMM",
+                                "type": "mm"
+                            }
+                        ],
+                        "valueColumn": "Value",
+                        "nameColumn": "CountryMM"
+                    }
+                },
+                {
+                    "type": "bar-chart",
+                    "heading": "Bar Chart Example",
+                    "colspan": 2,
+                    "settings": {
+                        "direction": "horizontal",
+                        "xAxisLabel": "Population",
+                        "yAxisLabel": "Country",
+                        "source": {
+                            "listWeb": "/hq/j6/j6sandbox",
+                            "listName": "CountryCharts",
+			                "url":  "/hq/j6/j6sandbox/Lists/CountryCharts",
+                            "camlQuery_oneCountry": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQuery": "<View><Query><Where></Where></Query></View>"
+                        },
+                        "columns": [
+                            {
+                                "columnName": "Year"
+                            },
+                            {
+                                "columnName": "Population"
+                            },
+                            {
+                                "columnName": "CountryMM",
+                                "type": "mm"
+                            },
+                            {
+                                "columnName": "Population_2018"
+                            },
+                            {
+                                "columnName": "Population_2019"
+                            }
+                        ],
+                        "valueColumn": "Population",
+                        "nameColumn": "Year",
+                        "groupByColumn": "CountryMM"
                     }
                 }
             ]

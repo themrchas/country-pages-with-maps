@@ -1,0 +1,80 @@
+<div class="main-container">
+    <div class="chart-col">
+      <div *ngIf="chartResults" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;">
+        <ng-container *ngIf="!settings.groupByColumn; else grouped_chart">
+          <ng-container *ngIf="settings.direction !== 'vertical'; else vertical_chart">
+            <ngx-charts-bar-horizontal
+              class="chart-container"
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="chartResults"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)">
+            </ngx-charts-bar-horizontal>
+          </ng-container>
+  
+          <ng-template #vertical_chart>
+              <ngx-charts-bar-vertical
+              class="chart-container"
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="chartResults"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)">
+            </ngx-charts-bar-vertical>
+          </ng-template>
+        </ng-container>
+        <ng-template #grouped_chart>
+          <ng-container *ngIf="settings.direction !== 'vertical'; else vertical_chart">
+            <ngx-charts-bar-horizontal-2d
+              class="chart-container"
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="chartResults"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)">
+            </ngx-charts-bar-horizontal-2d>
+          </ng-container>
+  
+          <ng-template #vertical_chart>
+              <ngx-charts-bar-vertical-2d
+              class="chart-container"
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="chartResults"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)">
+            </ngx-charts-bar-vertical-2d>
+          </ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </div>

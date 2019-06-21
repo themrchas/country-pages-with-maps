@@ -4,20 +4,19 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule,
   MatListModule,
   MatButtonModule,
-  MatMenuModule,
   MatToolbarModule,
   MatGridListModule,
-  MatTabsModule } from '@angular/material';
-import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
-
-// List searching
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
-
-// Modal support
-import { MatDialogModule } from '@angular/material';
+  MatTabsModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDialogModule  } from '@angular/material';
 
 // Chart support
 import { ChartsModule } from 'ng2-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { DashboardComponent } from './dashboard.component';
 import { TileContainerComponent } from '../tiles/tile/tile-container.component';
@@ -37,6 +36,8 @@ import { SingleItemComponent } from '../tiles/single-item/single-item.component'
 import { LinksComponent } from '../tiles/links/links.component';
 import { IframeModalComponent } from '../modals/iframe-modal/iframe-modal.component';
 import { DetailsModalComponent } from '../modals/details-modal/details-modal.component';
+import { CardsComponent } from '../tiles/cards/cards.component';
+import { BarChartComponent } from '../tiles/bar-chart/bar-chart.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -58,7 +59,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LinksComponent,
     IframeModalComponent,
     DetailsModalComponent,
-    ChartComponent
+    ChartComponent,
+    BarChartComponent,
+    CardsComponent
   ],
   imports: [
     CommonModule,
@@ -77,7 +80,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MatDialogModule,
     MatListModule,
     MatTabsModule,
-    ChartsModule
+    ChartsModule,
+    NgxChartsModule
   ],
   providers: [
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG}
@@ -92,7 +96,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LinksComponent,
     IframeModalComponent,
     DetailsModalComponent,
-    ChartComponent
+    ChartComponent,
+    CardsComponent,
+    BarChartComponent
   ],
 })
 export class DashboardModule { }
