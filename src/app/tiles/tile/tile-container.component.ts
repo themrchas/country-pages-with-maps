@@ -11,6 +11,8 @@ import { UpcomingEventsComponent } from '../upcoming-events/upcoming-events.comp
 import { SingleItemComponent } from '../single-item/single-item.component';
 import { LinksComponent } from '../links/links.component';
 import { ChartComponent } from '../chart/chart.component';
+import { CardsComponent } from '../cards/cards.component';
+import { BarChartComponent } from '../bar-chart/bar-chart.component';
 
 @Component({
   selector: 'app-tile',
@@ -31,7 +33,9 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
     UPCOMING_EVENTS: 'upcoming-events',
     SINGLE_ITEM: 'single-item',
     LINKS: 'links',
-    CHART: 'chart'
+    CHART: 'chart',
+    CARDS: 'cards',
+    BAR_CHART: 'bar-chart'
   };
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
@@ -107,6 +111,14 @@ export class TileContainerComponent implements OnInit, AfterViewInit {
       }
       case this.tileTypes.CHART: {
         tileComponent = ChartComponent;
+        break;
+      }
+      case this.tileTypes.CARDS: {
+        tileComponent = CardsComponent;
+        break;
+      }
+      case this.tileTypes.BAR_CHART: {
+        tileComponent = BarChartComponent;
         break;
       }
       default: {

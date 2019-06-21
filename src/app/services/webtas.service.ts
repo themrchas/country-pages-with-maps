@@ -16,7 +16,7 @@ export class WebtasService extends BaseDataService {
   }
 
   getListItems(source: DataSource, filterObj?, columns?: Array<Column>): Observable<Array<SourceResult>> {
-    const filter = source.filter ? this.replacePlaceholdersWithFieldValues(source.filter, filterObj) : null;
+    const filter = source.filter ? BaseDataService.replacePlaceholdersWithFieldValues(source.filter, filterObj) : null;
     const where = filter ? `&where=${filter}` : '';
     const url = `${source.listWeb}?ddclass=${source.listName}&isall=true${where}`;
 
