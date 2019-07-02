@@ -1,39 +1,3 @@
-<!--<div class="btn-group" mdbDropdown>
-    <button mdbDropdownToggle type="button" mdbBtn color="info" class="dropdown-toggle waves-light"
-      mdbWavesEffect>
-      Change Country
-    </button>
-  
-    <div class="dropdown-menu dropdown-primary">
-        <div class="container-fluid">
-            <div class="row">
-            <ng-container *ngFor='let region of regions | keyvalue'>
-                <div class="col-lg-4">
-                <h6 class="sub-title">{{region.key}}</h6>
-                <ng-container *ngFor="let country of region.value">
-                    <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
-                </ng-container>
-                </div>
-            </ng-container>
-            </div>
-        </div>
-      </div>
-  </div>-->
-
-<!--<div class="container-fluid">
-    <div class="row">
-        <ng-container *ngFor='let region of regions | keyvalue'>
-            <div class="col-lg-4 mb-3">
-            <h6 class="sub-title">
-                {{region.key}}
-            </h6>
-            <ng-container *ngFor="let country of region.value">
-                <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>{{country.title}}</a>
-            </ng-container>
-            </div>
-        </ng-container>
-    </div>
-</div>-->
 <div (click)="handleClick($event)" *ngIf="regions && campaigns && countries">
     <div class="container-fluid">
         <mat-tab-group selectedIndex=2 (selectedTabChange)="onTabChanged($event)" [ngClass]="{'initial-tabs': !tabChanged}">
@@ -46,6 +10,7 @@
                     </mat-expansion-panel-header>
                     <ng-container *ngFor="let country of region.value">
                         <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>
+                            <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
                             {{country.title}}
                         </a>
                     </ng-container>
@@ -61,6 +26,7 @@
                 </mat-expansion-panel-header>
                 <ng-container *ngFor="let country of campaign.value">
                     <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>
+                        <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
                         {{country.title}}
                     </a>
                 </ng-container>
@@ -74,6 +40,7 @@
                     <div class="col-md">
                     <ng-container *ngFor='let country of countries.slice(0,16)'>
                         <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>
+                            <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
                             {{country.title}}
                         </a>
                     </ng-container>
@@ -81,6 +48,7 @@
                     <div class="col-md" *ngIf="countries.length > 16">
                         <ng-container *ngFor='let country of countries.slice(16)'>
                             <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve'>
+                                <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
                                 {{country.title}}
                             </a>
                         </ng-container>

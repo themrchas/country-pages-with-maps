@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input } from '@angular/core';
+import { Component, NgZone, OnInit, AfterViewInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Country } from '../../model/country';
 import { TileComponent } from '../tile/tile.component';
 import { GeospatialService } from 'src/app/services/geospatial.service';
@@ -10,7 +10,7 @@ declare let L;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit, TileComponent {
+export class MapComponent implements OnInit, OnDestroy, TileComponent {
 
   @Input() country: Country;
   @Input() settings: any;
@@ -18,34 +18,53 @@ export class MapComponent implements OnInit, TileComponent {
 
   constructor(private geospatialService: GeospatialService) { }
 
+  // Options:
+  // 1. zoom in on country (default)
+  // 2. highlight country (default)
+  // 3. display markers on map
   ngOnInit() {
 
-    this.geospatialService.getAfricaGeoJson().subscribe(data => {
-      if (ConfigProvider.settings.mapService.type === 'OSM') {
-        this.map = L.map('map', {
-          zoomSnap: 0.05
-        }).setView([6.4096, 16.7600], 3.6);
-      } else {
-        // WMS
-        this.map = L.map('map', {
-          zoomSnap: 0.05
-        }).setView([4.9342, 18.5038], 2.6);
-      }
+    if (ConfigProvider.settings.mapService.type === 'OSM') {
+      this.map = L.map('map', {
+        zoomSnap: 0.05
+      }).setView([6.4096, 16.7600], 3.6);
+    } else {
+      // WMS
+      this.map = L.map('map', {
+        zoomSnap: 0.05
+      }).setView([4.9342, 18.5038], 2.6);
+    }
+    this.geospatialService.getTileLayer(L).addTo(this.map);
+    this.geospatialService.setCurrentMap(this.map);
 
-      this.geospatialService.getTileLayer(L).addTo(this.map);
+    if (!this.settings.highlightCountry === false && !this.settings.zoomToCountry === false) {
 
-      L.geoJson(data, {
-        filter: countryFilter.bind(this),
-        onEachFeature: onEachFeature.bind(this)  // should just be one feature
-      }).addTo(this.map);
-
-      function countryFilter(feature) {
+      const countryFilter = (feature) => {
         return feature.properties.iso_a3 === this.country.countryCode3;
-      }
+      };
+      const onEachFeature = (feature, layer) => {
+        if (!this.settings || !this.settings.zoomToCountry === false) {
+          this.map.fitBounds(layer.getBounds());
+        }
+      };
 
-      function onEachFeature(feature, layer) {
-        this.map.fitBounds(layer.getBounds());
-      }
-    });
+      this.geospatialService.getAfricaGeoJson().subscribe(data => {
+        L.geoJson(data, {
+          filter: countryFilter,
+          style: (feature) => {
+            const weight = this.settings && !this.settings.highlightCountry === false ? 1 : 0;
+            return {
+              weight: 1,
+              opacity: 0
+            };
+          },
+          onEachFeature: onEachFeature // should just be one feature
+        }).addTo(this.map);
+      });
+    }
+  }
+
+  ngOnDestroy() {
+    this.geospatialService.clearCurrentMap();
   }
 }

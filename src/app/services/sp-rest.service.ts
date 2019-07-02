@@ -81,9 +81,9 @@ export class SpRestService extends BaseDataService {
 
     if (filterObj) {
       camlQuery = source.camlQuery ?
-          this.replacePlaceholdersWithFieldValues(source.camlQuery, filterObj) : source.camlQuery;
+          BaseDataService.replacePlaceholdersWithFieldValues(source.camlQuery, filterObj) : source.camlQuery;
       filter = source.filter ?
-          this.replacePlaceholdersWithFieldValues(source.filter, filterObj) : source.filter;
+          BaseDataService.replacePlaceholdersWithFieldValues(source.filter, filterObj) : source.filter;
     }
 
     if (source.camlQuery) {

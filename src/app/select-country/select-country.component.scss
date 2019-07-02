@@ -26,6 +26,12 @@ mat-expansion-panel {
     padding: 0 1.5rem;
 }
 
+.flag-icon {
+    width: 20px;
+    margin-top: -2px;
+    height: auto;
+}
+
 :host ::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, :host ::ng-deep .mat-tab-nav-bar.mat-primary .mat-ink-bar{
     background: #4abde8;
 }

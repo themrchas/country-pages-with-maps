@@ -8,6 +8,18 @@ export abstract class BaseDataService {
     ownerDocument = document.implementation.createHTMLDocument('virtual');
     newDays: 1;
 
+    static replacePlaceholdersWithFieldValues(str: string, item) {
+        // const matchedItems = str.match(/(?<=\{\{)(.*?)(?=\}\})/g);
+        // const matchedItems = str.match(/(?<=\)/g);
+        const matchedItems = str.match(/\{\{(.*?)\}\}/g) || [];
+        for (const matchedItem of matchedItems) {
+            str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
+        }
+
+        console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
+        return str;
+    }
+
     abstract getListItems(source: DataSource, filterObj?, columns?: Array<Column>): Observable<Array<SourceResult>>;
 
     getHtmlTextContent(htmlContent) {
@@ -26,15 +38,5 @@ export abstract class BaseDataService {
         return retVal;
     }
 
-    replacePlaceholdersWithFieldValues(str: string, item) {
-        // const matchedItems = str.match(/(?<=\{\{)(.*?)(?=\}\})/g);
-        // const matchedItems = str.match(/(?<=\)/g);
-        const matchedItems = str.match(/\{\{(.*?)\}\}/g) || [];
-        for (const matchedItem of matchedItems) {
-            str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
-        }
 
-        console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
-        return str;
-    }
 }

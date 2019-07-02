@@ -1,0 +1,40 @@
+  :host ::ng-deep  .pin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -13px 0 0 -18px;
+    transform: rotate(-45deg);
+    background: #2981ca;
+    border-radius: 50% 50% 50% 0;
+    width: 25px;
+    height: 25px;
+    border: 1px solid #2e6992;
+  }
+  
+  :host ::ng-deep  .pin::after {
+    position: absolute;
+    content: '';
+    width: 8px;
+    height: 8px;
+    margin: 8px 0 0 8px;
+    background: #fff;
+    border-radius: 50%;
+  }
+    
+  :host ::ng-deep .pulse {
+    background: rgba(0,0,0,0.1);
+    border-radius: 50%;
+    height: 10px;
+    width: 10px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: 13px 0px 0px -10px;
+    transform: rotateX(55deg);
+    z-index: -2;
+  }
+
+  :host ::ng-deep .pin.red {
+    background-color: red;
+    border: 1px solid #fff;
+  }

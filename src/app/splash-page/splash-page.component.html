@@ -19,7 +19,10 @@
                         </mat-expansion-panel-header>
                         <ng-container *ngFor="let country of region.value">
                             <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve' 
-                            (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">{{country.title}}</a>
+                            (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">
+                              <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/>   
+                              {{country.title}}
+                            </a>
                         </ng-container>
                       </mat-expansion-panel>
                 </mat-tab>
@@ -36,7 +39,10 @@
                       </mat-expansion-panel-header>
                       <ng-container *ngFor="let country of campaign.value">
                           <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve' 
-                          (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">{{country.title}}</a>
+                          (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">
+                            <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
+                            {{country.title}}
+                          </a>
                       </ng-container>
                     </mat-expansion-panel>
                   </ng-template>
@@ -48,13 +54,19 @@
                         <div class="col-xs">
                           <ng-container *ngFor='let country of countries.slice(0,16)'>
                               <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve' 
-                              (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">{{country.title}}</a>
+                              (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">
+                              <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
+                                {{country.title}}
+                              </a>
                           </ng-container>
                         </div>
                         <div class="col-xs" *ngIf="countries.length > 16">
                           <ng-container *ngFor='let country of countries.slice(16)'>
                               <a class="dropdown-item" [routerLink]="['/country', country.countryCode3]" queryParamsHandling='preserve' 
-                              (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">{{country.title}}</a>
+                              (mouseenter)="highlightCountry(country.countryCode3)" (mouseleave)="resetHighlightCountry(country.countryCode3)">
+                                <img class="flag-icon" [src]="'./assets/flags/' + country.countryCode3 + '-flag-icon-64.png'"/> 
+                                {{country.title}}
+                              </a>
                           </ng-container>
                         </div>
                       </div>

@@ -11,6 +11,7 @@ import { MDBModalService, MDBModalRef } from 'angular-bootstrap-md';
 import { map } from 'rxjs/operators';
 import { SpRestService } from 'src/app/services/sp-rest.service';
 import { DataLayerService } from 'src/app/services/data-layer.service';
+import { BaseDataService } from 'src/app/services/baseDataService';
 
 @Component({
   selector: 'app-upcoming-events',
@@ -50,7 +51,7 @@ export class UpcomingEventsComponent implements OnInit, TileComponent {
       const eventSource = Object.assign({}, settingsSource);
       if (eventSource['camlQuery']) {
         eventSource['camlQuery'] =
-          this.spRestService.replacePlaceholdersWithFieldValues(eventSource['camlQuery'], country);
+          BaseDataService.replacePlaceholdersWithFieldValues(eventSource['camlQuery'], country);
       }
 
       const arrReqs = [];

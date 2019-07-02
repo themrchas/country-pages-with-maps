@@ -5,13 +5,14 @@ import { DataLayerService } from '../../services/data-layer.service';
 import { mergeMap } from 'rxjs/operators';
 import { DataSource } from 'src/app/model/dataSource';
 import { ConfigProvider } from '../../providers/configProvider';
+import { TileComponent } from '../tile/tile.component';
 
 @Component({
   selector: 'app-links',
   templateUrl: './links.component.html',
   styleUrls: ['./links.component.css']
 })
-export class LinksComponent implements OnInit {
+export class LinksComponent implements OnInit, TileComponent {
 
   @Input() settings: any;
   @Input() country: Country;
