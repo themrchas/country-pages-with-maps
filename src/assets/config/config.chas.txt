@@ -158,7 +158,29 @@
                         ]
                        
                     }
+                },
+                {
+                   "type": "news",
+                    "colspan": 1,
+                    "heading": "News & Updates",
+                    "settings": {
+                        "sources":  [ 
+                            {
+                                "displayName": "Blog Info",
+                                "listWeb": "http://localhost:8080/sites/dev/socafdev/blogsite",
+                                "url": "http://localhost:8080/sites/dev/socafdev/blogsite",
+                                "listName": "Posts",
+			                    "select": "PostCategory/Title,Body,Title,PublishedDate,Id,Modified",
+                                "type":"blog",
+                                "displayForm":"Post.aspx",
+                                "dateField":"PublishedDate",
+                                "expand":"PostCategory"
+                            }
+                        ]
+                    }
                 }
+                
+                
             ]
         },
         {

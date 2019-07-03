@@ -33,6 +33,7 @@ export class NewsService {
           return empty();
         }));
       };
+      
       from(sources).pipe(mergeMap(source => getNewsFromSourceObservable(source), (sourceItem, observableItem) => {
         return {
           sourceItem: sourceItem,
