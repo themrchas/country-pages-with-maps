@@ -1,16 +1,15 @@
 <div class="main-container">
-  <div class="chart-col">
+  <div class="chart-col num-card">
     <div *ngIf="cardResults" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;">
 
       <ngx-charts-number-card
         class="chart-container"
         [view]="view"
+        [animations]="true"
         [scheme]="colorScheme"
         [results]="cardResults"
-        [animations]="animations"
         [valueFormatting]="statusValueFormat"
-        [labelFormatting]="statusLabelFormat"
-      >
+        [labelFormatting]="statusLabelFormat">
       </ngx-charts-number-card>
     </div>
   </div>

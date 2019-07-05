@@ -39,7 +39,7 @@
         "type": "WMS"
     },
     "mapService": {
-        "url": "https://osm-{s}.gs.mil/tiles/default/{z}/{x}/{y}.png",
+        "url": "https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png",
         "options":
         {
             "subdomains": "1234"
@@ -232,8 +232,7 @@
                                 "listWeb": "/hq/j6/j6sandbox",
                                 "listName": "Documents",
                                 "url":  "/hq/j6/j6sandbox/Shared%20Documents",
-                                "select": "File/Name,File_x0020_Type,Created,Modified,FileRef,Id",
-                                "expand": "File",
+                                "select": "FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
                                 "type": "docLibrary"
                             },
                         "columns": [
@@ -243,9 +242,8 @@
                                 "type": "docTypeIcon"
                             },
                             {
-                                "columnName": "File/Name",
-                                "displayName": "Name",
-                                "type": "expanded"
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
                             },
                             { "columnName": "isNew", "displayName": "", "type": "newBadge" },
                             {
@@ -253,7 +251,8 @@
                                 "displayName": "Created Date",
                                 "type": "date"
                             }
-                        ]
+                        ],
+                        "modal": {}
                     }
                 },
                 {
