@@ -33,6 +33,8 @@ export function createNewsItemFromSharePointResult(result: any, source: DataSour
     }
 
 
+
+    //Grab dates to be used for determing id item requires a 'New' or 'Updated' badge
     const itemCreated = moment(result.rawData['PublishedDate'], 'YYYY-MM-DDTHH:mm:SS');
     const itemModified = moment(result.rawData['Modified'], 'YYYY-MM-DDTHH:mm:SS');
 
