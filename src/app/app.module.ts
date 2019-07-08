@@ -20,7 +20,9 @@ const appRoutes: Routes = [
     MainLayoutModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: false } // <-- debugging purposes only
+      { enableTracing: false, // debug purposes only
+        scrollPositionRestoration: 'enabled'
+      }
     ),
     BrowserModule,
     HttpClientModule,

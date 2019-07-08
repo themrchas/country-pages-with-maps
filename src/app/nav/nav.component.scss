@@ -156,6 +156,14 @@ h6.sub-title {
     height: 53px;
 }
 
+:host ::ng-deep .submenu .mat-list-item,
+:host ::ng-deep  .submenu .mat-list-option {
+    height: 25px;
+    padding: 0 20px;
+    color: #aaa;
+    font-size: .82em;
+}
+
 :host ::ng-deep mdb-popover-container {
     position: fixed;
     background-color: #444;
@@ -206,4 +214,12 @@ mat-sidenav mat-toolbar-row img {
 
 .btn-group.open .btn {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.submenu {
+    margin-bottom: 5px;
+}
+
+.submenu a:hover {
+    color: #fff;
 }

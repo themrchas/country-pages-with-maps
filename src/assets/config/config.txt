@@ -508,6 +508,35 @@
                     }
                 },
                 {
+                    "type": "table",
+                    "heading": "Doc Library GeoData",
+                    "colspan": 1,
+                    "settings": {
+                        "disableModal": true,
+                        "hideFilter": false,
+                        "source": 
+                            {
+                                "listWeb": "/hq/j6/j6sandbox",
+                                "listName": "Documents",
+                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
+                                "select": "MGRS,FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
+                                "type": "docLibrary"
+                            },
+                        "columns": [
+                            {
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
+                            },
+                            {
+                                "columnName": "MGRS",
+                                "displayName": "MGRS",
+                                "showInModal": true,
+                                "type": "geo"
+                            }
+                        ]
+                    }
+                },
+                {
                     "type": "cards",
                     "heading": "Cards Example",
                     "colspan": 2,

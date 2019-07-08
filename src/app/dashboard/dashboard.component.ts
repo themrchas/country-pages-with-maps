@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CountryService } from '../services/country.service';
 import { BehaviorSubject} from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   rows: Array<any>;
   tableSettings: any;
   newsSettings: any;
+  highlightedTileId: any;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
@@ -28,14 +29,16 @@ export class DashboardComponent implements OnInit {
     combineLatest(this.countryService.selectedCountry, this.topicService.selectedTopic).subscribe(combined => {
       this.selectedCountry = combined[0];
       this.selectedTopic = combined[1];
+      let tileIndex = 0;
 
       if (this.selectedCountry && this.selectedTopic) {
+
         let currColCountForRow = 0;
         const tempRows = [[]];  // Each row will have an array of tiles, tiles can span 1-3 cols
         for (const item of this.selectedTopic.tiles) {
-          const tile = Object.assign({}, item);
+          const tile = Object.assign({tileId: item.type + tileIndex}, item);
           // countries can have customized tiles
-          if (this.displayTileForCountry(tile, this.selectedCountry)) {
+          if (this.countryService.displayTileForCountry(tile, this.selectedCountry)) {
             if (currColCountForRow === 3 || tile.colspan + currColCountForRow > 3) {
               // Create new row
               tempRows.push([]);
@@ -51,19 +54,20 @@ export class DashboardComponent implements OnInit {
             }
             tempRows[tempRows.length - 1].push(tile);
             currColCountForRow += tile.colspan;
+            tileIndex++;
           }
         }
         this.rows = tempRows;
       }
     });
-  }
 
-  displayTileForCountry(tile, country: Country): boolean {
-    let retVal = true;
-    if (tile.displayForCountries && country) {
-      retVal = tile.displayForCountries.includes(country.countryCode3);
-    }
-    return retVal;
+    this.topicService.highlightedTile.subscribe(tileId => {
+      if (tileId !== null) {
+        const el = document.getElementById(tileId);
+        el.scrollIntoView();
+        this.highlightedTileId = tileId;
+      }
+    });
   }
 
 }

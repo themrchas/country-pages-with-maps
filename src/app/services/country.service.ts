@@ -57,4 +57,12 @@ export class CountryService {
   resetCountry() {
     this.countrySubject.next(null);
   }
+
+  displayTileForCountry(tile, country: Country): boolean {
+    let retVal = true;
+    if (tile.displayForCountries && country) {
+      retVal = tile.displayForCountries.includes(country.countryCode3);
+    }
+    return retVal;
+  }
 }
