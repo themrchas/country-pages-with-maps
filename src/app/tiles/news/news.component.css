@@ -41,3 +41,7 @@ mat-card {
     height: calc(100% - 40px);
     margin-top: 5px;
 }
+
+.news-badge {
+    margin-left:10px;
+}
