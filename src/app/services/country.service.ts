@@ -17,11 +17,13 @@ export class CountryService {
   countrySource: DataSource;
   private countrySubject = new BehaviorSubject<Country>(null);
   selectedCountry = this.countrySubject.asObservable();
+  
 
   constructor(private dataLayerService: DataLayerService) {
     this.countrySettings = ConfigProvider.settings.country;
     this.countrySource = new DataSource(this.countrySettings);
-    console.log('ConfigProvider.settings.country in country.service.ts is', this.countrySource);
+
+    ConfigProvider.settings.debugLog && console.log('ConfigProvider.settings.country in country.service.ts is', this.countrySource);
   }
 
   // Use ISO 3 for country code

@@ -1,5 +1,7 @@
+import { ConfigProvider } from '../providers/configProvider';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 
 export interface DateFilter {
     startDate: string;
@@ -45,6 +47,7 @@ export const enum SourceServiceType {
 export const enum SourceDataType {
     DOC_LIBRARY = 'docLibrary',
     LIST = 'list'
+    
 }
 
 export class DataSource {
@@ -100,6 +103,43 @@ export class DataSource {
                 this.filter += `${json.dateFilter.endDateField} le dateTime'${endDate.toISOString()}'`;
             }
         }
+
+        //Analyze select statement for presence of specific columns
+        if (this.type && this.select)
+            this.select = this.verifySelect(this.listName,this.select,this.type);
+        
+    }
+
+        //Verify  select statements found in configuration have required columns and modify as required
+        private verifySelect(listName,select,listType) {
+
+        let listColumns: Array<string> = ["Id","Created", "Modified"];
+        let docLibColumns: Array<string> = ["Id","Created", "Modified","FileRef","File_x0020_Type","FileLeafRef"];
+
+        //Ensure string does not mistakenly terminate with a comma -> preventative measure
+         select = _.endsWith(select,",") ? select.substring(0,select.length-1) : select;
+
+        if (listType === "docLibrary") {
+
+            for(let column of docLibColumns) 
+                if (!select.includes(column))
+                    select = select.concat(",",column);
+       
+                    ConfigProvider.settings.debugLog &&  console.log("**listName is:",listName,"select is:",select,"type is type is docLibrary");
+        } 
+
+        else if (listType === "blog" || listType === "list") {
+
+            for(let column of listColumns) 
+
+                if (!select.includes(column))
+                    select = select.concat(",",column);
+
+                    ConfigProvider.settings.debugLog && console.log("**listName is:",listName,"select is:",select,"type is type is "+listType);
+        }
+
+        return select;
+       
     }
 }
 

@@ -110,7 +110,7 @@
                         "source": {
                             "listWeb": "http://localhost:8080/sites/dev/socafdev",
                             "listName": "SampleList",
-			                 "select": "ContentTypeId,Title,MyUrl,Created,Modified,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,Id",
+			                 "select": "ContentTypeId,Title,MyUrl,Modified,Country,CountryMMM,CountryChoice,SampleRichText,FieldValuesAsText/UserColTest,ContentType/Name,TestYesNo,",
 			                "expand": "FieldValuesAsText,ContentType",
                             "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
                             "camlQueryMM": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
@@ -170,7 +170,7 @@
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev/blogsite",
                                 "url": "http://localhost:8080/sites/dev/socafdev/blogsite",
                                 "listName": "Posts",
-			                    "select": "PostCategory/Title,Body,Title,PublishedDate,Id,Modified",
+			                    "select": "PostCategory/Title,Body,Title,PublishedDate,",
                                 "type":"blog",
                                 "displayForm":"Post.aspx",
                                 "dateField":"PublishedDate",
@@ -243,7 +243,7 @@
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "listName": "CountryDocs",
                                 "url":  "http://localhost:8080/sites/dev/socafdev/Shared%20Documents",
-                                "select": "File/Name,File_x0020_Type,Created,FileRef,Id",
+                                "select": "File/Name,Modified,FileRef,File_x0020_Type",
                                 "expand": "File",
                                 "type": "docLibrary",
                                 "camlQuery" : "<View><Query><Where><Or><Eq><FieldRef Name='Region'/><Value Type='Text'>{{region}}</Value></Eq><Eq><FieldRef Name='Region'/><Value Type='Text'>SOCAFRICA AOR</Value></Eq></Or></Where></Query></View>"

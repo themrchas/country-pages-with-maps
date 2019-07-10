@@ -1,4 +1,4 @@
-
+import { ConfigProvider } from '../providers/configProvider';
 import { Observable } from 'rxjs';
 import { DataSource, Column, SourceResult } from '../model/dataSource';
 import * as moment from 'moment';
@@ -15,8 +15,8 @@ export abstract class BaseDataService {
         for (const matchedItem of matchedItems) {
             str = str.replace(`${matchedItem}`, item[matchedItem.replace(/\{\{/g, '').replace(/\}\}/g, '')]);
         }
-
-        console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
+         
+        ConfigProvider.settings.debugLog && console.log('CamlQuery in replacePlaceholdersWithFieldValues modified with', item, 'and is', str );
         return str;
     }
 
