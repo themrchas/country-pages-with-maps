@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
   mockSp: false,
-  configPath: 'assets/config.chas.txt'
+  configPath: 'assets/config/config.chas.txt'
 };

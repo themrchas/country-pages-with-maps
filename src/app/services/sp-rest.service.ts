@@ -96,7 +96,7 @@ export class SpRestService extends BaseDataService {
 
     return asyncRequest.pipe(map(resp => {
 
-      console.log('resp in sp-rest.service is', resp);
+      console.log('List: ',source.listName,'resp in sp-rest.service is', resp);
       let retResults = null;
 
       if (resp && resp['d'] && resp['d'].results) {
