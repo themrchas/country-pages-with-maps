@@ -1,11 +1,23 @@
 <div class="dashboard-container">
     <ng-container *ngIf="selectedCountry && selectedTopic">
-          <div class="row wow fadeIn" *ngFor="let row of rows">
+          <!--<div class="row wow fadeIn" *ngFor="let row of rows">
             <ng-container *ngFor="let tile of row">
               <div class="mb-4" [ngClass]="{'col-lg-4': tile.colspan === 1, 'col-lg-8': tile.colspan === 2, 'col-lg-12': tile.colspan === 3}">
                   <app-tile [tile]="tile" [country]="selectedCountry"></app-tile>
               </div>
             </ng-container>
-          </div>  
+          </div>  -->
+
+      <ng-container *ngIf="displayGrid">
+          <div class="grid-stack" data-gs-width="12">
+            <ng-container *ngFor="let tile of tiles">
+              <div class="grid-stack-item" [attr.data-gs-x]="tile.x" [attr.data-gs-y]="tile.y" [attr.data-gs-width]="tile.colspan || 1" [attr.data-gs-height]="tile.height || 4" #gridItem>
+                <div class="grid-stack-item-content">
+                  <app-tile [tile]="tile" [country]="selectedCountry"></app-tile>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
     </ng-container>
 </div>

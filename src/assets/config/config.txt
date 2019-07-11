@@ -55,16 +55,18 @@
                 {
                     "type": "single-item",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "SOCAFRICA Country Overview",
                     "description": "Various information about the selected country",
                     "settings": {
-			"source": {
-				"listWeb": "/hq/j6/j6sandbox",
-				"listName": "CountryData",
-				"url": "/hq/j6/j6sandbox/Lists/CountryData",
-				"displayName": "Country Data",
-				"camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
-			},
+                    "source": {
+                        "listWeb": "/hq/j6/j6sandbox",
+                        "listName": "CountryData",
+                        "url": "/hq/j6/j6sandbox/Lists/CountryData",
+                        "displayName": "Country Data",
+                        "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                    },
                         "columns": [
                             {
                                 "columnName": "CountryMM",
@@ -86,12 +88,15 @@
                 {
                     "type": "map",
                     "colspan": 1,
+                    "x": 1,
+                    "y": 0,
                     "heading": "Map"
                 },
 { 
                     "type": "links",
-                    "rowspan": 1,
                     "colspan": 1,
+                    "x": 2,
+                    "y": 0,
                     "heading": "Sample Links List",
                     "settings": {
                         "sources": [{
@@ -115,6 +120,8 @@
                 { 
                     "type": "chart",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 4,
                     "heading": "Country Pages Chart",
                     "settings": {
                         "source": {
@@ -140,6 +147,8 @@
                 { 
                     "type": "table",
                     "colspan": 2,
+                    "x": 1,
+                    "y": 4,
                     "heading": "Sample Gen List",
                     "settings": {
                         "source": {

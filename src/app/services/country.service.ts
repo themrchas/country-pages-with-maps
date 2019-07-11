@@ -17,7 +17,6 @@ export class CountryService {
   countrySource: DataSource;
   private countrySubject = new BehaviorSubject<Country>(null);
   selectedCountry = this.countrySubject.asObservable();
-  
 
   constructor(private dataLayerService: DataLayerService) {
     this.countrySettings = ConfigProvider.settings.country;
