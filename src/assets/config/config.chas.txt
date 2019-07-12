@@ -31,7 +31,7 @@
         }
    
     },
-    "mapService": {
+    "mapService_wms": {
         "url": "https://maps.gvs.nga.mil/arcgis/services/Basemap/World_StreetMap_2D/MapServer/WmsServer?",
         "options":
         {
@@ -39,6 +39,14 @@
             "version": "1.3.0"
         },
         "type": "WMS"
+    },
+    "mapService": {
+        "url": "https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png",
+        "options":
+        {
+            "subdomains": "1234"
+        },
+        "type": "OSM"
     },
     "topics": [
         {
