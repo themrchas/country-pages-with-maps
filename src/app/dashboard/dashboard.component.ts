@@ -69,6 +69,7 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
             cellHeight: 80,
             verticalMargin: 10,
             disableResize: true,
+            disableDrag: true,
             width: 3
         });
         this.grid = $('.grid-stack').data('gridstack');

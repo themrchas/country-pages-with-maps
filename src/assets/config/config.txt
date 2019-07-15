@@ -189,6 +189,8 @@
                 {
                     "type": "news",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "News",
                     "settings": {
                         "sources": [
@@ -234,6 +236,8 @@
                 { 
                     "type": "table",
                     "colspan": 2,
+                    "x": 1,
+                    "y": 0,
                     "heading": "Sample Document Library",
                     "settings": {
                         "source": 
@@ -268,6 +272,8 @@
                 {
                     "type": "upcoming-events",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 4,
                     "heading": "Upcoming Events",
                     "settings": {
                         "sources": [
@@ -299,6 +305,8 @@
                 {
                     "type": "tabs",
                     "colspan": 2,
+                    "x": 0,
+                    "y": 0,
                     "heading": "US Contacts",
                     "settings": {
                         "tabs": [
@@ -439,6 +447,8 @@
                 {  
                     "type": "table",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "WebTAS Example",
                     "settings": {
                         "disableModal": true,
@@ -477,7 +487,10 @@
             "tiles": [
                 {
                     "type": "map",
-                    "colspan": 1,
+                    "colspan": 2,
+                    "x": 1,
+                    "y": 0,
+                    "height": 12,
                     "heading": "Map",
                     "settings": {
                         "zoomToCountry": true,
@@ -488,6 +501,8 @@
                     "type": "table",
                     "heading": "Geodata List",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "settings": {
                         "disableModal": true,
                         "hideFilter": false,
@@ -517,9 +532,42 @@
                     }
                 },
                 {
+                    "type": "table",
+                    "heading": "Doc Library GeoData",
+                    "colspan": 1,
+                    "x": 0,
+                    "y": 4,
+                    "settings": {
+                        "disableModal": true,
+                        "hideFilter": false,
+                        "source": 
+                            {
+                                "listWeb": "/hq/j6/j6sandbox",
+                                "listName": "Documents",
+                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
+                                "select": "MGRS,FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
+                                "type": "docLibrary"
+                            },
+                        "columns": [
+                            {
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
+                            },
+                            {
+                                "columnName": "MGRS",
+                                "displayName": "MGRS",
+                                "showInModal": true,
+                                "type": "geo"
+                            }
+                        ]
+                    }
+                },
+                {
                     "type": "cards",
                     "heading": "Cards Example",
                     "colspan": 2,
+                    "x": 0,
+                    "y": 16,
                     "settings": {
                         "source": {
                             "listWeb": "/hq/j6/j6sandbox",
@@ -555,6 +603,8 @@
                     "type": "bar-chart",
                     "heading": "Bar Chart Example",
                     "colspan": 2,
+                    "x": 0,
+                    "y": 20,
                     "settings": {
                         "direction": "horizontal",
                         "xAxisLabel": "Population",

@@ -33,6 +33,7 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   modalRef: MDBModalRef;
   hasGeoData: boolean;
   selectedRowIndex: number;
+  isSingleClick = true;
 
   // Data source used to control the table
   dataSource  = new MatTableDataSource<any>();
@@ -66,12 +67,26 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
 
   // Fire off when row in table clicked
   onRowClicked(event: any, index: number) {
+    this.isSingleClick = true;
+    setTimeout(() => {
+      if (this.isSingleClick) {
+        index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
+        if (!this.settings.disableModal) {
+          console.log('Row clicked with event:', event);
+          this.openTableItemDialog(index);
+        } else if (this.hasGeoData) {
+          this.geospatialService.highlightItemOnMap(L, index);
+          this.selectedRowIndex = index;
+        }
+      }
+    }, 200);
+  }
+
+  onRowDoubleClicked(event: any, index: number) {
+    this.isSingleClick = false;
     index = this.dataSource.paginator.pageSize * this.dataSource.paginator.pageIndex + index;
-    if (!this.settings.disableModal) {
-      console.log('Row clicked with event:', event);
-      this.openTableItemDialog(index);
-    } else if (this.hasGeoData) {
-      this.geospatialService.highlightItemOnMap(L, index);
+    if (this.hasGeoData) {
+      this.geospatialService.zoomToItemOnMap(L, index);
       this.selectedRowIndex = index;
     }
   }
