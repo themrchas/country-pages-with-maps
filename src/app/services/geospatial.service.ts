@@ -79,6 +79,15 @@ export class GeospatialService {
     this.updateMarkerIcon(L, mapMarker);
   }
 
+  zoomToItemOnMap(L, identifier) {
+    const mapMarker = this.markerDict[identifier];
+    mapMarker.openPopup();
+    this.updateMarkerIcon(L, mapMarker);
+    const latLngs = [ mapMarker.getLatLng() ];
+    const markerBounds = L.latLngBounds(latLngs);
+    this.currentMap.value.fitBounds(markerBounds);
+  }
+
   updateMarkerIcon(L, marker) {
     if (this.selectedMapMarker) {
       this.selectedMapMarker.setIcon(this.getMarkerIcon(L));
@@ -118,6 +127,6 @@ export class GeospatialService {
     });
 
     // zoom to bounds
-    this.currentMap.value.fitBounds(group.getBounds(), { padding: [50, 50]});
+    this.currentMap.value.fitBounds(group.getBounds(), { padding: [100, 100]});
   }
 }

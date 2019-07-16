@@ -96,7 +96,7 @@ export class SpRestService extends BaseDataService {
 
     return asyncRequest.pipe(map(resp => {
 
-      ConfigProvider.settings.debugLog && console.log('List: ',source.listName,'resp in sp-rest.service is', resp);
+      console.log('resp in sp-rest.service is', resp);
       let retResults = null;
 
       if (resp && resp['d'] && resp['d'].results) {
@@ -272,9 +272,7 @@ export class SpRestService extends BaseDataService {
     // const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems(query=@v1)?@v1=${camlQuery}${optParams}`;
     const reqUrl = `${listWeb}/_api/web/lists/getByTitle('${listName}')/GetItems?${optParams}`;
 
-    ConfigProvider.settings.debugLog &&  console.log('reqUrl in sp-rest.service.ts is', reqUrl, 'and optParams are:', optParams, '**', 'and data is', data );
-
-
+    console.log('reqUrl in sp-rest.service.ts is', reqUrl, 'and optParams are:', optParams, '**', 'and data is', data );
     return this.getRequestDigest(listWeb).pipe(mergeMap(requestDigest => {
       return this.httpClient.post(reqUrl, JSON.stringify(data), this.spPostHttpOptions(requestDigest));
     }));

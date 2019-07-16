@@ -13,7 +13,7 @@ export class NewsItem {
         public badgeType: string
         ) {
         this.friendlyDate = moment(date).format('DD MMM').toUpperCase();
-    }  //constructor
+    }
 }
 
 const ownerDocument = document.implementation.createHTMLDocument('virtual');
@@ -32,19 +32,18 @@ export function createNewsItemFromSharePointResult(result: any, source: DataSour
         resultTitle = result.rawData.Title;
     }
 
-
-
-    //Grab dates to be used for determing id item requires a 'New' or 'Updated' badge
+    // Grab dates to be used for determing id item requires a 'New' or 'Updated' badge
     const itemCreated = moment(result.rawData['PublishedDate'], 'YYYY-MM-DDTHH:mm:SS');
     const itemModified = moment(result.rawData['Modified'], 'YYYY-MM-DDTHH:mm:SS');
 
-    if (moment.duration(moment().diff(itemCreated)).as('hours') <= 24) 
-        badgeType = 'New'
-    else if (moment.duration(moment().diff(itemModified)).as('hours') <= 24)
-         badgeType = "Updated";
+    if (moment.duration(moment().diff(itemCreated)).as('hours') <= 24) {
+        badgeType = 'New';
+    } else if (moment.duration(moment().diff(itemModified)).as('hours') <= 24) {
+         badgeType = 'Updated';
+    }
 
 
 
-    newsItem = new NewsItem(resultTitle, resultText, source, result.id, moment(result[source.dateField]),badgeType);
+    newsItem = new NewsItem(resultTitle, resultText, source, result.id, moment(result.rawData[source.dateField]),  badgeType);
     return newsItem;
 }
