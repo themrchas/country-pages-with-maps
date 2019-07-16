@@ -197,7 +197,7 @@ export class SpRestService extends BaseDataService {
               processedColumns,
               modalColumns,
               result,
-              (source.type === SourceDataType.DOC_LIBRARY ? result.File.Name : result.Title),
+              (source.type === SourceDataType.DOC_LIBRARY ? result.FileLeafRef : result.Title),
               result.Id,
               result.Modified,
               itemUrl$,

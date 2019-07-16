@@ -3,7 +3,6 @@ import { TileDirective } from './tile.directive';
 import { TileComponent } from './tile.component';
 
 import { Country } from '../../model/country';
-import { BehaviorSubject } from 'rxjs';
 import { NewsComponent } from '../news/news.component';
 import { MapComponent } from '../map/map.component';
 import { TableComponent } from '../table/table.component';
