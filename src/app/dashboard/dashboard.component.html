@@ -11,7 +11,7 @@
       <ng-container *ngIf="displayGrid">
           <div class="grid-stack" data-gs-width="12">
             <ng-container *ngFor="let tile of tiles">
-              <div class="grid-stack-item" [attr.data-gs-x]="tile.x" [attr.data-gs-y]="tile.y" [attr.data-gs-width]="tile.colspan || 1" [attr.data-gs-height]="tile.height || 4" #gridItem>
+              <div class="grid-stack-item" [attr.data-gs-x]="tile.x" [attr.data-gs-y]="tile.y * 4" [attr.data-gs-width]="tile.colspan || 1" [attr.data-gs-height]="tile.height ? tile.height * 4 : 4" #gridItem>
                 <div class="grid-stack-item-content">
                   <app-tile [tile]="tile" [country]="selectedCountry"></app-tile>
                 </div>
