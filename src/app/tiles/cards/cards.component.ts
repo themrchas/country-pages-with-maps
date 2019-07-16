@@ -16,8 +16,9 @@ export class CardsComponent implements OnInit, TileComponent, AfterViewChecked {
   @Input() settings: any;
   @Input() country: Country;
   @ViewChild(NumberCardComponent) numCard: NumberCardComponent;
+  @ViewChild('cardContainer') cardElement: any;
 
-  svg: any;
+  ieAdjusted = false;
   isIE: boolean;
   view: any[] = undefined;
   colorScheme = {
@@ -25,62 +26,6 @@ export class CardsComponent implements OnInit, TileComponent, AfterViewChecked {
   };
 
   cardResults: Array<any>;
-  /* single = [
-    {
-      'name': 'Germany',
-      'value': '8940000\nTest'
-    },
-    {
-      'name': '<strong>USA</strong><p>Here is some info</p>',
-      'value': 5000000
-    },
-    {
-      'name': 'Kenya',
-      'value': 7200000
-    }
-  ]; */
-
-  /* multi = [
-    {
-      'name': 'Germany',
-      'series': [
-        {
-          'name': '2010',
-          'value': 7300000
-        },
-        {
-          'name': '2011',
-          'value': 8940000
-        }
-      ]
-    },
-    {
-      'name': 'USA',
-      'series': [
-        {
-          'name': '2010',
-          'value': 7870000
-        },
-        {
-          'name': '2011',
-          'value': 8270000
-        }
-      ]
-    },
-    {
-      'name': 'France',
-      'series': [
-        {
-          'name': '2010',
-          'value': 5000002
-        },
-        {
-          'name': '2011',
-          'value': 5800000
-        }
-      ]
-    }
-  ];*/
 
   constructor(
     private dataLayerService: DataLayerService) { }
@@ -88,6 +33,7 @@ export class CardsComponent implements OnInit, TileComponent, AfterViewChecked {
   ngOnInit() {
     this.loadCards(this.country);
 
+    // TODO: move this somewhere central
     const ua = navigator.userAgent;
     const M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
     this.isIE = (/trident/i.test(M[1])) ? true : false;
@@ -95,21 +41,27 @@ export class CardsComponent implements OnInit, TileComponent, AfterViewChecked {
 
   ngAfterViewChecked() {
     // Very hacky way to get labels to display in IE11 (foreignObject not supported)
-    if (this.isIE && this.cardElement && !this.svg) {
-      this.svg = this.cardElement.nativeElement.childNodes[0].childNodes[0].childNodes[0].childNodes[0];
-      /*$('foreignObject').each((index, el) => {
-        const label = $(el).text();
-        $(el).replaceWith(
-          '<text class="value-text" x="23.5" y="50.5" style="fill: rgb(18, 33, 17); font-size: 18pt;">' +
-          label +
-          '</text>');
+    // NGX cards displays the value as a <text> element and the label as a <foreignObject> element
+    // Instead, grab the foreignObject and get the label text and create a new text element with
+    // the label text
+    if (this.isIE && this.cardElement && !this.ieAdjusted) {
+      $('foreignObject').each((index, el) => {
+        const foreignObj = $(el);
+        const label = foreignObj.text();
+
+        // Apply the same styles as the value text item.
+        // NOTE: this seems to grab the font-size too early, so the font-size is always 12pt
+        const textElement = foreignObj.next();
+        const style = textElement.attr('style');
+
+        const newElement = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        newElement.textContent = label;
+        newElement.setAttribute('x', foreignObj.attr('x'));
+        newElement.setAttribute('y', foreignObj.attr('y'));
+        newElement.setAttribute('style', style);
+        el.parentNode.appendChild(newElement);
       });
-      $('ngx-charts-chart').html($('ngx-charts-chart').html());*/
-      /*$('.value-text').each((index, el) => {
-        $(el).html('<tspan dy="1.2em">Hi</tspan><tspan dy="1.2em">there<tspan>');
-      });*/
-      // $('.value-text').text('hiya');
-      // $('.num-card ngx-charts-chart').html($('ngx-charts-chart').html());
+      this.ieAdjusted = true;
     }
   }
 
