@@ -18,8 +18,8 @@
                     </a>
                     <ng-container *ngIf="selectedTopic | async as selectedTopic">
                         <div *ngIf="topic.topicId === selectedTopic.topicId" class="submenu">
-                            <ng-container *ngFor="let tile of tilesForTopic; let i = index">
-                                <a mat-list-item (click)="highlightTile(tile.type + i)">{{tile.heading && tile.heading.length < 18 ? tile.heading : (tile.heading | slice:0:16)+'...' }}</a>
+                            <ng-container *ngFor="let tile of tilesForTopic">
+                                <a mat-list-item (click)="highlightTile(tile.type + '_' + tile.x + '_' + tile.y)">{{tile.heading && tile.heading.length < 18 ? tile.heading : (tile.heading | slice:0:16)+'...' }}</a>
                             </ng-container>
                         </div>
                     </ng-container>

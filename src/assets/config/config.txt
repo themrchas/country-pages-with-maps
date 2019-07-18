@@ -568,28 +568,34 @@
                     "x": 0,
                     "y": 3,
                     "settings": {
-                        "disableModal": true,
-                        "hideFilter": false,
-                        "source": 
+                        "source": {
+                            "listWeb": "/hq/j6/j6sandbox",
+                            "listName": "CountryCharts",
+			                "url":  "/hq/j6/j6sandbox/Lists/CountryCharts",
+                            "camlQuery_oneCountry": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
+                            "camlQuery": "<View><Query><Where></Where></Query></View>"
+                        },
+                        "columns_oneCountry": [
                             {
-                                "listWeb": "/hq/j6/j6sandbox",
-                                "listName": "Documents",
-                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
-                                "select": "MGRS,FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
-                                "type": "docLibrary"
+                                "columnName": "Value",
+                                "displayName": "Value"
                             },
+                            {
+                                "columnName": "Population",
+                                "displayName": "Population"
+                            }
+                        ],
                         "columns": [
                             {
-                                "columnName": "FileLeafRef",
-                                "displayName": "Name"
+                                "columnName": "Value"
                             },
                             {
-                                "columnName": "MGRS",
-                                "displayName": "MGRS",
-                                "showInModal": true,
-                                "type": "geo"
+                                "columnName": "CountryMM",
+                                "type": "mm"
                             }
-                        ]
+                        ],
+                        "valueColumn": "Value",
+                        "nameColumn": "CountryMM"
                     }
                 },
                 {

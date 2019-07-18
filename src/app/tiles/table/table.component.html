@@ -28,15 +28,15 @@
          <ng-container *ngIf="tblCol.type === 'geo'">
           <td mat-cell *matCellDef="let tableItem">
             <ng-container *ngIf="tableItem[tblCol.columnName]">
-              <img class="action-icon" title="Click item to highlight on map tile.  Double-click to zoom to item." src="./assets/images/map-marker.png"/> {{tableItem[tblCol.columnName]}}
-            </ng-container> 
+              <div title="Click item to highlight on map tile.  Double-click to zoom to item."><img class="action-icon" src="./assets/images/map-marker.png"/> {{tableItem[tblCol.columnName]}}</div>
+            </ng-container>
           </td>
          </ng-container>
 
          <ng-container *ngIf="tblCol.type === 'kml'">
           <td mat-cell *matCellDef="let tableItem">
             <ng-container *ngIf="tableItem[tblCol.columnName]">
-              <img class="action-icon" src="./assets/images/earth.png" title="Add to map tile"/>
+              <img class="action-icon" src="./assets/images/earth.png" title="Double-click to add to map"/>
             </ng-container>
           </td>
          </ng-container>
