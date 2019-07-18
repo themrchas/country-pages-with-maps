@@ -28,8 +28,8 @@
          <ng-container *ngIf="tblCol.type === 'geo'">
           <td mat-cell *matCellDef="let tableItem">
             <ng-container *ngIf="tableItem[tblCol.columnName]">
-              <img class="action-icon" src="./assets/images/map-marker.png"/> {{tableItem[tblCol.columnName]}}
-            </ng-container>
+              <img class="action-icon" title="Click item to highlight on map tile.  Double-click to zoom to item." src="./assets/images/map-marker.png"/> {{tableItem[tblCol.columnName]}}
+            </ng-container> 
           </td>
          </ng-container>
 
@@ -66,7 +66,7 @@
          <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
          
          <tr mat-row *matRowDef="let row; columns: columnsToDisplay; let i = index;"
-           (click)="onRowClicked($event, i)" [ngClass]="{'highlight': selectedRowIndex == i + dataSource.paginator.pageSize * dataSource.paginator.pageIndex }">
+           (click)="onRowClicked($event, i)" (dblclick)="onRowDoubleClicked($event, i)" [ngClass]="{'highlight': selectedRowIndex == i + dataSource.paginator.pageSize * dataSource.paginator.pageIndex }">
          </tr>
          
        </table>

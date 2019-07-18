@@ -37,7 +37,7 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
     this.geospatialService.getTileLayer(L).addTo(this.map);
     this.geospatialService.setCurrentMap(this.map);
 
-    if (!this.settings.highlightCountry === false && !this.settings.zoomToCountry === false) {
+    if (!this.settings || (!this.settings.highlightCountry === false && !this.settings.zoomToCountry === false)) {
 
       const countryFilter = (feature) => {
         return feature.properties.iso_a3 === this.country.countryCode3;
@@ -52,10 +52,9 @@ export class MapComponent implements OnInit, OnDestroy, TileComponent {
         L.geoJson(data, {
           filter: countryFilter,
           style: (feature) => {
-            const weight = this.settings && !this.settings.highlightCountry === false ? 1 : 0;
+            const weight = this.settings && this.settings.highlightCountry === false ? 0 : 1;
             return {
-              weight: 1,
-              opacity: 0
+              weight: weight
             };
           },
           onEachFeature: onEachFeature // should just be one feature

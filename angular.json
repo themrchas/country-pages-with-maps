@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/gridstack/dist/gridstack.css",
               "./node_modules/leaflet/dist/leaflet.css",
               "./node_modules/angular-bootstrap-md/scss/bootstrap/bootstrap.scss",
               "./node_modules/angular-bootstrap-md/scss/mdb-free.scss",
@@ -31,6 +32,10 @@
             ],
             "scripts": [
               "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/jquery-ui-dist/jquery-ui.min.js",
+              "./node_modules/lodash/lodash.min.js",
+              "./node_modules/gridstack/dist/gridstack.js",
+              "./node_modules/gridstack/dist/gridstack.jQueryUI.min.js",
               "./node_modules/spservices/dist/jquery.SPServices.min.js",
               "./node_modules/leaflet/dist/leaflet.js",
               "./node_modules/togeojson/togeojson.js"
