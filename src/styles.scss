@@ -7,5 +7,7 @@ body {
 }
 
 app-tile.highlighted .card {
-    border: 2px solid #81c9ff;
+    /* border: 2px solid #81c9ff; */
+    box-shadow: 0px 0px 0px 5px #81c9ff;
+    transition: box-shadow 0.2s linear;
 }

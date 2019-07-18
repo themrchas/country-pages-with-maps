@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
       let tileIndex = 0;
 
       if (this.selectedCountry && this.selectedTopic) {
-
+        this.highlightedTileId = null;
         let currColCountForRow = 0;
         const tempRows = [[]];  // Each row will have an array of tiles, tiles can span 1-3 cols
         for (const item of this.selectedTopic.tiles) {
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
     this.topicService.highlightedTile.subscribe(tileId => {
       if (tileId !== null) {
         const el = document.getElementById(tileId);
-        el.scrollIntoView();
+        el.scrollIntoView({ behavior: 'smooth', inline: 'start' });
         this.highlightedTileId = tileId;
       }
     });

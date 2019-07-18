@@ -509,7 +509,7 @@
                 },
                 {
                     "type": "table",
-                    "heading": "Doc Library GeoData",
+                    "heading": "Doc Library MGRS",
                     "colspan": 1,
                     "settings": {
                         "disableModal": true,
@@ -537,38 +537,31 @@
                     }
                 },
                 {
-                    "type": "cards",
-                    "heading": "Cards Example",
-                    "colspan": 2,
+                    "type": "table",
+                    "heading": "Doc Library KML",
+                    "colspan": 1,
                     "settings": {
-                        "source": {
-                            "listWeb": "/hq/j6/j6sandbox",
-                            "listName": "CountryCharts",
-			                "url":  "/hq/j6/j6sandbox/Lists/CountryCharts",
-                            "camlQuery_oneCountry": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
-                            "camlQuery": "<View><Query><Where></Where></Query></View>"
-                        },
-                        "columns_oneCountry": [
+                        "disableModal": true,
+                        "hideFilter": false,
+                        "source": 
                             {
-                                "columnName": "Value",
-                                "displayName": "Value"
+                                "listWeb": "/hq/j6/j6sandbox",
+                                "listName": "KML Library",
+                                "url":  "/hq/j6/j6sandbox/KML%20Library",
+                                "select": "FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
+                                "type": "docLibrary"
                             },
-                            {
-                                "columnName": "Population",
-                                "displayName": "Population"
-                            }
-                        ],
                         "columns": [
                             {
-                                "columnName": "Value"
+                                "columnName": "FileRef",
+                                "displayName": "Type",
+                                "type": "kml"
                             },
                             {
-                                "columnName": "CountryMM",
-                                "type": "mm"
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
                             }
-                        ],
-                        "valueColumn": "Value",
-                        "nameColumn": "CountryMM"
+                        ]
                     }
                 },
                 {

@@ -32,6 +32,7 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   doLog: false; // Control component logging to console
   modalRef: MDBModalRef;
   hasGeoData: boolean;
+  hasKml: boolean;
   selectedRowIndex: number;
 
   // Data source used to control the table
@@ -73,6 +74,8 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
     } else if (this.hasGeoData) {
       this.geospatialService.highlightItemOnMap(L, index);
       this.selectedRowIndex = index;
+    } else if (this.hasKml) {
+      this.geospatialService.loadKml(this.rawResults[index].rawData.FileRef, L);
     }
   }
 
@@ -125,6 +128,9 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
     for (const column of this.settings.columns) {
       if (column.type === 'geo') {
         geoDataCols.push(column);
+      }
+      if (column.type === 'kml') {
+        this.hasKml = true;
       }
     }
     this.hasGeoData = geoDataCols.length > 0;
