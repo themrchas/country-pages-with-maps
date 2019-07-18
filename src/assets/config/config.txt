@@ -575,6 +575,7 @@
                             "camlQuery_oneCountry": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>",
                             "camlQuery": "<View><Query><Where></Where></Query></View>"
                         },
+                        "colorFunc": "return value > 100 ? ( value > 400 ? 'red' : 'yellow') : 'blue';",
                         "columns_oneCountry": [
                             {
                                 "columnName": "Value",
