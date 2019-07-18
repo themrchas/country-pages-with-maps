@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { ConfigProvider } from '../providers/configProvider';
 import * as mgrs from 'mgrs';
+declare let toGeoJSON;
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class GeospatialService {
   private geoJsonPath = './assets/geo/africa.txt';
   private markerDict = {};
   private selectedMapMarker: any;
+  private parser = new DOMParser();
   public currentMap = new BehaviorSubject<any>(null);
 
   constructor(private httpClient: HttpClient) { }
@@ -107,6 +110,15 @@ export class GeospatialService {
     } else {
       this._addMarkersOnMap(L, markers, zoomToBounds, handleMarkerClick);
     }
+  }
+
+  loadKml(filePath, L) {
+    this.httpClient.get(filePath, { responseType: 'text' }).subscribe(response => {
+      const xmlDoc = this.parser.parseFromString(response, 'text/xml');
+      const geoJson = toGeoJSON.kml(xmlDoc);
+      console.log(geoJson);
+      L.geoJson(geoJson).addTo(this.currentMap.value);
+    });
   }
 
   _addMarkersOnMap(L, markers: Array<any>, zoomToBounds, handleMarkerClick) {

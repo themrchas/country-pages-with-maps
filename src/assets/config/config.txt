@@ -532,7 +532,7 @@
                 },
                 {
                     "type": "table",
-                    "heading": "Doc Library GeoData",
+                    "heading": "Doc Library MGRS",
                     "colspan": 1,
                     "x": 0,
                     "y": 1,
@@ -596,6 +596,36 @@
                         ],
                         "valueColumn": "Value",
                         "nameColumn": "CountryMM"
+                    }
+                },
+                {
+                    "type": "table",
+                    "heading": "Doc Library KML",
+                    "colspan": 1,
+                    "x": 0,
+                    "y": 2,
+                    "settings": {
+                        "disableModal": true,
+                        "hideFilter": false,
+                        "source": 
+                            {
+                                "listWeb": "/hq/j6/j6sandbox",
+                                "listName": "KML Library",
+                                "url":  "/hq/j6/j6sandbox/KML%20Library",
+                                "select": "FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
+                                "type": "docLibrary"
+                            },
+                        "columns": [
+                            {
+                                "columnName": "FileRef",
+                                "displayName": "Type",
+                                "type": "kml"
+                            },
+                            {
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
+                            }
+                        ]
                     }
                 },
                 {
