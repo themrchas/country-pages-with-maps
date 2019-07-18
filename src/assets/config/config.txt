@@ -39,7 +39,7 @@
         "type": "WMS"
     },
     "mapService": {
-        "url": "https://osm-{s}.gs.mil/tiles/default/{z}/{x}/{y}.png",
+        "url": "https://osm-{s}.geointservices.io/tiles/default/{z}/{x}/{y}.png",
         "options":
         {
             "subdomains": "1234"
@@ -55,16 +55,18 @@
                 {
                     "type": "single-item",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "SOCAFRICA Country Overview",
                     "description": "Various information about the selected country",
                     "settings": {
-			"source": {
-				"listWeb": "/hq/j6/j6sandbox",
-				"listName": "CountryData",
-				"url": "/hq/j6/j6sandbox/Lists/CountryData",
-				"displayName": "Country Data",
-				"camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
-			},
+                    "source": {
+                        "listWeb": "/hq/j6/j6sandbox",
+                        "listName": "CountryData",
+                        "url": "/hq/j6/j6sandbox/Lists/CountryData",
+                        "displayName": "Country Data",
+                        "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                    },
                         "columns": [
                             {
                                 "columnName": "CountryMM",
@@ -86,12 +88,15 @@
                 {
                     "type": "map",
                     "colspan": 1,
+                    "x": 1,
+                    "y": 0,
                     "heading": "Map"
                 },
 { 
                     "type": "links",
-                    "rowspan": 1,
                     "colspan": 1,
+                    "x": 2,
+                    "y": 0,
                     "heading": "Sample Links List",
                     "settings": {
                         "sources": [{
@@ -115,6 +120,8 @@
                 { 
                     "type": "chart",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 1,
                     "heading": "Country Pages Chart",
                     "settings": {
                         "source": {
@@ -140,6 +147,8 @@
                 { 
                     "type": "table",
                     "colspan": 2,
+                    "x": 1,
+                    "y": 1,
                     "heading": "Sample Gen List",
                     "settings": {
                         "source": {
@@ -180,6 +189,8 @@
                 {
                     "type": "news",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "News",
                     "settings": {
                         "sources": [
@@ -225,6 +236,8 @@
                 { 
                     "type": "table",
                     "colspan": 2,
+                    "x": 1,
+                    "y": 0,
                     "heading": "Sample Document Library",
                     "settings": {
                         "source": 
@@ -232,8 +245,7 @@
                                 "listWeb": "/hq/j6/j6sandbox",
                                 "listName": "Documents",
                                 "url":  "/hq/j6/j6sandbox/Shared%20Documents",
-                                "select": "File/Name,File_x0020_Type,Created,Modified,FileRef,Id",
-                                "expand": "File",
+                                "select": "FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
                                 "type": "docLibrary"
                             },
                         "columns": [
@@ -243,9 +255,8 @@
                                 "type": "docTypeIcon"
                             },
                             {
-                                "columnName": "File/Name",
-                                "displayName": "Name",
-                                "type": "expanded"
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
                             },
                             { "columnName": "isNew", "displayName": "", "type": "newBadge" },
                             {
@@ -253,12 +264,15 @@
                                 "displayName": "Created Date",
                                 "type": "date"
                             }
-                        ]
+                        ],
+                        "modal": {}
                     }
                 },
                 {
                     "type": "upcoming-events",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 1,
                     "heading": "Upcoming Events",
                     "settings": {
                         "sources": [
@@ -290,6 +304,8 @@
                 {
                     "type": "tabs",
                     "colspan": 2,
+                    "x": 0,
+                    "y": 0,
                     "heading": "US Contacts",
                     "settings": {
                         "tabs": [
@@ -430,6 +446,8 @@
                 {  
                     "type": "table",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "WebTAS Example",
                     "settings": {
                         "disableModal": true,
@@ -468,7 +486,10 @@
             "tiles": [
                 {
                     "type": "map",
-                    "colspan": 1,
+                    "colspan": 2,
+                    "x": 1,
+                    "y": 0,
+                    "height": 3,
                     "heading": "Map",
                     "settings": {
                         "zoomToCountry": true,
@@ -479,6 +500,8 @@
                     "type": "table",
                     "heading": "Geodata List",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "settings": {
                         "disableModal": true,
                         "hideFilter": false,
@@ -508,9 +531,42 @@
                     }
                 },
                 {
+                    "type": "table",
+                    "heading": "Doc Library GeoData",
+                    "colspan": 1,
+                    "x": 0,
+                    "y": 1,
+                    "settings": {
+                        "disableModal": true,
+                        "hideFilter": false,
+                        "source": 
+                            {
+                                "listWeb": "/hq/j6/j6sandbox",
+                                "listName": "Documents",
+                                "url":  "/hq/j6/j6sandbox/Shared%20Documents",
+                                "select": "MGRS,FileLeafRef,File_x0020_Type,Created,Modified,FileRef,Id",
+                                "type": "docLibrary"
+                            },
+                        "columns": [
+                            {
+                                "columnName": "FileLeafRef",
+                                "displayName": "Name"
+                            },
+                            {
+                                "columnName": "MGRS",
+                                "displayName": "MGRS",
+                                "showInModal": true,
+                                "type": "geo"
+                            }
+                        ]
+                    }
+                },
+                {
                     "type": "cards",
                     "heading": "Cards Example",
                     "colspan": 2,
+                    "x": 0,
+                    "y": 3,
                     "settings": {
                         "source": {
                             "listWeb": "/hq/j6/j6sandbox",
@@ -546,6 +602,8 @@
                     "type": "bar-chart",
                     "heading": "Bar Chart Example",
                     "colspan": 2,
+                    "x": 0,
+                    "y": 4,
                     "settings": {
                         "direction": "horizontal",
                         "xAxisLabel": "Population",

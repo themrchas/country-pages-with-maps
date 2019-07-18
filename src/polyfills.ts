@@ -36,8 +36,7 @@ import 'core-js/es6/set';
 import 'core-js/es7/array';
 
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
-// import 'classlist.js';  // Run `npm install --save classlist.js`.
-
+import 'classlist.js';
 /** IE10 and IE11 requires the following for the Reflect API. */
 // import 'core-js/es6/reflect';
 
@@ -79,3 +78,7 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+if (typeof SVGElement.prototype.contains === 'undefined') {
+    SVGElement.prototype.contains = HTMLDivElement.prototype.contains;
+}
