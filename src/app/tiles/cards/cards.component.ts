@@ -26,11 +26,19 @@ export class CardsComponent implements OnInit, TileComponent, AfterViewChecked {
   };
 
   cardResults: Array<any>;
+  customColorResults: Array<any>;
+  customFunc: any;
 
   constructor(
     private dataLayerService: DataLayerService) { }
 
   ngOnInit() {
+    // Create a function to apply custom colors based on the card's value
+    // Since we can't store the function in our config JSON, the JSON instead just stores the body
+    // of the function and we create the full function dynamically here.
+    if (this.settings.colorFunc) {
+      this.customFunc = new Function('value', this.settings.colorFunc);
+    }
     this.loadCards(this.country);
 
     // TODO: move this somewhere central
@@ -87,7 +95,20 @@ export class CardsComponent implements OnInit, TileComponent, AfterViewChecked {
         });
       }
       this.cardResults = tempCards;
+      this.customColorResults = [...this.cardResults];
     });
+  }
+
+  // For some reason, NGX passes the label and not the value for custom colors.  Need to retrieve the value
+  // from the customColorResults object.  Assumes labels are arriving in order.
+  customColor = (label) => {
+    // Get the first item
+    const value = this.customColorResults[0].value;
+
+    // Remove the first item
+    this.customColorResults.shift();
+
+    return this.customFunc(value);
   }
 
 }

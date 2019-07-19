@@ -37,7 +37,8 @@
               "./node_modules/gridstack/dist/gridstack.js",
               "./node_modules/gridstack/dist/gridstack.jQueryUI.min.js",
               "./node_modules/spservices/dist/jquery.SPServices.min.js",
-              "./node_modules/leaflet/dist/leaflet.js"
+              "./node_modules/leaflet/dist/leaflet.js",
+              "./node_modules/togeojson/togeojson.js"
             ]
           },
           "configurations": {

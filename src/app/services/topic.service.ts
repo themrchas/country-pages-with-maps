@@ -7,7 +7,9 @@ import { ConfigProvider } from '../providers/configProvider';
 })
 export class TopicService {
   private topicSubject = new BehaviorSubject<any>(null);
+  private highlightedTileSubject = new BehaviorSubject<any>(null);
   selectedTopic = this.topicSubject.asObservable();
+  highlightedTile = this.highlightedTileSubject.asObservable();
 
   constructor() {}
 
@@ -21,5 +23,9 @@ export class TopicService {
 
   changeTopic(topicId) {
     this.topicSubject.next(this.getTopic(topicId));
+  }
+
+  highlightTile(tileId) {
+    this.highlightedTileSubject.next(tileId);
   }
 }

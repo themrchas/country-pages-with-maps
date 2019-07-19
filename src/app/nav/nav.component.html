@@ -12,11 +12,18 @@
         <ng-container *ngIf="selectedCountry | async as selectedCountry">
             <mat-nav-list>
                 <ng-container *ngFor="let topic of topics" >
-                <a mat-list-item [routerLink]="[]" [queryParams]="{ topic: topic.topicId }" routerLinkActive="active-route">
-                    <mat-icon matListIcon class="app-nav-list-icon"><img *ngIf="topic.iconPath" [src]="topic.iconPath"/></mat-icon>
-                    {{topic.name}}
-                </a>
-            </ng-container>
+                    <a mat-list-item [routerLink]="[]" (click)="scrollTop()" [queryParams]="{ topic: topic.topicId }" routerLinkActive="active-route">
+                        <mat-icon matListIcon class="app-nav-list-icon"><img *ngIf="topic.iconPath" [src]="topic.iconPath"/></mat-icon>
+                        {{topic.name}}
+                    </a>
+                    <ng-container *ngIf="selectedTopic | async as selectedTopic">
+                        <div *ngIf="topic.topicId === selectedTopic.topicId" class="submenu">
+                            <ng-container *ngFor="let tile of tilesForTopic">
+                                <a mat-list-item (click)="highlightTile(tile.type + '_' + tile.x + '_' + tile.y)">{{tile.heading && tile.heading.length < 18 ? tile.heading : (tile.heading | slice:0:16)+'...' }}</a>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </ng-container>
             
                 <!--<mat-divider></mat-divider>-->
             
@@ -25,7 +32,7 @@
         <div class="feedback mat-list-item"><a [href]="feedbackUrl" mdbPopover="Submit Feedback"
             placement="right" triggers="hover" target="_blank"><img src="./assets/images/message-text-outline.png"><span class="show-expanded"> Submit Feedback</span></a></div>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content #sideNav>
         <mat-toolbar class="country-toolbar" *ngIf="selectedCountry | async as selectedCountry">
             <ng-container>
                 <h3><img [hidden]="flagHidden" (error)="flagHidden = true" (load)="flagHidden = false" class="flag-icon" [src]="'./assets/flags/' + selectedCountry.countryCode3 + '-flag-icon-64.png'"/> {{selectedCountry.title}}</h3>
