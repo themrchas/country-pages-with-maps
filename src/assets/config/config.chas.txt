@@ -74,7 +74,7 @@
                             {
                                 "columnName": "RegionMM",
                                 "displayName": "Region",
-				"type": "mm"
+				                "type": "mm"
                             }
                         ]
                     },
@@ -219,25 +219,8 @@
                                     "startDateOffset_unit": "months",
                                     "startDateField": "PublishedDate"
                                 }
-                            },
-                            {
-                                "displayName": "Remote Blog",
-                                "listName": "Posts",
-                                "listWeb": "/hq/km/remoteblog",
-                                "url": "/hq/km/remoteblog",
-                                "type": "blog",
-                                "displayForm": "Post.aspx",
-                                "dateField": "PublishedDate",
-                                "select": "PostCategory/Title,Body,Title,PublishedDate,Id",
-                                "expand": "PostCategory",
-                                "filter": "OData__ModerationStatus eq 0",
-                                "dateFilter": {
-                                    "startDate": "TODAY",
-                                    "startDateOffset": -3,
-                                    "startDateOffset_unit": "months",
-                                    "startDateField": "PublishedDate"
-                                }
                             }
+                            
                         ]
                     }
                 },
@@ -276,12 +259,12 @@
                     "settings": {
                         "sources": [
                             {
-				"past": false,
+				                "past": false,
                                 "listWeb": "http://localhost:8080/sites/dev/socafdev",
                                 "url": "http://localhost:8080/sites/dev/socafdev/Lists/DevCalendar",
                                 "listName": "DevCalendar",
                                 "defaultView": "",
-				"camlQuery": "<Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query>"
+				                "camlQuery": "<Query><Where><Eq><FieldRef Name='Countries'/><Value Type='Text'>{{countryMM}}</Value></Eq></Where></Query>"
                             },
                             {
                                 "listWeb": "/hq/km",
