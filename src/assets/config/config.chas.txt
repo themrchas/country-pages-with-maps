@@ -57,16 +57,18 @@
                 {
                     "type": "single-item",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 0,
                     "heading": "SOCAFRICA Country Overview",
                     "description": "Various information about the selected country",
                     "settings": {
-			"source": {
-				"listWeb": "http://localhost:8080/sites/dev/socafdev",
-				"listName": "CountryData",
-				"url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryData",
-				"displayName": "Country Data",
-				"camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldValue'>{{countryMM}}</Value></Eq></Where></Query></View>"
-			},
+			            "source": {
+				            "listWeb": "http://localhost:8080/sites/dev/socafdev",
+				            "listName": "CountryData",
+				            "url": "http://localhost:8080/sites/dev/socafdev/Lists/CountryData",
+				            "displayName": "Country Data",
+				            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='CountryMM'/><Value Type='TaxonomyFieldValue'>{{countryMM}}</Value></Eq></Where></Query></View>"
+			        },
                         "columns": [
                             {
                                "columnName": "CountryMM", "displayName": "Country", "type": "mm"
@@ -80,17 +82,21 @@
                     },
                     "displayForCountries": [
                         "SOM",
-                        "GHA"
+                        "GHA",
+                        "KEN"
                     ]
                 },
                 {
                     "type": "map",
                     "colspan": 1,
+                    "x": 1,
+                    "y": 0,
                     "heading": "Map"
                 },
                 { 
                     "type": "links",
-                    "rowspan": 1,
+                     "x": 2,
+                    "y": 0,
                     "colspan": 1,
                     "heading": "Sample Links List",
                     "settings": {
@@ -112,7 +118,9 @@
                 },
                 { 
                     "type": "table",
-                    "colspan": 3,
+                    "colspan": 2,
+                    "x":0,
+                    "y":1,
                     "heading": "Sample Gen List",
                     "settings": {
                         "source": {
@@ -141,6 +149,8 @@
                 { 
                     "type": "chart",
                     "colspan": 1,
+                    "x":0,
+                    "y":2,
                     "heading": "Country Pages Chart",
                     "settings": {
                         
@@ -170,6 +180,8 @@
                 {
                    "type": "news",
                     "colspan": 1,
+                    "x": 0,
+                    "y": 2,
                     "heading": "News & Updates",
                     "settings": {
                         "sources":  [ 
@@ -285,6 +297,8 @@
                 {
                     "type": "tabs",
                     "colspan": 2,
+                    "x":0,
+                    "y":0,
                     "heading": "US Contacts",
                     "settings": {
                         "tabs": [
@@ -435,10 +449,57 @@
                             }
                         ]
                     }
+                },
+                {
+                "type": "map",
+                "colspan": 2,
+                "x": 1,
+                "y": 1,
+                "height": 3,
+                "heading": "Map",
+                "settings": {
+                    "zoomToCountry": true,
+                    "highlightCountry": false
+                 }
+                },
+                {
+                    "type":"table",
+                    "heading":"Geodata List",
+                    "colspan": 1,
+                    "x": 0,
+                    "y": 1,
+                    "settings": {
+                        "disableModal":true,
+                        "hideFilter": false,
+                        "source": {
+                            "listWeb": "http://localhost:8080/sites/dev/socafdev",
+                            "listName": "SampleList",
+                            "url":  "http://localhost:8080/sites/dev/socafdev/Lists/SampleList",
+                            "camlQuery": "<View><Query><Where><Eq><FieldRef Name='Country'/><Value Type='TaxonomyFieldType'>{{countryMM}}</Value></Eq></Where></Query></View>"
+                        },
+                        "columns": [
+                            {
+                                "columnName": "Title",
+                                "displayName": "Title",
+                                "showInModal": true
+                            },
+                            {
+                                "columnName": "MGRS",
+                                "displayName": "MGRS",
+                                "showInModal": true,
+                                "type": "geo"
+                            }
+                        ],
+                        "modal": {
+                            "titleColumn": "Title",
+                            "type": "details"
+                        }
+
+                    }
                 }
             ]
         },
-	{
+	    {
 		"name": "Test Events",
 		"topicId":  "events",
 		"tiles": [
