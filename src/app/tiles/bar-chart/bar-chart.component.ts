@@ -24,6 +24,7 @@ export class BarChartComponent implements OnInit, TileComponent {
   showYAxisLabel: boolean;
   yAxisLabel: string;
   colorScheme: any;
+  barPadding: any;
 
   view: any[] = undefined;
 
@@ -39,6 +40,7 @@ export class BarChartComponent implements OnInit, TileComponent {
     this.xAxisLabel = this.settings.xAxisLabel || '';
     this.showYAxisLabel = this.settings.showYAxisLabel || true;
     this.yAxisLabel = this.settings.yAxisLabel || '';
+    this.barPadding = this.settings.barPadding || 2;
     this.colorScheme = {
       domain: this.settings.colorScheme || ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
     };

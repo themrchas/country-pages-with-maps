@@ -1,6 +1,6 @@
 <div class="main-container">
     <div class="chart-col">
-      <div *ngIf="chartResults" style="position: absolute; top: 50px; left: 50px; right: 50px; bottom: 50px;">
+      <div *ngIf="chartResults" style="position: absolute; top: 30px; left: 50px; right: 50px; bottom: 20px;">
         <ng-container *ngIf="!settings.groupByColumn; else grouped_chart">
           <ng-container *ngIf="settings.direction !== 'vertical'; else vertical_chart">
             <ngx-charts-bar-horizontal
@@ -16,6 +16,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
+              [barPadding]="barPadding"
               (select)="onSelect($event)">
             </ngx-charts-bar-horizontal>
           </ng-container>
@@ -34,6 +35,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
+              [barPadding]="barPadding"
               (select)="onSelect($event)">
             </ngx-charts-bar-vertical>
           </ng-template>
@@ -53,6 +55,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
+              [barPadding]="barPadding"
               (select)="onSelect($event)">
             </ngx-charts-bar-horizontal-2d>
           </ng-container>
@@ -71,6 +74,7 @@
               [showYAxisLabel]="showYAxisLabel"
               [xAxisLabel]="xAxisLabel"
               [yAxisLabel]="yAxisLabel"
+              [barPadding]="barPadding"
               (select)="onSelect($event)">
             </ngx-charts-bar-vertical-2d>
           </ng-template>
