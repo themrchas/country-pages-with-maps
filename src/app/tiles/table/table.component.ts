@@ -139,6 +139,10 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   loadTable(country) {
 
     const geoDataCols = [];
+    const markerDataCols: Array<string> = [];
+    let markerHtml : string;
+
+
     // Find any geodata columns
     for (const column of this.settings.columns) {
       if (column.type === 'geo') {
@@ -147,8 +151,16 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
       if (column.type === 'kml') {
         this.hasKml = true;
       }
+      if (column.showInMarker) {
+        markerDataCols.push(column.columnName);
+
+      }
     }
     this.hasGeoData = geoDataCols.length > 0;
+
+    //If there is at least one column entry with 'showInMarker' property then grab the html string to be used with column(s)
+    if (markerDataCols.length > 0) 
+      markerHtml = this.settings.marker.markerHtml;
 
     const listItems = Array<any>();
     this.dataLayerService.getItemsFromSource(new DataSource(this.settings.source),
@@ -167,13 +179,23 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
           // Add formated object to list of items to be returned
           listItems.push(result.processedColumns);
 
+          //Value of columns that have been identified to be passed to marker ('showInMarker' in config.txt)
+          const markerData = {};
+          for (const markerDataCol of markerDataCols) 
+            if (result.processedColumns[markerDataCol])
+               markerData[markerDataCol] = result.processedColumns[markerDataCol];
+             
+
+
           for (const geoCol of geoDataCols) {
             // mgrsPoints.push(result.processedColumns[geoCol.name]);
             const mgrsData = result.processedColumns[geoCol.columnName];
             if (mgrsData) {
               markers.push({
                 mgrsStr: mgrsData,
-                identifier: resultIndex
+                identifier: resultIndex,
+                markerData: markerData,
+                html : markerHtml
               });
             }
           }
@@ -208,3 +230,5 @@ export class TableComponent implements OnInit, AfterViewInit, TileComponent {
   }
 
 }
+
+

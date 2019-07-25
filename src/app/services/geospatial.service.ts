@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { ConfigProvider } from '../providers/configProvider';
+import { BaseDataService } from "./baseDataService";
 import * as mgrs from 'mgrs';
 declare let toGeoJSON;
 
@@ -16,8 +17,12 @@ export class GeospatialService {
   private selectedMapMarker: any;
   private parser = new DOMParser();
   public currentMap = new BehaviorSubject<any>(null);
+  doLog:boolean; // Control component logging to console
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) { 
+      this.doLog = ConfigProvider.settings.debugLog;
+
+  }
 
   // Only retrieve the geoJson once
   getAfricaGeoJson() {
@@ -121,12 +126,31 @@ export class GeospatialService {
     });
   }
 
+
+  setMarkerTitle( html, markerData ) : string {
+  
+    let parsedHtml: string;    parsedHtml = BaseDataService.replacePlaceholdersWithFieldValues(html,markerData);
+
+    this.doLog &&console.log('The modified markerHtml string in setMarkerTitle is',parsedHtml);
+
+    return parsedHtml;
+
+  }
+
+
   _addMarkersOnMap(L, markers: Array<any>, zoomToBounds, handleMarkerClick) {
     const markerIcon = this.getMarkerIcon(L);
 
     const leafletMarkers = markers.map(marker => {
+     this.doLog &&  console.log('Marker is ', marker);
+      
+      //Perform substitution of existing list values in the html string
+      let markerTitle: string = this.setMarkerTitle(marker.html,marker.markerData);
+     
+
       return L.marker(mgrs.toPoint(marker.mgrsStr),
-        { icon: markerIcon, riseOnHover: true, identifier: marker.identifier });
+             { icon: markerIcon, riseOnHover: true, identifier: marker.identifier }).bindPopup(markerTitle);
+       
     });
 
     const group = L.featureGroup(leafletMarkers)
@@ -134,7 +158,7 @@ export class GeospatialService {
       .addTo(this.currentMap.value);
 
     group.eachLayer(layer => {
-      layer.bindPopup('<div>Test</div>');
+     // layer.bindPopup('<div>Test</div>');
       this.markerDict['' + layer.options.identifier] = layer; // Map row index to marker to retrieve later
     });
 

@@ -8,7 +8,7 @@ export abstract class BaseDataService {
     ownerDocument = document.implementation.createHTMLDocument('virtual');
     newDays: 1;
 
-    static replacePlaceholdersWithFieldValues(str: string, item) {
+    static replacePlaceholdersWithFieldValues(str: string, item): string {
         // const matchedItems = str.match(/(?<=\{\{)(.*?)(?=\}\})/g);
         // const matchedItems = str.match(/(?<=\)/g);
         const matchedItems = str.match(/\{\{(.*?)\}\}/g) || [];

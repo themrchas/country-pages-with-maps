@@ -481,18 +481,24 @@
                             {
                                 "columnName": "Title",
                                 "displayName": "Title",
-                                "showInModal": true
+                                "showInModal": true,
+                                "showInMarker":true
                             },
                             {
                                 "columnName": "MGRS",
                                 "displayName": "MGRS",
                                 "showInModal": true,
+                                "showInMarker":true,
                                 "type": "geo"
                             }
                         ],
                         "modal": {
                             "titleColumn": "Title",
                             "type": "details"
+                        },
+
+                        "marker" : {
+                            "markerHtml" : "<b>{{Title}}</b>:{{MGRS}}"
                         }
 
                     }
