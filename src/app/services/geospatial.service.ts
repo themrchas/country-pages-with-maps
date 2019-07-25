@@ -129,7 +129,9 @@ export class GeospatialService {
 
   setMarkerTitle( html, markerData ) : string {
   
-    let parsedHtml: string;    parsedHtml = BaseDataService.replacePlaceholdersWithFieldValues(html,markerData);
+    let parsedHtml: string;    
+    
+    parsedHtml = BaseDataService.replacePlaceholdersWithFieldValues(html,markerData);
 
     this.doLog &&console.log('The modified markerHtml string in setMarkerTitle is',parsedHtml);
 
